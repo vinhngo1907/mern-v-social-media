@@ -2,11 +2,10 @@
 	"name": "server",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "app.js",
 	"scripts": {
-		"start": "NODE_ENV=prod node app",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"server": "NODE_ENV=dev nodemon app",
+		"start": "NODE_ENV=prod node src/app",
+		"server": "NODE_ENV=dev nodemon src/app",
 		"client": "cd ../client && npm run start"
 	},
 	"author": "Vinh Ngo <vinhtrungngo1907@gmail.com>",
