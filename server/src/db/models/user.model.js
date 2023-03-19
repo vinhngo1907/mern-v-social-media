@@ -23,7 +23,12 @@ const UserSchema = new Schema({
 		type: String,
 		default: "https://res.cloudinary.com/v-webdev/image/upload/v1661947123/v-chat-app/profile-user_p2khhu.png"
 	},
-	mobile: { type: String }
+	mobile: { type: String },
+	gender: { type: String },
+	followers: [{ type: Schema.Types.ObjectId, ref: "users" }],
+	following: [{ type: Schema.Types.ObjectId, ref: "users" }],
+	salt: { type: String },
+	type: { type: String, default: "register" }
 }, {
 	timestamps: true
 })
