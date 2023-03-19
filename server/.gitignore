@@ -1,6 +1,9 @@
+# dependencies
 /node_modules
 dump.rdb
 npm-debug.log
 .env
 .env.dev
 package-*.json
+/.vscode
+.DS_Store

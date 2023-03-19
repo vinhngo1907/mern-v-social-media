@@ -58,6 +58,6 @@ const { authCtrl } = require("../controllers");
  * @desc Login user
  * @access Public
 */
-router.post('/login', authCtrl.login);
+router.post('/login', authCtrl.Login);
 
 module.exports = router
