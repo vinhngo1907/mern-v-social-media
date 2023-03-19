@@ -1,4 +1,5 @@
 module.exports = {
-    tokenUtil: require("./tokens"),
-    emailUtil: require("./emails")
+    TokenUtil: require("./tokens"),
+    EmailUtil: require("./emails"),
+    ResponseDTO: require("./dtos")
 }

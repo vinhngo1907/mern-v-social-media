@@ -1,4 +1,4 @@
-class responseDTO{
+class ResponseDTO{
     success(message = 'Success', data){
         return {
             status: 200,
@@ -50,4 +50,4 @@ class responseDTO{
     }
 }
 
-module.exports = responseDTO;
+module.exports = ResponseDTO;
