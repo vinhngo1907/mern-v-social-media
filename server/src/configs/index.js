@@ -18,5 +18,6 @@ module.exports = {
     CLIENT_SECRET: process.env.MAIL_CLIENT_SECRET,
     REFRESH_TOKEN: process.env.MAIL_REFRESH_TOKEN,
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
-    RF_PATH: process.env.RF_PATH
+    RF_PATH: process.env.RF_PATH,
+    OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND
 };
