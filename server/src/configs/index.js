@@ -11,5 +11,12 @@ module.exports = {
     BASE_URL: "/api",
     PORT: process.env.PORT,
     DB_URL: process.env.MONGODB_URI,
-    APP_SECRET: process.env.APP_SECRET,
+    ACCESS_SECRET: process.env.ACCESS_TOKEN_SECRET,
+    REFRESH_SECRET: process.env.REFRESH_TOKEN_SECRET,
+    ACTIVE_SECRET: process.env.ACTIVE_TOKEN_SECRET,
+    CLIENT_ID: process.env.MAIL_CLIENT_ID,
+    CLIENT_SECRET: process.env.MAIL_CLIENT_SECRET,
+    REFRESH_TOKEN: process.env.MAIL_REFRESH_TOKEN,
+    SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
+    RF_PATH: process.env.RF_PATH
 };
