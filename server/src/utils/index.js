@@ -1,7 +1,7 @@
 module.exports = {
-    Signature: require("./tokens"),
+    signature: require("./tokens"),
     Mailer: require("./emails"),
-    ResponseDTO: require("./dtos"),
-    Validation: require("./validations"),
-    Password: require("./passwords"),
+    responseDTO: require("./dtos"),
+    validation: require("./validations"),
+    passwordUtil: require("./passwords"),
 }

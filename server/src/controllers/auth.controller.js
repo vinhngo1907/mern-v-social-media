@@ -1,67 +1,57 @@
 "use strict"
-const { ResponseDTO, Validation, Password, Mailer, Signature } = require("../utils");
+const { responseDTO, validation, passwordUtil, Mailer, signature } = require("../utils");
 const { modeSchema } = require("../db");
 const { CLIENT_URL, ACTIVE_SECRET } = require("../configs");
 const { userModel } = modeSchema;
 const jwt = require("jsonwebtoken");
 
 class AuthController {
-    constructor() {
-        // this.responseDTO = new ResponseDTO();
-        // this.validate = new Validation();
-        // this.password = new Password();
-        // this.signature = new Signature();
-    }
-
     async Login(req, res) {
         try {
             const { account, password } = req.body;
-            if (this.validate.validateMobile(account)) {
-
+            if (validation.ValidateEmail(account)) {
+                const user = await userModel.findOne({
+                    $or: [
+                        { email: account },
+                        { username: account }
+                    ]
+                });
+                if (!user) {
+                    res.status(400).json(responseDTO.badRequest("This user does not exist"));
+                }
+                return this.LoginUser(password, user, req, res);
             }
-
-            const user = await userModel.findOne({
-                $or: [
-                    { email: account },
-                    { username: account }
-                ]
-            });
-            if (!user) {
-                res.status(400).json(this.responseDTO.badRequest("This user does not exist"));
-            }
-            return this.LoginUser(password, user, req, res);
-            // res.status(200).json(this.responseDTO.success("Success"))
         } catch (error) {
             console.log(error);
-            return res.status(500).json(this.responseDTO.serverError(error.message));
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
 
     async Register(req, res) {
         try {
             const { fullname, username, email, password } = req.body;
-            const checkUser = Validation.validaiteRegister(req.body);
+            const checkUser = validation.ValidaiteRegister(req.body);
 
             // Simple validate
             if (checkUser) {
-                return res.status(400).json(this.responseDTO.badRequest(checkUser))
+                return res.status(400).json(responseDTO.badRequest(checkUser))
             }
 
             const newUserName = username.toLowerCase().replace(/ /g, '');
 
-            const salt = await Password.GenerateSalt();
-            const newPassword = await Password.GeneratePassword(password, salt);
+            const salt = await passwordUtil.GenerateSalt();
+            const newPassword = await passwordUtil.GeneratePassword(password, salt);
             const newUser = {
                 fullname, username: newUserName, email, password: newPassword, salt
             }
-            const activeToken = await Signature.GenerateActiveToken(newUser);
+            const activeToken = await signature.GenerateActiveToken(newUser);
             const url = `${CLIENT_URL}/active/${activeToken}`
             const mailer = new Mailer(email, url, "Verify your email address");
             mailer.sendMail();
-            res.status(200).json(ResponseDTO.success('Successfully, please check your email!'));
+            res.status(200).json(responseDTO.success('Successfully, please check your email!'));
         } catch (error) {
             console.log(error);
-            return res.status(500).json(ResponseDTO.serverError(error.message));
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
 
@@ -69,23 +59,24 @@ class AuthController {
         try {
             const { token } = req.body;
             if (!token) {
-                return res.status(400).json(ResponseDTO.badRequest("Register in failure, please try again!"));
+                return res.status(400).json(responseDTO.badRequest("Register in failure, please try again!"));
             }
-            const user = jwt.verify(token, ACTIVE_SECRET)
-            const result = await RegisterUser(user, req, res);
-            if (result.status !== 200) {
-                return res.status(400).json(result);
+            const user = jwt.verify(token, ACTIVE_SECRET);
+            if (!user) {
+                return res.status(400).json(responseDTO.unauthorization("Authenticated faild, please try again."))
             }
-            res.status(200).json(result);
+            await RegisterUser(user, req, res);
+
+
         } catch (error) {
             console.log(error);
-            return res.status(500).json(ResponseDTO.serverError(error.message));
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
 }
 const LoginUser = async (password, user, req, res) => {
     try {
-        return res.status(200).json(ResponseDTO.success("Logged Successfully", {
+        return res.status(200).json(responseDTO.success("Logged Successfully", {
             user: { ...user, password: "" }
         }));
     } catch (error) {
@@ -102,33 +93,29 @@ const RegisterUser = async (user, req, res) => {
                 { email: user.email }
             ]
         });
-
+        
         if (isUserExist)
-            return res.status(400).json(ResponseDTO.badRequest("This user is already taken"));
+            return res.status(400).json(responseDTO.badRequest("This user is already taken"));
 
         const newUser = await new userModel({ ...user });
 
         // return token
-        const access_token = await Signature.GenerateAccessToken({ userId: newUser._id });
-        const rf_token = await Signature.GenerateRefreshToken({ userId: newUser._id }, res);
-        newUser.rf_token = rf_token;
+        const access_token = await signature.GenerateAccessToken({ userId: newUser._id });
+        await signature.GenerateRefreshToken({ userId: newUser._id }, res);
 
         // save user
         await newUser.save();
 
-        // return res.status(200).json(this.responseDTO.success("Registered in successfully!", {
-        //     user: { ...user, password: "" },
-        //     access_token
-        // }))
-        return ResponseDTO.success("Registered in successfully!", {
-            user: { ...user, password: "" },
+        res.status(200).json(this.responseDTO.success(
+            user.type ? "Register in successfully" : "Account has been activated!", {
+            user: { ...newUser._doc, password: "" },
             access_token
-        });
-        
+        }));
+
     } catch (error) {
         console.log(error);
-        // return res.status(400).json(this.responseDTO.serverError(error.message));
-        return ResponseDTO.serverError(error.message);
+        return res.status(500).json(responseDTO.serverError(error.message));
+        // return responseDTO.serverError(error.message);
     }
 }
 
