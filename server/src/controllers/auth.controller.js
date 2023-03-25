@@ -1,7 +1,7 @@
 "use strict"
 const { ResponseDTO, Validation, Password, Mailer, Signature } = require("../utils");
 const { modeSchema } = require("../db");
-const { CLIENT_ID, ACTIVE_SECRET } = require("../configs");
+const { CLIENT_URL, ACTIVE_SECRET } = require("../configs");
 const { userModel } = modeSchema;
 const jwt = require("jsonwebtoken");
 
@@ -55,7 +55,7 @@ class AuthController {
                 fullname, username: newUserName, email, password: newPassword, salt
             }
             const activeToken = await Signature.GenerateActiveToken(newUser);
-            const url = `${CLIENT_ID}/active/${activeToken}`
+            const url = `${CLIENT_URL}/active/${activeToken}`
             const mailer = new Mailer(email, url, "Verify your email address");
             mailer.sendMail();
             res.status(200).json(ResponseDTO.success('Successfully, please check your email!'));
@@ -69,16 +69,17 @@ class AuthController {
         try {
             const { token } = req.body;
             if (!token) {
-                return res.status(400).json(this.responseDTO.badRequest("Register in failure, please try again!"));
+                return res.status(400).json(ResponseDTO.badRequest("Register in failure, please try again!"));
             }
             const user = jwt.verify(token, ACTIVE_SECRET)
-            const result = await this.RegisterUser(user);
+            const result = await RegisterUser(user, req, res);
             if (result.status !== 200) {
                 return res.status(400).json(result);
             }
             res.status(200).json(result);
         } catch (error) {
-            return res.status(500).json(this.responseDTO.serverError(error.message));
+            console.log(error);
+            return res.status(500).json(ResponseDTO.serverError(error.message));
         }
     }
 
@@ -92,42 +93,44 @@ class AuthController {
         }
     }
 
-    async RegisterUser(user, req, res) {
-        try {
-            // Check for existing user
-            const isUserExist = await userModel.findOne({
-                $or: [
-                    { username: user.username },
-                    { email: user.email }
-                ]
-            });
+    
+}
 
-            if (isUserExist)
-                return res.status(400).json(this.responseDTO.badRequest("This user is already taken"));
+ const RegisterUser = async(user, req, res)=> {
+    try {
+        // Check for existing user
+        const isUserExist = await userModel.findOne({
+            $or: [
+                { username: user.username },
+                { email: user.email }
+            ]
+        });
 
-            const newUser = await new userModel({ ...user });
+        if (isUserExist)
+            return res.status(400).json(ResponseDTO.badRequest("This user is already taken"));
 
-            // return token
-            const access_token = await this.signature.GenerateAccessToken({ userId: newUser._id });
-            const rf_token = await this.signature.GenerateRefreshToken({ userId: newUser._id });
-            newUser.rf_token = rf_token;
+        const newUser = await new userModel({ ...user });
 
-            // save user
-            await newUser.save();
+        // return token
+        const access_token = await Signature.GenerateAccessToken({ userId: newUser._id });
+        const rf_token = await Signature.GenerateRefreshToken({ userId: newUser._id }, res);
+        newUser.rf_token = rf_token;
 
-            // return res.status(200).json(this.responseDTO.success("Registered in successfully!", {
-            //     user: { ...user, password: "" },
-            //     access_token
-            // }))
-            return this.responseDTO.success("Registered in successfully!", {
-                user: { ...user, password: "" },
-                access_token
-            })
-        } catch (error) {
-            console.log(error);
-            // return res.status(400).json(this.responseDTO.serverError(error.message));
-            return this.responseDTO.serverError(error.message);
-        }
+        // save user
+        await newUser.save();
+
+        // return res.status(200).json(this.responseDTO.success("Registered in successfully!", {
+        //     user: { ...user, password: "" },
+        //     access_token
+        // }))
+        return ResponseDTO.success("Registered in successfully!", {
+            user: { ...user, password: "" },
+            access_token
+        })
+    } catch (error) {
+        console.log(error);
+        // return res.status(400).json(this.responseDTO.serverError(error.message));
+        return ResponseDTO.serverError(error.message);
     }
 }
 

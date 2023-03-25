@@ -19,5 +19,6 @@ module.exports = {
     REFRESH_TOKEN: process.env.MAIL_REFRESH_TOKEN,
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
     RF_PATH: process.env.RF_PATH,
-    OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND
+    OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
+    CLIENT_URL: process.env.CLIENT_URL
 };

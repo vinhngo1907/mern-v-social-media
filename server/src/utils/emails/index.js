@@ -1,11 +1,11 @@
 'use strict';
 
-const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, SENDER_MAIL, OAUTH_PLAYGROUND } = require("../../configs");
+const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, SENDER_MAIL, OAUTH_PLAYGROUND, CLIENT_URL } = require("../../configs");
 const nodemailer = require("nodemailer");
-// const { google } = require('googleapis')
-// const { OAuth2 } = google.auth;
+const { google } = require('googleapis')
+const { OAuth2 } = google.auth;
 
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
 const ResponseDTO = require("../dtos");
 
 class Mailer {
@@ -15,7 +15,7 @@ class Mailer {
         this.txt = txt;
     }
     async sendMail() {
-        const oAuth2Client = new OAuth2Client(
+        const oAuth2Client = new OAuth2(
             CLIENT_ID, CLIENT_SECRET, OAUTH_PLAYGROUND
         );
 
@@ -35,9 +35,9 @@ class Mailer {
             });
             const mailOptions = {
                 from: SENDER_MAIL,
-                to: to,
+                to: this.to,
                 subject: "V-Social-Media-NetWork",
-                html: require("./template.email")(this.url, this.txt, CLIENT_ID)
+                html: require("./template.email")({url: this.url, txt: this.txt, CLIENT_URL})
             }
 
             const result = await transport.sendMail(mailOptions);

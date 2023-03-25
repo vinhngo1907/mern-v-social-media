@@ -22,6 +22,15 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:5001/api/auth/active
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6Ik5nw7QgVHJ1bmcgVmluaCIsInVzZXJuYW1lIjoidmluaG5nbyIsImVtYWlsIjoidmluaG5nb3RydW5nMTk5OUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRQVTlGN1kvVy9zYVplQ213MW9ULjkuLndpek1IS3daRTNqRzRLN29DdmV5OUVtVm5ITzc3LiIsInNhbHQiOiIkMmIkMTAkUFU5RjdZL1cvc2FaZUNtdzFvVC45LiIsImlhdCI6MTY3OTcyNDgyOSwiZXhwIjoxNjc5NzI1NzI5fQ.FF1vdITbhcJXXR4OkRMI92S0NrCKhqeIHP2v33fW-lo"
+}
+
+###
+
 POST http://localhost:5000/api/posts
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDYxYjk1YjdkMjljZTFiMTA5YmQxZTAiLCJpYXQiOjE2MTczNjIxNjV9.ZTwbrIeDpchmUjkNQv_bmBd7_Maw2Gp7Y1ioZx2s7i8

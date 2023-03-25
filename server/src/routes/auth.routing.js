@@ -23,6 +23,6 @@ router.post('/register',authCtrl.Register)
  * @desc Login user
  * @access Public
 */
-router.post('/login', authCtrl.Login);
+router.post('/active', authCtrl.ActiveAccount);
 
 module.exports = router
