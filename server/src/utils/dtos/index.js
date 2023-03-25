@@ -50,4 +50,4 @@ class ResponseDTO{
     }
 }
 
-module.exports = ResponseDTO;
+module.exports = new ResponseDTO();

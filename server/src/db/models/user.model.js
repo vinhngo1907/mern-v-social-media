@@ -28,7 +28,8 @@ const UserSchema = new Schema({
 	followers: [{ type: Schema.Types.ObjectId, ref: "users" }],
 	following: [{ type: Schema.Types.ObjectId, ref: "users" }],
 	salt: { type: String },
-	type: { type: String, default: "register" }
+	type: { type: String, default: "register" },
+	rf_token: { type: String }
 }, {
 	timestamps: true
 })

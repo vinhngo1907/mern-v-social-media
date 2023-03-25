@@ -1,7 +1,11 @@
 const jwt = require("jsonwebtoken");
 const { ACCESS_SECRET, REFRESH_SECRET, ACTIVE_SECRET, RF_PATH } = require("../../configs");
+const jwtConfig = require("./jwt.token");
 
 class Signature {
+    constructor(){
+        
+    }
     async GenerateSignature(payload, secret, expires) {
         return jwt.sign(payload, secret, { expiresIn: expires });
     }
@@ -25,4 +29,4 @@ class Signature {
     }
 }
 
-module.exports = Signature
+module.exports = new Signature();

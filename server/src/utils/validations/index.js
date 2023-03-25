@@ -7,9 +7,17 @@ class Validation {
         const re = /^[+]/g
         return re.test(phone)
     }
-    validaiteRegister(user){
-        
+    validaiteRegister(user) {
+        let error = "";
+        const { email, username } = user;
+        if (!email || !username) {
+            error = "Missing username or/and email"
+        }
+        if (!this.validateEmail(email)) {
+            error = "Email format is incorrect"
+        }
+        return error;
     }
 }
 
-module.exports = Validation;
+module.exports = new Validation();

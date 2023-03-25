@@ -16,4 +16,4 @@ class Password {
     }
 }
 
-module.exports = Password;
+module.exports = new Password();
