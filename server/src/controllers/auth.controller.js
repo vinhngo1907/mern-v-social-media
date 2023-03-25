@@ -82,21 +82,18 @@ class AuthController {
             return res.status(500).json(ResponseDTO.serverError(error.message));
         }
     }
-
-    async LoginUser(password, user, req, res) {
-        try {
-            return res.status(200).json(this.responseDTO.success("Logged Successfully", {
-                user: { ...user, password: "" }
-            }))
-        } catch (error) {
-            console.log(error);
-        }
+}
+const LoginUser = async (password, user, req, res) => {
+    try {
+        return res.status(200).json(ResponseDTO.success("Logged Successfully", {
+            user: { ...user, password: "" }
+        }));
+    } catch (error) {
+        console.log(error);
     }
-
-    
 }
 
- const RegisterUser = async(user, req, res)=> {
+const RegisterUser = async (user, req, res) => {
     try {
         // Check for existing user
         const isUserExist = await userModel.findOne({
@@ -126,7 +123,8 @@ class AuthController {
         return ResponseDTO.success("Registered in successfully!", {
             user: { ...user, password: "" },
             access_token
-        })
+        });
+        
     } catch (error) {
         console.log(error);
         // return res.status(400).json(this.responseDTO.serverError(error.message));
