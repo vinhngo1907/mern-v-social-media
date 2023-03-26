@@ -93,7 +93,7 @@ const RegisterUser = async (user, req, res) => {
                 { email: user.email }
             ]
         });
-        
+
         if (isUserExist)
             return res.status(400).json(responseDTO.badRequest("This user is already taken"));
 
@@ -106,7 +106,7 @@ const RegisterUser = async (user, req, res) => {
         // save user
         await newUser.save();
 
-        res.status(200).json(this.responseDTO.success(
+        res.status(200).json(responseDTO.success(
             user.type ? "Register in successfully" : "Account has been activated!", {
             user: { ...newUser._doc, password: "" },
             access_token
