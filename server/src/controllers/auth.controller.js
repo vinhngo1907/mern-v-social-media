@@ -3,7 +3,8 @@ const { responseDTO, validation, passwordUtil, Mailer, signature } = require("..
 const { modelSchema } = require("../db");
 const jwt = require("jsonwebtoken");
 const { userModel } = modelSchema;
-const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH } = require("../configs");
+const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET } = require("../configs");
+const { OAuth2Client } = require("google-auth-library");
 
 class AuthController {
     async Login(req, res) {
@@ -123,7 +124,20 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    async GoogleLogin(req, res) {
+        try {
+            const { id_token } = req.body;
+            if(!id_token){
 
+            }
+            const client = new OAuth2Client(CLIENT_SECRET);
+            // const result = await client.verifyIdToken()
+            res.status(200).json(responseDTO.success("Logged in successfully"))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
     async LoginSMS(req, res) {
         try {
 

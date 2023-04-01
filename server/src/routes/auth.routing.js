@@ -37,13 +37,20 @@ router.post('/refresh-token', authCtrl.RefreshToken);
  * @desc Login user by sms
  * @access Public
 */
-router.post('/logout',userAuth ,authCtrl.Logout);
+router.post('/logout', userAuth, authCtrl.Logout);
 
 /** 
- *  @route POST api/auth/login-sms
+ *  @route POST api/auth/sms-login
  * @desc Login user by sms
  * @access Public
 */
 router.post('/sms-login', authCtrl.LoginSMS);
+
+/** 
+ *  @route POST api/auth/google-login
+ * @desc Login with google
+ * @access Public
+*/
+router.post('/google-login', authCtrl.GoogleLogin)
 
 module.exports = router
