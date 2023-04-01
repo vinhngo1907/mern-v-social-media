@@ -8,15 +8,18 @@ const jwt = require("jsonwebtoken");
 class AuthController {
     async Login(req, res) {
         try {
+            const { account, password } = req.body;
             const user = await userModel.findOne({
                 $or: [
                     { email: account },
                     { username: account }
                 ]
             });
+
             if (!user) {
-                res.status(400).json(responseDTO.badRequest("This user does not exist"));
+                return res.status(400).json(responseDTO.badRequest("This user does not exist"));
             }
+            
             return LoginUser(password, user, req, res);
         } catch (error) {
             console.log(error);
@@ -30,7 +33,7 @@ class AuthController {
             if (validation.ValidateMobile(mobile)) {
                 res.status(200).json(responseDTO.success('Successfully, please check your phone!'));
             }
-            
+
             if (validation.ValidateEmail(email)) {
 
                 const checkUser = validation.ValidaiteRegister(req.body);
