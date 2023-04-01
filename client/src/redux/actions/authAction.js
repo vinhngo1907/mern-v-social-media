@@ -38,3 +38,14 @@ export const refreshToken = () => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
+
+export const logout = (token) => async (dispatch) => {
+    try {
+        const res = await postDataApi('auth/logout', null, token);
+        localStorage.removeItem("firstLogin");
+        window.location.href = "/";
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.message } })
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}

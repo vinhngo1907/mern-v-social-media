@@ -6,14 +6,17 @@ import LoginSMS from "../components/auth/LoginSMS";
 import { useSelector } from "react-redux";
 
 const Login = () => {
-	const {auth} = useSelector(state=>state)
-	const history = useHistory()
+	const {auth} = useSelector(state=>state);
+	const history = useHistory();
+	
 	useEffect(()=>{
 		if(auth.token){
 			return history.push("/")
 		}
-	},[auth.token])
+	},[auth.token, history])
+	
 	const [sms, setSms] = useState(false);
+
 	return (
 		<div className="auth_page">
 			<div className="auth_box">
