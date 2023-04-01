@@ -1,4 +1,4 @@
-@{serverUrl} = http://localhost:5001/api
+@serverUrl = http://localhost:5001/api
 
 POST http://localhost:5001/api/auth/register
 Content-Type: application/json
@@ -12,23 +12,32 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:5000/api/auth/login
+POST {{serverUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "henry",
-  "password": "henry"
+  "account": "vinhngo",
+  "password": "123456"
 }
 
 ###
 
-POST http://localhost:5001/api/auth/active
+POST {{serverUrl}}/auth/active
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6Ik5nw7QgVHJ1bmcgVmluaCIsInVzZXJuYW1lIjoidmluaG5nbyIsImVtYWlsIjoidmluaG5nb3RydW5nMTk5OUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRGNXpiVHFCaU42eXFZc1JLbEVlNDdPMTJRNW5rVk5VYnZaTzZkejBEU0I4QjFSWjZyMGlkcSIsInNhbHQiOiIkMmIkMTAkRjV6YlRxQmlONnlxWXNSS2xFZTQ3TyIsImlhdCI6MTY3OTcyOTgzOCwiZXhwIjoxNjc5NzMwNzM4fQ.WsCL7z67HeHx7UKAtY9J1KuPue7m9rqzIl9SNOaCLsQ"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6Ik5nw7QgVHJ1bmcgVmluaCIsInVzZXJuYW1lIjoidmluaG5nbyIsImVtYWlsIjoidmluaG5nb3RydW5nMTk5OUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR1c3JjNEJzTWZNejVBbHZqWVlqRzEuazFzLmlneDJsbG9tcVEzckhmNjdqNDdMaUZWWjBzcSIsInNhbHQiOiIkMmIkMTAkdXNyYzRCc01mTXo1QWx2allZakcxLiIsImlhdCI6MTY4MDMxNjI5NiwiZXhwIjoxNjgwMzE3MTk2fQ.d2qd8JSZHSgVAO9lOkgjpwgdzaHZy4SWl3anUL5D66I"
 }
 
+###
+
+POST {{serverUrl}}/auth/refresh-token
+Content-Type: application/json
+###
+
+POST {{serverUrl}}/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODAzMTc3OTksImV4cCI6MTY4MDQwNDE5OX0.MjgR_ioAETk3QR2pL4j2rM6ZgnC6vL3NEEvkIW11_xM
 ###
 
 POST http://localhost:5000/api/posts
