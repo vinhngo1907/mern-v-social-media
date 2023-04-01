@@ -81,3 +81,9 @@ img {
 
 /* ---------- Auth Page------------ */
 @import url("./auth.css");
+
+/* ---------- Avatar------------ */
+@import url("./avatar.css");
+
+/* ---------- Loading------------ */
+@import url("./loading.css");

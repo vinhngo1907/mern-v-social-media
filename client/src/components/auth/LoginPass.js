@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/authAction";
 
 const LoginPass = () => {
+	const dispatch = useDispatch();
 	const [typePass, setTypePass] = useState(false);
 	const [userData, setUserData] = useState({
 		account: '',
@@ -10,15 +13,18 @@ const LoginPass = () => {
 		setUserData({ ...userData, [e.target.name]: e.target.value })
 	}
 	const { account, password } = userData;
-	const handleSubmit = (e) => {
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(login(userData))
 	}
+	
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group mb-3">
 					<label htmlFor="account"> Email / Username</label>
-					<input type="email" className="form-control" id="account"
+					<input type="text" className="form-control" id="account"
 						aria-describedby="emailHelp" placeholder="Enter account"
 						name="account" onChange={handleChangeInput} value={account} />
 				</div>

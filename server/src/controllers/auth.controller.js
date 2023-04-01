@@ -94,7 +94,7 @@ class AuthController {
                 if (err)
                     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
 
-                const user = await userModel.findById(result.userId).select("-password");
+                const user = await userModel.findById(result.userId).select("-password -salt");
                 if (!user)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
 
@@ -162,7 +162,7 @@ const LoginUser = async (password, user, req, res) => {
         const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
         return res.status(200).json(responseDTO.success("Logged Successfully", {
-            user: { ...user._doc, password: "" },
+            user: { ...user._doc, password: "", salt: "" },
             access_token: access_token
         }));
     } catch (error) {
@@ -194,7 +194,7 @@ const RegisterUser = async (user, req, res) => {
 
         res.status(200).json(responseDTO.success(
             user.type ? "Register in successfully" : "Account has been activated!", {
-            user: { ...newUser._doc, password: "" },
+            user: { ...newUser._doc, password: "", salt: "" },
             access_token
         }));
 

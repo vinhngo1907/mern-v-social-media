@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SocialLogin from "../components/auth/SocialLogin";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import LoginPass from "../components/auth/LoginPass";
 import LoginSMS from "../components/auth/LoginSMS";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+	const {auth} = useSelector(state=>state)
+	const history = useHistory()
+	useEffect(()=>{
+		if(auth.token){
+			return history.push("/")
+		}
+	},[auth.token])
 	const [sms, setSms] = useState(false);
 	return (
 		<div className="auth_page">
