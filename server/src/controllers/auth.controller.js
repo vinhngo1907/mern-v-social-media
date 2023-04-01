@@ -1,7 +1,7 @@
 "use strict"
 const { responseDTO, validation, passwordUtil, Mailer, signature } = require("../utils");
 const { modeSchema } = require("../db");
-const { CLIENT_URL, ACTIVE_SECRET } = require("../configs");
+const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET } = require("../configs");
 const { userModel } = modeSchema;
 const jwt = require("jsonwebtoken");
 
@@ -19,7 +19,7 @@ class AuthController {
             if (!user) {
                 return res.status(400).json(responseDTO.badRequest("This user does not exist"));
             }
-            
+
             return LoginUser(password, user, req, res);
         } catch (error) {
             console.log(error);
@@ -74,6 +74,42 @@ class AuthController {
             }
             await RegisterUser(user, req, res);
 
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async RefreshToken(req, res) {
+        try {
+            const rf_token = req.cookies.rf_v_media;
+            if (!rf_token)
+                return res.status(401).json(responseDTO.unauthorization("Please login now!"));
+
+            // const decoded = jwt.verify(rf_token, REFRESH_SECRET);
+            // if(!decoded)
+            //     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
+            jwt.verify(rf_token, REFRESH_SECRET, async (err, result) => {
+                if (err)
+                    return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
+
+                const user = await userModel.findById(result.userId).select("-password");
+                if (!user)
+                    return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
+
+                const access_token = await signature.GenerateAccessToken({ userId: user._id });
+                res.status(200).json(responseDTO.success("Successfully", {
+                    user: { ...user._doc },
+                    access_token: access_token
+                }))
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async LoginSMS(req, res) {
+        try {
 
         } catch (error) {
             console.log(error);

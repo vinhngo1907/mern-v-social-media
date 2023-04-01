@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { userAuth } = require('../middleware');
-const {AuthController} = require("../controllers");
+const { AuthController } = require("../controllers");
 const authCtrl = new AuthController();
 
 /**  
@@ -16,7 +16,7 @@ router.post('/login', authCtrl.Login);
  * @desc Register user
  * @access Public
 */
-router.post('/register',authCtrl.Register)
+router.post('/register', authCtrl.Register)
 
 /** 
  *  @route POST api/auth/login
@@ -24,5 +24,19 @@ router.post('/register',authCtrl.Register)
  * @access Public
 */
 router.post('/active', authCtrl.ActiveAccount);
+
+/** 
+ *  @route POST api/auth/refresh-token
+ * @desc Refresh new token
+ * @access Public
+*/
+router.post('/refresh-token', authCtrl.RefreshToken);
+
+/** 
+ *  @route POST api/auth/login-sms
+ * @desc Login user by sms
+ * @access Public
+*/
+router.post('/sms-login', authCtrl.LoginSMS);
 
 module.exports = router
