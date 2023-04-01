@@ -37,6 +37,13 @@ router.post('/refresh-token', authCtrl.RefreshToken);
  * @desc Login user by sms
  * @access Public
 */
+router.post('/logout',userAuth ,authCtrl.Logout);
+
+/** 
+ *  @route POST api/auth/login-sms
+ * @desc Login user by sms
+ * @access Public
+*/
 router.post('/sms-login', authCtrl.LoginSMS);
 
 module.exports = router

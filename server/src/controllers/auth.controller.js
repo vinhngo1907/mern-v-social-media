@@ -1,9 +1,9 @@
 "use strict"
 const { responseDTO, validation, passwordUtil, Mailer, signature } = require("../utils");
-const { modeSchema } = require("../db");
-const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET } = require("../configs");
-const { userModel } = modeSchema;
+const { modelSchema } = require("../db");
 const jwt = require("jsonwebtoken");
+const { userModel } = modelSchema;
+const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH } = require("../configs");
 
 class AuthController {
     async Login(req, res) {
@@ -108,6 +108,22 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async Logout(req, res) {
+        try {
+            res.clearCookie("rf_v_media", { path: RF_PATH });
+            if (req.user) {
+                await userModel.findByIdAndUpdate(req.user._id, {
+                    rf_token: ""
+                })
+            }
+            return res.status(200).json(responseDTO.success("Logged out in successfully!"));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
     async LoginSMS(req, res) {
         try {
 
