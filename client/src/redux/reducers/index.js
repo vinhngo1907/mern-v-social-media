@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import alert from './alertReducer';
 import auth from './authReducer';
+import alert from './alertReducer';
+import theme from './themeReducer';
 
 export default combineReducers({
+    auth,
     alert,
-    auth
+    theme
 })

@@ -1,100 +1,26 @@
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import { Link } from 'react-router-dom'
-import { useContext, useState } from 'react'
-import { AuthContext } from '../../contexts/AuthContext'
-import AlertMessage from '../layout/AlertMessage'
+import React from "react";
 
-const RegisterForm = () => {
-	// Context
-	const { registerUser } = useContext(AuthContext)
-
-	// Local state
-	const [registerForm, setRegisterForm] = useState({
-		username: '',
-		password: '',
-		confirmPassword: ''
-	})
-
-	const [alert, setAlert] = useState(null)
-
-	const { username, password, confirmPassword } = registerForm
-
-	const onChangeRegisterForm = event =>
-		setRegisterForm({
-			...registerForm,
-			[event.target.name]: event.target.value
-		})
-
-	const register = async event => {
-		event.preventDefault()
-
-		if (password !== confirmPassword) {
-			setAlert({ type: 'danger', message: 'Passwords do not match' })
-			setTimeout(() => setAlert(null), 5000)
-			return
-		}
-
-		try {
-			const registerData = await registerUser(registerForm)
-			if (!registerData.success) {
-				setAlert({ type: 'danger', message: registerData.message })
-				setTimeout(() => setAlert(null), 5000)
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
+const Register = () => {
 
 	return (
-		<>
-			<Form className='my-4' onSubmit={register}>
-				<AlertMessage info={alert} />
-
-				<Form.Group>
-					<Form.Control
-						type='text'
-						placeholder='Username'
-						name='username'
-						required
-						value={username}
-						onChange={onChangeRegisterForm}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Control
-						type='password'
-						placeholder='Password'
-						name='password'
-						required
-						value={password}
-						onChange={onChangeRegisterForm}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Control
-						type='password'
-						placeholder='Confirm Password'
-						name='confirmPassword'
-						required
-						value={confirmPassword}
-						onChange={onChangeRegisterForm}
-					/>
-				</Form.Group>
-				<Button variant='success' type='submit'>
-					Register
-				</Button>
-			</Form>
-			<p>
-				Already have an account?
-				<Link to='/login'>
-					<Button variant='info' size='sm' className='ml-2'>
-						Login
-					</Button>
-				</Link>
-			</p>
-		</>
+		<form>
+			<div className="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" className="form-control" id="exampleInputEmail1"
+					aria-describedby="emailHelp" placeholder="Enter email" />
+				<small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+			</div>
+			<div className="form-group">
+				<label for="exampleInputPassword1">Password</label>
+				<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+			</div>
+			<div className="form-check">
+				<input type="checkbox" className="form-check-input" id="exampleCheck1" />
+				<label className="form-check-label" for="exampleCheck1">Check me out</label>
+			</div>
+			<button type="submit" className="btn btn-primary">Submit</button>
+		</form>
 	)
 }
 
-export default RegisterForm
+export default Register

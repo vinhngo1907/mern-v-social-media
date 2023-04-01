@@ -1,10 +1,8 @@
 import { GLOBALTYPES } from "../actions/globalTypes";
 
-const authReducer = (state, action) => {
-	// const {
-	// 	type,
-	// 	payload: { isAuthenticated, user }
-	// } = action
+const initialState = {}
+
+const authReducer = (state = initialState, action) => {
 
 	switch (action.type) {
 		case GLOBALTYPES.AUTH:
