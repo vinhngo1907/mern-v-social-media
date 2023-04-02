@@ -37,7 +37,7 @@ Content-Type: application/json
 
 POST {{serverUrl}}/auth/logout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODAzMTc3OTksImV4cCI6MTY4MDQwNDE5OX0.MjgR_ioAETk3QR2pL4j2rM6ZgnC6vL3NEEvkIW11_xM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODA0MDgzNjQsImV4cCI6MTY4MDQ5NDc2NH0.nsLnhs60jj59DFQ6Zn6XV10oZDrVGu8-1F_b1CIi4QA
 ###
 
 POST http://localhost:5000/api/posts
@@ -53,8 +53,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDYxY
 
 ###
 
-GET http://localhost:5000/api/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDYxYjk1YjdkMjljZTFiMTA5YmQxZTAiLCJpYXQiOjE2MTcwMTk3ODF9.ri-nHdgZc1VQTocFLfMgF4_PhFf2TeUVqXLd8tpOkeA
+GET {{serverUrl}}/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODA0MDgzNjQsImV4cCI6MTY4MDQ5NDc2NH0.nsLnhs60jj59DFQ6Zn6XV10oZDrVGu8-1F_b1CIi4QA
 
 ###
 
