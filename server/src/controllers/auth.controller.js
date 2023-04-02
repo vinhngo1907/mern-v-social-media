@@ -87,9 +87,6 @@ class AuthController {
             if (!rf_token)
                 return res.status(401).json(responseDTO.unauthorization("Please login now!"));
 
-            // const decoded = jwt.verify(rf_token, REFRESH_SECRET);
-            // if(!decoded)
-            //     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
             jwt.verify(rf_token, REFRESH_SECRET, async (err, result) => {
                 if (err)
                     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
@@ -183,6 +180,7 @@ const LoginUser = async (password, user, req, res) => {
         }));
     } catch (error) {
         console.log(error);
+        return res.status(500).json(responseDTO.serverError(error.message));
     }
 }
 

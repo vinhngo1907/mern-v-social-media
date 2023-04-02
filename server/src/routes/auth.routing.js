@@ -56,7 +56,7 @@ router.post('/google-login', authCtrl.GoogleLogin)
 
 /** 
  *  @route POST api/auth/facebook-login
- * @desc Login with google
+ * @desc Login with facebook
  * @access Public
 */
 router.post('/facebook-login', authCtrl.GoogleLogin)

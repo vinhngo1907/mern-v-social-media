@@ -6,7 +6,9 @@
     left: 0;
     z-index: 2;
     box-shadow: 0 0 10px #ddd;
-    background: #f8f9fa;
+    /* background: #f8f9fa; */
+    background: var(--main-bg-color);
+	color: var(--main-color);
     border: 1px solid rgb(0, 0, 0, .125);
 }
 .header .navbar{
@@ -49,15 +51,21 @@
 /* ---------- Header Search -------- */
 .header .search_form{
     position: relative;
+	margin: auto;
+	width: 50%;
 }
-.header .search_form #search{
-    background: #fafafa;
-    border: 1px solid #ddd;
-    min-width: 250px;
+.header .search_form input{
+    /* background: #fafafa; */
+    background: var(--second-bg-color);
+    /* border: 1px solid #ddd; */
+    border: none;
+    /* min-width: 250px; */
     width: 100%;
     outline: none;
     text-indent: 5px;
-    border-radius: 3px;
+    border-radius: 20px;
+    padding: 12px 10px 12px 50px;
+    color: var(--main-color);
 }
 .header .search_form .search_icon{
     position: absolute;
