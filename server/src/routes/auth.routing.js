@@ -51,6 +51,14 @@ router.post('/sms-login', authCtrl.LoginSMS);
  * @desc Login with google
  * @access Public
 */
+
 router.post('/google-login', authCtrl.GoogleLogin)
+
+/** 
+ *  @route POST api/auth/facebook-login
+ * @desc Login with google
+ * @access Public
+*/
+router.post('/facebook-login', authCtrl.GoogleLogin)
 
 module.exports = router

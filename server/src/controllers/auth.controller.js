@@ -98,7 +98,11 @@ class AuthController {
                 if (!user)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
 
+                if(user.rf_token !== rf_token)
+                    return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
+                
                 const access_token = await signature.GenerateAccessToken({ userId: user._id });
+
                 res.status(200).json(responseDTO.success("Successfully", {
                     user: { ...user._doc },
                     access_token: access_token
@@ -127,12 +131,21 @@ class AuthController {
     async GoogleLogin(req, res) {
         try {
             const { id_token } = req.body;
-            if(!id_token){
-
+            if (!id_token) {
+                return res.status(400).json(responseDTO.badRequest("Authenticated failed, please try again!"));
             }
             const client = new OAuth2Client(CLIENT_SECRET);
-            // const result = await client.verifyIdToken()
+            const result = await client.verifyIdToken();
+            console.log(result)
             res.status(200).json(responseDTO.success("Logged in successfully"))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async FacebookLogin(req, res) {
+        try {
+
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -158,7 +171,10 @@ const LoginUser = async (password, user, req, res) => {
                 : `Password is incorrect. This account login with ${user.type}`;
             return res.status(400).json(responseDTO.badRequest(msgErr));
         }
-        await signature.GenerateRefreshToken({ userId: user._id }, res);
+        const rf_token = await signature.GenerateRefreshToken({ userId: user._id }, res);
+        await userModel.findOneAndUpdate({ _id: user._id }, {
+            rf_token: rf_token
+        })
         const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
         return res.status(200).json(responseDTO.success("Logged Successfully", {
