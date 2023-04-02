@@ -94,6 +94,9 @@ img {
 /* ---------- Header------------ */
 @import url("./header.css");
 
+/* ---------- User Card------------ */
+@import url("./user-card.css");
+
 /* --------- Responsive ------ */
 @media (max-width: 766px) {
     .header .navbar .logo {

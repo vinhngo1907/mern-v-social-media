@@ -1,0 +1,13 @@
+.user_card {
+	text-align: center;
+	padding: 10px 10px;
+	text-decoration: none;
+	font-size: 17px;
+	color: var(--second-color);
+	position: relative;
+}
+
+.user_card:hover {
+    text-decoration: none;
+	cursor: pointer;
+}
