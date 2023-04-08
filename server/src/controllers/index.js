@@ -1,6 +1,6 @@
 module.exports = {
     AuthController: require("./auth.controller"),
     UserController: require("./user.controller"),
-    postCtrl: require("./post.controller"),
+    PostController: require("./post.controller"),
     commentCtrl: require("./comment.controller"),
 }

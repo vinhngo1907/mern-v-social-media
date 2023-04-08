@@ -13,7 +13,8 @@ class AuthController {
             const user = await userModel.findOne({
                 $or: [
                     { email: account },
-                    { username: account }
+                    { username: account },
+                    { mobile: account }
                 ]
             });
 
@@ -151,7 +152,7 @@ class AuthController {
                 const newUser = {
                     email, username: name,
                     fullname: `${family_name} ${given_name}`,
-                    avatar: picture, type: 'google', 
+                    avatar: picture, type: 'google',
                     password: hashedPassword,
                     salt
                 }
