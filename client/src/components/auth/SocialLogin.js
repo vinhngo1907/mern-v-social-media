@@ -31,7 +31,6 @@ const SocialLogin = () => {
     }
     return (
         <>
-            {/* <div className="my-2"> */}
             <GoogleLogin
                 client_id='616694186975-olqok3eltlaouicov78vk2h3uhlepp1p.apps.googleusercontent.com'
                 cookiepolicy='single_host_origin'

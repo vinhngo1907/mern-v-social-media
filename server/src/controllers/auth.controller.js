@@ -3,7 +3,7 @@ const { responseDTO, validation, passwordUtil, Mailer, signature } = require("..
 const { modelSchema } = require("../db");
 const jwt = require("jsonwebtoken");
 const { userModel } = modelSchema;
-const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID } = require("../configs");
+const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET } = require("../configs");
 const { OAuth2Client } = require("google-auth-library");
 
 class AuthController {
@@ -95,9 +95,9 @@ class AuthController {
                 if (!user)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
 
-                if(user.rf_token !== rf_token)
+                if (user.rf_token !== rf_token)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
-                
+
                 const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
                 res.status(200).json(responseDTO.success("Successfully", {
@@ -127,14 +127,36 @@ class AuthController {
     }
     async GoogleLogin(req, res) {
         try {
+            // console.log(req.body)
             const { idToken } = req.body;
             if (!idToken) {
                 return res.status(400).json(responseDTO.badRequest("Authenticated failed, please try again!"));
             }
             const client = new OAuth2Client(CLIENT_SECRET);
-            const result = await client.verifyIdToken({idToken: idToken, audience: CLIENT_ID});
-            console.log(result)
-            res.status(200).json(responseDTO.success("Logged in successfully"))
+            const result = await client.verifyIdToken({ idToken: idToken, audience: CLIENT_ID });
+
+            const { email, email_verified, name, picture, given_name, family_name } = result.payload;
+            if (!email_verified) {
+                return res.status(400).json(responseDTO.badRequest("Please confirm or/and verify email from google!"));
+            }
+            const user = await userModel.findOne({
+                email: email
+            });
+            const password = email + GG_SECRET;
+            const salt = await passwordUtil.GenerateSalt();
+            const hashedPassword = await passwordUtil.GeneratePassword(password, salt)
+            if (user) {
+                LoginUser(password, user, req, res)
+            } else {
+                const newUser = {
+                    email, username: name,
+                    fullname: `${family_name} ${given_name}`,
+                    avatar: picture, type: 'google', 
+                    password: hashedPassword,
+                    salt
+                }
+                RegisterUser(newUser, req, res)
+            }
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

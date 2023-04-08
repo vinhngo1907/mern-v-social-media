@@ -20,5 +20,7 @@ module.exports = {
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
     RF_PATH: process.env.RF_PATH,
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
-    CLIENT_URL: process.env.CLIENT_URL
+    CLIENT_URL: process.env.CLIENT_URL,
+    GG_SECRET: process.env.GOOGLE_SECRET,
+    FB_SECRET: process.env.FACEBOOK_SECRET,
 };
