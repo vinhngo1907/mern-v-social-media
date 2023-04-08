@@ -5,11 +5,13 @@ import alert from './alertReducer';
 import theme from './themeReducer';
 import sidebar from './sidebarReducer';
 import status from './statusReducer';
+import suggestion from './suggestionReducer';
 
 export default combineReducers({
     auth,
     alert,
     theme,
     sidebar,
-    status
+    status,
+    suggestion
 })

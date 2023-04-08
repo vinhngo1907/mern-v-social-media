@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+import Icons from './Icons';
 
 const StatusModal = () => {
     const { auth, theme, status } = useSelector(state => state)
@@ -18,7 +19,8 @@ const StatusModal = () => {
             setContent(status.content)
             setImages(status.images)
         }
-    }, [status])
+    }, [status]);
+
     return (
         <div className="status_modal">
             <form onSubmit={handleSubmit}>
@@ -31,14 +33,20 @@ const StatusModal = () => {
                     </span>
                 </div>
                 <div className='status_body'>
-                    <textarea name="content" value={content} onChange={(e)=>setContent(e.target.value)}
+                    <textarea name="content" value={content}
+                        placeholder={`${auth.user.username}, what are you thinking?`}
+                        onChange={(e) => setContent(e.target.value)}
                         style={{
                             filter: theme ? 'invert(1)' : 'invert(0)',
                             color: theme ? 'white' : '#111',
                             background: theme ? 'rgba(0,0,0,.03)' : '',
                         }}>
-                            
+
                     </textarea>
+                    <div className='d-flex'>
+                        <div className='flex-fill'></div>
+                        <Icons setContent={setContent} content={content} theme={theme}/>
+                    </div>
                 </div>
                 <div className="status_footer">
                     <button className="btn btn-secondary w-100" type="submit">
