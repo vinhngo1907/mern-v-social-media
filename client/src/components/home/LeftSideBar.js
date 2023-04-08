@@ -15,6 +15,7 @@ const LeftSideBar = () => {
         { path: "timeline-videos.html", icon: "fas fa-power-off", content: "Logout" },
     ]
     return (
+        <>
         <div className='widget mt-3'>
             <h4 className="widget-title">Shortcuts</h4>
             <ul className="sidebar-nav">
@@ -30,6 +31,11 @@ const LeftSideBar = () => {
                 }
             </ul>
         </div>
+        <div className='widget mt-3'>
+            <h4 className="widget-title">Who's Following</h4>
+            
+        </div>
+        </>
     )
 }
 

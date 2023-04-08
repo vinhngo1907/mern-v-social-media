@@ -1,3 +1,9 @@
+.widget {
+    background: var(--main-bg-color);
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 4px 1px;
+}
+
 .widget ul.sidebar-nav li i {
     display: inline-block;
     font-size: 16px;
@@ -25,4 +31,114 @@
     position: absolute;
     width: 20%;
     background: #088dcd;
+}
+
+/*---- your page widget ---*/
+.your-page>figure {
+    display: inline-block;
+    margin-bottom: 0;
+    max-width: 55px;
+    vertical-align: middle;
+    width: 55px;
+}
+
+.your-page {
+    display: inline-block;
+    padding: 0 20px 10px;
+    width: 100%;
+}
+
+.your-page>figure img,
+.notification-box>ul li figure img {
+    border-radius: 100%;
+}
+
+.page-meta {
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    width: 69.8%;
+}
+
+.page-meta>a {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    width: auto;
+}
+
+.page-meta>span {
+    display: inline-block;
+    font-size: 13px;
+    width: 100%;
+}
+
+.page-meta>span i {
+    margin-right: 5px;
+    vertical-align: sub;
+}
+
+.page-meta>span em {
+    border: 1px solid #cecece;
+    display: inline-block;
+    line-height: 8px;
+    margin-left: 3px;
+    padding: 3px;
+}
+
+.page-likes {
+    float: left;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.page-likes .tab-content .tab-pane > span {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    text-align: center;
+    float: left;
+    width: 100%;
+}
+
+.page-likes .tab-content .tab-pane > span i {
+    color: green;
+    font-size: 15px;
+    margin-right: 6px;
+}
+
+.page-likes .tab-content .tab-pane > a {
+    color: green;
+    float: left;
+    font-size: 13px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+.page-likes .tab-content .tab-pane > a:hover {
+    text-decoration: underline;
+}
+
+
+.users-thumb-list {
+    float: left;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.users-thumb-list > a {
+    display: inline-block;
+    margin-left: -17px;
+}
+
+.users-thumb-list > a:first-child {
+    margin-left: 0;
+}
+
+.users-thumb-list > a img {
+    border: 2px solid #fff;
+    border-radius: 50%;
 }
