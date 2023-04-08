@@ -49,3 +49,20 @@ export const logout = (token) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
+
+export const googleLogin = ({ idToken }) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        const res = await postDataApi('auth/google-login', { idToken });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.message } });
+        localStorage.setItem('firstLogin', true);
+        dispatch({
+            type: GLOBALTYPES.AUTH, payload: {
+                user: res.data.results.user,
+                token: res.data.results.access_token
+            }
+        })
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}

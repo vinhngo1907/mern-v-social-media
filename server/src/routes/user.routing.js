@@ -18,4 +18,11 @@ router.patch('/', userAuth, userCtrl.UpdateProfile);
 */
 router.get('/', userAuth, userCtrl.GetAllUser)
 
+/** 
+ *  @route GET api/user/suggestion
+ *  @desc Get users suggestion
+ *  @access Public
+*/
+router.get('/suggestion', userAuth, userCtrl.Suggestion)
+
 module.exports = router;

@@ -46,9 +46,9 @@ class UserController {
     }
 
     async Follow(req, res) {
-        try{
+        try {
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
@@ -56,7 +56,7 @@ class UserController {
 
     async UnFollow(req, res) {
         try {
-            
+
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -64,9 +64,18 @@ class UserController {
     }
 
     async Suggestion(req, res) {
-        try{
+        try {
+            const newArr = [...req.user.following, req.user._id];
+            const num = req.query.num || 10;
 
-        }catch(error){
+            const users = await userModel.aggregate([
+                { $match: { _id: { $nin: newArr } } },
+                { $sample: { size: Number(num) } },
+                { $lookup: { from: "users", localField: "followers", foreignField: '_id', as: 'followers' } },
+                { $lookup: { from: "users", localField: "following", foreignField: '_id', as: 'following' } }
+            ]);
+            res.status(200).json(responseDTO.success("Get data successfully", users))
+        } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }

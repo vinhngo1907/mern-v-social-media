@@ -59,6 +59,6 @@ router.post('/google-login', authCtrl.GoogleLogin)
  * @desc Login with facebook
  * @access Public
 */
-router.post('/facebook-login', authCtrl.GoogleLogin)
+router.post('/facebook-login', authCtrl.FacebookLogin)
 
 module.exports = router

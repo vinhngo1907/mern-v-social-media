@@ -37,19 +37,12 @@ Content-Type: application/json
 
 POST {{serverUrl}}/auth/logout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODA0MDgzNjQsImV4cCI6MTY4MDQ5NDc2NH0.nsLnhs60jj59DFQ6Zn6XV10oZDrVGu8-1F_b1CIi4QA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODA5NDU2ODcsImV4cCI6MTY4MTAzMjA4N30.BYuDxqoM7ZF0A_0jiLNQgGU1vRNleO1bPR59jFBF4Pw
 ###
 
-POST http://localhost:5000/api/posts
+GET {{serverUrl}}/user/suggestion
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDYxYjk1YjdkMjljZTFiMTA5YmQxZTAiLCJpYXQiOjE2MTczNjIxNjV9.ZTwbrIeDpchmUjkNQv_bmBd7_Maw2Gp7Y1ioZx2s7i8
-
-{
-  "title": "React",
-  "description": "React",
-  "url": "react.com",
-  "status": "TO LEARN"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODA5NDU2ODcsImV4cCI6MTY4MTAzMjA4N30.BYuDxqoM7ZF0A_0jiLNQgGU1vRNleO1bPR59jFBF4Pw
 
 ###
 
