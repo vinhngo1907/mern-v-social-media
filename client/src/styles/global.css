@@ -144,12 +144,17 @@ img {
 
     .left_sidebar {
 		width: 0;
+        z-index: 0;
 	}
 	
     .main_sidebar {
 		margin-left: 0;
 	}
-    
+
+    .sidebar-expand .left_sidebar{
+        z-index: 1;
+    }
+
     .sidebar-expand .main_sidebar{
         margin-left: 0;
     }
