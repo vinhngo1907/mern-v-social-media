@@ -12,7 +12,7 @@
     margin-top: 18px;
     
     overflow: hidden;
-    /* z-index: 2; */
+    z-index: 2;
     transition: width .5s;
 }
 
@@ -29,6 +29,6 @@
     margin-left: auto;
 }
 
-.left_sidebar:hover{
-    width: 280px;
-}
+/* .left_sidebar:hover{
+    width: 3000px;
+} */

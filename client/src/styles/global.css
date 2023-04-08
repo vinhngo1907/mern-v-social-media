@@ -161,6 +161,7 @@ img {
     .sidebar-expand .left_sidebar{
         /* z-index: 1; */
         display: block;
+        width: 360px;
     }
 
     .sidebar-expand .main_sidebar{
