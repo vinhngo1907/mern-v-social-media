@@ -8,7 +8,7 @@ const Home = () => {
 	const {sidebar} = useSelector(state=>state);
 	return (
 		<div className={`home row mx-0 ${sidebar? 'sidebar-expand' : ''}`}>
-			<div className="col-md-2 left_sidebar">
+			<div className="col-md-3 left_sidebar">
 				<LeftSideBar />
 			</div>
 			<div className="main_sidebar col-md-6">
