@@ -18,7 +18,7 @@ const Menu = () => {
     const isActive = (pn) => {
         if (pn === pathname) return 'active';
     }
-    
+
     return (
         <div className="menu">
             <ul className="navbar-nav flex-row">
@@ -32,27 +32,35 @@ const Menu = () => {
                     ))
                 }
                 {/* Noti */}
-                <li className="nav-item dropdown" style={{opacity: 1}} >
-                    <span className="nav-link dropdown-toggle" id="navbarDropdown" 
-                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li className="nav-item dropdown" style={{ opacity: 1 }} >
+                    <span className="nav-link dropdown-toggle" id="navbarDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <Avatar src={auth.user.avatar} size="medium-avatar" />
                     </span>
 
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>Profile</Link>
+                        <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>
+                            < i className="fas fa-user mr-2" />
+                            Profile
+                        </Link>
 
-                    <label htmlFor="theme" className="dropdown-item"
-                    onClick={() => dispatch({
-                        type: GLOBALTYPES.THEME, payload: !theme
-                    })}>
-
-                        {theme ? 'Light mode' : 'Dark mode'}
-                    </label>
+                        <label htmlFor="theme" className="dropdown-item"
+                            onClick={() => dispatch({
+                                type: GLOBALTYPES.THEME, payload: !theme
+                            })}>
+                            {
+                                theme
+                                    ? < i className="fas fa-sun light-icon mr-2" />
+                                    : < i className="fas fa-moon dark-icon mr-2" />
+                            }
+                            {theme ? 'Light mode' : 'Dark mode'}
+                        </label>
 
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to="/"
                             onClick={() => dispatch(logout(auth.token))}
-                            >
+                        >
+                            <i className='fas fa-sign-out-alt mr-2'/>
                             Logout
                         </Link>
                     </div>
