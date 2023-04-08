@@ -15,7 +15,7 @@ const Home = () => {
 				<Status/>
 				Home Page
 			</div>
-			<div className="col-md-3">
+			<div className="right_sidebar col-md-3">
                 <RightSideBar />
             </div>
 		</div>

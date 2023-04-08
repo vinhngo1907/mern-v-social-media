@@ -10,7 +10,6 @@
     width: 300px;
     overflow: hidden;
     transition: width .5s;
-    margin-top: 18px;
 }
 
 .sidebar-expand .left_sidebar {
@@ -83,7 +82,9 @@
     margin-left: 82px;
     margin-left: 300px;
 } */
-
+.right_sidebar,.left_sidebar{
+    margin-top: 18px;
+}
 /* .left_sidebar:hover{
     width: 3000px;
 } */
