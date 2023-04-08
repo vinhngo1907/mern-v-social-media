@@ -11,9 +11,7 @@ const Header = () => {
 
     return (
         <div className="header bg-light">
-            <nav className="navbar navbar-expand-lg navbar-light 
-        bg-light justify-content-between align-middle">
-
+            <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between align-middle">
                 <Link to="/" className="logo position-relative">
                     <i className="fas fa-bars text-dark position-absolute"
                         style={{ top: "33%", left: "5px", fontSize: "20px" }}
