@@ -79,7 +79,7 @@ img {
     object-fit: cover;
 }
 
-.menu-bar{
+.menu-bar {
     cursor: pointer;
 }
 
@@ -106,6 +106,9 @@ img {
 
 /* ---------- Status Modal------------ */
 @import url("./status-modal.css");
+
+/* ---------- Widget------------ */
+@import url("./widget.css");
 
 /* --------- Responsive ------ */
 @media (max-width: 766px) {
@@ -150,21 +153,25 @@ img {
     }
 
     .left_sidebar {
-		width: 0;
+        width: 0;
         display: none;
-	}
-	
-    .main_sidebar {
-		margin-left: 0;
-	}
-
-    .sidebar-expand .left_sidebar{
-        /* z-index: 1; */
-        display: block;
-        width: 360px;
     }
 
-    .sidebar-expand .main_sidebar{
+    .main_sidebar {
+        margin-left: 0;
+    }
+
+    .sidebar-expand .left_sidebar {
+        z-index: 2;
+        display: block;
+        width: 360px;
+        position: fixed;
+        margin-top: 18px;
+        overflow: hidden;
+        transition: width .5s;
+    }
+
+    .sidebar-expand .main_sidebar {
         margin-left: 0;
         display: block;
     }

@@ -49,7 +49,7 @@ const Menu = () => {
 
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>
-                            < i className="fas fa-user mr-2" />
+                            < i className="fas fa-user-tie mr-2" />
                             Profile
                         </Link>
 
