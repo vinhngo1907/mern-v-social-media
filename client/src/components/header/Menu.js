@@ -6,12 +6,13 @@ import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { logout } from '../../redux/actions/authAction';
 
 const Menu = () => {
-    const { auth, theme } = useSelector(state => state);
+    const { auth, theme, sidebar } = useSelector(state => state);
     const dispatch = useDispatch();
+
     const navLinks = [
         { label: 'Home', icon: 'home', path: '/' },
         { label: 'Message', icon: 'near_me', path: '/message' },
-        { label: 'Discover', icon: 'explore', path: '/discover' }
+        { label: 'Discover', icon: 'explore', path: '/discover' },
     ];
 
     const { pathname } = useLocation();
@@ -22,6 +23,14 @@ const Menu = () => {
     return (
         <div className="menu">
             <ul className="navbar-nav flex-row">
+                <li className='nav-item px-2 active'>
+                    {/* <i className='fas fa-bars text-dark position-absolute' style={{top:"25%",left:"-20px", fontSize:"23px"}}
+                        onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}
+                    /> */}
+                     <span className="material-icons menu-bar"  
+                     style={{display:"none"}}
+                     onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}>menu</span>
+                </li>
                 {
                     navLinks.map((link, index) => (
                         <li className={`nav-item px-2 ${isActive(link.path)}`} key={index}>
@@ -60,7 +69,7 @@ const Menu = () => {
                         <Link className="dropdown-item" to="/"
                             onClick={() => dispatch(logout(auth.token))}
                         >
-                            <i className='fas fa-sign-out-alt mr-2'/>
+                            <i className='fas fa-sign-out-alt mr-2' />
                             Logout
                         </Link>
                     </div>

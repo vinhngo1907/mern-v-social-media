@@ -97,6 +97,9 @@ img {
 /* ---------- User Card------------ */
 @import url("./user-card.css");
 
+/* ---------- Sidebar------------ */
+@import url("./sidebar.css");
+
 /* --------- Responsive ------ */
 @media (max-width: 766px) {
     .header .navbar .logo {
@@ -137,5 +140,21 @@ img {
 
     .status {
         padding: 20px 10px;
+    }
+
+    .left_sidebar {
+		width: 0;
+	}
+	
+    .main_sidebar {
+		margin-left: 0;
+	}
+    
+    .sidebar-expand .main_sidebar{
+        margin-left: 0;
+    }
+
+    .menu-bar {
+        display: block !important;
     }
 }

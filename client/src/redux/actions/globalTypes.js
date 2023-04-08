@@ -8,6 +8,7 @@ export const GLOBALTYPES = {
     ONLINE: 'ONLINE',
     OFFLINE: 'OFFLINE',
     CALL: 'CALL',
-    PEER: 'PEER'
+    PEER: 'PEER',
+    SIDEBAR: 'SIDEBAR'
 }
 

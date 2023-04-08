@@ -1,0 +1,26 @@
+.left_sidebar {
+    /* width: 100%; */
+    width: 82px;
+    height: 100vh;
+    position: fixed;
+    margin-top: 18px;
+    background: var(--main-bg-color);
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 4px 1px;
+    overflow: hidden;
+    z-index: 100;
+    transition: width .5s;
+}
+.sidebar-expand .left_sidebar{
+    width: 360px;
+}
+.sidebar-expand .main_sidebar {
+	margin-left: 360px;
+}
+
+.main_sidebar{
+    margin-left: 82px;
+}
+.left_sidebar:hover{
+    width: 360px;
+}
