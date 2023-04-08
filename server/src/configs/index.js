@@ -23,4 +23,7 @@ module.exports = {
     CLIENT_URL: process.env.CLIENT_URL,
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
+    CLOUD_NAME: process.env.CLOUD_NAME,
+    API_KEY: process.env.API_KEY, 
+    API_SECRET: process.env.API_SECRET
 };
