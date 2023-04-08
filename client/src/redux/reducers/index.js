@@ -4,10 +4,12 @@ import auth from './authReducer';
 import alert from './alertReducer';
 import theme from './themeReducer';
 import sidebar from './sidebarReducer';
+import status from './statusReducer';
 
 export default combineReducers({
     auth,
     alert,
     theme,
-    sidebar
+    sidebar,
+    status
 })

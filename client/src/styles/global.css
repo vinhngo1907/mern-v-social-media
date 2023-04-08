@@ -79,6 +79,10 @@ img {
     object-fit: cover;
 }
 
+.menu-bar{
+    cursor: pointer;
+}
+
 /* ---------- Auth Page------------ */
 @import url("./auth.css");
 
@@ -99,6 +103,9 @@ img {
 
 /* ---------- Sidebar------------ */
 @import url("./sidebar.css");
+
+/* ---------- Status Modal------------ */
+@import url("./status-modal.css");
 
 /* --------- Responsive ------ */
 @media (max-width: 766px) {
