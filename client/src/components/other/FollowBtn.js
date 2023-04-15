@@ -15,7 +15,7 @@ const FollowBtn = ({ user }) => {
         return () => setFollowed(false)
     }, [auth.user.following, user._id]);
 
-    const handleFollow = () => {
+    const handleFollow = async() => {
         if (load) return;
 
         setFollowed(true)
@@ -24,7 +24,7 @@ const FollowBtn = ({ user }) => {
         setLoad(false);
     }
 
-    const handleUnFollow = () => {
+    const handleUnFollow = async () => {
         if (load) return;
 
         setFollowed(false)
@@ -38,11 +38,13 @@ const FollowBtn = ({ user }) => {
                 followed
                     ? <button
                         className="btn btn-outline-danger"
-                        onClick={handleUnFollow}>
+                    onClick={handleUnFollow}
+                    >
                         UnFollow
                     </button>
                     : <button className="btn btn-outline-info"
-                        onClick={handleFollow}>
+                    onClick={handleFollow}
+                    >
                         Follow
                     </button>
             }

@@ -33,14 +33,28 @@ export const updateProfile = (data) => async (dispatch) => {
 }
 
 export const follow = ({ users, user, auth }) => async (dispatch) => {
-    try {
-        const res = await patchDataApi(`user/${user._id}/follow`, null, auth.token);
-        dispatch({ type: PROFILE_TYPES.FOLLOW, payload: res.data.results })
-        dispatch({
-            type: GLOBALTYPES.AUTH, payload: {
-                user: { ...auth.user, following: [...auth.user.following, user._id] }
+    let newUser = null;
+    if (users.every(u => u._id !== user._id)) {
+        newUser = { ...user, followers: [...user.followers, auth.user] }
+    } else {
+        users.forEach(item => {
+            if (item._id === user._id) {
+                newUser = { ...item, followers: [...item.followers, auth.user] }
             }
         })
+    }
+
+    dispatch({ type: PROFILE_TYPES.FOLLOW, payload: newUser });
+
+    dispatch({
+        type: GLOBALTYPES.AUTH, payload: {
+            ...auth,
+            user: { ...auth.user, following: [...auth.user.following, newUser] }
+        }
+    })
+    try {
+        await patchDataApi(`user/${user._id}/follow`, null, auth.token);
+
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

@@ -39,6 +39,7 @@ const LeftSideBar = () => {
             </div>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Who's Following</h4>
+                <ul className='sidebar-nav'>
                 {
                     auth.user.loading
                         ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
@@ -46,16 +47,17 @@ const LeftSideBar = () => {
                                 <span className="sr-only">Loading...</span>
                             </div>
                         </div>
-                        : <div className="suggestions">
+                        : <div className="following">
                             {
                                 auth?.user.following.map(user => (
-                                    <UserCard key={user._id} user={user} type="suggest">
+                                    <UserCard key={user._id} user={user} type="home">
                                         {/* <FollowBtn user={user} /> */}
                                     </UserCard>
                                 ))
                             }
                         </div>
                 }
+                </ul>
             </div>
         </div>
     )

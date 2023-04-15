@@ -11,11 +11,11 @@ const UserCard = ({ children, user, border, type }) => {
             <div>
                 <Link to={`/profile/${user._id}`} onClick={handleCloseAll}
                     className="d-flex align-items-center user_card">
-                    <Avatar src={user.avatar} size={type === "suggest" ? 'large-avatar' : 'big-avatar'} />
+                    <Avatar src={user.avatar} size={type === "home" ? 'large-avatar' : 'big-avatar'} />
                     <div className="ml-1" style={{ transform: 'translateY(-2px)' }}>
                         <span className="d-block">{user.username}</span>
                         <small style={{ opacity: 0.7 }}>
-                            {user.fullname}
+                            {type==="home" ? <Link to="#" className="underline">unfollow</Link> :user.fullname}
                         </small>
                     </div>
                 </Link>

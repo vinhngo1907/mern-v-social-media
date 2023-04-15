@@ -1,0 +1,6 @@
+.ps-container {
+    -ms-touch-action: auto;
+    touch-action: auto;
+    overflow: hidden!important;
+    -ms-overflow-style: none;
+}
