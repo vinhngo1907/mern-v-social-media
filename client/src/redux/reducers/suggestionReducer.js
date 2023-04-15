@@ -15,7 +15,7 @@ const suggestionReducer = (state = initialState, action) => {
         case SUGGES_TYPES.GET_USERS:
             return {
                 // ...state,
-                loading: action.payload.loading,
+                loading: false,
                 users: action.payload.results
             }
         default:
