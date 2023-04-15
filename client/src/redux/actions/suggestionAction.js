@@ -9,7 +9,7 @@ export const SUGGES_TYPES = {
 export const getSuggestion = (token) => async (dispatch) => {
     try {
         dispatch({ type: SUGGES_TYPES.LOADING, payload: {loading : true} })
-        const res = await getDataApi('user', token);
+        const res = await getDataApi('user/suggestion', token);
         // console.log(res.data);
         dispatch({ type: SUGGES_TYPES.LOADING, payload: {loading : false} })
         dispatch({ type: SUGGES_TYPES.GET_USERS, payload: res.data })
