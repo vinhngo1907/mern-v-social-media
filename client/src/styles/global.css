@@ -48,6 +48,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background: var(--main-bg-color);
     color: var(--main-color);
+    --scrollbar-color: #00000000;
 }
 
 

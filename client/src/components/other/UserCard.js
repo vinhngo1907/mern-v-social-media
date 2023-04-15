@@ -15,7 +15,7 @@ const UserCard = ({ children, user, border, type }) => {
                     <div className="ml-1" style={{ transform: 'translateY(-2px)' }}>
                         <span className="d-block">{user.username}</span>
                         <small style={{ opacity: 0.7 }}>
-                            {type==="home" ? <Link to="#" className="underline">unfollow</Link> :user.fullname}
+                            {type === "home" ? <Link to="#" className="underline">unfollow</Link> : user.fullname}
                         </small>
                     </div>
                 </Link>

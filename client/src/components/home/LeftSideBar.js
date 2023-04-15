@@ -24,7 +24,7 @@ const LeftSideBar = () => {
         <div className='sidebar'>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Shortcuts</h4>
-                <ul className="sidebar-nav">
+                <ul className="sidebar-nav overlay-scrollbar scrollbar-hover">
                     {
                         navLink.map((item, index) => (
                             <li className='sidebar-nav-item' key={index}>
@@ -39,7 +39,7 @@ const LeftSideBar = () => {
             </div>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Who's Following</h4>
-                <ul className='sidebar-nav'>
+                <ul className='sidebar-nav overlay-scrollbar scrollbar-hover'>
                 {
                     auth.user.loading
                         ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
