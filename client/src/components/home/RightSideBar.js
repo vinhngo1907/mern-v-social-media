@@ -12,7 +12,7 @@ const RightSideBar = () => {
 
 
     return (
-        <>
+        <div className='sidebar'>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Your page</h4>
                 <div className="your-page">
@@ -115,7 +115,7 @@ const RightSideBar = () => {
                             : <div className="suggestions">
                                 {
                                     suggestion?.users.map(user => (
-                                        <UserCard key={user._id} user={user} >
+                                        <UserCard key={user._id} user={user} type="suggest">
                                             <FollowBtn user={user} />
                                         </UserCard>
                                     ))
@@ -139,7 +139,7 @@ const RightSideBar = () => {
                     </small>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

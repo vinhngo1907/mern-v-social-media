@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+    Link,
+    // useLocation
+} from 'react-router-dom';
+import UserCard from '../other/UserCard';
 
 const LeftSideBar = () => {
-    const { pathname } = useLocation();
+    const { auth } = useSelector(state => state);
+    // const { pathname } = useLocation();
     const navLink = [
         { path: "newsfeed.html", icon: "fas fa-clipboard", content: "News feed" },
         { path: "inbox.html", icon: "fas fa-mouse", content: "Inbox" },
@@ -15,27 +21,43 @@ const LeftSideBar = () => {
         { path: "timeline-videos.html", icon: "fas fa-power-off", content: "Logout" },
     ]
     return (
-        <>
-        <div className='widget mt-3'>
-            <h4 className="widget-title">Shortcuts</h4>
-            <ul className="sidebar-nav">
+        <div className='sidebar'>
+            <div className='widget mt-3'>
+                <h4 className="widget-title">Shortcuts</h4>
+                <ul className="sidebar-nav">
+                    {
+                        navLink.map((item, index) => (
+                            <li className='sidebar-nav-item' key={index}>
+                                <Link className='sidebar-nav-link' to={item.path} title={item.content}>
+                                    <div><i className={item.icon} /></div>
+                                    <span>{item.content}</span>
+                                </Link>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            <div className='widget mt-3'>
+                <h4 className="widget-title">Who's Following</h4>
                 {
-                    navLink.map((item, index) => (
-                        <li className='sidebar-nav-item' key={index}>
-                            <Link className='sidebar-nav-link' to={item.path} title={item.content}>
-                                <div><i className={item.icon} /></div>
-                                <span>{item.content}</span>
-                            </Link>
-                        </li>
-                    ))
+                    auth.user.loading
+                        ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
+                            <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        : <div className="suggestions">
+                            {
+                                auth?.user.following.map(user => (
+                                    <UserCard key={user._id} user={user} type="suggest">
+                                        {/* <FollowBtn user={user} /> */}
+                                    </UserCard>
+                                ))
+                            }
+                        </div>
                 }
-            </ul>
+            </div>
         </div>
-        <div className='widget mt-3'>
-            <h4 className="widget-title">Who's Following</h4>
-            
-        </div>
-        </>
     )
 }
 

@@ -28,12 +28,25 @@ class UserController {
         }
     }
 
+    async GetUser(req, res) {
+        try {
+            const user = await userModel.findOne({ _id: req.params.id }).populate("following followers", "-password -rf_token -salt");
+            if (!user) return res.status(400).json(responseDTO.badRequest("This user does not exist"));
+
+            res.json(responseDTO.success("Get user successfully", user));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
     async UpdateProfile(req, res) {
         try {
-            // const {fullname, avatar, gender, } = req.
+            const { fullname, avatar, gender, } = req.body;
+            if (!fullname) return res.status(400).json(responseDTO.badRequest("Please add your full name."));
+
             const updatedUser = await userModel.findOneAndUpdate({ _id: req.user._id }, {
                 ...req.body
-            }, { new: true, runValidators: true });
+            }, { new: true, runValidators: true }).select("-password -salt -rf_token");
             if (!updatedUser) {
                 return res.status(400).json(responseDTO.badRequest("User not found or/and not authorized"));
             }
@@ -47,7 +60,20 @@ class UserController {
 
     async Follow(req, res) {
         try {
+            const { id } = req.params;
+            // const users = await userModel.find({ _id: req.user._id, followers: id })
+            const users = await userModel.find({ _id: id, followers: req.user._id });
+            if (users.length > 0) return res.status(400).json(responseDTO.badRequest("You have been followed this user"));
 
+            const following = await userModel.findOneAndUpdate({ _id: req.user._id }, {
+                $push: { following: id }
+            }, { new: true }).populate("following followers", "-password -rf_token -salt");
+
+            if (!following) return res.status(400).json(responseDTO.badRequest(`This user ${req.user._id} does not exist`));
+
+            await userModel.findOneAndUpdate({ _id: id }, { $push: { followers: req.user._id } }, { new: true });
+
+            res.status(200).json(responseDTO.success("Followed successfully"));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -56,7 +82,17 @@ class UserController {
 
     async UnFollow(req, res) {
         try {
+            const { id } = req.params.id;
 
+            const unFollowedUser = await userModel.findOneAndUpdate({ _id: id }, {
+                $pull: { followers: req.user._id }
+            }, { new: true }).populate("following followers", "-password -rf_token -salt");
+            if (!unFollowedUser) {
+                return res.status(400).json(responseDTO.badRequest("This user not found"));
+            }
+
+            await userModel.findOneAndUpdate({ _id: req.user._id }, { $pull: { following: id } }, { new: true });
+            res.status(200).json(responseDTO.success("UnFollowed successfully"));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

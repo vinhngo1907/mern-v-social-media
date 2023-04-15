@@ -5,6 +5,15 @@
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 4px 1px;
     height: 100vh;
 } */
+/*--- sidebar widgets ---*/
+
+.sidebar {
+    display: table;
+    float: none;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    width: 80%;
+}
 
 .left_sidebar {
     width: 300px;
@@ -74,7 +83,8 @@
     color: var(--danger-color);
     margin-left: -5px;
 }
-.sidebar-nav-link:hover{
+
+.sidebar-nav-link:hover {
     text-decoration: none;
 }
 
@@ -83,9 +93,12 @@
     margin-left: 82px;
     margin-left: 300px;
 } */
-.right_sidebar,.left_sidebar, .main_sidebar{
+.right_sidebar,
+.left_sidebar,
+.main_sidebar {
     margin-top: 18px;
 }
+
 /* .left_sidebar:hover{
     width: 3000px;
 } */

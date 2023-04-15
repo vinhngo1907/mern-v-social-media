@@ -8,6 +8,39 @@
 }
 
 .user_card:hover {
-    text-decoration: none;
+	text-decoration: none;
 	cursor: pointer;
+}
+
+a.underline:before {
+	background: #088dcd;
+}
+
+a.underline {
+	position: relative;
+}
+
+a.underline:before,
+.list-style li>a:before {
+	background: #545454;
+	bottom: -5px;
+	content: "";
+	height: 1px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	visibility: hidden;
+	width: 100%;
+	transition: all 0.2s linear 0s;
+}
+
+a.underline:hover:before,
+.list-style li>a:hover:before {
+	opacity: 1;
+	visibility: visible;
+	bottom: 0;
+}
+
+.knowldeg-box .underline:hover::before {
+	background: #fff none repeat scroll 0 0;
 }

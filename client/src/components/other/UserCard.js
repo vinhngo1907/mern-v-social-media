@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/other/Avatar";
 
-const UserCard = ({ children, user, border }) => {
+const UserCard = ({ children, user, border, type }) => {
     const handleCloseAll = () => {
 
     }
@@ -11,7 +11,7 @@ const UserCard = ({ children, user, border }) => {
             <div>
                 <Link to={`/profile/${user._id}`} onClick={handleCloseAll}
                     className="d-flex align-items-center user_card">
-                    <Avatar src={user.avatar} size='big-avatar' />
+                    <Avatar src={user.avatar} size={type === "suggest" ? 'large-avatar' : 'big-avatar'} />
                     <div className="ml-1" style={{ transform: 'translateY(-2px)' }}>
                         <span className="d-block">{user.username}</span>
                         <small style={{ opacity: 0.7 }}>

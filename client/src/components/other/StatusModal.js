@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import Icons from './Icons';
@@ -9,7 +9,7 @@ const StatusModal = () => {
 
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
-
+    console.log(images);
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -45,7 +45,7 @@ const StatusModal = () => {
                     </textarea>
                     <div className='d-flex'>
                         <div className='flex-fill'></div>
-                        <Icons setContent={setContent} content={content} theme={theme}/>
+                        <Icons setContent={setContent} content={content} theme={theme} />
                     </div>
                 </div>
                 <div className="status_footer">

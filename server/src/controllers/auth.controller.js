@@ -16,7 +16,7 @@ class AuthController {
                     { username: account },
                     { mobile: account }
                 ]
-            });
+            }).populate("following followers", "-rf_token -password -salt");
 
             if (!user) {
                 return res.status(400).json(responseDTO.badRequest("This user does not exist"));
@@ -92,7 +92,8 @@ class AuthController {
                 if (err)
                     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
 
-                const user = await userModel.findById(result.userId).select("-password -salt");
+                const user = await userModel.findById(result.userId)
+                .select("-password -salt").populate("following followers", "-rf_token -password -salt");
                 if (!user)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
 
@@ -102,7 +103,7 @@ class AuthController {
                 const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
                 res.status(200).json(responseDTO.success("Successfully", {
-                    user: { ...user._doc },
+                    user: { ...user._doc, rf_token: "", salt: "" },
                     access_token: access_token
                 }))
             })
@@ -194,11 +195,11 @@ const LoginUser = async (password, user, req, res) => {
         const rf_token = await signature.GenerateRefreshToken({ userId: user._id }, res);
         await userModel.findOneAndUpdate({ _id: user._id }, {
             rf_token: rf_token
-        })
+        }).select("-rf_token -password -salt")
         const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
         return res.status(200).json(responseDTO.success("Logged Successfully", {
-            user: { ...user._doc, password: "", salt: "" },
+            user: { ...user._doc, password: "", salt: "", rf_token: "" },
             access_token: access_token
         }));
     } catch (error) {
