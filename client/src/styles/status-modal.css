@@ -106,3 +106,13 @@
 .status_body .dropdown-menu{
     transform: translate3d(-153px, -190px, 0px) !important;
 }
+
+
+.attachments {
+    border: 1px solid #eee;
+    display: block;
+    padding: 10px;
+    text-align: right;
+    border-top: 0;
+    background: #fff;
+}

@@ -17,8 +17,8 @@ const Home = () => {
 				
 				{
 					homePosts.loading
-						? <div class="spinner-border text-primary  d-block mx-auto" role="status">
-							<span class="sr-only">Loading...</span>
+						? <div className="spinner-border text-primary  d-block mx-auto" role="status">
+							<span className="sr-only">Loading...</span>
 						</div>
 						: (homePosts.result === 0 && homePosts.posts.length === 0)
 							? <h2 className="text-center">No Post</h2>

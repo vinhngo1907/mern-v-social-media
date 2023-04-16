@@ -10,6 +10,7 @@ import PrivateRouter from "./customRouter/PrivateRouter";
 import PageRender from "./customRouter/PageRender";
 import StatusModal from "./components/other/StatusModal";
 import { getSuggestion } from "./redux/actions/suggestionAction";
+import { getAllPosts } from "./redux/actions/postAction";
 
 function App() {
 	const { auth, status } = useSelector(state => state);
@@ -21,6 +22,7 @@ function App() {
 
 	useEffect(() => {
 		if (auth.token) {
+			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token))
 		}
 	}, [auth.token, dispatch])

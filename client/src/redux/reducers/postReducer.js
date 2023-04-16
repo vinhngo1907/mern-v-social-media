@@ -14,7 +14,8 @@ const postReducer = (state = initialSatate, action) => {
 		case POST_TYPES.GET_POSTS:
 			return {
 				...state,
-				posts: payload,
+				posts: payload.posts,
+				result: payload.result,
 				loading: false
 			}
 

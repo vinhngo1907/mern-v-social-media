@@ -33,7 +33,7 @@ class PostController {
     async GetUserPosts() {
         try {
             const posts = await postModel.find({ _id: req.user._id });
-            res.json(responseDTO.success("Get data successfully", posts));
+            res.json(responseDTO.success("Get data successfully", { posts, result: posts.length }));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -42,9 +42,11 @@ class PostController {
 
     async GetAllPosts(req, res) {
         try {
-            const posts = await postModel.find({
+            const feature = new APIFeatures(postModel.find({
                 user: [...req.user.following, req.user._id]
-            }).populate("user", "username fullname avatar");
+            }), req.query).paginating().sorting("-createdAt");
+
+            const posts = await feature.query.populate("user", "username fullname avatar");
             res.json(responseDTO.success("Get posts successfully", { posts, result: posts.length }))
         } catch (error) {
             console.log(error);

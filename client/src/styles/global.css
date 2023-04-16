@@ -51,7 +51,6 @@ body {
     --scrollbar-color: #00000000;
 }
 
-
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -91,6 +90,15 @@ a:hover {
 
 img {
     object-fit: cover;
+}
+
+textarea {
+    background: var(--second-bg-color);
+    color: var(--main-color);
+    border-radius: 6px 6px 0 0;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 0;
 }
 
 .menu-bar {
@@ -179,9 +187,10 @@ img {
     }
 
     .sidebar-expand .left_sidebar {
-        z-index: 2;
+        z-index: 3;
         display: block;
-        width: 360px;
+        /* width: 360px; */
+        width: 90%;
         position: fixed;
         margin-top: 18px;
         overflow: hidden;
@@ -195,5 +204,9 @@ img {
 
     .menu-bar {
         display: block !important;
+    }
+
+    .sidebar {
+        width: 100%;
     }
 }

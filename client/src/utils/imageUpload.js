@@ -1,4 +1,4 @@
-import { postDataApi } from "./fetchData";
+import axios from "axios";
 
 export const checkImage = (file) => {
     let err = "";
@@ -15,17 +15,25 @@ export const checkImage = (file) => {
 
 export const imageUpload = async (images, token) => {
     let imgArr = [];
-    for (const img of images) {
-        const formData = new FormData()
-        if (img.camera) {
-            formData.append("file", img.camera)
+    for (const item of images) {
+        const formData = new FormData();
+        if (item.camera) {
+            formData.append("file", item.camera)
         } else {
-            formData.append("file", img)
+            formData.append("file", item)
         }
 
-        const res = await postDataApi('upload', formData, token);
+        // const res = await postDataApi('upload/create', formData, token);
+        const res = await axios.post('api/upload/create', formData, {
+            withCredentials: true,
+            headers: {
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        console.log(res.data.results)
         const data = res.data.results
-        imgArr.push({ public_id: data.public_id, url: data.secure_url });
+        imgArr.push({ public_id: data.public_id, url: data.url });
     }
     return imgArr;
 }

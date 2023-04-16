@@ -24,7 +24,7 @@ export const refreshToken = () => async (dispatch) => {
         const firstLogin = localStorage.getItem('firstLogin');
         if (firstLogin) {
             const res = await postDataApi('auth/refresh-token');
-            console.log(res.data)
+            // console.log(res.data)
             dispatch({
                 type: GLOBALTYPES.AUTH, payload: {
                     user: res.data.results.user,
