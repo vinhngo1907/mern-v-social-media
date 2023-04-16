@@ -1,55 +1,50 @@
-import {
-	POSTS_LOADED_SUCCESS,
-	POSTS_LOADED_FAIL,
-	ADD_POST,
-	DELETE_POST,
-	UPDATE_POST,
-	FIND_POST
-} from '../contexts/constants'
+import { DeleteData, EditData } from '../actions/globalTypes';
+import { POST_TYPES } from '../actions/postAction';
 
-export const postReducer = (state, action) => {
+const initialSatate = {
+	loading: false,
+	posts: [],
+	page: 2,
+	result: 0
+}
+
+const postReducer = (state = initialSatate, action) => {
 	const { type, payload } = action
 	switch (type) {
-		case POSTS_LOADED_SUCCESS:
+		case POST_TYPES.GET_POSTS:
 			return {
 				...state,
 				posts: payload,
-				postsLoading: false
+				loading: false
 			}
 
-		case POSTS_LOADED_FAIL:
+		case POST_TYPES.LOADING_POST:
 			return {
 				...state,
-				posts: [],
-				postsLoading: false
+				loading: payload
 			}
 
-		case ADD_POST:
+		case POST_TYPES.CREATE_POST:
 			return {
 				...state,
 				posts: [...state.posts, payload]
 			}
 
-		case DELETE_POST:
+		case POST_TYPES.DELETE_POST:
 			return {
 				...state,
-				posts: state.posts.filter(post => post._id !== payload)
+				// posts: state.posts.filter(post => post._id !== payload)
+				posts: DeleteData(state.posts, payload._id)
 			}
 
-		case FIND_POST:
-			return { ...state, post: payload }
-
-		case UPDATE_POST:
-			const newPosts = state.posts.map(post =>
-				post._id === payload._id ? payload : post
-			)
-
+		case POST_TYPES.UPDATE_POST:
 			return {
 				...state,
-				posts: newPosts
+				posts: EditData(state.posts, payload._id, payload)
 			}
 
 		default:
 			return state
 	}
 }
+export default postReducer;

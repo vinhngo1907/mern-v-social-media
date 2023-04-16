@@ -7,6 +7,7 @@ import sidebar from './sidebarReducer';
 import status from './statusReducer';
 import suggestion from './suggestionReducer';
 import profile from './profileReducer';
+import homePosts from './postReducer'
 
 export default combineReducers({
     auth,
@@ -15,5 +16,6 @@ export default combineReducers({
     sidebar,
     status,
     suggestion,
-    profile
+    profile,
+    homePosts
 })

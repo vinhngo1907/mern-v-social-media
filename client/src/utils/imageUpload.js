@@ -1,3 +1,5 @@
+import { postDataApi } from "./fetchData";
+
 export const checkImage = (file) => {
     let err = "";
     if (!file) return err = "File does not exist";
@@ -11,15 +13,19 @@ export const checkImage = (file) => {
     return err;
 }
 
-export const imageUpload = async (images) => {
+export const imageUpload = async (images, token) => {
     let imgArr = [];
     for (const img of images) {
         const formData = new FormData()
         if (img.camera) {
-            formData.append("file", item.camera)
+            formData.append("file", img.camera)
         } else {
-            formData.append("file", item)
-
+            formData.append("file", img)
         }
+
+        const res = await postDataApi('upload', formData, token);
+        const data = res.data.results
+        imgArr.push({ public_id: data.public_id, url: data.secure_url });
     }
+    return imgArr;
 }
