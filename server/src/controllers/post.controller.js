@@ -43,9 +43,9 @@ class PostController {
     async GetAllPosts(req, res) {
         try {
             const posts = await postModel.find({
-                _id: req.user._id
-            });
-            res.json(responseDTO.success("Get posts successfully", posts))
+                user: [...req.user.following, req.user._id]
+            }).populate("user", "username fullname avatar");
+            res.json(responseDTO.success("Get posts successfully", { posts, result: posts.length }))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
