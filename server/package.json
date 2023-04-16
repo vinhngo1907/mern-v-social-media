@@ -21,6 +21,7 @@
 		"express-fileupload": "^1.2.0",
 		"google-auth-library": "^7.1.0",
 		"googleapis": "^61.0.0",
+		"helmet": "^6.1.5",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.12.2",
 		"node-fetch": "^2.6.1",

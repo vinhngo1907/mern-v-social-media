@@ -2,7 +2,7 @@
 const authRouter = require("./auth.routing");
 const userRouter = require("./user.routing");
 const postRouter = require("./post.routing");
-const uploadRouter = require("./post.routing");
+const uploadRouter = require("./upload.routing");
 
 const { BASE_URL } = require("../configs");
 

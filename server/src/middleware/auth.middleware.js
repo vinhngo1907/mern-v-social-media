@@ -17,7 +17,10 @@ const verifyToken = async (req, res, next) => {
 		const decoded = jwt.verify(token, ACCESS_SECRET);
 		if (!decoded) return res.status(403).json(responseDTO.badRequest("Invalid token."));
 
-		const user = await userModel.findById(decoded.userId).select("-password -__v -createdAt -updatedAt -salt");
+		const user = await userModel.findById(decoded.userId)
+		.select("-password -__v -createdAt -updatedAt -salt")
+		.populate("followers following", "-password -__v -createdAt -updatedAt -salt");
+		
 		if (!user) return res.status(400).json(responseDTO.badRequest("User does not exist."));
 
 		req.user = user;
