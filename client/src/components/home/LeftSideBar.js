@@ -39,7 +39,7 @@ const LeftSideBar = () => {
             </div>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Who's Following</h4>
-                <ul className='sidebar-nav overlay-scrollbar scrollbar-hover'>
+                <ul className='following overlay-scrollbar scrollbar-hover'>
                 {
                     auth.user.loading
                         ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>

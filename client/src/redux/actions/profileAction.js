@@ -61,15 +61,27 @@ export const follow = ({ users, user, auth }) => async (dispatch) => {
 }
 
 export const unFollow = ({ users, user, auth }) => async (dispatch) => {
-    try {
-        const res = await patchDataApi(`user/${user._id}/unfollow`, null, auth.token);
-        dispatch({ type: PROFILE_TYPES.UNFOLLOW, payload: res.data.results });
-        const newData = DeleteData(auth.user.following, user);
-        dispatch({
-            type: GLOBALTYPES.AUTH, payload: {
-                user: { ...auth.user, following: [...auth.user.following, ...newData] }
+    let newUser = null;
+    if(users.every(u=>u._id !== user._id)){
+        newUser = {...user, followers: DeleteData(user.followers, auth.user._id)};
+    }else{
+        users.forEach(u=>{
+            if(u._id === user._id){
+                newUser = {...u, followers: DeleteData(u.followers, auth.user._id)};
             }
         })
+    }
+    dispatch({ type: PROFILE_TYPES.UNFOLLOW, payload: newUser });
+    dispatch({
+        type: GLOBALTYPES.AUTH, 
+        payload: {
+            ...auth,
+            user: { ...auth.user, following: DeleteData(auth.user.following, newUser._id) }
+        }
+    })
+    try {
+        await patchDataApi(`user/${user._id}/unfollow`, null, auth.token);
+       
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

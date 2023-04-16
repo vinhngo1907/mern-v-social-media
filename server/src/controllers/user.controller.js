@@ -82,8 +82,7 @@ class UserController {
 
     async UnFollow(req, res) {
         try {
-            const { id } = req.params.id;
-
+            const { id } = req.params;
             const unFollowedUser = await userModel.findOneAndUpdate({ _id: id }, {
                 $pull: { followers: req.user._id }
             }, { new: true }).populate("following followers", "-password -rf_token -salt");
