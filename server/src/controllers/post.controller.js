@@ -61,7 +61,7 @@ class PostController {
                     path: "comments",
                     populate: {
                         path: "user likes",
-                        select: "-password"
+                        select: "-password -rf_token -salt -__V"
                     }
                 });
 
