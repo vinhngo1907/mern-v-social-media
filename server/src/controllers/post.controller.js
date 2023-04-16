@@ -32,7 +32,16 @@ class PostController {
 
     async GetUserPosts() {
         try {
-            const posts = await postModel.find({ _id: req.user._id });
+            const features = new APIFeatures(postModel.find({ _id: req.user._id }), req.query).paginating().sorting();
+            const posts = await features.query
+                .populate("user likes", "username email avatar followers following")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password -rf_token -salt -__V"
+                    }
+                });
             res.json(responseDTO.success("Get data successfully", { posts, result: posts.length }));
         } catch (error) {
             console.log(error);
@@ -42,11 +51,20 @@ class PostController {
 
     async GetAllPosts(req, res) {
         try {
-            const feature = new APIFeatures(postModel.find({
+            const features = new APIFeatures(postModel.find({
                 user: [...req.user.following, req.user._id]
-            }), req.query).paginating().sorting("-createdAt");
+            }), req.query).paginating().sorting();
 
-            const posts = await feature.query.populate("user", "username fullname avatar");
+            const posts = await features.query
+                .populate("user likes", "username fullname avatar following followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    }
+                });
+
             res.json(responseDTO.success("Get posts successfully", { posts, result: posts.length }))
         } catch (error) {
             console.log(error);
