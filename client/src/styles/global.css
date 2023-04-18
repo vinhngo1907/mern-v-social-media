@@ -132,6 +132,9 @@ textarea {
 /* ---------- Widget------------ */
 @import url("./widget.css");
 
+/* ---------- Comment------------ */
+@import url("./comment.css");
+
 /* ---------- Other------------ */
 @import url("./other.css");
 
@@ -208,5 +211,14 @@ textarea {
 
     .sidebar {
         width: 100%;
+    }
+
+    .comet-avatar {
+        max-width: 3.5%;
+        width: 3.5%;
+    }
+
+    .post-comt-box {
+        width: 90%;
     }
 }

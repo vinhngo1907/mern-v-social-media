@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LikeButton from "../../other/LikeButton";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { likePost, unLikePost } from "../../../redux/actions/postAction";
 
 const CardFooter = ({ post }) => {
+    const { auth } = useSelector(state => state);
     const [isLike, setIsLike] = useState(false);
     // const [isShare, setIsShare] = useState(false);
-    const handleLike = () => {
+    const dispatch = useDispatch();
 
+    // likes
+    useEffect(() => {
+        if(post.likes.find(p => p._id === auth.user._id)){
+            setIsLike(true);
+        }else{
+            setIsLike(false);
+        }
+    },[post.likes, auth.user._id])
+
+    const handleLike = () => {
+        dispatch(likePost({ post, auth }))
     }
 
     const handleUnLike = () => {
-
+        dispatch(unLikePost({ post, auth }))
     }
 
     return (

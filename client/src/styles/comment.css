@@ -1,0 +1,116 @@
+.post-comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    position: relative;
+    width: 100%;
+}
+
+.post-comt-box {
+    display: inline-block;
+    padding-left: 50px;
+    position: relative;
+    width: 90%;
+}
+
+.comet-avatar {
+    position: absolute;
+    max-width: 7.6%;
+    width: 7.6%;
+    top: 0;
+    left: 3px;
+    transform: translate(90%, 20%);
+    /* display: table-cell; */
+    /* vertical-align: top; */
+}
+
+/* .post-comment .comet-avatar {
+    display: inline-block;
+    max-width: 6%;
+    vertical-align: top;
+    width: 6%;
+} */
+
+.comment_input {
+    display: flex;
+    align-items: center;
+}
+
+.comment_input input {
+    background: #f7f7f7;
+    /* background: #f3f3f3 none repeat scroll 0 0; */
+    border-color: transparent;
+    border: none;
+    outline: none;
+    flex: 1;
+    overflow: auto;
+    border-radius: 3px;
+    color: var(--main-color);
+    font-size: 13.5px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 16px;
+}
+
+.comment_input .postBtn {
+    border: none;
+    outline: none;
+    /* background: #f7f7f7;
+    color: blue; */
+    font-weight: 600;
+    bottom: 2px;
+    position: absolute;
+    right: 0;
+    background: none;
+}
+
+.comment_input .dropdown-menu {
+    transform: translate3d(-120px, -200px, 0px) !important;
+}
+
+/* ---------- Comments ---------- */
+.comment_display {
+    padding: 10px 25px;
+}
+
+.comment_card .comment_content {
+    background: #eee;
+    padding: 7px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment_card .comment_content .readMore {
+    cursor: pointer;
+    color: crimson;
+}
+
+.comment_card .comment_content .nav-item {
+    cursor: pointer;
+    opacity: 0;
+}
+
+.comment_card .comment_content:hover .nav-item {
+    opacity: 1;
+}
+
+.comment_card .comment_content .dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: inherit;
+}
+
+.comment_card .comment_content .dropdown-item {
+    display: flex;
+    margin: 10px 0;
+}
+
+.comment_card .comment_content textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+}

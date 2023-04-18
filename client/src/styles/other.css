@@ -65,3 +65,43 @@
 .reactions span{
     margin: 3px 0;
 }
+
+.btn-view.btn-load-more:hover{
+	background: #088dcd;
+}
+
+.btn-view.btn-load-more {
+    background: #fff;
+    border: medium none;
+    border-radius: 100%;
+    color: transparent;
+    display: block;
+    height: 50px;
+    margin: 30px auto 0;
+    position: relative;
+    width: 50px;
+    transition: all 0.2s linear 0s;
+    z-index: 77;
+}
+
+.central-meta button.btn-view {
+    background: #f1f1f1;
+}
+
+.btn-view.btn-load-more::before {
+    color: #333;
+    content: "\f01e";
+    font-family: fontawesome;
+    left: 50%;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    z-index: 111;
+    transition: all 0.2s linear 0s;
+}
+
+.btn-view.btn-load-more:hover::before {
+    color: #fff;
+    transform: translate(-50%, -50%) rotate(360deg);
+}

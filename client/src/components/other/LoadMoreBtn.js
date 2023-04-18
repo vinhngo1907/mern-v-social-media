@@ -6,7 +6,7 @@ const LoadMoreBtn = ({ result, page, load, handleLoadMore }) => {
             {
                 result < 9 * (page - 1) ? '' :
                     !load &&
-                    <button class="btn-view btn-load-more" onClick={handleLoadMore}>Load More</button>
+                    <button className="btn-view btn-load-more" onClick={handleLoadMore}>Load More</button>
             }
         </>
     )

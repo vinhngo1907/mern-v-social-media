@@ -50,11 +50,20 @@ export const editPost = (data) => async (dispatch) => {
     }
 }
 
-export const likePost = (data) => async (dispatch) => {
+export const likePost = ({ post, auth }) => async (dispatch) => {
     try {
 
     } catch (err) {
         console.log(err.response);
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+    }
+}
+
+export const unLikePost = ({ post, auth }) => async (dispatch) => {
+    try {
+
+    } catch (err) {
+        console.log(err.response);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
