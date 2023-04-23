@@ -3,15 +3,17 @@ import UserCard from '../../components/other/UserCard'
 import FollowBtn from '../../components/other/FollowBtn'
 import { useSelector } from 'react-redux'
 
-const Followers = ({users, setShowFollowers}) => {
+const Followers = ({ users, setShowFollowers }) => {
     const { auth } = useSelector(state => state)
     return (
         <div className="follow">
             <div className="follow_box">
-                <h5 className="text-center">Followers</h5>
-                <hr/>
-                
-                <div className="follow_content">
+                <div className='follow_box_header'>
+                    <span>Followers</span>
+                </div>
+                <hr />
+
+                <div className="follow_content overlay-scrollbar scrollbar-hover">
                     {
                         users.map(user => (
                             <UserCard key={user._id} user={user} setShowFollowers={setShowFollowers} >
@@ -22,13 +24,13 @@ const Followers = ({users, setShowFollowers}) => {
                         ))
                     }
                 </div>
-                
+
 
                 <div className="close" onClick={() => setShowFollowers(false)}>
                     {/* &times; */}
-                    <i className='fas fa-times-circle'/>
+                    <i className='fas fa-times-circle' />
                 </div>
-                
+
             </div>
         </div>
     )
