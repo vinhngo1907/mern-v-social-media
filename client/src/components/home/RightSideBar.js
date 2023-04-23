@@ -107,10 +107,8 @@ const RightSideBar = () => {
                 <div className='postion-relative'>
                     {
                         suggestion.loading
-                            ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
-                                <div className="spinner-border" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div>
+                            ? <div className="spinner-border d-block mx-auto" role="status">
+                                <span className="sr-only">Loading...</span>
                             </div>
                             : <div className="suggestions">
                                 {
