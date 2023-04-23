@@ -16,8 +16,15 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
     try {
         dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
         const res = await getDataApi(`user/${id}`, auth.token);
+        console.log(res.data); 
+        const users = res.data
 
-        dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: res.data.results } });
+        const resPosts = await getDataApi(`post/user/${id}`,auth.token);
+        console.log(resPosts.data);
+        const posts = resPosts.data;
+
+        dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results} });
+        dispatch({ type: PROFILE_TYPES.GET_POSTS, payload: posts.results.posts });
         dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
