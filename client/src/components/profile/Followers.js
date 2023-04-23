@@ -25,7 +25,8 @@ const Followers = ({users, setShowFollowers}) => {
                 
 
                 <div className="close" onClick={() => setShowFollowers(false)}>
-                    &times;
+                    {/* &times; */}
+                    <i className='fas fa-times-circle'/>
                 </div>
                 
             </div>

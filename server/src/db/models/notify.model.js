@@ -8,7 +8,7 @@ const notifySchema = new mongoose.Schema({
     image: String,
     recipients: [{ type: mongoose.Types.ObjectId, ref: 'users' }],
     isRead: { type: Boolean, default: false }
-});
+}, { timestamps: true });
 
 
 module.exports = mongoose.model("notifies", notifySchema)
