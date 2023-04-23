@@ -16,11 +16,11 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
     try {
         dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
         const res = await getDataApi(`user/${id}`, auth.token);
-        console.log(res.data); 
+        // console.log(res.data); 
         const users = res.data
 
         const resPosts = await getDataApi(`post/user/${id}`,auth.token);
-        console.log(resPosts.data);
+        // console.log(resPosts.data);
         const posts = resPosts.data;
 
         dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results} });
@@ -31,9 +31,11 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
     }
 }
 
-export const updateProfile = (data) => async (dispatch) => {
+export const updateProfile = ({avatar, profileData, auth}) => async (dispatch) => {
     try {
+        if(avatar){
 
+        }
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

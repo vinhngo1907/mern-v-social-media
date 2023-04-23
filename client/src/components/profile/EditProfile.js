@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { checkImage } from "../../utils/imageUpload";
+import { GLOBALTYPES } from "../../redux/actions/globalTypes";
+import { updateProfile } from "../../redux/actions/profileAction";
 
 const EditProfile = ({ setOnEdit }) => {
     const { auth, theme } = useSelector(state => state);
-
+    const dispatch = useDispatch();
     const [profileData, setProfileData] = useState({
         fullname: '', mobile: '', gender: 'male', address: '', website: '', story: ''
     });
@@ -16,10 +19,17 @@ const EditProfile = ({ setOnEdit }) => {
     }
 
     const handleChangeAvatar = (e) => {
-
+        const file = e.target.files[0];
+        console.log(file)
+        const err = checkImage(file);
+        if (err) {
+            dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
+        }
+        setAvatar(file);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(updateProfile({avatar, profileData, auth}));
     }
     return (
         <div className="edit_profile">
