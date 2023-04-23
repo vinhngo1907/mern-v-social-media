@@ -11,7 +11,7 @@ const Profile = () => {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-    const [saveTab, setSavedTab] = useState(false);
+    const [saveTab, setSaveTab] = useState(false);
 
     useEffect(() => {
         if (profile.ids.every(i => i !== id)) {
@@ -22,10 +22,16 @@ const Profile = () => {
     return (
         <div className="profile">
             <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
-
+            {
+                auth.user._id === id &&
+                <div className="profile_tab">
+                    <button className={saveTab ? '' : 'active'} onClick={() => setSaveTab(false)}>Posts</button>
+                    <button className={saveTab ? 'active' : ''} onClick={() => setSaveTab(true)}>Saved</button>
+                </div>
+            }
             {
                 profile.loading
-                    ? <div className="spinner-border text-primary d-block" role="status">
+                    ? <div className="spinner-border text-primary d-block mx-auto" role="status">
                         <span className="sr-only">Loading...</span>
                     </div>
                     :

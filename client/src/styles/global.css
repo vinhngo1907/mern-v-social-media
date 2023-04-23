@@ -135,6 +135,9 @@ textarea {
 /* ---------- Comment------------ */
 @import url("./comment.css");
 
+/* ---------- Profile------------ */
+@import url("./profile.css");
+
 /* ---------- Menu------------ */
 @import url("./menu.css");
 
