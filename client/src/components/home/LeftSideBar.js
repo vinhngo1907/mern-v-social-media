@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import UserCard from '../other/UserCard';
 
-const LeftSideBar = () => {
+const LeftSideBar = ({type}) => {
     const { auth } = useSelector(state => state);
     // const { pathname } = useLocation();
     const navLink = [
@@ -37,7 +37,8 @@ const LeftSideBar = () => {
                     }
                 </ul>
             </div>
-            <div className='widget mt-3'>
+            {
+                type!== "profile" && <div className='widget mt-3'>
                 <h4 className="widget-title">Who's Following</h4>
                 <ul className='following overlay-scrollbar scrollbar-hover'>
                 {
@@ -59,6 +60,7 @@ const LeftSideBar = () => {
                 }
                 </ul>
             </div>
+            }
         </div>
     )
 }
