@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const NotifyModal = () => {
-    const { auth, notify } = useSelector(state => state)
-    const dispatch = useDispatch();
+    // const { auth, notify } = useSelector(state => state)
+    // const dispatch = useDispatch();
     return (
         <div style={{minWidth: '300px'}}>
             <div className="dropdown-menu-header px-3">

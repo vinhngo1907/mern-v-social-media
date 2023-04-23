@@ -11,6 +11,7 @@ const StatusModal = () => {
 
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
+    const [stream, setStream] = useState(false);
 
     useEffect(() => {
         if (status.onEdit) {
@@ -18,7 +19,7 @@ const StatusModal = () => {
             setImages(status.images)
         }
     }, [status]);
-    const [stream, setStream] = useState(false);
+
     const handleChangeImages = (e) => {
         const files = [...e.target.files];
         let err = "";
