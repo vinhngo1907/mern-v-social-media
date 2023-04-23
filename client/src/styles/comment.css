@@ -9,20 +9,16 @@
 
 .post-comt-box {
     display: inline-block;
-    padding-left: 50px;
+    background-color: transparent;
     position: relative;
-    width: 90%;
+    width: 100%;
 }
 
 .comet-avatar {
-    position: absolute;
+    display: table-cell;
     max-width: 7.6%;
+    vertical-align: top;
     width: 7.6%;
-    top: 0;
-    left: 3px;
-    transform: translate(90%, 20%);
-    /* display: table-cell; */
-    /* vertical-align: top; */
 }
 
 /* .post-comment .comet-avatar {
@@ -38,7 +34,7 @@
 }
 
 .comment_input input {
-    background: #f7f7f7;
+    background: var(--main-bg-color);
     /* background: #f3f3f3 none repeat scroll 0 0; */
     border-color: transparent;
     border: none;
