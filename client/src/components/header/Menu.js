@@ -4,9 +4,10 @@ import Avatar from '../other/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { logout } from '../../redux/actions/authAction';
+import NotifyModal from '../other/NotifyModal';
 
 const Menu = () => {
-    const { auth, theme, sidebar } = useSelector(state => state);
+    const { auth, theme, sidebar, notify } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const navLinks = [
@@ -27,9 +28,9 @@ const Menu = () => {
                     {/* <i className='fas fa-bars text-dark position-absolute' style={{top:"25%",left:"-20px", fontSize:"23px"}}
                         onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}
                     /> */}
-                     <span className="material-icons menu-bar"  
-                     style={{display:"none"}}
-                     onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}>menu</span>
+                    <span className="material-icons menu-bar"
+                        style={{ display: "none" }}
+                        onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}>menu</span>
                 </li>
                 {
                     navLinks.map((link, index) => (
@@ -40,7 +41,26 @@ const Menu = () => {
                         </li>
                     ))
                 }
-                {/* Noti */}
+
+                <li className='nav-item dropdown'>
+                    <span className="nav-link position-relative" id="navbarDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        <span className="material-icons"
+                            style={{ color: notify.data.length > 0 ? 'crimson' : '' }}>
+                            favorite
+                        </span>
+
+                        <span className="notify_length">{notify.data.length}</span>
+
+                    </span>
+
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style={{ transform: 'translateX(75px)' }}>
+                        <NotifyModal />
+
+                    </div>
+                </li>
                 <li className="nav-item dropdown" style={{ opacity: 1 }} >
                     <span className="nav-link dropdown-toggle" id="navbarDropdown"
                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
