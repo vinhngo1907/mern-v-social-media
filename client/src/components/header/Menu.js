@@ -42,7 +42,7 @@ const Menu = () => {
                     ))
                 }
 
-                <li className='nav-item dropdown'>
+                <li className='nav-item dropdown' style={{ opacity: 1 }} >
                     <span className="nav-link position-relative" id="navbarDropdown"
                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -55,10 +55,11 @@ const Menu = () => {
 
                     </span>
 
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown"
+                    <div id="notification-menu"
+                        className="dropdown-menu notification-menu"
+                        aria-labelledby="navbarDropdown"
                         style={{ transform: 'translateX(75px)' }}>
                         <NotifyModal />
-
                     </div>
                 </li>
                 <li className="nav-item dropdown" style={{ opacity: 1 }} >

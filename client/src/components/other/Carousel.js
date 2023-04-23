@@ -16,7 +16,7 @@ const Carousel = ({ images, id }) => {
                     ))
                 }
             </ol>
-            <div class="carousel-inner">
+            <div className="carousel-inner">
                 {
                     images.map((img, index) => (
                         <div key={index} className={`carousel-item ${isActive(index)}`}>
