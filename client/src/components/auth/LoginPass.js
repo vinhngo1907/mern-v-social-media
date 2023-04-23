@@ -23,9 +23,9 @@ const LoginPass = () => {
 		<>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group mb-3">
-					<label htmlFor="account"> Email / Username</label>
+					<label htmlFor="account"> Email / Username / Mobile</label>
 					<input type="text" className="form-control" id="account"
-						aria-describedby="emailHelp" placeholder="Enter account"
+						aria-describedby="emailHelp" placeholder="Example@gmail.com/+84374481936"
 						name="account" onChange={handleChangeInput} value={account} />
 				</div>
 				<div className="form-group mb-3">
@@ -37,6 +37,7 @@ const LoginPass = () => {
 							id="password"
 							name="password" value={password}
 							onChange={handleChangeInput}
+							placeholder="Enter password"
 						/>
 
 						<small onClick={() => setTypePass(!typePass)}>

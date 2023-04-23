@@ -11,6 +11,7 @@ import PageRender from "./customRouter/PageRender";
 import StatusModal from "./components/other/StatusModal";
 import { getSuggestion } from "./redux/actions/suggestionAction";
 import { getAllPosts } from "./redux/actions/postAction";
+import Register from "./pages/register";
 
 function App() {
 	const { auth, status } = useSelector(state => state);
@@ -36,6 +37,7 @@ function App() {
 					{auth.token && <Header />}
 					{status && <StatusModal />}
 					<Route exact path="/" component={auth.token ? Home : Login} />
+					<Route exact path="/register" component={Register} />
 					<Route exact path="/login" component={Login} />
 					<PrivateRouter exact path="/:page" component={PageRender} />
 					<PrivateRouter exact path="/:page/:id" component={PageRender} />
