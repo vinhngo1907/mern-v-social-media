@@ -24,7 +24,7 @@ export const imageUpload = async (images, token) => {
         }
 
         // const res = await postDataApi('upload/create', formData, token);
-        const res = await axios.post('api/upload/create', formData, {
+        const res = await axios.post('/api/upload/create', formData, {
             withCredentials: true,
             headers: {
                 'content-type': 'multipart/form-data',

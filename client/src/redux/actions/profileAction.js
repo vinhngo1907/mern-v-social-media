@@ -1,4 +1,5 @@
-import { getDataApi, patchDataApi } from "../../utils/fetchData"
+import { getDataApi, patchDataApi, putDataApi } from "../../utils/fetchData"
+import { imageUpload } from "../../utils/imageUpload"
 import { DeleteData, GLOBALTYPES } from "./globalTypes"
 
 export const PROFILE_TYPES = {
@@ -19,11 +20,11 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
         // console.log(res.data); 
         const users = res.data
 
-        const resPosts = await getDataApi(`post/user/${id}`,auth.token);
+        const resPosts = await getDataApi(`post/user/${id}`, auth.token);
         // console.log(resPosts.data);
         const posts = resPosts.data;
 
-        dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results} });
+        dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results } });
         dispatch({ type: PROFILE_TYPES.GET_POSTS, payload: posts.results.posts });
         dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
     } catch (err) {
@@ -31,11 +32,34 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
     }
 }
 
-export const updateProfile = ({avatar, profileData, auth}) => async (dispatch) => {
-    try {
-        if(avatar){
+export const updateProfile = ({ avatar, profileData, auth }) => async (dispatch) => {
+    if (!profileData.fullname)
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Please add your full name." } })
 
-        }
+    if (profileData.fullname.length > 25)
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your full name too long." } })
+
+    if (profileData.story.length > 200)
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your story too long." } })
+
+    let media = null;
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+        if (avatar) media = await imageUpload([avatar], auth.token);
+        console.log({media})
+        dispatch({
+            type: GLOBALTYPES.AUTH,
+            payload: {
+                ...auth,
+                user: {
+                    ...auth.user,
+                    ...profileData,
+                    avatar: avatar ? media[0].url : auth.user.avatar
+                }
+            }
+        });
+        const res = await putDataApi('user', { ...profileData, avatar: avatar ? media[0].url : auth.user.avatar }, auth.token)
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
@@ -71,18 +95,18 @@ export const follow = ({ users, user, auth }) => async (dispatch) => {
 
 export const unFollow = ({ users, user, auth }) => async (dispatch) => {
     let newUser = null;
-    if(users.every(u=>u._id !== user._id)){
-        newUser = {...user, followers: DeleteData(user.followers, auth.user._id)};
-    }else{
-        users.forEach(u=>{
-            if(u._id === user._id){
-                newUser = {...u, followers: DeleteData(u.followers, auth.user._id)};
+    if (users.every(u => u._id !== user._id)) {
+        newUser = { ...user, followers: DeleteData(user.followers, auth.user._id) };
+    } else {
+        users.forEach(u => {
+            if (u._id === user._id) {
+                newUser = { ...u, followers: DeleteData(u.followers, auth.user._id) };
             }
         })
     }
     dispatch({ type: PROFILE_TYPES.UNFOLLOW, payload: newUser });
     dispatch({
-        type: GLOBALTYPES.AUTH, 
+        type: GLOBALTYPES.AUTH,
         payload: {
             ...auth,
             user: { ...auth.user, following: DeleteData(auth.user.following, newUser._id) }
@@ -90,7 +114,7 @@ export const unFollow = ({ users, user, auth }) => async (dispatch) => {
     })
     try {
         await patchDataApi(`user/${user._id}/unfollow`, null, auth.token);
-       
+
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

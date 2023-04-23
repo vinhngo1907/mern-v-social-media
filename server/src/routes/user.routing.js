@@ -9,7 +9,7 @@ const userCtrl = new UserController();
  *  @desc Update user's profile
  *  @access Private
 */
-router.put('/:id', userAuth, userCtrl.UpdateProfile);
+router.put('/', userAuth, userCtrl.UpdateProfile);
 
 /** 
  *  @route GET api/user
