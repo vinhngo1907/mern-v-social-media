@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
 import { getSuggestion } from '../../redux/actions/suggestionAction';
 import FollowBtn from '../other/FollowBtn';
+import Likes from './Likes';
+import Views from './Views';
 
 const RightSideBar = () => {
     const { auth, suggestion } = useSelector(state => state);
     const dispatch = useDispatch();
-
+    const [likeTab, setLikeTab] = useState(false);
 
     return (
         <div className='sidebar'>
@@ -28,66 +30,23 @@ const RightSideBar = () => {
                     </div>
                     <div className="page-likes">
                         <ul className="nav nav-tabs likes-btn">
-                            <li className="nav-item"><Link className="active" to="#link1" data-toggle="tab">likes</Link> </li>
-                            <li className="nav-item"><Link className="" to="#link2" data-toggle="tab">views</Link> </li>
+                        <li className="nav-item" onClick={() => setLikeTab(true)}>
+                                <Link className={likeTab ? 'active show' : ''} to="#" data-toggle="tab" type='button'>likes</Link>
+                            </li>
+                            <li className="nav-item" onClick={() => setLikeTab(false)}>
+                                <Link className={likeTab ? '' : 'active show'} to="#" data-toggle="tab" type='button'>views</Link>
+                            </li>
+                            
+
                         </ul>
                         {/* <!-- Tab panes --> */}
                         <div className="tab-content">
-                            <div className="tab-pane active fade show" id="link1">
-                                <span><i className="fas fa-heart"></i>884</span>
-                                <Link to="#" title="weekly-likes">35 new likes this week</Link>
-                                <div className="users-thumb-list">
-                                    {/* <Link to="#" title="" data-toggle="tooltip" data-original-title="Anderw">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="frank">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Sara">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Amy">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Ema">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Sophie">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link> */}
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Maria">
-                                        <Avatar src={auth.user.avatar} size="small-avatar" />
+                            {
+                                likeTab
+                                    ? <Likes auth={auth} />
+                                    : <Views auth={auth} />
+                            }
 
-                                    </Link>
-                                </div>
-                            </div>
-                            {/* <div className="tab-pane fade" id="link2">
-                            <span><i className="ti-eye"></i>440</span>
-                            <Link to="#" title="weekly-likes">440 new views this week</Link> 
-                            <div className="users-thumb-list">
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Anderw">
-                                    <img src="images/resources/userlist-1.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="frank">
-                                    <img src="images/resources/userlist-2.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Sara">
-                                    <img src="images/resources/userlist-3.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Amy">
-                                    <img src="images/resources/userlist-4.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Ema">
-                                    <img src="images/resources/userlist-5.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Sophie">
-                                    <img src="images/resources/userlist-6.jpg" alt=""/>
-                                </Link> 
-                                <Link to="#" title="" data-toggle="tooltip" data-original-title="Maria">
-                                    <img src="images/resources/userlist-7.jpg" alt=""/>
-                                </Link> 
-                            </div>
-                        </div> */}
                         </div>
                     </div>
                 </div>

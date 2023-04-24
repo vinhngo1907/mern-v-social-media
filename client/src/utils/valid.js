@@ -1,4 +1,4 @@
-function validateRegister({ fullname, username, email, password, cf_password }) {
+export const validateRegister = ({ fullname, username, email, password, cf_password }) => {
     let error = {}
     if (!fullname) {
         error.fullname = "Fullname can not be blank"
@@ -34,7 +34,7 @@ function validateRegister({ fullname, username, email, password, cf_password }) 
     }
 }
 
-function validateUpdateProfile({ fullname, mobile, story }) {
+export const validateUpdateProfile = ({ fullname, mobile, story }) => {
     let error = {}
     if (!fullname) {
         error.fullname = "Please add your full name."
@@ -58,7 +58,7 @@ function validateUpdateProfile({ fullname, mobile, story }) {
     }
 }
 
-function validatePassword(password, cf_password) {
+export const validatePassword = (password, cf_password) => {
     let error = {}
     if (password.length < 6) {
         error.pass = ("Password must be at least 6 chars.")

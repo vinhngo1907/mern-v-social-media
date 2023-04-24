@@ -94,7 +94,7 @@
     width: 100%;
 }
 
-.page-likes .tab-content .tab-pane > span {
+.page-likes .tab-content .tab-pane>span {
     font-size: 22px;
     font-style: normal;
     font-weight: 600;
@@ -103,13 +103,13 @@
     width: 100%;
 }
 
-.page-likes .tab-content .tab-pane > span i {
+.page-likes .tab-content .tab-pane>span i {
     color: green;
     font-size: 15px;
     margin-right: 6px;
 }
 
-.page-likes .tab-content .tab-pane > a {
+.page-likes .tab-content .tab-pane>a {
     color: green;
     float: left;
     font-size: 13px;
@@ -118,7 +118,7 @@
     width: 100%;
 }
 
-.page-likes .tab-content .tab-pane > a:hover {
+.page-likes .tab-content .tab-pane>a:hover {
     text-decoration: underline;
 }
 
@@ -130,16 +130,102 @@
     margin-top: 20px;
 }
 
-.users-thumb-list > a {
+.users-thumb-list>a {
     display: inline-block;
     margin-left: -17px;
 }
 
-.users-thumb-list > a:first-child {
+.users-thumb-list>a:first-child {
     margin-left: 0;
 }
 
-.users-thumb-list > a img {
+.users-thumb-list>a img {
     border: 2px solid #fff;
     border-radius: 50%;
+}
+
+/*---- tabs likes, views ---*/
+.nav.nav-tabs.likes-btn {
+    border-bottom: medium none;
+    display: inline-block;
+    width: 100%;
+}
+
+.nav.nav-tabs.likes-btn>li {
+    float: left;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 50%;
+}
+
+.nav.nav-tabs.likes-btn>li a {
+    background: #eeeeee none repeat scroll 0 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 5px 0;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.nav.nav-tabs.likes-btn .nav-item a.active{
+    color: #088dcd;	
+}
+
+.nav.nav-tabs.likes-btn>li a.active {
+    color: #fff;
+}
+
+.page-likes .tab-content .tab-pane>span {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    text-align: center;
+    float: left;
+    width: 100%;
+}
+
+.page-likes .tab-content .tab-pane>span i {
+    color: green;
+    font-size: 15px;
+    margin-right: 6px;
+}
+
+.users-thumb-list {
+    float: left;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.users-thumb-list>a {
+    display: inline-block;
+    margin-left: -17px;
+}
+
+.users-thumb-list>a:first-child {
+    margin-left: 0;
+}
+
+.users-thumb-list>a img {
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+
+.page-likes .tab-content .tab-pane>a {
+    color: green;
+    float: left;
+    font-size: 13px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+.page-likes .tab-content .tab-pane>a:hover {
+    text-decoration: underline;
+}
+
+.nav.nav-tabs {
+    border: medium none;
 }

@@ -1,6 +1,7 @@
 import { getDataApi, patchDataApi, putDataApi } from "../../utils/fetchData"
 import { imageUpload } from "../../utils/imageUpload"
 import { DeleteData, GLOBALTYPES } from "./globalTypes"
+import {validateUpdateProfile} from "../../utils/valid"
 
 export const PROFILE_TYPES = {
     LOADING: 'LOADING_PROFILE',
