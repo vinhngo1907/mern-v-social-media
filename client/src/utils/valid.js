@@ -36,7 +36,9 @@ function validateRegister({ fullname, username, email, password, cf_password }) 
 
 function validateUpdateProfile({ fullname, mobile, story }) {
     let error = {}
-    if (fullname && fullname.length > 25) {
+    if (!fullname) {
+        error.fullname = "Please add your full name."
+    } else if (fullname && fullname.length > 25) {
         error.fullname = "Fullname is up to 25 chars long"
     }
 
