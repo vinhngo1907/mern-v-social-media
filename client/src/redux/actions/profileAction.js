@@ -33,20 +33,24 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
 }
 
 export const updateProfile = ({ avatar, profileData, auth }) => async (dispatch) => {
-    if (!profileData.fullname)
-        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Please add your full name." } })
+    // if (!profileData.fullname)
+    //     return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Please add your full name." } })
 
-    if (profileData.fullname.length > 25)
-        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your full name too long." } })
+    // if (profileData.fullname.length > 25)
+    //     return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your full name too long." } })
 
-    if (profileData.story.length > 200)
-        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your story too long." } })
+    // if (profileData.story.length > 200)
+    //     return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your story too long." } })
+    const error = validateUpdateProfile(profileData);
+    if (error.errLength > 0) {
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.errMsg } })
+    }
 
     let media = null;
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
         if (avatar) media = await imageUpload([avatar], auth.token);
-        
+
         dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {
