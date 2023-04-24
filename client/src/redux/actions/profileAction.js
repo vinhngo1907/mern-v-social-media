@@ -21,11 +21,11 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
         const users = res.data
 
         const resPosts = await getDataApi(`post/user/${id}`, auth.token);
-        // console.log(resPosts.data);
-        const posts = resPosts.data;
+        console.log(resPosts.data);
+        const postsData = resPosts.data;
 
         dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results } });
-        dispatch({ type: PROFILE_TYPES.GET_POSTS, payload: posts.results.posts });
+        dispatch({ type: PROFILE_TYPES.GET_POSTS, payload: { ...postsData.results, _id: id, page: 2 } });
         dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
@@ -46,7 +46,7 @@ export const updateProfile = ({ avatar, profileData, auth }) => async (dispatch)
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
         if (avatar) media = await imageUpload([avatar], auth.token);
-        console.log({media})
+        console.log({ media })
         dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {

@@ -61,7 +61,7 @@ class PostController {
     async GetUserPosts(req, res) {
         try {
             const { id } = req.params;
-            const features = new APIFeatures(postModel.find({ _id: id }), req.query).paginating().sorting();
+            const features = new APIFeatures(postModel.find({ user: id }), req.query).paginating().sorting();
             const posts = await features.query
                 .populate("user likes", "username email avatar followers following")
                 .populate({

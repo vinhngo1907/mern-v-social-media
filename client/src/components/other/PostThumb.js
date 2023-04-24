@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const PostThumb = ({ posts, result }) => {
-    const { theme } = useSelector(state => state)
-
+    const { theme } = useSelector(state => state);
+    
     if (result === 0) return <h2 className="text-center text-danger">No Post</h2>
+
     return (
         <div className='post_thumb'>
             {
                 posts.map((post, index) => (
-                    <Link to={`/posts/${post._id}`}>
+                    <Link to={`/posts/${post._id}`} key={`${post._id}`}>
                         <div className="post_thumb_display">
                             {
-                                posts.images[0].url.match(/video/i)
+                                post.images[0].url.match(/video/i)
                                     ? <video controls src={post.images[0].url} alt={post.images[0].url}
                                         style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
                                     : <img src={post.images[0].url} alt={post.images[0].url}

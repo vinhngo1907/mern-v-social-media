@@ -141,6 +141,9 @@ textarea {
 /* ---------- Menu------------ */
 @import url("./menu.css");
 
+/* ---------- Post thumb------------ */
+@import url("./post_thumb.css");
+
 /* ---------- Other------------ */
 @import url("./other.css");
 
