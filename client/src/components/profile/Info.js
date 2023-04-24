@@ -16,8 +16,8 @@ const Info = ({ auth, id, dispatch, profile }) => {
         if (auth.user._id === id) {
             setUserData([auth.user])
         }else{
-            const user = profile.users.find(u => u._id === id)
-            setUserData([user])
+            const user = profile.users.filter(u => u._id === id);
+            setUserData(user)
         }
     }, [auth.user, id, profile.users, dispatch]);
 

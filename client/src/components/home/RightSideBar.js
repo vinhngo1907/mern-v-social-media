@@ -37,7 +37,7 @@ const RightSideBar = () => {
                                 <span><i className="fas fa-heart"></i>884</span>
                                 <Link to="#" title="weekly-likes">35 new likes this week</Link>
                                 <div className="users-thumb-list">
-                                    <Link to="#" title="" data-toggle="tooltip" data-original-title="Anderw">
+                                    {/* <Link to="#" title="" data-toggle="tooltip" data-original-title="Anderw">
                                         <Avatar src={auth.user.avatar} size="small-avatar" />
                                     </Link>
                                     <Link to="#" title="" data-toggle="tooltip" data-original-title="frank">
@@ -54,7 +54,7 @@ const RightSideBar = () => {
                                     </Link>
                                     <Link to="#" title="" data-toggle="tooltip" data-original-title="Sophie">
                                         <Avatar src={auth.user.avatar} size="small-avatar" />
-                                    </Link>
+                                    </Link> */}
                                     <Link to="#" title="" data-toggle="tooltip" data-original-title="Maria">
                                         <Avatar src={auth.user.avatar} size="small-avatar" />
 
