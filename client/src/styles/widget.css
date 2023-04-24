@@ -168,8 +168,13 @@
     width: 100%;
 }
 
-.nav.nav-tabs.likes-btn .nav-item a.active{
-    color: #088dcd;	
+.nav.nav-tabs.likes-btn .nav-item a.active {
+    color: #088dcd;
+}
+
+.nav.nav-tabs.likes-btn .nav-item a.active.show {
+    background-color: #088dcd;
+    color: #eeeeee
 }
 
 .nav.nav-tabs.likes-btn>li a.active {
