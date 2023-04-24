@@ -31,7 +31,7 @@ export const imageUpload = async (images, token) => {
                 'Authorization': `Bearer ${token}`,
             }
         });
-        console.log(res.data.results)
+        // console.log(res.data.results)
         const data = res.data.results
         imgArr.push({ public_id: data.public_id, url: data.url });
     }

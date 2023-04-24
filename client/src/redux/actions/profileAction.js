@@ -46,7 +46,7 @@ export const updateProfile = ({ avatar, profileData, auth }) => async (dispatch)
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
         if (avatar) media = await imageUpload([avatar], auth.token);
-        console.log({ media })
+        
         dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {
