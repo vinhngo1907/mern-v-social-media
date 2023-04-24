@@ -51,7 +51,7 @@ const RightSideBar = () => {
                     </div>
                 </div>
             </div>
-            <div className='widget mt-3'>
+            <div className="widget mt-3">
                 {/* <UserCard user={auth.user}/> */}
                 <div className="d-flex justify-content-between align-items-center my-2 position-relative">
                     <h4 className="widget-title">Suggestion</h4>
