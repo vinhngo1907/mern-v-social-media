@@ -34,7 +34,8 @@ export const validateRegister = ({ fullname, username, email, password, cf_passw
     }
 }
 
-export const validateUpdateProfile = ({ fullname, mobile, story }) => {
+export const validateUpdateProfile = (profileData) => {
+    const { fullname, mobile, story } = profileData;
     let error = {}
     if (!fullname) {
         error.fullname = "Please add your full name."
@@ -43,9 +44,9 @@ export const validateUpdateProfile = ({ fullname, mobile, story }) => {
     }
 
     if (mobile) {
-        if (!validatePhone(mobile)) {
-            error.mobile = "Mobile format is incorrect";
-        }
+        // if (!validatePhone(mobile)) {
+        //     error.mobile = "Mobile format is incorrect";
+        // }
     }
 
     if (story && story.length > 200) {

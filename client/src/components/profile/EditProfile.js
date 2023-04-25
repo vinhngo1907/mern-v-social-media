@@ -8,7 +8,7 @@ const EditProfile = ({ setOnEdit }) => {
     const { auth, theme } = useSelector(state => state);
     const dispatch = useDispatch();
     const [profileData, setProfileData] = useState({
-        fullname: '', mobile: '', gender: 'male', address: '', website: '', story: ''
+        fullname: '', mobile: '', gender: '', address: '', website: '', story: ''
     });
     const [avatar, setAvatar] = useState('');
 
@@ -20,7 +20,7 @@ const EditProfile = ({ setOnEdit }) => {
 
     const handleChangeAvatar = (e) => {
         const file = e.target.files[0];
-        console.log(file)
+        // console.log(file)
         const err = checkImage(file);
         if (err) {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
@@ -53,7 +53,7 @@ const EditProfile = ({ setOnEdit }) => {
                     <label htmlFor="fullname">Full Name</label>
                     <div className="position-relative">
                         <input type="text" className="form-control" id="fullname"
-                            name="fullname" value={fullname} onChange={handleChangeInput} />
+                            name="fullname" value={fullname ? fullname: auth.user.fullname} onChange={handleChangeInput} />
                         <small className="text-danger position-absolute"
                             style={{ top: '50%', right: '5px', transform: 'translateY(-50%)' }}>
                             {fullname.length}/25
@@ -63,13 +63,13 @@ const EditProfile = ({ setOnEdit }) => {
 
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile</label>
-                    <input type="text" name="mobile" value={mobile}
+                    <input type="text" name="mobile" value={mobile ? mobile : auth.user.mobile}
                         className="form-control" onChange={handleChangeInput} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="address">Address</label>
-                    <input type="text" name="address" value={address}
+                    <input type="text" name="address" value={address ? address : auth.user.address}
                         className="form-control" onChange={handleChangeInput} />
                 </div>
 

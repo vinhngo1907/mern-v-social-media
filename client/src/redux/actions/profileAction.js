@@ -44,7 +44,7 @@ export const updateProfile = ({ avatar, profileData, auth }) => async (dispatch)
     //     return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Your story too long." } })
     const error = validateUpdateProfile(profileData);
     if (error.errLength > 0) {
-        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.errMsg } })
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: error.errMsg })
     }
 
     let media = null;
