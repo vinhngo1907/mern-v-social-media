@@ -33,8 +33,9 @@ const UserSchema = new Schema({
 	website: { type: String },
 	address: { type: String },
 	story: { type: String },
-	followers: [{ type: Schema.Types.ObjectId, ref: "users" }],
-	following: [{ type: Schema.Types.ObjectId, ref: "users" }],
+	followers: [{ type: Schema.Types.ObjectId, ref: "user" }],
+	following: [{ type: Schema.Types.ObjectId, ref: "user" }],
+	saved: [{ type: Schema.Types.ObjectId, ref: "user" }],
 	salt: { type: String },
 	type: { type: String, default: "register" },
 	rf_token: { type: String }
@@ -42,4 +43,4 @@ const UserSchema = new Schema({
 	timestamps: true
 })
 
-module.exports = mongoose.model('users', UserSchema)
+module.exports = mongoose.model('user', UserSchema)

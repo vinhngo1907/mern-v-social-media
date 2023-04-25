@@ -11,16 +11,16 @@ const PostSchema = new Schema({
 	},
 	comments: [{
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'comment'
 	}],
 	likes: [{
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'user'
 	}],
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'user'
 	}
 }, { timestamps: true })
 
-module.exports = mongoose.model('posts', PostSchema)
+module.exports = mongoose.model('post', PostSchema)

@@ -28,7 +28,7 @@ const postReducer = (state = initialSatate, action) => {
 		case POST_TYPES.CREATE_POST:
 			return {
 				...state,
-				posts: [...state.posts, payload]
+				posts: [payload, ...state.posts]
 			}
 
 		case POST_TYPES.DELETE_POST:

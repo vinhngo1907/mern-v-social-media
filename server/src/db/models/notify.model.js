@@ -6,9 +6,9 @@ const notifySchema = new mongoose.Schema({
     url: String,
     content: String,
     image: String,
-    recipients: [{ type: mongoose.Types.ObjectId, ref: 'users' }],
+    recipients: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
     isRead: { type: Boolean, default: false }
 }, { timestamps: true });
 
 
-module.exports = mongoose.model("notifies", notifySchema)
+module.exports = mongoose.model("notify", notifySchema)
