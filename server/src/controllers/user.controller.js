@@ -106,10 +106,12 @@ class UserController {
             const users = await userModel.aggregate([
                 { $match: { _id: { $nin: newArr } } },
                 { $sample: { size: Number(num) } },
-                { $lookup: { from: "users", localField: "followers", foreignField: '_id', as: 'followers' } },
-                { $lookup: { from: "users", localField: "following", foreignField: '_id', as: 'following' } }
+                { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followers' } },
+                { $lookup: { from: 'users', localField: 'following', foreignField: '_id', as: 'following' } },
+                // { $lookup: { from: "users", localField: "followers", foreignField: '_id', as: 'followers' } },
+                // { $lookup: { from: "users", localField: "following", foreignField: '_id', as: 'following' } }
             ]);
-            res.status(200).json(responseDTO.success("Get data successfully", users))
+            res.status(200).json(responseDTO.success("Get data successfully", {users, result: users.length}))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

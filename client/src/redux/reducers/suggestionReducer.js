@@ -16,7 +16,7 @@ const suggestionReducer = (state = initialState, action) => {
             return {
                 // ...state,
                 loading: false,
-                users: action.payload.results
+                users: action.payload.users
             }
         default:
             return state;

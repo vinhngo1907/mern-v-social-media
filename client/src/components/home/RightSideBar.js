@@ -69,7 +69,7 @@ const RightSideBar = () => {
                             ? <div className="spinner-border d-block mx-auto" role="status">
                                 <span className="sr-only">Loading...</span>
                             </div>
-                            : <div className="suggestions">
+                            : <div className="suggestions px-2">
                                 {
                                     suggestion?.users.map(user => (
                                         <UserCard key={user._id} user={user} type="home">

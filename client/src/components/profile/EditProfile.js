@@ -29,7 +29,7 @@ const EditProfile = ({ setOnEdit }) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateProfile({avatar, profileData, auth}));
+        dispatch(updateProfile({ avatar, profileData, auth }));
     }
     return (
         <div className="edit_profile">
@@ -53,7 +53,7 @@ const EditProfile = ({ setOnEdit }) => {
                     <label htmlFor="fullname">Full Name</label>
                     <div className="position-relative">
                         <input type="text" className="form-control" id="fullname"
-                            name="fullname" value={fullname ? fullname: auth.user.fullname} onChange={handleChangeInput} />
+                            name="fullname" value={fullname} onChange={handleChangeInput} />
                         <small className="text-danger position-absolute"
                             style={{ top: '50%', right: '5px', transform: 'translateY(-50%)' }}>
                             {fullname.length}/25
@@ -63,13 +63,13 @@ const EditProfile = ({ setOnEdit }) => {
 
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile</label>
-                    <input type="text" name="mobile" value={mobile ? mobile : auth.user.mobile}
+                    <input type="text" name="mobile" value={mobile}
                         className="form-control" onChange={handleChangeInput} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="address">Address</label>
-                    <input type="text" name="address" value={address ? address : auth.user.address}
+                    <input type="text" name="address" value={address}
                         className="form-control" onChange={handleChangeInput} />
                 </div>
 
