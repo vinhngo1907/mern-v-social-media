@@ -4,26 +4,26 @@ import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
 
-import Likes from './Likes';
+import Visits from './Visits';
 import Views from './Views';
 
 const RightSideBar = () => {
     const { auth } = useSelector(state => state);
     // const dispatch = useDispatch();
-    const [likeTab, setLikeTab] = useState(false);
+    const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
 
-    const handleSearch = (e)=>{
+    const handleSearch = (e) => {
         e.preventDefault();
     }
-    useEffect(()=>{
-        if(auth.user.following){
+    useEffect(() => {
+        if (auth.user.following) {
             setUsers(auth.user.following)
         }
-    },[auth.user.following])
+    }, [auth.user.following])
 
-    const handleClose = ()=>{
+    const handleClose = () => {
         setSearch('');
         setUsers(auth.user.following);
     }
@@ -44,20 +44,20 @@ const RightSideBar = () => {
                     </div>
                     <div className="page-likes">
                         <ul className="nav nav-tabs likes-btn">
-                            <li className="nav-item" onClick={() => setLikeTab(true)}>
-                                <Link className={likeTab ? 'active show' : ''} to="#" data-toggle="tab" type='button'>likes</Link>
-                            </li>
-                            <li className="nav-item" onClick={() => setLikeTab(false)}>
-                                <Link className={likeTab ? '' : 'active show'} to="#" data-toggle="tab" type='button'>views</Link>
-                            </li>
 
+                            <li className="nav-item" onClick={() => setVisitTab(false)}>
+                                <Link className={visitTab ? '' : 'active show'} to="#" data-toggle="tab" type='button'>views</Link>
+                            </li>
+                            <li className="nav-item" onClick={() => setVisitTab(true)}>
+                                <Link className={visitTab ? 'active show' : ''} to="#" data-toggle="tab" type='button'>Visitors</Link>
+                            </li>
 
                         </ul>
                         {/* <!-- Tab panes --> */}
                         <div className="tab-content">
                             {
-                                likeTab
-                                    ? <Likes auth={auth} />
+                                visitTab
+                                    ? <Visits auth={auth} />
                                     : <Views auth={auth} />
                             }
 
@@ -70,7 +70,7 @@ const RightSideBar = () => {
                 <div className="searchDir">
                     <form className="search_form" onSubmit={handleSearch}>
                         <input className="filterinput" type="text" placeholder="Search Contacts..." value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                         <div className="search_icon" style={{ opacity: search ? 0 : 0.3 }}>
                             {/* <span className="material-icons">search</span> */}
@@ -78,9 +78,9 @@ const RightSideBar = () => {
                         </div>
 
                         <div className="close_search" onClick={handleClose}
-                            style={{ opacity: search ? 1 : 0 }} 
-                            >
-                            <i className='fas fa-times-circle'/>
+                            style={{ opacity: search ? 1 : 0 }}
+                        >
+                            <i className='fas fa-times-circle' />
                         </div>
 
                         <button type="submit" style={{ display: 'none' }}>Search</button>
