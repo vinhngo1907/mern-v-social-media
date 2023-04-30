@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require('express-fileupload');
 const helmet = require("helmet");
 const morgan = require("morgan");
-const logger =  require('node-color-log');
+const logger = require('node-color-log');
 const cron = require('cron');
 
 const WebRoute = require('./routes');
@@ -22,11 +22,17 @@ module.exports = async (app) => {
     app.use(fileUpload({
         useTempFiles: true
     }));
-    
+
     const { CronJob } = cron;
+    const job = new CronJob('*/10 * * * *', async () => {
+        logger.info('Fetching all stats');
+        // await fetchAllStats();
+        
+    });
+    job.start();
     //api
     WebRoute(app);
-    
+
     // error handling
     // errorHandler(app);
 }
