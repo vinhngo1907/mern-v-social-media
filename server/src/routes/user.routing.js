@@ -46,4 +46,18 @@ router.patch('/:id/follow', userAuth, userCtrl.Follow);
 */
 router.patch('/:id/unfollow', userAuth, userCtrl.UnFollow);
 
+/** 
+ *  @route PATCH api/user/:id/save
+ *  @desc Save a post user
+ *  @access Private
+*/
+router.patch('/:id/save', userAuth, userCtrl.SavePost);
+
+/** 
+ *  @route PATCH api/user/:id/unsave
+ *  @desc UnSave a post user
+ *  @access Private
+*/
+router.patch('/:id/unsave', userAuth, userCtrl.UnSavePost);
+
 module.exports = router;

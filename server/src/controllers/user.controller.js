@@ -117,7 +117,7 @@ class UserController {
         }
     }
 
-    async SavedPost(req, res) {
+    async SavePost(req, res) {
         try {
             const postExist = await postModel.findOne({ _id: req.params.id });
             if (!postExist) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
@@ -144,7 +144,7 @@ class UserController {
                 { $pull: { saved: req.params.id } },
                 { new: true, runValidators: true }
             );
-            
+
             res.json(responseDTO.success("Saved post in successfully", savedPost))
         } catch (error) {
             console.log(error);
