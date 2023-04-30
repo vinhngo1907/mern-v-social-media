@@ -23,13 +23,13 @@ module.exports = async (app) => {
         useTempFiles: true
     }));
 
-    const { CronJob } = cron;
-    const job = new CronJob('*/10 * * * *', async () => {
-        logger.info('Fetching all stats');
-        // await fetchAllStats();
+    // const { CronJob } = cron;
+    // const job = new CronJob('*/10 * * * *', async () => {
+    //     logger.info('Fetching all stats');
+    //     await fetchAllStats();
         
-    });
-    job.start();
+    // });
+    // job.start();
     //api
     WebRoute(app);
 

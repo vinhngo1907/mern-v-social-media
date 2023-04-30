@@ -6,7 +6,12 @@ const { commentModel } = modelSchema;
 
 class CommentController {
     async GetAllComments(req, res) {
-
+        try{
+            
+        }catch(error){
+            console.log(error);
+            responseDTO.serverError(error.message);
+        }
     }
 
     async CreateComment(req, res) {
