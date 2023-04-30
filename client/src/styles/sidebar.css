@@ -115,7 +115,13 @@
 .main_sidebar {
     margin-top: 18px;
 }
-
+.left_sidebar, .right_sidebar{
+    position: sticky;
+    position: -webkit-sticky;
+    height: 100%;
+    top: -280px;
+    /* left: 60px; */
+}
 /* .left_sidebar:hover{
     width: 3000px;
 } */

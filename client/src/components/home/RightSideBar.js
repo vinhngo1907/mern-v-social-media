@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
-import { getSuggestion } from '../../redux/actions/suggestionAction';
-import FollowBtn from '../other/FollowBtn';
+
 import Likes from './Likes';
 import Views from './Views';
 
 const RightSideBar = () => {
-    const { auth, suggestion } = useSelector(state => state);
-    const dispatch = useDispatch();
+    const { auth } = useSelector(state => state);
+    // const dispatch = useDispatch();
     const [likeTab, setLikeTab] = useState(false);
+    const [search, setSearch] = useState('');
+    const [users, setUsers] = useState([]);
 
+    const handleSearch = (e)=>{
+        e.preventDefault();
+    }
+    const handleClose = (e)=>{
+
+    }
     return (
         <div className='sidebar static'>
             <div className='widget mt-3'>
@@ -30,13 +37,13 @@ const RightSideBar = () => {
                     </div>
                     <div className="page-likes">
                         <ul className="nav nav-tabs likes-btn">
-                        <li className="nav-item" onClick={() => setLikeTab(true)}>
+                            <li className="nav-item" onClick={() => setLikeTab(true)}>
                                 <Link className={likeTab ? 'active show' : ''} to="#" data-toggle="tab" type='button'>likes</Link>
                             </li>
                             <li className="nav-item" onClick={() => setLikeTab(false)}>
                                 <Link className={likeTab ? '' : 'active show'} to="#" data-toggle="tab" type='button'>views</Link>
                             </li>
-                            
+
 
                         </ul>
                         {/* <!-- Tab panes --> */}
@@ -52,49 +59,45 @@ const RightSideBar = () => {
                 </div>
             </div>
             <div className="widget mt-3">
-                {/* <UserCard user={auth.user}/> */}
-                <div className="d-flex justify-content-between align-items-center my-2 position-relative">
-                    <h4 className="widget-title">Suggestion</h4>
-                    {
-                        !suggestion.loading &&
-                        <i className="fas fa-redo position-absolute"
-                            style={{ cursor: 'pointer', top: "30%", right: "10%" }}
-                            onClick={() => dispatch(getSuggestion(auth.token))}
-                        />
-                    }
-                </div>
-                <div className='postion-relative'>
-                    {
-                        suggestion.loading
-                            ? <div className="spinner-border d-block mx-auto" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </div>
-                            : <div className="suggestions px-2">
-                                {
-                                    suggestion?.users.map(user => (
-                                        <UserCard key={user._id} user={user} type="home">
-                                            <FollowBtn user={user} />
-                                        </UserCard>
-                                    ))
-                                }
-                            </div>
-                    }
-                </div>
-                <div style={{ opacity: 0.5, flexDirection: "column" }}
-                    className="my-2 d-flex justify-content-between aligns-item-center"
-                >
-                    <a href="https://www.github.com/vinhngo1907" target="_blank" rel="noreferrer"
-                        style={{ wordBreak: 'break-all' }} >
-                        https://www.github.com/vinhngo1907
-                    </a>
-                    <small className="d-block">
-                        Welcome to v social media "V-Network"
-                    </small>
+                <h4 className="widget-title">Who's Following</h4>
+                <div className="searchDir">
+                    <form className="search_form" onSubmit={handleSearch}>
+                        <input className="filterinput" type="text" placeholder="Search Contacts..." />
+                        <div className="search_icon" style={{ opacity: search ? 0 : 0.3 }}>
+                            {/* <span className="material-icons">search</span> */}
+                            {/* <span>Enter to Search</span> */}
+                        </div>
 
-                    <small>
-                        &copy; 2023 V-NETWORK FROM KOOKUU V.N VIET NAM
-                    </small>
+                        <div className="close_search" onClick={handleClose}
+                            style={{ opacity: users.length === 0 ? 0 : 1 }} 
+                            >
+                            <i className='fas fa-times-circle'/>
+                        </div>
+
+                        <button type="submit" style={{ display: 'none' }}>Search</button>
+
+                    </form>
                 </div>
+                {
+                    <ul className='following overlay-scrollbar scrollbar-hover px-2'>
+                        {
+                            auth.user.loading
+                                ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
+                                    <div className="spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                : <div className="following">
+                                    {
+                                        auth?.user.following.map(user => (
+                                            <UserCard key={user._id} user={user} type="home" />
+                                        ))
+                                    }
+                                </div>
+                        }
+                    </ul>
+                }
+
             </div>
         </div>
     )
