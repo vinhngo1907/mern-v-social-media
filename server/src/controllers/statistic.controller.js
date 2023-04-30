@@ -3,6 +3,9 @@ const moment = require("moment-timezone");
 let stateCache;
 
 class StatisticController {
+    constructor(){
+        
+    }
     async FetchAllStat() {
         const today = moment().format("LL");
 

@@ -4,5 +4,6 @@ module.exports = {
     responseDTO: require("./dtos"),
     validation: require("./validations"),
     passwordUtil: require("./passwords"),
-    APIFeatures: require("./libs")
+    APIFeatures: require("./libs"),
+    statisticUtil: require("./statistics")
 }
