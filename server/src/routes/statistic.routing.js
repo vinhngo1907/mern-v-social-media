@@ -3,6 +3,6 @@ const { StatisticController } = require("../controllers");
 const statisticCtrl = new StatisticController;
 const { userAuth } = require('../middleware');
 
-router.get('/', userAuth, statisticCtrl.FetchAllStat);
+router.get('/', userAuth, statisticCtrl.FetchAllStats);
 
 module.exports = router;

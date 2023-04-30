@@ -6,19 +6,26 @@ const moment = require("moment-timezone");
 let stateCache;
 
 class StatisticController {
-    async FetchAllStat() {
+    async FetchAllStats(req, res) {
         try {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
+            let statisticRecord = {}
 
             const recordExist = await statisticModel.findOne({
                 loggedAt: {
                     $gt: dayStart,
                     $lte: dayEnd
                 }
-            })
+            });
             if (recordExist) {
+                const { viewCount, visitCount } = recordExist;
+                statisticRecord.viewCount = viewCount + 1;
+                if (req.query.type === "visit-pageview") {
+                    statisticRecord.viewCount = visitCount + 1;
+                }
+
                 await statisticModel.findOneAndUpdate(
                     {
                         loggedAt: {
@@ -26,19 +33,26 @@ class StatisticController {
                             $lte: dayEnd
                         }
                     }, {
-                    $inc: {
-                        viewCount: +1,
-                        visitCount: +1
-                    },
-                    loggedAt: now
+                    $set: {
+                        viewCount: statisticRecord.viewCount,
+                        visitCount: statisticRecord.visitCount,
+                        loggedAt: now
+                    }
                 });
+                res.status(200).json(responseDTO.success("submit duration success"));
             } else {
+                const newStatistic = new statisticModel({
+                    viewCount: 1,
+                    visitCount: 1
+                });
 
+                await newStatistic.save();
+                res.status(200).json(responseDTO.success("submit duration success"));
             }
 
             stateCache = undefined;
         } catch (error) {
-            responseDTO.serverError(error.message);
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
     async GetTotalStats() {
@@ -61,7 +75,7 @@ class StatisticController {
             responseDTO.success("Get data in successfully", stats)
         } catch (error) {
             console.log(error);
-            responseDTO.serverError(error.message);
+            return res.status(500).json(responseDTO.serverError(error.message));;
         }
     }
 }
