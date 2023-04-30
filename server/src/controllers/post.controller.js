@@ -2,6 +2,7 @@
 
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
+const { commentModel } = require("../db/models");
 const { postModel } = modelSchema;
 
 class PostController {
@@ -20,7 +21,16 @@ class PostController {
 
     }
     async DeletePost() {
+        try {
+            const deletedPost = await postModel.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+            if (!deletedPost) return res.status(400).json(responseDTO.badRequest("This post does not exist!"));
+            await commentModel.deleteMany({ postId: deletedPost._id, postUserId: deletedPost.user });
 
+            res.status(200).json(responseDTO.success("Deleted post in successfully", deletedPost))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
     }
     async LikePost(req, res) {
         try {

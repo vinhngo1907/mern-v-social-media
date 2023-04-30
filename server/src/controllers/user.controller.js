@@ -115,6 +115,14 @@ class UserController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async SavedPost(){
+        try{
+        }catch(error){
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = UserController
