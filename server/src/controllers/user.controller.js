@@ -87,9 +87,7 @@ class UserController {
             const unFollowedUser = await userModel.findOneAndUpdate({ _id: id }, {
                 $pull: { followers: req.user._id }
             }, { new: true }).populate("following followers", "-password -rf_token -salt");
-            if (!unFollowedUser) {
-                return res.status(400).json(responseDTO.badRequest("This user not found"));
-            }
+            if (!unFollowedUser) return res.status(400).json(responseDTO.badRequest("This user not found or/and not authorized"));
 
             await userModel.findOneAndUpdate({ _id: req.user._id }, { $pull: { following: id } }, { new: true });
             res.status(200).json(responseDTO.success("UnFollowed successfully"));
@@ -126,6 +124,8 @@ class UserController {
             if (posts.length > 0) return res.status(400).json(responseDTO.badRequest("Something wrong"));
 
             const savedPost = await userModel.findOneAndUpdate({ _id: req.user._id }, { $push: { saved: req.params.id } }, { new: true, runValidators: true });
+            if (!savedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist"));
+
             res.json(responseDTO.success("Saved post in successfully", savedPost))
         } catch (error) {
             console.log(error);
@@ -144,7 +144,7 @@ class UserController {
                 { $pull: { saved: req.params.id } },
                 { new: true, runValidators: true }
             );
-
+            if (!savedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist"));
             res.json(responseDTO.success("Saved post in successfully", savedPost))
         } catch (error) {
             console.log(error);
