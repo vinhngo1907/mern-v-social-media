@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
@@ -17,8 +17,15 @@ const RightSideBar = () => {
     const handleSearch = (e)=>{
         e.preventDefault();
     }
-    const handleClose = (e)=>{
+    useEffect(()=>{
+        if(auth.user.following){
+            setUsers(auth.user.following)
+        }
+    },[auth.user.following])
 
+    const handleClose = ()=>{
+        setSearch('');
+        setUsers(auth.user.following);
     }
     return (
         <div className='sidebar static'>
@@ -62,14 +69,16 @@ const RightSideBar = () => {
                 <h4 className="widget-title">Who's Following</h4>
                 <div className="searchDir">
                     <form className="search_form" onSubmit={handleSearch}>
-                        <input className="filterinput" type="text" placeholder="Search Contacts..." />
+                        <input className="filterinput" type="text" placeholder="Search Contacts..." value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        />
                         <div className="search_icon" style={{ opacity: search ? 0 : 0.3 }}>
                             {/* <span className="material-icons">search</span> */}
                             {/* <span>Enter to Search</span> */}
                         </div>
 
                         <div className="close_search" onClick={handleClose}
-                            style={{ opacity: users.length === 0 ? 0 : 1 }} 
+                            style={{ opacity: search ? 1 : 0 }} 
                             >
                             <i className='fas fa-times-circle'/>
                         </div>
@@ -89,7 +98,7 @@ const RightSideBar = () => {
                                 </div>
                                 : <div className="following">
                                     {
-                                        auth?.user.following.map(user => (
+                                        users.map(user => (
                                             <UserCard key={user._id} user={user} type="home" />
                                         ))
                                     }
