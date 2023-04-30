@@ -24,7 +24,7 @@ class PostController {
         try {
             const deletedPost = await postModel.findOneAndDelete({ _id: req.params.id, user: req.user._id });
             if (!deletedPost) return res.status(400).json(responseDTO.badRequest("This post does not exist!"));
-            await commentModel.deleteMany({ postId: deletedPost._id, postUserId: deletedPost.user });
+            await commentModel.deleteMany({ _id: { $in: deletedPost.comments } });
 
             res.status(200).json(responseDTO.success("Deleted post in successfully", deletedPost))
         } catch (error) {
