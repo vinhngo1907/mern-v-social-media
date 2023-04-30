@@ -4,5 +4,6 @@ module.exports = {
     PostController: require("./post.controller"),
     CommentController: require("./comment.controller"),
     UploadController: require("./upload.controller"),
-    NotifyController: require("./notify.controller")
+    NotifyController: require("./notify.controller"),
+    TaskController: require("./notify.controller"),
 }
