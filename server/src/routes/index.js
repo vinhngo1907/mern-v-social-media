@@ -4,6 +4,7 @@ const userRouter = require("./user.routing");
 const postRouter = require("./post.routing");
 const uploadRouter = require("./upload.routing");
 const notifyRouter = require("./notify.routing");
+const statisticRouter = require("./statistic.routing");
 
 const { BASE_URL } = require("../configs");
 
@@ -13,6 +14,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/post", postRouter);
     app.use(BASE_URL + "/upload", uploadRouter);
     app.use(BASE_URL + "/notify", notifyRouter);
+    app.use(BASE_URL + "/stats", statisticRouter);
 }
 
 module.exports = WebRoute;
