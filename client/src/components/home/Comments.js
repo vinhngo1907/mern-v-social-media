@@ -16,13 +16,14 @@ const Comments = ({ post }) => {
     useEffect(() => {
         const newRep = post.comments.filter(cm => cm.replies);
         setReplyComments(newRep);
-    }, [post.comments])
+    }, [post.comments]);
+    
     return (
         <div className="comments">
             {
                 showComments.map((comment, index) => (
                     <CommentDisplay key={index} comment={comment} post={post}
-                        replyCm={replyComments.filter(item => item.reply === comment._id)} />
+                        replyCm={replyComments.filter(item => item.replies === comment._id)} />
                 ))
             }
 
