@@ -1,8 +1,10 @@
 import React from 'react';
 
-const CommentDisplay = () =>{
+const CommentDisplay = ({ comment, post, replyCm }) => {
     return (
-        <></>
+        <div className="comment_display">
+
+        </div>
     )
 }
 
