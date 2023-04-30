@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import UserCard from '../other/UserCard';
 
-const LeftSideBar = ({type}) => {
+const LeftSideBar = ({ type }) => {
     const { auth } = useSelector(state => state);
     // const { pathname } = useLocation();
     const navLink = [
@@ -21,7 +21,7 @@ const LeftSideBar = ({type}) => {
         { path: "timeline-videos.html", icon: "fas fa-power-off", content: "Logout" },
     ]
     return (
-        <div className='sidebar'>
+        <div className='sidebar static'>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Shortcuts</h4>
                 <ul className="sidebar-nav overlay-scrollbar scrollbar-hover">
@@ -38,28 +38,28 @@ const LeftSideBar = ({type}) => {
                 </ul>
             </div>
             {
-                type!== "profile" && <div className='widget mt-3'>
-                <h4 className="widget-title">Who's Following</h4>
-                <ul className='following overlay-scrollbar scrollbar-hover'>
-                {
-                    auth.user.loading
-                        ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
-                            <div className="spinner-border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </div>
-                        </div>
-                        : <div className="following">
-                            {
-                                auth?.user.following.map(user => (
-                                    <UserCard key={user._id} user={user} type="home">
-                                        {/* <FollowBtn user={user} /> */}
-                                    </UserCard>
-                                ))
-                            }
-                        </div>
-                }
-                </ul>
-            </div>
+                type !== "profile" && <div className='widget mt-3'>
+                    <h4 className="widget-title">Who's Following</h4>
+                    <ul className='following overlay-scrollbar scrollbar-hover'>
+                        {
+                            auth.user.loading
+                                ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
+                                    <div className="spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                : <div className="following">
+                                    {
+                                        auth?.user.following.map(user => (
+                                            <UserCard key={user._id} user={user} type="home">
+                                                {/* <FollowBtn user={user} /> */}
+                                            </UserCard>
+                                        ))
+                                    }
+                                </div>
+                        }
+                    </ul>
+                </div>
             }
         </div>
     )

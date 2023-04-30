@@ -78,7 +78,7 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function validatePhone(phone) {
-    const re = /^[+]/g
-    return re.test(phone)
-}
+// function validatePhone(phone) {
+//     const re = /^[+]/g
+//     return re.test(phone)
+// }

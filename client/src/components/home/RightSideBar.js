@@ -14,7 +14,7 @@ const RightSideBar = () => {
     const [likeTab, setLikeTab] = useState(false);
 
     return (
-        <div className='sidebar'>
+        <div className='sidebar static'>
             <div className='widget mt-3'>
                 <h4 className="widget-title">Your page</h4>
                 <div className="your-page">

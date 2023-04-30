@@ -107,9 +107,7 @@ class UserController {
                 { $match: { _id: { $nin: newArr } } },
                 { $sample: { size: Number(num) } },
                 { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followers' } },
-                { $lookup: { from: 'users', localField: 'following', foreignField: '_id', as: 'following' } },
-                // { $lookup: { from: "users", localField: "followers", foreignField: '_id', as: 'followers' } },
-                // { $lookup: { from: "users", localField: "following", foreignField: '_id', as: 'following' } }
+                { $lookup: { from: 'users', localField: 'following', foreignField: '_id', as: 'following' } }
             ]);
             res.status(200).json(responseDTO.success("Get data successfully", {users, result: users.length}))
         } catch (error) {

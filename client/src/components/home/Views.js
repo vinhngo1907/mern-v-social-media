@@ -5,7 +5,7 @@ import Avatar from "../other/Avatar";
 const Views = ({ auth }) => {
     return (
         <div className="tab-pane fade active show" id="link2">
-            <span><i className="ti-eye"></i>440</span>
+            <span><i className="fas fa-eye"/>440</span>
             <Link to="#" title="weekly-likes">440 new views this week</Link>
             <div className="users-thumb-list">
                 <Link to="#" title="" data-toggle="tooltip" data-original-title="Anderw">

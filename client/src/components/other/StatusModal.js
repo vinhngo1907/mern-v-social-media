@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import Icons from './Icons';
@@ -12,6 +12,9 @@ const StatusModal = () => {
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [stream, setStream] = useState(false);
+    const videoRef = useRef();
+    const canvasRef = useRef();
+    const [tracks, setTracks] = useState('');
 
     useEffect(() => {
         if (status.onEdit) {
@@ -43,10 +46,33 @@ const StatusModal = () => {
         setImages(newArr)
     }
     const handleStream = (e) => {
+        setStream(true);
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getDisplayMedia({ video: true })
+                .then(mediaStream => {
+                    videoRef.current.srcObject = mediaStream;
+                    videoRef.current.play()
 
+                    const track = mediaStream.getTracks()
+                    setTracks(track[0])
+                }).catch(err => console.log(err))
+        }
     }
     const handleCapture = (e) => {
+        const width = videoRef.current.clientWidth;
+        const height = videoRef.current.clientHeight;
 
+        canvasRef.current.setAttribute("width", width)
+        canvasRef.current.setAttribute("height", height)
+
+        const ctx = canvasRef.current.getContext('2d')
+        ctx.drawImage(videoRef.current, 0, 0, width, height)
+        let URL = canvasRef.current.toDataURL()
+        setImages([...images, { camera: URL }])
+    }
+    const handleStopStream = () => {
+        tracks.stop()
+        setStream(false)
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -89,11 +115,20 @@ const StatusModal = () => {
                     </textarea>
                     <div className='d-flex'>
                         <div className='flex-fill'></div>
-                        {/* stream */}
+                        {
+                            stream &&
+                            <div className="stream position-relative">
+                                <video autoPlay muted ref={videoRef} width="100%" height="100%"
+                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
+
+                                <span onClick={handleStopStream}>&times;</span>
+                                <canvas ref={canvasRef} style={{ display: 'none' }} />
+                            </div>
+                        }
                         <div className="input_images">
                             {
                                 stream
-                                    ? <i className="fas fa-video" onClick={handleCapture} style={{ fontSize: "18px" }} />
+                                    ? <i className="fas fa-camera" onClick={handleCapture} style={{ fontSize: "18px" }} />
                                     : <>
                                         <div className='file_upload'>
                                             <i className="fas fa-camera" onClick={handleStream} style={{ fontSize: "18px" }} />
