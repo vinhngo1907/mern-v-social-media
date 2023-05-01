@@ -130,6 +130,15 @@ class PostController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async GetSavedPosts(req,res){
+        try {
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = PostController;
