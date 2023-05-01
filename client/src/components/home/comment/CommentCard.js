@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputComment from '../InputComment';
 
 const CommentCard = ({ children, comment, post, commentId }) => {
-    console.log({comment})
     const { auth, theme } = useSelector(state => state)
     const dispatch = useDispatch()
 
