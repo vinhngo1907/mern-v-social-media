@@ -36,17 +36,27 @@ class CommentController {
     }
     async UpdateComment(req, res) {
         try {
-            
+
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    async LikeComment(req,res) {
+    async LikeComment(req, res) {
+        try {
 
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
     }
-    async UnLikeComment(req,res){
-        
+    async UnLikeComment(req, res) {
+        try {
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
     }
     async RemoveComment(req, res) {
         try {
