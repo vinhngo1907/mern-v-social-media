@@ -6,9 +6,10 @@ const CommentDisplay = ({ comment, post, replyCm }) => {
     const [next, setNext] = useState(1);
 
     useEffect(() => {
-        console.log(replyCm)
+        // console.log(replyCm)
         setShowRep(replyCm.slice(replyCm.length - next))
-    }, [replyCm, next])
+    }, [replyCm, next]);
+    
     return (
         <div className="comment_display">
             <CommentCard comment={comment} post={post} commentId={comment._id} >

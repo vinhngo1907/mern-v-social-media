@@ -22,7 +22,7 @@ const Profile = () => {
         <div className="posts">
             {
                 post.length === 0 &&  <div className="mx-auto d-block spinner-border text-dark my-4">
-                <span class="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
             </div>
             }
             {

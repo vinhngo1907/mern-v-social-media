@@ -40,10 +40,10 @@ const Search = () => {
                 {
                     loading
                         ?
-                        <div class="spinner-border text-dark position-absolute mt-2"
+                        <div className="spinner-border text-dark position-absolute mt-2"
                             style={{ width: '30px', height: "30px", right: "15px" }}
                             role="status">
-                            <span class="sr-only">Loading...</span>
+                            <span className="sr-only">Loading...</span>
                         </div>
                         :
                         <div className="close_search" onClick={handleClose} style={{ opacity: users.length === 0 ? 0 : 1 }}>
