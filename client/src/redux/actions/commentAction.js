@@ -9,7 +9,9 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
         const data = { ...newComment, postId: post._id, postUserId: post.user._id }
         const res = await postDataApi('comment', data, auth.token);
 
-        const newPost = { ...post, comments: [...post.comments, newPost] }
+        const newData = {...res.data.results}
+        const newPost = { ...post, comments: [...post.comments, newData] }
+        
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
 
