@@ -5,7 +5,7 @@ const commentSchema = new mongoose.Schema({
     likes: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
     tag: Object,
     replies: mongoose.Types.ObjectId,
-    user: mongoose.Types.ObjectId,
+    user: {type:mongoose.Types.ObjectId, ref: 'user'},
     postId: mongoose.Types.ObjectId,
     postUserId: mongoose.Types.ObjectId
 }, { timestamps: true });

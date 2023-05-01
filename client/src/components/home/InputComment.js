@@ -24,7 +24,9 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
             createdAt: new Date().toISOString()
         }
 
-        dispatch(CreateComment({post,newComment, auth}))
+        dispatch(CreateComment({post,newComment, auth}));
+
+        if(setOnReply) return setOnReply(false);
     }
     return (
         <div className='post-comment'>

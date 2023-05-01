@@ -2,8 +2,7 @@
 
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
-const { postModel } = require("../db/models");
-const { commentModel } = modelSchema;
+const { postModel, commentModel } = require("../db/models");
 
 class CommentController {
     async GetAllComments(req, res) {
