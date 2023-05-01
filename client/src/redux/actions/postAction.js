@@ -67,3 +67,13 @@ export const unLikePost = ({ post, auth }) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
+
+export const getPost = ({postDetail, id, auth}) => async(dispatch) =>{
+    try{
+        
+        const res = await getDataApi(`post/${id}`,auth.token);
+
+    }catch(err){
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+    }
+}

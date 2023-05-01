@@ -9,6 +9,7 @@ import suggestion from './suggestionReducer';
 import profile from './profileReducer';
 import homePosts from './postReducer'
 import notify from './notifyReducer';
+import postDetail from './postDetailReducer';
 
 export default combineReducers({
     auth,
@@ -19,5 +20,6 @@ export default combineReducers({
     suggestion,
     profile,
     homePosts,
-    notify
+    notify,
+    postDetail
 })
