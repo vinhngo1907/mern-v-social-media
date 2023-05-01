@@ -1,5 +1,4 @@
 # dependencies
-request.http
 /node_modules
 dump.rdb
 npm-debug.log
@@ -9,3 +8,4 @@ package-*.json
 /.vscode
 .DS_Store
 tmp
+request.http
