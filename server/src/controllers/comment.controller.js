@@ -5,15 +5,6 @@ const { modelSchema } = require("../db");
 const { postModel, commentModel } = require("../db/models");
 
 class CommentController {
-    async GetAllComments(req, res) {
-        try {
-
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
     async CreateComment(req, res) {
         try {
             const postExist = await postModel.findOne({
@@ -43,7 +34,20 @@ class CommentController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    async UpdateComment(req, res) {
+        try {
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async LikeComment(req,res) {
 
+    }
+    async UnLikeComment(req,res){
+        
+    }
     async RemoveComment(req, res) {
         try {
 

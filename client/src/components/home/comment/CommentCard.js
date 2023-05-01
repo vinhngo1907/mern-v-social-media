@@ -109,7 +109,11 @@ const CommentCard = ({ children, comment, post, commentId }) => {
 
                                 : <small className="font-weight-bold mr-3"
                                     onClick={handleReply}>
-                                    {onReply ? 'cancel' : 'reply'}
+                                    {
+                                        onReply ? 'cancel' 
+                                        :<i class="fa fa-reply text-primary" />
+                                        // : 'reply'
+                                    }
                                 </small>
                         }
 

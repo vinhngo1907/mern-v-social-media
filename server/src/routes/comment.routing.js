@@ -4,10 +4,10 @@ const { userAuth } = require('../middleware');
 const { CommentController } = require("../controllers")
 const commentCtrl = new CommentController();
 
-router.get("/", userAuth, commentCtrl.GetAllComments);
 router.post("/", userAuth, commentCtrl.CreateComment);
-// router.delete("/", userAuth, commentCtrl.GetAllComments);
-// router.patch("/", userAuth, commentCtrl.GetAllComments);
-// router.put("/", userAuth, commentCtrl.GetAllComments);
+router.put("/:id", userAuth, commentCtrl.UpdateComment);
+router.delete("/:id", userAuth, commentCtrl.RemoveComment);
+router.patch("/:id/like", userAuth, commentCtrl.LikeComment);
+router.patch("/:id/unlike", userAuth, commentCtrl.UnLikeComment);
 
 module.exports = router;
