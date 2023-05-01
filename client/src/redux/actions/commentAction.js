@@ -9,9 +9,9 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
         const data = { ...newComment, postId: post._id, postUserId: post.user._id }
         const res = await postDataApi('comment', data, auth.token);
 
-        const newData = {...res.data.results}
+        const newData = { ...res.data.results, user: auth.user }
         const newPost = { ...post, comments: [...post.comments, newData] }
-        
+
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
 
@@ -25,9 +25,31 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
             image: post.images[0].url
         }
 
-
-
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 } 
+
+export const likeComment = ({comment, auth}) => async (dispatch) =>{
+    try {
+        
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}
+
+export const unLikeComment = ({comment, auth}) => async (dispatch) =>{
+    try {
+        
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}
+
+export const updateComment = ({comment, auth}) => async (dispatch) =>{
+    try {
+        
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}
