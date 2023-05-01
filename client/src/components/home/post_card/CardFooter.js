@@ -5,35 +5,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { likePost, unLikePost } from "../../../redux/actions/postAction";
 
 const CardFooter = ({ post }) => {
-    const { auth } = useSelector(state => state);
     const [isLike, setIsLike] = useState(false);
     // const [isShare, setIsShare] = useState(false);
-    const [loadLike, setLoadLike] = useState(false);
+    // const [isSaved, setIsSaved] = useState(false);
+    // const [loadLike, setLoadLike] = useState(false);
+
+    const { auth } = useSelector(state => state);
     const dispatch = useDispatch();
 
     // likes
     useEffect(() => {
-        if(post.likes.find(p => p._id === auth.user._id)){
+        if (post.likes.find(p => p._id === auth.user._id)) {
             setIsLike(true);
-        }else{
+        } else {
             setIsLike(false);
         }
-    },[post.likes, auth.user._id])
+    }, [post.likes, auth.user._id])
 
-    const handleLike = () => {
-        if(loadLike) return;
-        
-        setLoadLike(true)
-        dispatch(likePost({ post, auth }))
-        setIsLike(false);
+    const handleLike = async () => {
+        // if (loadLike) return;
+
+        // setLoadLike(true)
+        // console.log("asdasd")
+        await dispatch(likePost({ post, auth }))
+        // setIsLike(false);
     }
 
-    const handleUnLike = () => {
-        if(loadLike) return;
-        
-        setLoadLike(true)
-        dispatch(unLikePost({ post, auth }));
-        setIsLike(false)
+    const handleUnLike = async () => {
+        // if(loadLike) return;
+
+        // setLoadLike(true)
+        // console.log("asdasd")
+        await dispatch(unLikePost({ post, auth }));
+        // setIsLike(false)
     }
 
     return (

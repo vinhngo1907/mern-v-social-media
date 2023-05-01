@@ -41,7 +41,8 @@ const postReducer = (state = initialSatate, action) => {
 		case POST_TYPES.UPDATE_POST:
 			return {
 				...state,
-				posts: EditData(state.posts, payload._id, payload)
+				// posts: EditData(state.posts, payload._id, payload)
+                posts: EditData(state.posts, action.payload._id, action.payload)
 			}
 
 		default:
