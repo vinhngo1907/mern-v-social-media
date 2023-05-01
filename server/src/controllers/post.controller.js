@@ -110,6 +110,26 @@ class PostController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async GetPost(req, res) {
+        try {
+            const post = await postModel.findById(req.params.id)
+            .populate("user likes", ["avatar", "fullname", "username", "following", "followers"])
+            .populate({
+                path:"comments",
+                populate:{
+                    path: "user likes",
+                    select: "avatar fullname username following followers"
+                }
+            });
+            if (!post) return res.status(400).json(responseDTO.badRequest("This post not found or/and user not authorized"));
+
+            res.json(responseDTO.success("Get post in successfully", post))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = PostController;

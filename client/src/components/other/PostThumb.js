@@ -11,7 +11,7 @@ const PostThumb = ({ posts, result }) => {
         <div className='post_thumb'>
             {
                 posts.map((post, index) => (
-                    <Link to={`/posts/${post._id}`} key={`${post._id}`}>
+                    <Link to={`/post/${post._id}`} key={`${post._id}`}>
                         <div className="post_thumb_display">
                             {
                                 post.images[0].url.match(/video/i)
