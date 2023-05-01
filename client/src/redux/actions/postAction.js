@@ -50,6 +50,14 @@ export const editPost = (data) => async (dispatch) => {
     }
 }
 
+export const deletePost = ({post, auth}) => (dispatch)=>{
+    try {
+        
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}
+
 export const likePost = ({ post, auth }) => async (dispatch) => {
     try {
 

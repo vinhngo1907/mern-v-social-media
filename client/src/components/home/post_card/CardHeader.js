@@ -1,22 +1,27 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import moment from 'moment'
 import Avatar from "../../other/Avatar";
+import { BASE_URL } from "../../../utils/constants";
+import { deletePost } from "../../../redux/actions/postAction";
 
 const CardHeader = ({ post }) => {
     const { auth } = useSelector(state => state);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // const history = useHistory();
+    const history = useHistory();
     const handleCopyLink = () => {
-
+        navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
     }
     const handleEditPost = () => {
 
     }
     const handleDeletePost = () => {
-
+        if (window.confirm("Are you sure?")) {
+            dispatch(deletePost({ post, auth }))
+            return history.push("/");
+        }
     }
     return (
         <div className="card_header">
