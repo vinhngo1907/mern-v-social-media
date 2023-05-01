@@ -58,6 +58,6 @@ router.patch('/:id/like', userAuth, postCtrl.LikePost)
  * @desc Unlike post
  * @access Private
 */
-router.patch('/:id/un-like', userAuth, postCtrl.UnLikePost)
+router.patch('/:id/unlike', userAuth, postCtrl.UnLikePost)
 
 module.exports = router

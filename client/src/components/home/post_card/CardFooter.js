@@ -8,6 +8,7 @@ const CardFooter = ({ post }) => {
     const { auth } = useSelector(state => state);
     const [isLike, setIsLike] = useState(false);
     // const [isShare, setIsShare] = useState(false);
+    const [loadLike, setLoadLike] = useState(false);
     const dispatch = useDispatch();
 
     // likes
@@ -20,11 +21,19 @@ const CardFooter = ({ post }) => {
     },[post.likes, auth.user._id])
 
     const handleLike = () => {
+        if(loadLike) return;
+        
+        setLoadLike(true)
         dispatch(likePost({ post, auth }))
+        setIsLike(false);
     }
 
     const handleUnLike = () => {
-        dispatch(unLikePost({ post, auth }))
+        if(loadLike) return;
+        
+        setLoadLike(true)
+        dispatch(unLikePost({ post, auth }));
+        setIsLike(false)
     }
 
     return (

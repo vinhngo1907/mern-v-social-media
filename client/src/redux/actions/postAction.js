@@ -1,4 +1,4 @@
-import { getDataApi, postDataApi } from "../../utils/fetchData";
+import { getDataApi, patchDataApi, postDataApi } from "../../utils/fetchData";
 import { imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
 
@@ -50,17 +50,20 @@ export const editPost = (data) => async (dispatch) => {
     }
 }
 
-export const deletePost = ({post, auth}) => (dispatch)=>{
+export const deletePost = ({ post, auth }) => (dispatch) => {
     try {
-        
+
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
 
 export const likePost = ({ post, auth }) => async (dispatch) => {
+    const newPost = { ...post, likes: [...post.likes, auth.user] }
     try {
 
+        dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+        await patchDataApi(`post/${post._id}/like`, null, auth.token);
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
@@ -68,8 +71,10 @@ export const likePost = ({ post, auth }) => async (dispatch) => {
 }
 
 export const unLikePost = ({ post, auth }) => async (dispatch) => {
+    const newPost = { ...post, likes: post.likes.filter(l => l._id !== auth.user._id)}
     try {
-
+        dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+        await patchDataApi(`post/${post._id}/unlike`, null, auth.token);
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
