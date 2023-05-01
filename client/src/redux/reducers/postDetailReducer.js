@@ -1,12 +1,6 @@
 import { EditData } from '../actions/globalTypes';
 import { POST_TYPES } from '../actions/postAction';
 
-const initialSatate = {
-    loading: false,
-    posts: [],
-    page: 2,
-    result: 0
-}
 const postDetailReducer = (state = [], action) => {
     switch (action.type) {
         case POST_TYPES.GET_POST:

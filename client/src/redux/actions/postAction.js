@@ -68,12 +68,15 @@ export const unLikePost = ({ post, auth }) => async (dispatch) => {
     }
 }
 
-export const getPost = ({postDetail, id, auth}) => async(dispatch) =>{
-    try{
-        
-        const res = await getDataApi(`post/${id}`,auth.token);
+export const getPost = ({ postDetail, id, auth }) => async (dispatch) => {
 
-    }catch(err){
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+    if (postDetail.every(p => p._id !== id)) {
+        try {
+            const res = await getDataApi(`post/${id}`, auth.token);
+            dispatch({ type: POST_TYPES.GET_POST, payload: res.data.results })
+        } catch (err) {
+            dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+        }
     }
+
 }
