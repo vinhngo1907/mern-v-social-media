@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 import Avatar from '../other/Avatar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icons from "../other/Icons";
+import { CreateComment } from '../../redux/actions/commentAction';
 
 const InputComment = ({ children, post, onReply, setOnReply }) => {
     const { auth, theme } = useSelector(state => state);
     const [content, setContent] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(!content.trim()){
+            if(setOnReply) return setOnReply(false);
+            return
+        }
+        const newComment = {
+            content,
+            likes:[],
+            user: auth.user,
+            reply: onReply && onReply.commentId,
+            tag: onReply && onReply.user,
+            createdAt: new Date().toISOString()
+        }
+
+        dispatch(CreateComment({post,newComment, auth}))
     }
     return (
         <div className='post-comment'>

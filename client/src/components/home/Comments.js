@@ -8,13 +8,13 @@ const Comments = ({ post }) => {
     const [replyComments, setReplyComments] = useState([]);
 
     useEffect(() => {
-        const newCm = post.comments.filter(cm => !cm.replies);
+        const newCm = post.comments.filter(cm => !cm.reply);
         setComments(newCm);
         setShowComments(newCm.slice(newCm.length - next))
     }, [post.comments, next])
 
     useEffect(() => {
-        const newRep = post.comments.filter(cm => cm.replies);
+        const newRep = post.comments.filter(cm => cm.reply);
         setReplyComments(newRep);
     }, [post.comments]);
     
@@ -23,7 +23,7 @@ const Comments = ({ post }) => {
             {
                 showComments.map((comment, index) => (
                     <CommentDisplay key={index} comment={comment} post={post}
-                        replyCm={replyComments.filter(item => item.replies === comment._id)} />
+                        replyCm={replyComments.filter(item => item.reply === comment._id)} />
                 ))
             }
 
