@@ -21,10 +21,10 @@ const CommentCard = ({ children, comment, post, commentId }) => {
         setContent(comment.content)
         setIsLike(false)
         setOnReply(false)
-        if(comment.likes.find(like => like._id === auth.user._id)){
+        if (comment.likes.find(like => like._id === auth.user._id)) {
             setIsLike(true)
         }
-    },[comment, auth.user._id])
+    }, [comment, auth.user._id])
 
     const handleLike = (e) => {
 
@@ -48,11 +48,44 @@ const CommentCard = ({ children, comment, post, commentId }) => {
 
     return (
         <div className="comment_card mt-2" style={styleCard}>
-            <Link to={`/profile/${comment?.user._id}`} className="d-flex text-dark">
-                <Avatar src={comment.user.avatar} size="small-avatar" />
-                <h6 className="mx-1">{comment.user.username}</h6>
-            </Link>
+            <div className='d-flex align-items-center justify-content-between'>
+                <Link to={`/profile/${comment?.user._id}`} className="d-flex text-dark">
+                    <Avatar src={comment.user.avatar} size="small-avatar" />
+                    <h5 className="mx-1">{comment.user.username}</h5>
+                </Link>
+                <div style={{ cursor: 'pointer' }}>
+                    <small className="text-muted mr-3">
+                        {moment(comment.createdAt).fromNow()}
+                    </small>
 
+                    <small className="font-weight-bold mr-3">
+                        {comment.likes.length} likes
+                    </small>
+
+                    {
+                        onEdit
+                            ? <>
+                                <small className="font-weight-bold mr-3"
+                                    onClick={handleUpdate}>
+                                    update
+                                </small>
+                                <small className="font-weight-bold mr-3"
+                                    onClick={() => setOnEdit(false)}>
+                                    cancel
+                                </small>
+                            </>
+
+                            : <small className="font-weight-bold mr-3"
+                                onClick={handleReply}>
+                                {
+                                    onReply ? 'cancel' : <i className="fa fa-reply text-primary" />
+                                    // : 'reply'
+                                }
+                            </small>
+                    }
+
+                </div>
+            </div>
             <div className="comment_content">
                 <div className="flex-fill"
                     style={{
@@ -85,39 +118,7 @@ const CommentCard = ({ children, comment, post, commentId }) => {
                                 }
                             </div>
                     }
-                    <div style={{ cursor: 'pointer' }}>
-                        <small className="text-muted mr-3">
-                            {moment(comment.createdAt).fromNow()}
-                        </small>
 
-                        <small className="font-weight-bold mr-3">
-                            {comment.likes.length} likes
-                        </small>
-
-                        {
-                            onEdit
-                                ? <>
-                                    <small className="font-weight-bold mr-3"
-                                        onClick={handleUpdate}>
-                                        update
-                                    </small>
-                                    <small className="font-weight-bold mr-3"
-                                        onClick={() => setOnEdit(false)}>
-                                        cancel
-                                    </small>
-                                </>
-
-                                : <small className="font-weight-bold mr-3"
-                                    onClick={handleReply}>
-                                    {
-                                        onReply ? 'cancel' 
-                                        :<i className="fa fa-reply text-primary" />
-                                        // : 'reply'
-                                    }
-                                </small>
-                        }
-
-                    </div>
                 </div>
                 <div className="d-flex align-items-center mx-2" style={{ cursor: 'pointer' }}>
                     <CommentMenu post={post} comment={comment} setOnEdit={setOnEdit} />
