@@ -23,9 +23,9 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
             tag: onReply && onReply.user,
             createdAt: new Date().toISOString()
         }
-
+        
         dispatch(CreateComment({ post, newComment, auth }));
-
+        setContent('');
         if (setOnReply) return setOnReply(false);
     }
     return (

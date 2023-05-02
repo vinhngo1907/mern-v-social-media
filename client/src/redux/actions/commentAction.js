@@ -17,7 +17,6 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
 
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
-
         // Notify
         const msg = {
             id: res.data.results._id,

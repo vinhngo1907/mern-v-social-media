@@ -59,7 +59,7 @@ const CommentCard = ({ children, comment, post, commentId }) => {
     }
 
     return (
-        <div className="comment_card mt-2" style={styleCard}>
+        <div className={`comment_card mt-2 ${comment.tag ? 'reply' : ''}`} style={styleCard}>
             <div className='d-flex align-items-center justify-content-between'>
                 <Link to={`/profile/${comment?.user._id}`} className="d-flex text-dark">
                     <Avatar src={comment.user.avatar} size="small-avatar" />

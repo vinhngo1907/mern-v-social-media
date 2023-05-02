@@ -80,6 +80,11 @@
     align-items: center;
 }
 
+.comment_card.reply{
+    margin-left: 25px;
+    padding-left: 0;
+}
+
 /* .comment_card .comment_content ::before,
 .peoples-mesg-box > ul > li p:before {
     border-bottom: 10px solid transparent;
