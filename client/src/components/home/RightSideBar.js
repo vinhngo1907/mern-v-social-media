@@ -98,8 +98,8 @@ const RightSideBar = () => {
                                 </div>
                                 : <div className="following">
                                     {
-                                        users.map(user => (
-                                            <UserCard key={user._id} user={user} type="home" />
+                                        users.map((user, index) => (
+                                            <UserCard key={user ? user._id : index} user={user} type="home" />
                                         ))
                                     }
                                 </div>

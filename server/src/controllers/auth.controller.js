@@ -143,7 +143,7 @@ class AuthController {
             }
             const user = await userModel.findOne({
                 email: email
-            });
+            }).populate("following followers", "avatar fullname username email");
             const password = email + GG_SECRET;
             const salt = await passwordUtil.GenerateSalt();
             const hashedPassword = await passwordUtil.GeneratePassword(password, salt)
