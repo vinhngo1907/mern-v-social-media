@@ -49,8 +49,10 @@ const CommentCard = ({ children, comment, post, commentId }) => {
     }
 
     const handleReply = (e) => {
-
+        if (onReply) return setOnReply(false);
+        setOnReply({ ...comment, commentId })
     }
+    
     const styleCard = {
         opacity: comment._id ? 1 : 0.5,
         pointerEvents: comment._id ? 'inherit' : 'none'
