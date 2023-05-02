@@ -1,0 +1,5 @@
+export const DISCOVER_TYPES = {
+    LOADING: 'LOADING',
+    GET_POSTS: 'GET_POSTS',
+    UPDATE_POST: 'UPDATE_POST'
+}

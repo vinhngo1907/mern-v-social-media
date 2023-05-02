@@ -134,7 +134,11 @@ class PostController {
 
     async GetDiscoverPosts(req, res) {
         try {
-
+            const posts = await postModel.aggregate([
+                { $match: { user: { $nin: [...req.user.following, req.user._id] } } },
+                { $sample: { size: Number(req.query.num) || 9 } }
+            ]);
+            res.json(responseDTO.success("Get data successfully", posts))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -179,21 +183,20 @@ class PostController {
     }
 
     async GetSavedPosts(req, res) {
-        // console.log("asdasdasdasdas")
         try {
             const features = new APIFeatures(postModel.find({
                 _id: { $in: req.user.saved }
             }), req.query).paginating();
 
             const posts = await features.query.sort("-createdAt")
-            .populate("user likes", "avatar fullname username following followers")
-            .populate({
-                path:"comments",
-                populate:{
-                    path:"user likes",
-                    select: "avatar fullname username following followers"
-                }
-            })
+                .populate("user likes", "avatar fullname username following followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "avatar fullname username following followers"
+                    }
+                })
 
             res.json(responseDTO.success("Get data in successfully", posts))
         } catch (error) {

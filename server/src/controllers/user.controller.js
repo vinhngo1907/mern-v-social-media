@@ -39,6 +39,7 @@ class UserController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
     async UpdateProfile(req, res) {
         try {
             const { fullname, avatar, gender, } = req.body;
