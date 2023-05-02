@@ -72,7 +72,7 @@ class PostController {
         try {
             const { id } = req.params;
             const features = new APIFeatures(postModel.find({ user: id }), req.query).paginating().sorting();
-            
+
             const posts = await features.query
                 .populate("user likes", "username email avatar followers following")
                 .populate({
@@ -115,14 +115,14 @@ class PostController {
     async GetPost(req, res) {
         try {
             const post = await postModel.findById(req.params.id)
-            .populate("user likes", ["avatar", "fullname", "username", "following", "followers"])
-            .populate({
-                path:"comments",
-                populate:{
-                    path: "user likes",
-                    select: "avatar fullname username following followers"
-                }
-            });
+                .populate("user likes", ["avatar", "fullname", "username", "following", "followers"])
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "avatar fullname username following followers"
+                    }
+                });
             if (!post) return res.status(400).json(responseDTO.badRequest("This post not found or/and user not authorized"));
 
             res.json(responseDTO.success("Get post in successfully", post))
@@ -132,9 +132,9 @@ class PostController {
         }
     }
 
-    async GetDiscoverPosts(req,res){
+    async GetDiscoverPosts(req, res) {
         try {
-            
+
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -178,9 +178,24 @@ class PostController {
         }
     }
 
-    async GetSavedPosts(req,res){
+    async GetSavedPosts(req, res) {
+        // console.log("asdasdasdasdas")
         try {
-            const posts = await postModel.find()
+            const features = new APIFeatures(postModel.find({
+                _id: { $in: req.user.saved }
+            }), req.query).paginating();
+
+            const posts = await features.query.sort("-createdAt")
+            .populate("user likes", "avatar fullname username following followers")
+            .populate({
+                path:"comments",
+                populate:{
+                    path:"user likes",
+                    select: "avatar fullname username following followers"
+                }
+            })
+
+            res.json(responseDTO.success("Get data in successfully", posts))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

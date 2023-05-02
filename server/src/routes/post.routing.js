@@ -12,6 +12,13 @@ const postCtrl = new PostController();
 router.get('/', userAuth, postCtrl.GetAllPosts)
 
 /**
+ * @route GET api/post/saved
+ * @desc Get saved posts
+ * @access Private
+ */
+router.get('/user/saved', userAuth, postCtrl.GetSavedPosts)
+
+/**
  * @route GET api/post
  * @desc Get posts
  * @access Private

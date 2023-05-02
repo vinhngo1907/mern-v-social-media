@@ -12,7 +12,7 @@ const WebRoute = require('./routes');
 module.exports = async (app) => {
     app.enable('trust proxy');
     app.use(helmet());
-    app.use(morgan('common'));
+    // app.use(morgan('common'));
     app.use(express.json());
     app.use(cors({
         origin: "*"

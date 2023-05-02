@@ -35,7 +35,9 @@ const UserSchema = new Schema({
 	story: { type: String },
 	followers: [{ type: Schema.Types.ObjectId, ref: "user" }],
 	following: [{ type: Schema.Types.ObjectId, ref: "user" }],
-	saved: [{ type: Schema.Types.ObjectId, ref: "user" }],
+	saved: [{
+		type: mongoose.Types.ObjectId
+	}],
 	salt: { type: String },
 	type: { type: String, default: "register" },
 	rf_token: { type: String }
