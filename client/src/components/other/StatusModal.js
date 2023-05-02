@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import Icons from './Icons';
 import { imageShow, videoShow } from '../../utils/mediaShow';
-import { createPost } from '../../redux/actions/postAction';
+import { createPost, editPost } from '../../redux/actions/postAction';
 
 const StatusModal = () => {
     const { auth, theme, status } = useSelector(state => state)
@@ -82,7 +82,7 @@ const StatusModal = () => {
         //     });
 
         if (status.onEdit) {
-
+            dispatch(editPost({content, images, auth, status}))
         } else {
             dispatch(createPost({ content, images, auth }))
         }

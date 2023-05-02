@@ -41,7 +41,7 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
     }
 }
 
-export const editPost = (data) => async (dispatch) => {
+export const editPost = ({ content, images, auth, status }) => async (dispatch) => {
     try {
 
     } catch (err) {
@@ -71,8 +71,8 @@ export const likePost = ({ post, auth }) => async (dispatch) => {
 }
 
 export const unLikePost = ({ post, auth }) => async (dispatch) => {
-    console.log({post})
-    const newPost = { ...post, likes: post.likes.filter(l => l._id !== auth.user._id)}
+    console.log({ post })
+    const newPost = { ...post, likes: post.likes.filter(l => l._id !== auth.user._id) }
     try {
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
         await patchDataApi(`post/${post._id}/unlike`, null, auth.token);
