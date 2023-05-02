@@ -1,14 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { removeComment } from "../../../redux/actions/commentAction"
 
-const CommentMenu = ({post, comment, setOnEdit}) =>{
+const CommentMenu = ({ post, comment, setOnEdit }) => {
     const { auth } = useSelector(state => state)
     const dispatch = useDispatch();
-    const handleRemove = (e)=>{
-        
+
+    const handleRemove = () => {
+        if (window.confirm("Are you sure?")) {
+            dispatch(removeComment({ comment, post, auth }));
+        }
     }
+
     const MenuItem = () => {
-        return(
+        return (
             <>
                 <div className="dropdown-item" onClick={() => setOnEdit(true)}>
                     <span className="material-icons">create</span> Edit
@@ -19,6 +24,7 @@ const CommentMenu = ({post, comment, setOnEdit}) =>{
             </>
         )
     }
+
     return (
         <div className='menu'>
             {
@@ -31,12 +37,12 @@ const CommentMenu = ({post, comment, setOnEdit}) =>{
                     <div className="dropdown-menu" aria-labelledby="moreLink">
                         {
                             post.user._id === auth.user._id
-                            ? comment.user._id === auth.user._id
-                                ? MenuItem()
-                                : <div className="dropdown-item" onClick={handleRemove}>
-                                    <span className="material-icons">delete_outline</span> Remove
-                                </div>
-                            : comment.user._id === auth.user._id && MenuItem()
+                                ? comment.user._id === auth.user._id
+                                    ? MenuItem()
+                                    : <div className="dropdown-item" onClick={handleRemove}>
+                                        <span className="material-icons">delete_outline</span> Remove
+                                    </div>
+                                : comment.user._id === auth.user._id && MenuItem()
                         }
                     </div>
 

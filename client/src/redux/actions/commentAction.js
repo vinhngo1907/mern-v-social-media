@@ -56,3 +56,11 @@ export const updateComment = ({ comment, post, auth }) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
+
+export const removeComment = ({comment, post, auth}) => async (dispatch) =>{
+    try {
+
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    }
+}
