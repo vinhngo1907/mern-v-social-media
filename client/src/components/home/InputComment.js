@@ -11,22 +11,22 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!content.trim()){
-            if(setOnReply) return setOnReply(false);
+        if (!content.trim()) {
+            if (setOnReply) return setOnReply(false);
             return
         }
         const newComment = {
             content,
-            likes:[],
+            likes: [],
             user: auth.user,
             reply: onReply && onReply.commentId,
             tag: onReply && onReply.user,
             createdAt: new Date().toISOString()
         }
 
-        dispatch(CreateComment({post,newComment, auth}));
+        dispatch(CreateComment({ post, newComment, auth }));
 
-        if(setOnReply) return setOnReply(false);
+        if (setOnReply) return setOnReply(false);
     }
     return (
         <div className='post-comment'>
