@@ -14,7 +14,7 @@ const discoverReducer = (state = initialState, action) => {
         case DISCOVER_TYPES.LOADING:
             return {
                 ...state,
-                loading: true
+                loading: payload
             }
         case DISCOVER_TYPES.GET_POSTS:
             return {

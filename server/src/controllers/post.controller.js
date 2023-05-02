@@ -96,12 +96,12 @@ class PostController {
             }), req.query).paginating().sorting();
 
             const posts = await features.query
-                .populate("user likes", "username fullname avatar following followers")
+                .populate("user likes", "username fullname avatar following followers email")
                 .populate({
                     path: "comments",
                     populate: {
                         path: "user likes",
-                        select: "-password -rf_token -salt -__V"
+                        select: "username fullname avatar following followers email"
                     }
                 });
 
