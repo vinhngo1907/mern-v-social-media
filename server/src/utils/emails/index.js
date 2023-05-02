@@ -20,8 +20,16 @@ class Mailer {
         );
 
         oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+        google.options({ auth: oAuth2Client });
         try {
-            const access_token = await oAuth2Client.getAccessToken();
+            // const access_token = await oAuth2Client.getAccessToken();
+            const access_token = new Promise((resolve, reject) => {
+                oAuth2Client.getAccessToken((err, token) => {
+                    if (err) console.log(err); // Handling the errors
+                    else resolve(token);
+                });
+            });
             const transport = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
@@ -37,7 +45,7 @@ class Mailer {
                 from: SENDER_MAIL,
                 to: this.to,
                 subject: "V-Social-Media-NetWork",
-                html: require("./template.email")({url: this.url, txt: this.txt, CLIENT_URL})
+                html: require("./template.email")({ url: this.url, txt: this.txt, CLIENT_URL })
             }
 
             const result = await transport.sendMail(mailOptions);
