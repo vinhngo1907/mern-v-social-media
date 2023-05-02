@@ -38,7 +38,7 @@ export const likeComment = ({comment, auth}) => async (dispatch) =>{
     }
 }
 
-export const unLikeComment = ({comment, auth}) => async (dispatch) =>{
+export const unLikeComment = ({comment,post, auth}) => async (dispatch) =>{
     try {
         
     } catch (err) {
@@ -46,7 +46,7 @@ export const unLikeComment = ({comment, auth}) => async (dispatch) =>{
     }
 }
 
-export const updateComment = ({comment, auth}) => async (dispatch) =>{
+export const updateComment = ({comment,post, auth}) => async (dispatch) =>{
     try {
         
     } catch (err) {

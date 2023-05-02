@@ -6,6 +6,7 @@ import InputComment from '../InputComment';
 import CommentMenu from './CommentMenu';
 import LikeButton from '../../other/LikeButton';
 import moment from 'moment';
+import { likeComment, unLikeComment } from '../../../redux/actions/commentAction';
 
 const CommentCard = ({ children, comment, post, commentId }) => {
     const { auth, theme } = useSelector(state => state)
@@ -16,6 +17,7 @@ const CommentCard = ({ children, comment, post, commentId }) => {
     const [onReply, setOnReply] = useState(false);
     const [onEdit, setOnEdit] = useState(false);
     const [isLike, setIsLike] = useState(false);
+    const [loadLike, setLoadLike] = useState(false);
 
     useEffect(() => {
         setContent(comment.content)
@@ -26,12 +28,20 @@ const CommentCard = ({ children, comment, post, commentId }) => {
         }
     }, [comment, auth.user._id])
 
-    const handleLike = (e) => {
+    const handleLike = async (e) => {
+        if (loadLike) return;
 
+        setLoadLike(true);
+        await dispatch(likeComment({ comment, post, auth }))
+        setLoadLike(false);
     }
 
-    const handleUnLike = (e) => {
+    const handleUnLike = async (e) => {
+        if (loadLike) return;
 
+        setLoadLike(true);
+        await dispatch(unLikeComment({ comment, post, auth }))
+        setLoadLike(false);
     }
 
     const handleUpdate = (e) => {
