@@ -17,7 +17,7 @@ a.underline {
 }
 
 a.underline::before {
-	background: #088dcd;
+	background-color: #088dcd !important;
 }
 
 a.underline::before,

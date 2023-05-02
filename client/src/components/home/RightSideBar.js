@@ -38,7 +38,7 @@ const RightSideBar = () => {
                         </Link>
                     </figure>
                     <div className="page-meta">
-                        <Link to="#" title="" className="underline">My page</Link>
+                        <Link to={`profile/${auth.user._id}`} title="" className="underline">My page</Link>
                         <span><i className="fas fa-comment"></i><Link to="insight.html" title="">Messages <em>9</em></Link> </span>
                         <span><i className="fas fa-bell"></i><Link to="insight.html" title="">Notifications <em>2</em></Link> </span>
                     </div>

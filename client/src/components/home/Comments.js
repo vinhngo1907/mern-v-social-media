@@ -29,9 +29,9 @@ const Comments = ({ post }) => {
 
             {
                 comments.length - next > 0
-                    ? <div className="p-2 border-top text-center next-text"
+                    ? <div className="p-2 border-top text-center next-text underline w-50"
                         onClick={() => setNext(next + 10)}>
-                        See more comments...
+                        More comments...
                     </div>
 
                     : comments.length > 2 &&

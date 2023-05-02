@@ -136,4 +136,23 @@
 .comments .next-text{
     cursor: pointer;
     color: #088dcd;
+    text-transform: capitalize;
+    font-size: 12px;
 }
+
+/* .comments .next-text::after {
+	content: '';
+	background-color: #088dcd;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+	opacity: 0;
+	height: 2px;
+	width: 100%;
+	transition: transform 0.3s ease-in-out;
+}
+
+.comments .next-text:hover::after {
+	opacity: 1;
+	transform: translateY(-15px);
+} */
