@@ -12,16 +12,16 @@
 	cursor: pointer;
 }
 
-a.underline:before {
-	background: #088dcd;
-}
-
 a.underline {
 	position: relative;
 }
 
-a.underline:before,
-.list-style li>a:before {
+a.underline::before {
+	background: #088dcd;
+}
+
+a.underline::before,
+.list-style li>a::before {
 	background: #545454;
 	bottom: -5px;
 	content: "";
@@ -34,8 +34,8 @@ a.underline:before,
 	transition: all 0.2s linear 0s;
 }
 
-a.underline:hover:before,
-.list-style li>a:hover:before {
+a.underline:hover::before,
+.list-style li>a:hover::before {
 	opacity: 1;
 	visibility: visible;
 	bottom: 0;

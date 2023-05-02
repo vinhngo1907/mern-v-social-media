@@ -132,3 +132,8 @@
     border: none;
     outline: none;
 }
+
+.comments .next-text{
+    cursor: pointer;
+    color: #088dcd;
+}
