@@ -26,7 +26,7 @@ class CommentController {
             await newComment.save();
 
             res.json(responseDTO.success("Created new comment in successfully", {
-                ...newComment,
+                ...newComment._doc,
                 user: req.user
             }))
         } catch (error) {
