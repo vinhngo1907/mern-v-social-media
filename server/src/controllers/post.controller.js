@@ -138,7 +138,7 @@ class PostController {
                 { $match: { user: { $nin: [...req.user.following, req.user._id] } } },
                 { $sample: { size: Number(req.query.num) || 9 } }
             ]);
-            res.json(responseDTO.success("Get data successfully", posts))
+            res.json(responseDTO.success("Get data successfully",{ posts, result: posts.length}))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

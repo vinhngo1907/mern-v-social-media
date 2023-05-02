@@ -10,6 +10,7 @@ import profile from './profileReducer';
 import homePosts from './postReducer'
 import notify from './notifyReducer';
 import postDetail from './postDetailReducer';
+import discover from './discoverReducer';
 
 export default combineReducers({
     auth,
@@ -21,5 +22,6 @@ export default combineReducers({
     profile,
     homePosts,
     notify,
-    postDetail
+    postDetail,
+    discover
 })
