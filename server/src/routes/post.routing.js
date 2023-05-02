@@ -58,6 +58,20 @@ router.patch('/:id/like', userAuth, postCtrl.LikePost)
  * @desc Unlike post
  * @access Private
 */
-router.patch('/:id/unlike', userAuth, postCtrl.UnLikePost)
+router.patch('/:id/unlike', userAuth, postCtrl.UnLikePost);
+
+/** 
+ *  @route PATCH api/post/:id/save
+ *  @desc Save a post
+ *  @access Private
+*/
+router.patch('/:id/save', userAuth, postCtrl.SavePost);
+
+/** 
+ *  @route PATCH api/post/:id/unsave
+ *  @desc UnSave a post
+ *  @access Private
+*/
+router.patch('/:id/unsave', userAuth, postCtrl.UnSavePost);
 
 module.exports = router

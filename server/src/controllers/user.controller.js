@@ -2,7 +2,6 @@
 
 const { responseDTO, APIFeatures, passwordUtil } = require("../utils");
 const { modelSchema } = require("../db");
-const { postModel } = require("../db/models");
 const { userModel } = modelSchema;
 
 class UserController {
@@ -115,42 +114,6 @@ class UserController {
         }
     }
 
-    async SavePost(req, res) {
-        try {
-            const postExist = await postModel.findOne({ _id: req.params.id });
-            if (!postExist) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
-
-            const posts = await userModel.find({ saved: req.params.id });
-            if (posts.length > 0) return res.status(400).json(responseDTO.badRequest("Something wrong"));
-
-            const savedPost = await userModel.findOneAndUpdate({ _id: req.user._id }, { $push: { saved: req.params.id } }, { new: true, runValidators: true });
-            if (!savedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist"));
-
-            res.json(responseDTO.success("Saved post in successfully", savedPost))
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-    async UnSavePost(req, res) {
-        try {
-            const postExist = await postModel.findOne({ _id: req.params.id });
-            if (!postExist) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
-
-            // const posts = await userModel.find({ saved: req.params.id });
-            // if (posts.length > 0) return res.status(400).json(responseDTO.badRequest("Something wrong"));
-
-            const savedPost = await userModel.findOneAndUpdate({ _id: req.user._id },
-                { $pull: { saved: req.params.id } },
-                { new: true, runValidators: true }
-            );
-            if (!savedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist"));
-            res.json(responseDTO.success("Saved post in successfully", savedPost))
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
     async ChangePassword(req, res) {
         try {
             if (!req.user) return res.status(400).json(responseDTO.badRequest("User not found or/and not authorized"));
