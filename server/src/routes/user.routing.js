@@ -12,6 +12,20 @@ const userCtrl = new UserController();
 router.put('/', userAuth, userCtrl.UpdateProfile);
 
 /** 
+ *  @route PATCH api/user/change-password
+ *  @desc Change password
+ *  @access Private
+*/
+router.patch('/change-password', userAuth, userCtrl.ChangePassword);
+
+/** 
+ *  @route PATCH api/user/change-password
+ *  @desc Change password
+ *  @access Private
+*/
+router.patch('/reset-password', userAuth, userCtrl.ResetPassword);
+
+/** 
  *  @route GET api/user
  *  @desc Get users
  *  @access Private

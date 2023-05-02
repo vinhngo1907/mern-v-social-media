@@ -1,6 +1,6 @@
 'use strict';
 
-const { responseDTO, APIFeatures } = require("../utils");
+const { responseDTO, APIFeatures, passwordUtil } = require("../utils");
 const { modelSchema } = require("../db");
 const { postModel } = require("../db/models");
 const { userModel } = modelSchema;
@@ -146,6 +146,37 @@ class UserController {
             );
             if (!savedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist"));
             res.json(responseDTO.success("Saved post in successfully", savedPost))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async ChangePassword(req, res) {
+        try {
+            if (!req.user) return res.status(400).json(responseDTO.badRequest("User not found or/and not authorized"));
+
+            const { password } = req.body;
+            const salt = await passwordUtil.GenerateSalt();
+            const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
+            if (!hashedPassword || !salt) {
+                return res.status(400).json(responseDTO.badRequest("Something wrong with password"));
+            }
+
+            await userModel.findOneAndUpdate({ _id: req.user._id }, {
+                password: hashedPassword,
+                salt: salt
+            });
+
+            res.json(responseDTO.success("Changed password in successfully"));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async ResetPassword(req,res){
+        try {
+            
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
