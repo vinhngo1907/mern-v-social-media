@@ -42,8 +42,21 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
 }
 
 export const editPost = ({ content, images, auth, status }) => async (dispatch) => {
-    try {
+    let media;
+    const imgNewUrl = images.filter(img => !img.url);
+    const imgOldUrl = images.filter(img => img.url);
+    if (status.content === content && imgNewUrl === 0 && imgOldUrl === status.images.length) return;
 
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        if (imgNewUrl.length > 0) media = await imageUpload(imgNewUrl, auth.token);
+
+        const res = await patchDataApi(`post/${status._id}`, {
+            content, images: [...imgOldUrl, ...media]
+        }, auth.token);
+
+        dispatch({ type: POST_TYPES.UPDATE_POST, payload: res.data.results })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })

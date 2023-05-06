@@ -17,10 +17,22 @@ class PostController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    async UpdatePost() {
+    async UpdatePost(req, res) {
+        try {
+            const { content, images } = req.body;
+            if (!content || images.length === 0) {
+                return res.status(400).json(responseDTO.badRequest("Please post something nice!"));
+            }
+            const updatedPost = await postModel.findOneAndUpdate({ _id: req.params.id }, { ...req.body }, { new: true, runValidators: true });
+            if (!updatedPost) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
 
+            res.json(responseDTO.success("Updated post in successfully", { ...newPost._doc, user: req.user }));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
     }
-    async DeletePost() {
+    async DeletePost(req, res) {
         try {
             const deletedPost = await postModel.findOneAndDelete({ _id: req.params.id, user: req.user._id });
             if (!deletedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist!"));
@@ -138,7 +150,7 @@ class PostController {
                 { $match: { user: { $nin: [...req.user.following, req.user._id] } } },
                 { $sample: { size: Number(req.query.num) || 9 } }
             ]);
-            res.json(responseDTO.success("Get data successfully",{ posts, result: posts.length}))
+            res.json(responseDTO.success("Get data successfully", { posts, result: posts.length }))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

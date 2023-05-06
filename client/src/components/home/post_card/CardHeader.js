@@ -5,6 +5,7 @@ import moment from 'moment'
 import Avatar from "../../other/Avatar";
 import { BASE_URL } from "../../../utils/constants";
 import { deletePost } from "../../../redux/actions/postAction";
+import { GLOBALTYPES } from "../../../redux/actions/globalTypes";
 
 const CardHeader = ({ post }) => {
     const { auth } = useSelector(state => state);
@@ -14,9 +15,11 @@ const CardHeader = ({ post }) => {
     const handleCopyLink = () => {
         navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
     }
+    
     const handleEditPost = () => {
-
+        dispatch({ type: GLOBALTYPES.STATUS, payload: {...post, onEdit: true}})
     }
+
     const handleDeletePost = () => {
         if (window.confirm("Are you sure?")) {
             dispatch(deletePost({ post, auth }))
