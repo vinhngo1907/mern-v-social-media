@@ -2,9 +2,9 @@ import { getDataApi } from "../../utils/fetchData"
 import { GLOBALTYPES } from "./globalTypes"
 
 export const DISCOVER_TYPES = {
-    LOADING: 'LOADING',
-    GET_POSTS: 'GET_POSTS',
-    UPDATE_POST: 'UPDATE_POST'
+    LOADING: 'LOADING_DISCOVER',
+    GET_POSTS: 'GET_DISCOVER_POSTS',
+    UPDATE_POST: 'UPDATE_DISCOVER_POST'
 }
 
 export const getDiscoverPosts = (token) => async (dispatch) => {
