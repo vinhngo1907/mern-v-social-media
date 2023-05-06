@@ -58,6 +58,7 @@ const StatusModal = () => {
                 }).catch(err => console.log(err))
         }
     }
+
     const handleCapture = (e) => {
         const width = videoRef.current.clientWidth;
         const height = videoRef.current.clientHeight;
@@ -76,13 +77,13 @@ const StatusModal = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if (images.length === 0)
-        //     return dispatch({
-        //         type: GLOBALTYPES.ALERT, payload: { error: "Please add your media." }
-        //     });
+        if (!content || content==='' || images.length === 0)
+            return dispatch({
+                type: GLOBALTYPES.ALERT, payload: { error: "Please add your media." }
+            });
 
         if (status.onEdit) {
-            dispatch(editPost({content, images, auth, status}))
+            dispatch(editPost({ content, images, auth, status }))
         } else {
             dispatch(createPost({ content, images, auth }))
         }

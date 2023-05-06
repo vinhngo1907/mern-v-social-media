@@ -1,4 +1,4 @@
-import { getDataApi, patchDataApi, postDataApi } from "../../utils/fetchData";
+import { getDataApi, patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
 import { imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
 
@@ -42,6 +42,8 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
 }
 
 export const editPost = ({ content, images, auth, status }) => async (dispatch) => {
+    console.log({ images });
+    console.log({ status })
     let media;
     const imgNewUrl = images.filter(img => !img.url);
     const imgOldUrl = images.filter(img => img.url);
@@ -51,7 +53,7 @@ export const editPost = ({ content, images, auth, status }) => async (dispatch) 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
         if (imgNewUrl.length > 0) media = await imageUpload(imgNewUrl, auth.token);
 
-        const res = await patchDataApi(`post/${status._id}`, {
+        const res = await putDataApi(`post/${status._id}`, {
             content, images: [...imgOldUrl, ...media]
         }, auth.token);
 

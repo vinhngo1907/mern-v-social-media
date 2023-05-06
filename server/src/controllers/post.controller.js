@@ -26,7 +26,7 @@ class PostController {
             const updatedPost = await postModel.findOneAndUpdate({ _id: req.params.id }, { ...req.body }, { new: true, runValidators: true });
             if (!updatedPost) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
 
-            res.json(responseDTO.success("Updated post in successfully", { ...newPost._doc, user: req.user }));
+            res.json(responseDTO.success("Updated post in successfully", { ...updatedPost._doc, user: req.user }));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
