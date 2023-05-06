@@ -44,7 +44,17 @@ class CommentController {
     }
     async LikeComment(req, res) {
         try {
+            const commentId = req.params.id;
+            const likes = await commentModel.findOne({ _id: commentId }, { likes: req.user._id });
+            if (likes.length > 0) return;
 
+            const likedCmt = await commentModel.findOneAndUpdate(
+                { _id: commentId },
+                { $push: { likes: req.user._id } },
+                { new: true, runValidators: true });
+            if (!likedCmt) return res.status(400).json(responseDTO.badRequest("This comment does not exist"));
+
+            res.json(responseDTO.success("Liked comment in successfully", likedCmt))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -52,7 +62,15 @@ class CommentController {
     }
     async UnLikeComment(req, res) {
         try {
+            const commentId = req.params.id;
+            const unLikedCmt = await commentModel.findOneAndUpdate(
+                { _id: commentId },
+                { $pull: { likes: req.user._id } },
+                { new: true, runValidators: true }
+            );
+            if (!unLikedCmt) return res.status(400).json(responseDTO.badRequest("This comment does not exist"));
 
+            res.json(responseDTO.success("UnLiked comment in successfully", unLikedCmt))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
