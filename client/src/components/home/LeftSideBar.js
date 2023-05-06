@@ -15,7 +15,7 @@ const LeftSideBar = ({ type }) => {
     const navLink = [
         { path: "/", icon: "fas fa-clipboard", content: "News feed" },
         { path: "inbox.html", icon: "fas fa-mouse", content: "Inbox" },
-        { path: "timeline-friends.html", icon: "fas fa-users", content: "Friends" },
+        { path: "timeline-friends.html", icon: "fas fa-users", content: "Groups" },
         { path: "images.html", icon: "fas fa-image", content: "Images" },
         { path: "timeline-videos.html", icon: "fas fa-video", content: "Videos" },
         { path: "timeline-videos.html", icon: "fas fa-comments", content: "Messages" },

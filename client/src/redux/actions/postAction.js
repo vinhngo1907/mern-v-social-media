@@ -42,9 +42,7 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
 }
 
 export const editPost = ({ content, images, auth, status }) => async (dispatch) => {
-    console.log({ images });
-    console.log({ status })
-    let media;
+    let media = [];
     const imgNewUrl = images.filter(img => !img.url);
     const imgOldUrl = images.filter(img => img.url);
     if (status.content === content && imgNewUrl === 0 && imgOldUrl === status.images.length) return;
@@ -60,7 +58,7 @@ export const editPost = ({ content, images, auth, status }) => async (dispatch) 
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: res.data.results })
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
     } catch (err) {
-        console.log(err.response);
+        console.log(err);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
