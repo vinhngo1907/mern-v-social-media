@@ -19,7 +19,7 @@ const Comments = ({ post }) => {
     }, [post.comments]);
     
     return (
-        <div className="comments">
+        <div className="comments overlay-scrollbar scrollbar-hover">
             {
                 showComments.map((comment, index) => (
                     <CommentDisplay key={index} comment={comment} post={post}
