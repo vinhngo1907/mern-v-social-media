@@ -1,4 +1,4 @@
-import { patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
+import { deleteDataApi, patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
 import { DeleteData, EditData, GLOBALTYPES } from "./globalTypes";
 import { createNotify } from "./notifyAction";
 import { POST_TYPES } from "./postAction"
@@ -58,8 +58,6 @@ export const unLikeComment = ({ comment, post, auth }) => async (dispatch) => {
 }
 
 export const updateComment = ({ comment, post, content, auth }) => async (dispatch) => {
-    if(comment.content === content.trim()) return;
-    
     const newComment = { ...comment, content: content }
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
@@ -71,8 +69,14 @@ export const updateComment = ({ comment, post, content, auth }) => async (dispat
 }
 
 export const removeComment = ({ comment, post, auth }) => async (dispatch) => {
+    const deletedArr = [...post.comments.filter(cm => cm.reply === comment._id), comment]
+    const newPost = {
+        ...post, comments: post.comments.filter(cm => !deletedArr.find(da => cm._id === da._id))
+    }
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+    
     try {
-
+        await deleteDataApi(`comment/${comment._id}`, auth.token);
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

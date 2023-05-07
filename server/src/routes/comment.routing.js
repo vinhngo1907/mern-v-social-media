@@ -6,8 +6,8 @@ const commentCtrl = new CommentController();
 
 router.post("/", userAuth, commentCtrl.CreateComment);
 router.put("/:id", userAuth, commentCtrl.UpdateComment);
-router.delete("/:id", userAuth, commentCtrl.RemoveComment);
 router.patch("/:id/like", userAuth, commentCtrl.LikeComment);
 router.patch("/:id/unlike", userAuth, commentCtrl.UnLikeComment);
+router.delete("/:id", userAuth, commentCtrl.RemoveComment);
 
 module.exports = router;

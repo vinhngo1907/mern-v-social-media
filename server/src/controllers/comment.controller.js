@@ -87,7 +87,13 @@ class CommentController {
     }
     async RemoveComment(req, res) {
         try {
+            const post = await postModel.findOne({comments: req.params.id});
+            if(!post)  return res.status(400).json(responseDTO.badRequest("You can not delete comment from other post or/and user"));
 
+            const deletedComment = await commentModel.findOneAndDelete({_id: req.params.id});
+            if(!deletedComment) return res.status(400).json(responseDTO.badRequest("This comment does not exist"));
+
+            res.json(responseDTO.success("Deleted comment in successfully", deletedComment))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
