@@ -38,16 +38,16 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
 
         // Notify
-        // const msg = {
-        //     id: res.data.results._id,
-        //     text: 'added a new post.',
-        //     recipients: res.data.results.user.followers,
-        //     url: `/post/${res.data.results._id}`,
-        //     content, 
-        //     image: media[0].url
-        // }
+        const msg = {
+            id: res.data.results._id,
+            text: 'added a new post.',
+            recipients: res.data.results.user.followers,
+            url: `/post/${res.data.results._id}`,
+            content, 
+            image: media[0].url
+        }
 
-        // dispatch(createNotify({msg, auth}))
+        dispatch(createNotify({msg, auth}))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
