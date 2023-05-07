@@ -36,7 +36,8 @@ class StatisticController {
                     $set: {
                         viewCount: statisticRecord.viewCount,
                         visitCount: statisticRecord.visitCount,
-                        loggedAt: now
+                        loggedAt: now,
+                        user: req.user._id
                     }
                 });
                 res.status(200).json(responseDTO.success("submit duration success"));
