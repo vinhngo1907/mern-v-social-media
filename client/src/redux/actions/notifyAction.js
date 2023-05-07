@@ -1,4 +1,4 @@
-import { postDataApi } from "../../utils/fetchData";
+import { getDataApi, postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
 
 export const NOTIFY_TYPES = {
@@ -12,15 +12,17 @@ export const NOTIFY_TYPES = {
 
 export const getAllNotifies = (token) => async (dispatch) => {
     try {
+        const res = await getDataApi('notify', token);
+        dispatch({ type: NOTIFY_TYPES.GET_NOTIFIES, payload: res.data.results })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
     }
 }
 
-export const createNotify = ({msg, auth}) => async (dispatch) =>{
-    try{
+export const createNotify = ({ msg, auth }) => async (dispatch) => {
+    try {
         await postDataApi('notify', msg, auth.token);
-    }catch(err){
+    } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
     }
 }

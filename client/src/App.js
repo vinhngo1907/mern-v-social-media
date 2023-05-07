@@ -12,6 +12,7 @@ import StatusModal from "./components/other/StatusModal";
 import { getSuggestion } from "./redux/actions/suggestionAction";
 import { getAllPosts } from "./redux/actions/postAction";
 import Register from "./pages/register";
+import { getAllNotifies } from "./redux/actions/notifyAction";
 
 function App() {
 	const { auth, status } = useSelector(state => state);
@@ -24,7 +25,8 @@ function App() {
 	useEffect(() => {
 		if (auth.token) {
 			dispatch(getAllPosts(auth.token));
-			dispatch(getSuggestion(auth.token))
+			dispatch(getSuggestion(auth.token));
+			dispatch(getAllNotifies(auth.token))
 		}
 	}, [auth.token, dispatch])
 
