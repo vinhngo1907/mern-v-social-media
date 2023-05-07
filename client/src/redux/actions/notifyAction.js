@@ -12,7 +12,6 @@ export const NOTIFY_TYPES = {
 
 export const getAllNotifies = (token) => async (dispatch) => {
     try {
-
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
     }
