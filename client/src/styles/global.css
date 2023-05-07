@@ -105,6 +105,10 @@ textarea {
     cursor: pointer;
 }
 
+.notification-box > ul li figure img {
+    border-radius: 100%;
+}
+
 /* ---------- Auth Page------------ */
 @import url("./auth.css");
 
@@ -143,6 +147,9 @@ textarea {
 
 /* ---------- Post thumb------------ */
 @import url("./post_thumb.css");
+
+/* ---------- Notifications ------------ */
+@import url("./notification.css");
 
 /* ---------- Other------------ */
 @import url("./other.css");
@@ -233,5 +240,9 @@ textarea {
 
     .post-comt-box {
         width: 90%;
+    }
+
+    .notification-box > ul li > i.del {
+        width: 100%;
     }
 }

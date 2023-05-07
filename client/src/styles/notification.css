@@ -1,0 +1,88 @@
+.central-meta {
+    background: #fdfdfd none repeat scroll 0 0;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px;
+}
+
+.editing-interest>form {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.editing-interest form input {
+    border: 1px solid #eee;
+    font-size: 14px;
+    padding: 10px 20px;
+    width: 84%;
+}
+
+.editing-interest form ol {
+    margin-top: 35px;
+    padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.editing-interest form ol>li {
+    display: inline-block;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.editing-interest form ol>li a {
+    background: #ebebeb none repeat scroll 0 0;
+    display: inline-block;
+    font-size: 14px;
+    padding: 4px 15px;
+    text-transform: capitalize;
+    border-radius: 3px;
+}
+
+.editing-interest form ol>li span.remove {
+    left: -24px;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+}
+
+.editing-interest form button {
+    padding: 11px 30px;
+}
+
+/*--- notification page ---*/
+
+.notification-box > ul {
+    display: inline-block;
+    list-style: outside none none;
+    margin-bottom: 0;
+    margin-top: 20px;
+    padding-left: 0;
+    width: 100%;
+}
+
+.notification-box {
+    display: inline-block;
+    width: 100%;
+}
+
+.notification-box > ul > li {
+    border-bottom: 1px solid #e1e8ed;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.notification-box > ul li figure {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-right: 10px;
+    max-width: 45px;
+    min-width: 45px;
+    vertical-align: top;
+}

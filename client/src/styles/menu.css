@@ -32,7 +32,7 @@
 }
 
 
-.dropdown-menu-link i {
+.dropdown-menu-link i, .dropdown-menu-link img {
 	font-size: 1.25rem;
 	color: var(--second-color);
 	position: absolute;
