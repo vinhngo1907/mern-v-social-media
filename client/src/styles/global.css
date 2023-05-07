@@ -104,7 +104,9 @@ textarea {
 .menu-bar {
     cursor: pointer;
 }
-
+ul{
+    list-style: none;
+}
 .notification-box>ul li figure img {
     border-radius: 100%;
 }

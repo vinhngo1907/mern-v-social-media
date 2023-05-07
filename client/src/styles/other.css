@@ -116,11 +116,13 @@
     padding: 0 15px;
     margin: 0 auto;
 }
-.searchDir .search_form{
+
+.searchDir .search_form {
     position: relative;
-	margin: auto;
-	width: 100%;
+    margin: auto;
+    width: 100%;
 }
+
 .searchDir .filterinput {
     border: 1px solid #eaeaea;
     color: #575757;
@@ -130,7 +132,7 @@
     outline: none;
 }
 
-.searchDir .search_form .search_icon{
+.searchDir .search_form .search_icon {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -139,16 +141,17 @@
     pointer-events: none;
 }
 
-.searchDir .search_form .search_icon i{
+.searchDir .search_form .search_icon i {
     font-size: 14px;
     position: absolute;
-	top: 50%;
-	right: -20px;
-	transform: translateY(-50%);
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
     color: var(--second-color);
     cursor: pointer;
 }
-.searchDir .search_form .close_search{
+
+.searchDir .search_form .close_search {
     position: absolute;
     top: 50%;
     right: 20px;
@@ -158,7 +161,8 @@
     font-weight: 900;
     color: crimson;
 }
-.searchDir .search_form .users{
+
+.searchDir .search_form .users {
     position: absolute;
     width: 100%;
     min-width: 250px;
@@ -168,11 +172,96 @@
     overflow: auto;
     margin-top: 3px;
 }
-.searchDir .search_form .loading{
+
+.searchDir .search_form .loading {
     position: absolute;
     top: 50%;
     right: 5px;
     width: 15px;
     height: 15px;
     transform: translateY(-50%);
+}
+
+/*--- social widget ---*/
+
+.widget .socials>li {
+    margin-bottom: 10px;
+    padding: 3px;
+    position: relative;
+}
+
+.socials>li a {
+    color: #fff;
+    padding: 3px 10px;
+    width: 100%;
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, .4); */
+}
+
+.socials>li a i {
+    color: var(--second-color);
+    float: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.socials>li a span {
+    font-size: 13px;
+}
+
+.socials>li a ins {
+    float: right;
+    font-size: 12px;
+    margin-top: 4px;
+    text-decoration: none;
+}
+
+.socials>li a:hover {
+    color: var(--second-color) !important;
+    background: var(--second-bg-color);
+}
+
+li.facebook {
+    background: #2f5b9d;
+}
+
+li.twitter {
+    background: #38bff1;
+}
+
+li.google {
+    background: #f24756;
+}
+
+a:hover.facebook {
+    background: #516eab;
+}
+
+a:hover.instagram {
+    background: #444;
+}
+
+a:hover.twitter {
+    background: #55acee;
+}
+
+a:hover.google {
+    background: #dd4b39;
+}
+
+a:hover.pinterest {
+    background: #ca212a;
+}
+
+a:hover.youtube {
+    background: #e62117;
+}
+
+a:hover.dribble {
+    background: #1572b8;
+}
+
+a:hover.linkedin {
+    background: #0077b5;
 }
