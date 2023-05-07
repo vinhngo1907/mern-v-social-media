@@ -105,5 +105,32 @@ export const getPost = ({ postDetail, id, auth }) => async (dispatch) => {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
         }
     }
+}
 
+export const savePost = ({ post, auth }) => async (dispatch) => {
+    dispatch({
+        type: GLOBALTYPES.AUTH, payload: {
+            ...auth,
+            user: {
+                ...auth.user,
+                saved: [...auth.user.saved, post._id]
+            }
+        }
+    });
+    try {
+        await patchDataApi(`post/${post._id}/save`, null, auth.token);
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+    }
+}
+
+export const unSavePost = ({ post, auth }) => async (dispatch) => {
+    const newUser = {...auth.user, saved: auth.user.saved.filter(id => id !== post._id) }
+    dispatch({ type: GLOBALTYPES.AUTH, payload: {...auth, user: newUser}})
+
+    try {
+        await patchDataApi(`post/${post._id}/unsave`, null, auth.token);
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
+    }
 }

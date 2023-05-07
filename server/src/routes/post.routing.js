@@ -16,7 +16,7 @@ router.get('/', userAuth, postCtrl.GetAllPosts)
  * @desc Get saved posts
  * @access Private
  */
-router.get('/user/saved', userAuth, postCtrl.GetSavedPosts)
+router.get('/user/save', userAuth, postCtrl.GetSavedPosts)
 
 /**
  * @route GET api/post/saved
