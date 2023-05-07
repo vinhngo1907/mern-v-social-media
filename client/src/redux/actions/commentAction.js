@@ -1,4 +1,4 @@
-import { patchDataApi, postDataApi } from "../../utils/fetchData";
+import { patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
 import { DeleteData, EditData, GLOBALTYPES } from "./globalTypes";
 import { createNotify } from "./notifyAction";
 import { POST_TYPES } from "./postAction"
@@ -37,6 +37,7 @@ export const likeComment = ({ comment, post, auth }) => async (dispatch) => {
     const newComment = { ...comment, likes: [...comment.likes, auth.user] }
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+
     try {
         await patchDataApi(`comment/${comment._id}/like`, null, auth.token)
     } catch (err) {
@@ -46,10 +47,9 @@ export const likeComment = ({ comment, post, auth }) => async (dispatch) => {
 
 export const unLikeComment = ({ comment, post, auth }) => async (dispatch) => {
     const newComment = { ...comment, likes: DeleteData(comment.likes, auth.user._id) }
-    const newComments = EditData(post.comments, comment._id, newComment)
-    const newPost = { ...post, comments: newComments}
-
+    const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+
     try {
         await patchDataApi(`comment/${comment._id}/unlike`, null, auth.token)
     } catch (err) {
@@ -57,9 +57,14 @@ export const unLikeComment = ({ comment, post, auth }) => async (dispatch) => {
     }
 }
 
-export const updateComment = ({ comment, post, auth }) => async (dispatch) => {
+export const updateComment = ({ comment, post, content, auth }) => async (dispatch) => {
+    if(comment.content === content.trim()) return;
+    
+    const newComment = { ...comment, content: content }
+    const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
     try {
-
+        await putDataApi(`comment/${comment._id}`, newComment, auth.token)
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

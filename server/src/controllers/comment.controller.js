@@ -36,7 +36,16 @@ class CommentController {
     }
     async UpdateComment(req, res) {
         try {
+            if(req.body.content === "" || !req.body.content)  
+                return res.status(400).json(responseDTO.badRequest("Please comment something nice!"))
 
+            const updatedComment = await commentModel.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, {
+                ...req.body
+            }, { new: true, runValidators: true }).populate("user likes", "avatar fullname username followers following");
+            if (!updatedComment) 
+                return res.status(400).json(responseDTO.badRequest("This comment does not exist!"));
+
+            res.json(responseDTO.success("Created new comment in successfully", updatedComment))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

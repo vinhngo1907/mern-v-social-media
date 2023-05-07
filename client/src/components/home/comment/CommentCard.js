@@ -6,7 +6,7 @@ import InputComment from '../InputComment';
 import CommentMenu from './CommentMenu';
 import LikeButton from '../../other/LikeButton';
 import moment from 'moment';
-import { likeComment, unLikeComment } from '../../../redux/actions/commentAction';
+import { likeComment, unLikeComment, updateComment } from '../../../redux/actions/commentAction';
 
 const CommentCard = ({ children, comment, post, commentId }) => {
     const { auth, theme } = useSelector(state => state)
@@ -45,14 +45,19 @@ const CommentCard = ({ children, comment, post, commentId }) => {
     }
 
     const handleUpdate = (e) => {
-
+        if (comment.content !== content) {
+            dispatch(updateComment({ comment, post, content, auth }))
+            setOnEdit(false)
+        } else {
+            setOnEdit(false)
+        }
     }
 
     const handleReply = (e) => {
         if (onReply) return setOnReply(false);
         setOnReply({ ...comment, commentId })
     }
-    
+
     const styleCard = {
         opacity: comment._id ? 1 : 0.5,
         pointerEvents: comment._id ? 'inherit' : 'none'
