@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from "moment";
 import Avatar from './Avatar';
 import { isReadNotify } from '../../redux/actions/notifyAction';
+import NotiNotice from "../../assets/notice.png";
 
 const NotifyModal = () => {
     const { auth, notify } = useSelector(state => state)
@@ -22,7 +23,7 @@ const NotifyModal = () => {
             <hr className="mt-0" />
             {
                 notify.data.length === 0 &&
-                <i className="fas fa-bell w-100" />
+                <img src={NotiNotice} alt="noti" className='w-60 d-block mx-auto' />
             }
 
             <div className="dropdown-menu-content overlay-scrollbar scrollbar-hover">
@@ -81,12 +82,14 @@ const NotifyModal = () => {
                     </Link>
                 </div> */}
             </div>
-            <div className="dropdown-menu-footer">
-                <Link to="/notifications">
-                    <span>
-                        View all notifications
-                    </span></Link>
-            </div>
+            {
+                notify.data.length > 0 && <div className="dropdown-menu-footer">
+                    <Link to="/notifications">
+                        <span>
+                            View all notifications
+                        </span></Link>
+                </div>
+            }
         </div>
     )
 }
