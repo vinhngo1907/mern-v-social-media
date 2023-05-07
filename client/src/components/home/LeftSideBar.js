@@ -44,15 +44,19 @@ const LeftSideBar = ({ type }) => {
                 <h4 className="widget-title">Socials</h4>
                 <ul className="socials overlay-scrollbar scrollbar-hover px-3">
                     <li className="facebook">
-                        <a title="facebook" href="#">
+                        <Link title="facebook" to="/">
                             <i className="fa fa-facebook" /> <span>facebook</span> <ins>45 likes</ins>
-                        </a>
+                        </Link>
                     </li>
                     <li className="twitter">
-                        <a title="twitter" href="#"><i className="fa fa-twitter" /> <span>twitter</span><ins>25 likes</ins></a>
+                        <Link title="twitter" to="/">
+                            <i className="fa fa-twitter" /> <span>twitter</span><ins>25 likes</ins>
+                        </Link>
                     </li>
                     <li className="google">
-                        <a title="google" href="#"><i className="fa fa-google" /> <span>google</span><ins>35 likes</ins></a>
+                        <Link title="google" to="#">
+                            <i className="fa fa-google" /> <span>google</span><ins>35 likes</ins>
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -31,7 +31,6 @@ const NotifyModal = () => {
                         <div className="dropdown-menu-item" key={`${noti._id}-${index}`}>
                             <Link to={noti.url} className="dropdown-menu-link" onClick={() => handleIsRead(noti)}>
                                 <div>
-                                    {/* <i className="fas fa-gift" /> */}
                                     <Avatar src={noti.user.avatar} size="large-avatar" />
                                 </div>
 
@@ -40,7 +39,10 @@ const NotifyModal = () => {
                                         <strong className="mr-1">{noti.user.username}</strong>
                                         <span>{noti.text}</span>
                                     </div>
-                                    {noti.content && noti.content.slice(0, 45)}...
+                                    {noti.content && noti.content.length >= 45
+                                        ? `${noti.content.slice(0, 46)}...`
+                                        : noti.content
+                                    }
                                     <br />
                                     <span>
                                         {moment(noti.createdAt).fromNow()}
@@ -58,7 +60,7 @@ const NotifyModal = () => {
                                 }
                             </Link>
                             {
-                                !noti.isRead ? <span className="tag red">Unseen</span> : <span className="tag red">Seen</span>
+                                !noti.isRead ? <span className="tag red">Unseen</span> : <span className="tag green">Seen</span>
                             }
                         </div>
                     ))

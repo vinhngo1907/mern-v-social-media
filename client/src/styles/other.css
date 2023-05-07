@@ -275,8 +275,9 @@ a:hover.linkedin {
     font-size: 11px;
     padding: 0 6px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 27%;
+    transform: translateY(0, 50%);
 }
 
 .blue {
