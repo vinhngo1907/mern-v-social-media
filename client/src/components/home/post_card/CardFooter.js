@@ -66,7 +66,7 @@ const CardFooter = ({ post }) => {
     return (
         <div className="card_footer">
             <div className="card_icon_menu">
-                <div>
+                <div className="d-flex align-items-center justify-content-between">
                     <LikeButton
                         isLike={isLike}
                         handleLike={handleLike}
@@ -77,8 +77,40 @@ const CardFooter = ({ post }) => {
                         <i className="far fa-comment" />
                     </Link>
 
-                    {/* <img src={Send} alt="Send" onClick={() => setIsShare(!isShare)} /> */}
                     <i className="fa fa-share-alt" onClick={() => setIsShare(!isShare)} />
+                    {/* <Link  to="#" onClick={() => setIsShare(!isShare)}  className="social-media">
+                        <div className="social-menu">
+                            <div className="btn trigger"><i className="fa fa-share-alt"></i></div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-html5"></i></Link></div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-facebook"></i></Link></div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-google-plus"></i></Link></div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-twitter"></i></Link></div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-css3"></i></Link></div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-instagram"></i></Link>
+                                </div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-dribbble"></i></Link>
+                                </div>
+                            </div>
+                            <div className="rotater">
+                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-pinterest"></i></Link>
+                                </div>
+                            </div>
+
+                        </div>
+                    </Link> */}
                 </div>
                 {
                     saved
