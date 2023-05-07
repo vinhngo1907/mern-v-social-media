@@ -19,7 +19,7 @@ const Profile = () => {
     }, [id, dispatch, auth, postDetail])
 
     return (
-        <div className="posts container w-50">
+        <div className="posts container">
             {
                 post.length === 0 &&  <div className="mx-auto d-block spinner-border text-dark my-4">
                 <span className="sr-only">Loading...</span>

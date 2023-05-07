@@ -268,3 +268,25 @@ a:hover.dribble {
 a:hover.linkedin {
     background: #0077b5;
 }
+
+.tag {
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    padding: 0 6px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.blue {
+    background: #337ab7;
+}
+
+.red {
+    background: #ed6b75;
+}
+
+.green {
+    background: #33b7a0;
+}

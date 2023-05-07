@@ -16,7 +16,7 @@
 	flex-direction: row;
 	align-items: center;
 	text-decoration: none;
-	color: var(--main-color);
+	color: var(--main-color) !important;
 }
 
 .dropdown-menu-link div {
@@ -34,7 +34,7 @@
 
 .dropdown-menu-link i, .dropdown-menu-link img {
 	font-size: 1.25rem;
-	color: var(--second-color);
+	color: var(--second-color) !important;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -55,7 +55,7 @@
 
 .dropdown-menu-link:hover {
 	cursor: pointer;
-	background: var(--second-bg-color);
+	background: var(--second-bg-color) !important;
 }
 
 

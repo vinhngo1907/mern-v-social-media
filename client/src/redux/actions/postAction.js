@@ -1,6 +1,7 @@
 import { getDataApi, patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
 import { imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
+import { createNotify } from "./notifyAction";
 
 export const POST_TYPES = {
     CREATE_POST: 'CREATE_POST',
@@ -77,6 +78,18 @@ export const likePost = ({ post, auth }) => async (dispatch) => {
 
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
         await patchDataApi(`post/${post._id}/like`, null, auth.token);
+
+        // Notify
+        const msg = {
+            id: auth.user._id,
+            text: 'like your post.',
+            recipients: [post.user._id],
+            url: `/post/${post._id}`,
+            content: post.content,
+            image: post.images[0].url
+        }
+
+        dispatch(createNotify({ msg, auth }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
@@ -125,8 +138,8 @@ export const savePost = ({ post, auth }) => async (dispatch) => {
 }
 
 export const unSavePost = ({ post, auth }) => async (dispatch) => {
-    const newUser = {...auth.user, saved: auth.user.saved.filter(id => id !== post._id) }
-    dispatch({ type: GLOBALTYPES.AUTH, payload: {...auth, user: newUser}})
+    const newUser = { ...auth.user, saved: auth.user.saved.filter(id => id !== post._id) }
+    dispatch({ type: GLOBALTYPES.AUTH, payload: { ...auth, user: newUser } })
 
     try {
         await patchDataApi(`post/${post._id}/unsave`, null, auth.token);
