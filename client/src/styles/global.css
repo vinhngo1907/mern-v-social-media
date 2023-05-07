@@ -105,7 +105,7 @@ textarea {
     cursor: pointer;
 }
 
-.notification-box > ul li figure img {
+.notification-box>ul li figure img {
     border-radius: 100%;
 }
 
@@ -242,7 +242,11 @@ textarea {
         width: 90%;
     }
 
-    .notification-box > ul li > i.del {
+    .notification-box>ul li>i.del {
         width: 100%;
+    }
+
+    .notifi-meta {
+        width: 77%;
     }
 }
