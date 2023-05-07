@@ -28,7 +28,7 @@ const NotifyModal = () => {
             <div className="dropdown-menu-content overlay-scrollbar scrollbar-hover">
                 {
                     notify.data.map((noti, index) => (
-                        <div className="dropdown-menu-item" key={`${noti._id}-${index}`}>
+                        <div className="dropdown-menu-item position-relative" key={`${noti._id}-${index}`}>
                             <Link to={noti.url} className="dropdown-menu-link" onClick={() => handleIsRead(noti)}>
                                 <div>
                                     <Avatar src={noti.user.avatar} size="large-avatar" />
