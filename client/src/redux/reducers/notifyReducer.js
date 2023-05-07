@@ -1,3 +1,4 @@
+import { DeleteData } from "../actions/globalTypes";
 import { NOTIFY_TYPES } from "../actions/notifyAction";
 
 const initialState = {
@@ -18,7 +19,11 @@ const notifyReducer = (state = initialState, action) => {
                 ...state,
                 data: [action.payload, ...state.data]
             };
-
+        case NOTIFY_TYPES.UPDATE_NOTIFY:
+            return {
+                ...state,
+                data: DeleteData(state.data, action.payload._id)
+            }
         default:
             return state;
     }
