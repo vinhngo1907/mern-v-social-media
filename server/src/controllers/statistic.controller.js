@@ -37,14 +37,17 @@ class StatisticController {
                         viewCount: statisticRecord.viewCount,
                         visitCount: statisticRecord.visitCount,
                         loggedAt: now,
-                        user: req.user._id
+                        user: req.user._id,
+                        clients: recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
                     }
                 });
                 res.status(200).json(responseDTO.success("submit duration success"));
             } else {
                 const newStatistic = new statisticModel({
                     viewCount: 1,
-                    visitCount: 1
+                    visitCount: 1,
+                    user: req.user._id,
+                    clients: []
                 });
 
                 await newStatistic.save();

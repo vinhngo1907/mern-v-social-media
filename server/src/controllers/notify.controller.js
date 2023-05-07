@@ -63,8 +63,7 @@ class NotifyController {
     async isReadNotify(req, res) {
         try {
             const { id } = req.params;
-            const readNotify = await notifyModel.findOneAndUpdate({ _id: id }, { isRead: true }, { new: true, runValidators: true })
-
+            const readNotify = await notifyModel.findOneAndUpdate({ _id: id }, { isRead: true }, { new: true, runValidators: true });
             if (!readNotify) return res.status(400).json(responseDTO.badRequest("This notify does not exist"));
 
             res.json(responseDTO.success("Read notify in successfully", readNotify));
