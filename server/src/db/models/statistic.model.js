@@ -7,7 +7,9 @@ const StatisticSchema = new Schema({
     loggedAt: {
         type: Date,
         default: new Date(),
-    }
+    },
+    user: { type: Schema.Types.ObjectId, ref: "user" },
+    clients: [{ type: Schema.Types.ObjectId, ref: "user" }]
 });
 
 module.exports = mongoose.model("statistic", StatisticSchema)
