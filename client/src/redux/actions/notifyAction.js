@@ -28,7 +28,7 @@ export const createNotify = ({ msg, auth }) => async (dispatch) => {
 }
 export const removeNotify = ({ msg, auth }) => async (dispatch) => {
     try {
-        await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token)
+        await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token);
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
     }
@@ -44,9 +44,9 @@ export const isReadNotify = ({ msg, auth }) => async (dispatch) => {
 }
 
 export const deleteAllNotifies = (token) => async (dispatch) => {
-    dispatch({ type: NOTIFY_TYPES.DELETE_ALL_NOTIFIES, payload: [] })
+    dispatch({ type: NOTIFY_TYPES.DELETE_ALL_NOTIFIES, payload: [] });
     try {
-        await deleteDataApi('notify', token)
+        await deleteDataApi('notify', token);
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
     }
