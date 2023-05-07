@@ -16,9 +16,7 @@ const NotifyModal = () => {
     return (
         <div style={{ minWidth: '300px' }}>
             <div className="dropdown-menu-header px-3">
-                <span>
-                    Notifications
-                </span>
+                <span> Notifications </span>
             </div>
             <hr className="mt-0" />
             {
@@ -82,12 +80,23 @@ const NotifyModal = () => {
                     </Link>
                 </div> */}
             </div>
+            <hr className="mt-0" />
             {
                 notify.data.length > 0 && <div className="dropdown-menu-footer">
-                    <Link to="/notifications">
-                        <span>
-                            View all notifications
-                        </span></Link>
+                    <div>
+                        <Link to="/notifications">
+                            <span>
+                                View more
+                            </span>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="#">
+                            <span>
+                                Delete all
+                            </span>
+                        </Link>
+                    </div>
                 </div>
             }
         </div>

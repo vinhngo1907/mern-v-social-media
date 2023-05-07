@@ -51,7 +51,7 @@ class NotifyController {
     async DeleteAllNotifies(req, res) {
         try {
             const deletedNotifies = await notifyModel.deleteMany({ recipients: req.user_id });
-            if (!deletedNotifies) return;
+            if (!deletedNotifies) return res.status(400).json(responseDTO.badRequest("You don't have any notifies!"));
 
             res.json(responseDTO.success("Deleted all notifies in successfully", deletedNotifies));
         } catch (error) {
