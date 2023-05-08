@@ -67,6 +67,13 @@
 
 .dropdown-menu-footer {
 	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	text-align: center;
 	border-top: 1px solid var(--second-bg-color);
+}
+
+.dropdown-menu-footer div{
+	cursor: pointer;
 }

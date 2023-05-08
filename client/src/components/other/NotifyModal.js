@@ -83,17 +83,13 @@ const NotifyModal = () => {
             <hr className="mt-0" />
             {
                 notify.data.length > 0 && <div className="dropdown-menu-footer">
-                    <div>
-                        <Link to="/notifications">
-                            <span>
-                                View more
-                            </span>
-                        </Link>
+                    <div className='text-left text-primary ml-2'>
+                        View more
                     </div>
-                    <div>
+                    <div className='text-right text-danger mr-2'>
+                        Delete all
                         <Link to="#">
                             <span>
-                                Delete all
                             </span>
                         </Link>
                     </div>

@@ -21,7 +21,7 @@ export const getAllPosts = (token) => async (dispatch) => {
         dispatch({ type: POST_TYPES.LOADING_POST, payload: false });
     } catch (err) {
         console.log(err.response);
-        // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
     }
 }
 
