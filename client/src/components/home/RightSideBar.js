@@ -8,7 +8,7 @@ import Visits from './Visits';
 import Views from './Views';
 
 const RightSideBar = () => {
-    const { auth, notify } = useSelector(state => state);
+    const { auth, notify, statisitc } = useSelector(state => state);
     // const dispatch = useDispatch();
     const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
@@ -62,7 +62,8 @@ const RightSideBar = () => {
                         {/* <!-- Tab panes --> */}
                         <div className="tab-content">
                             {
-                                visitTab ? <Visits auth={auth} /> : <Views auth={auth} />
+                                visitTab ? <Visits auth={auth} statisitc={statisitc} /> : <Views auth={auth} statisitc={statisitc}/>
+                                // visitTab ? <Visits  /> : <Views />
                             }
 
                         </div>
