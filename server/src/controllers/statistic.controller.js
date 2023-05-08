@@ -11,7 +11,10 @@ class StatisticController {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
-            let statisticRecord = {}
+            let statisticRecord = {
+                viewCount: 0,
+                visitCount: 0
+            }
 
             const recordExist = await statisticModel.findOne({
                 loggedAt: {
@@ -26,7 +29,7 @@ class StatisticController {
                     statisticRecord.viewCount = visitCount + 1;
                 }
 
-                await statisticModel.findOneAndUpdate(
+                const updatedStats = await statisticModel.findOneAndUpdate(
                     {
                         loggedAt: {
                             $gt: dayStart,
@@ -41,17 +44,17 @@ class StatisticController {
                         clients: recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
                     }
                 });
-                res.status(200).json(responseDTO.success("submit duration success"));
+                res.status(200).json(responseDTO.success("submit duration success", updatedStats));
             } else {
-                const newStatistic = new statisticModel({
+                const newStats = new statisticModel({
                     viewCount: 1,
                     visitCount: 1,
                     user: req.user._id,
                     clients: []
                 });
 
-                await newStatistic.save();
-                res.status(200).json(responseDTO.success("submit duration success"));
+                await newStats.save();
+                res.status(200).json(responseDTO.success("submit duration success", newStats));
             }
 
             stateCache = undefined;

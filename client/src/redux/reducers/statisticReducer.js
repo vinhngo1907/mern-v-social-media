@@ -1,7 +1,7 @@
 import { STATISTIC_TYPES } from "../actions/statisticAction";
 
 const initialState = {
-    visistCount: 0,
+    visitCount: 0,
     viewCount: 0,
     clients: [],
     loading: false
@@ -18,7 +18,9 @@ const statisticReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                clients: [...state.clients, action.payload]
+                visitCount: action.payload.visitCount,
+                viewCount: action.payload.viewCount,
+                clients: [...state.clients, action.payload.clients]
             };
 
         default:

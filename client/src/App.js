@@ -25,15 +25,22 @@ function App() {
 		dispatch(refreshToken())
 	}, [dispatch])
 
+	sessionStorage.setItem("visit", "x");
 	useEffect(() => {
 		if (auth.token) {
 			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
-			dispatch(getAllStatistics(auth.token));
+			if (sessionStorage.getItem('visit') === null) {
+				// New visit and pageview
+				dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token  }));
+			} else {
+				// Pageview
+				dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
+			}
 		}
-	}, [auth.token, dispatch])
-	
+	}, [auth.token, dispatch]);
+
 	window.addEventListener('scroll', () => {
 		if (window.location.pathname === '/') {
 			scroll = window.pageYOffset
@@ -66,7 +73,7 @@ function App() {
 					</Switch>
 				</div>
 			</div>
-			<ScrollTop scroll={scroll}/>
+			<ScrollTop scroll={scroll} />
 		</Router>
 	)
 }
