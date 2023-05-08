@@ -1,4 +1,4 @@
-// import { getDataApi } from "../../utils/fetchData"
+import { getDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes"
 
 export const STATISTIC_TYPES = {
@@ -10,7 +10,10 @@ export const STATISTIC_TYPES = {
 
 export const getAllStatistics = (token) => async (dispatch) => {
     try {
-        // const res = await getDataApi('')
+        dispatch({type:STATISTIC_TYPES.LOADING, payload: true});
+        const res = await getDataApi('statistic',token);
+        dispatch({ type: STATISTIC_TYPES.GET_STASTS, payload: res.data.results });
+        dispatch({ type: STATISTIC_TYPES.LOADING, payload: false })
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response.data.message || error } })
     }

@@ -28,7 +28,7 @@ function App() {
 		if (auth.token) {
 			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token));
-			dispatch(getAllNotifies(auth.token))
+			dispatch(getAllNotifies(auth.token));
 		}
 	}, [auth.token, dispatch])
 	
