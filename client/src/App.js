@@ -15,6 +15,7 @@ import Register from "./pages/register";
 import { getAllNotifies } from "./redux/actions/notifyAction";
 import ScrollTop from "./components/other/ScrollTop";
 
+let scroll = 0;
 function App() {
 	const { auth, status } = useSelector(state => state);
 	const dispatch = useDispatch();
@@ -30,6 +31,20 @@ function App() {
 			dispatch(getAllNotifies(auth.token))
 		}
 	}, [auth.token, dispatch])
+	
+	window.addEventListener('scroll', () => {
+		if (window.location.pathname === '/') {
+			scroll = window.pageYOffset
+			return scroll;
+		}
+	})
+
+	// useEffect(() => {
+	// 	console.log(scroll)
+	// 	setTimeout(() => {
+	// 		window.scrollTo({ top: scroll, behavior: 'smooth' })
+	// 	}, 100)
+	// }, [])
 
 	return (
 		<Router>
@@ -49,7 +64,7 @@ function App() {
 					</Switch>
 				</div>
 			</div>
-			<ScrollTop />
+			<ScrollTop scroll={scroll}/>
 		</Router>
 	)
 }

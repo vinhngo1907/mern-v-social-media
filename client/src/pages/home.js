@@ -7,6 +7,7 @@ import Posts from "../components/home/Posts";
 
 const Home = () => {
 	const { homePosts, sidebar } = useSelector(state => state);
+
 	return (
 		<div className={`home row mx-0 ${sidebar ? 'sidebar-expand' : ''}`}>
 			<div className="left_sidebar col-md-3">
@@ -14,7 +15,7 @@ const Home = () => {
 			</div>
 			<div className="main_sidebar col-md-6">
 				<Status />
-				
+
 				{
 					homePosts.loading
 						? <div className="spinner-border text-primary d-block mx-auto" role="status">
