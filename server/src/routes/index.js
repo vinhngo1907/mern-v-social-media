@@ -15,7 +15,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/post", postRouter);
     app.use(BASE_URL + "/upload", uploadRouter);
     app.use(BASE_URL + "/notify", notifyRouter);
-    app.use(BASE_URL + "/stats", statisticRouter);
+    app.use(BASE_URL + "/statistic", statisticRouter);
     app.use(BASE_URL + "/comment", commentRouter);
 }
 

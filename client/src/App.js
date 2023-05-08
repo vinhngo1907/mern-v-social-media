@@ -14,6 +14,7 @@ import { getAllPosts } from "./redux/actions/postAction";
 import Register from "./pages/register";
 import { getAllNotifies } from "./redux/actions/notifyAction";
 import ScrollTop from "./components/other/ScrollTop";
+import { getAllStatistics } from "./redux/actions/statisticAction";
 
 let scroll = 0;
 function App() {
@@ -29,6 +30,7 @@ function App() {
 			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
+			dispatch(getAllStatistics(auth.token));
 		}
 	}, [auth.token, dispatch])
 	
