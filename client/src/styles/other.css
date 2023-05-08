@@ -442,3 +442,21 @@ a:hover.linkedin {
 .green {
     background: #33b7a0;
 }
+
+#topcontrol {
+    border-radius: 5px;
+    color: #fff;
+    display: inline-block;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+    transform: rotate(-15deg);
+    transition: all 0.2s linear 0s;
+    width: 40px;
+    z-index: 99;
+    background: #088dcd;
+}
+
+#topcontrol:hover {
+    transform: rotate(0);
+}

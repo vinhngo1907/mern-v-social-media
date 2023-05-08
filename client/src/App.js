@@ -13,6 +13,7 @@ import { getSuggestion } from "./redux/actions/suggestionAction";
 import { getAllPosts } from "./redux/actions/postAction";
 import Register from "./pages/register";
 import { getAllNotifies } from "./redux/actions/notifyAction";
+import ScrollTop from "./components/other/ScrollTop";
 
 function App() {
 	const { auth, status } = useSelector(state => state);
@@ -39,15 +40,16 @@ function App() {
 					{auth.token && <Header />}
 					{status && <StatusModal />}
 					<Switch>
-					<Route exact path="/" component={auth.token ? Home : Login} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/register" component={Register} />
+						<Route exact path="/" component={auth.token ? Home : Login} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/register" component={Register} />
 
-					<PrivateRouter exact path="/:page" component={PageRender} />
-					<PrivateRouter exact path="/:page/:id" component={PageRender} />
+						<PrivateRouter exact path="/:page" component={PageRender} />
+						<PrivateRouter exact path="/:page/:id" component={PageRender} />
 					</Switch>
 				</div>
 			</div>
+			<ScrollTop />
 		</Router>
 	)
 }

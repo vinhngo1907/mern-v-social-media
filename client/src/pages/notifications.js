@@ -4,7 +4,7 @@ import Avatar from "../components/other/Avatar";
 const Notifications = () => {
     return (
         <div className="notifications">
-            <div className="col-lg-6">
+            <div className="col-md-6">
                 <div className="central-meta">
                     <div className="editing-interest">
                         <h5 className="f-title"><i className="fas fa-bell"></i>All Notifications </h5>
