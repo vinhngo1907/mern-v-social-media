@@ -1,9 +1,24 @@
 .groups>span i {
     color: var(--second-color);
 }
-.pepl-info > span{
-    color: var(--second-color);	
+
+.pepl-info>span {
+    color: var(--second-color);
 }
+
+a.add-butn {
+    background: #088dcd;
+    color: #fff;
+    float: right;
+    font-size: 13px;
+    line-height: initial;
+    padding: 5px 10px;
+    position: absolute;
+    right: 0;
+    text-transform: capitalize;
+    top: 10px;
+}
+
 .groups>span i {
     margin-right: 5px;
 }
@@ -67,14 +82,14 @@
     width: 88%;
 }
 
-.pepl-info > h4 {
+.pepl-info>h4 {
     display: inline-block;
     font-size: 16px;
     font-weight: 600;
     text-transform: capitalize;
 }
 
-.pepl-info > span {
+.pepl-info>span {
     float: left;
     font-size: 13px;
     text-transform: capitalize;
@@ -82,7 +97,7 @@
     line-height: initial;
 }
 
-.pepl-info > em {
+.pepl-info>em {
     display: inline-block;
     font-size: 13px;
     font-style: normal;
@@ -92,6 +107,15 @@
     vertical-align: baseline;
 }
 
-.pepl-info > em i {
+.pepl-info>em i {
     margin-right: 5px;
+}
+
+a.add-butn.more-action {
+    background: lightslategray none repeat scroll 0 0;
+    right: 74px;
+}
+
+#frends a.add-butn.more-action {
+    right: 89px;
 }
