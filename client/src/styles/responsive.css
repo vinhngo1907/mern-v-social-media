@@ -92,4 +92,14 @@
     .notifi-meta {
         width: 77%;
     }
+
+    .nearby-contct>li {
+        padding: 10px;
+    }
+
+    .nearly-pepls > figure {
+        min-width: 40px;
+        max-width: 40px;
+        width: 40px;
+    }
 }
