@@ -164,3 +164,6 @@ ul{
 
 /* --------- Responsive ------ */
 @import url("./responsive.css");
+
+/* --------- Message ------ */
+@import url("./message.css");
