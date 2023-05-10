@@ -33,7 +33,7 @@ function App() {
 			dispatch(getAllNotifies(auth.token));
 			if (sessionStorage.getItem('visit') === null) {
 				// New visit and pageview
-				dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token  }));
+				dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token }));
 			} else {
 				// Pageview
 				dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
@@ -73,7 +73,7 @@ function App() {
 					</Switch>
 				</div>
 			</div>
-			<ScrollTop scroll={scroll} />
+			{auth.token && <ScrollTop scroll={scroll} />}
 		</Router>
 	)
 }
