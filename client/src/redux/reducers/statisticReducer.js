@@ -20,7 +20,7 @@ const statisticReducer = (state = initialState, action) => {
                 ...state,
                 visitCount: action.payload.visitCount,
                 viewCount: action.payload.viewCount,
-                clients: [...state.clients, action.payload.clients]
+                // clients: [...state.clients, action.payload.clients]
             };
 
         default:

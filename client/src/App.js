@@ -14,7 +14,7 @@ import { getAllPosts } from "./redux/actions/postAction";
 import Register from "./pages/register";
 import { getAllNotifies } from "./redux/actions/notifyAction";
 import ScrollTop from "./components/other/ScrollTop";
-import { getAllStatistics } from "./redux/actions/statisticAction";
+import { getTotalStatistics } from "./redux/actions/statisticAction";
 
 let scroll = 0;
 function App() {
@@ -25,19 +25,20 @@ function App() {
 		dispatch(refreshToken())
 	}, [dispatch])
 
-	sessionStorage.setItem("visit", "x");
 	useEffect(() => {
+		sessionStorage.setItem("visit", "x");
 		if (auth.token) {
 			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
-			if (sessionStorage.getItem('visit') === null) {
-				// New visit and pageview
-				dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token }));
-			} else {
-				// Pageview
-				dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
-			}
+			dispatch(getTotalStatistics(auth.token));
+			// if (sessionStorage.getItem('visit') === null) {
+			// 	// New visit and pageview
+			// 	dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token }));
+			// } else {
+			// 	// Pageview
+			// 	dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
+			// }
 		}
 	}, [auth.token, dispatch]);
 

@@ -3,34 +3,33 @@ const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
 const { statisticModel } = modelSchema;
 const moment = require("moment-timezone");
-let stateCache;
+let statCache;
 
 class StatisticController {
     async FetchAllStats(req, res) {
         try {
+            const today = moment().format("LL");
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
+            const recordExist = await statisticModel.findOne({ user: req.user._id })
+
             let statisticRecord = {
                 viewCount: 0,
                 visitCount: 0
             }
 
-            const recordExist = await statisticModel.findOne({
-                loggedAt: {
-                    $gt: dayStart,
-                    $lte: dayEnd
-                }
-            });
             if (recordExist) {
                 const { viewCount, visitCount } = recordExist;
                 statisticRecord.viewCount = viewCount + 1;
+
                 if (req.query.type === "visit-pageview") {
-                    statisticRecord.viewCount = visitCount + 1;
+                    statisticRecord.visitCount = visitCount + 1;
                 }
 
                 const updatedStats = await statisticModel.findOneAndUpdate(
                     {
+                        user: req.user._id,
                         loggedAt: {
                             $gt: dayStart,
                             $lte: dayEnd
@@ -41,9 +40,10 @@ class StatisticController {
                         visitCount: statisticRecord.visitCount,
                         loggedAt: now,
                         user: req.user._id,
-                        clients: recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
+                        // clients: recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
                     }
                 });
+                statCache = undefined;
                 res.status(200).json(responseDTO.success("submit duration success", updatedStats));
             } else {
                 const newStats = new statisticModel({
@@ -54,32 +54,53 @@ class StatisticController {
                 });
 
                 await newStats.save();
-                res.status(200).json(responseDTO.success("submit duration success", newStats));
+                statCache = undefined;
+                res.status(200).json(responseDTO.success("submit duration success", {
+                    ...newStats._doc, user: req.user
+                }));
             }
-
-            stateCache = undefined;
         } catch (error) {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    async GetTotalStats() {
+    async GetTotalStats(req, res) {
         try {
-            const today = moment().format("LL");
-            const statistic = await statisticModel.findOne({ loggedAt: today });
-            let stats = {}
-            if (statistic) {
-                const {
-                    viewCount,
-                    visitCount
-                } = statistic;
-
-                stats = {
-                    viewCount,
-                    visitCount,
-                    cacheTime: moment()
+            console.log({ statCache })
+            if (statCache) {
+                const { cacheTime, data } = statCache;
+                const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
+                if (durationUntilNow < 30) {
+                    return res.status(200).json(responseDTO.success("Get data in successfully", data));
                 }
             }
-            responseDTO.success("Get data in successfully", stats)
+            // const today = moment().format("LL");
+            const now = moment(new Date());
+            const dayStart = moment(now).startOf("date").toDate();
+            const dayEnd = moment(now).endOf("date").toDate();
+            const recordStats = await statisticModel
+                .findOne({
+                    user: req.user._id,
+                    loggedAt: {
+                        $gt: dayStart,
+                        $lte: dayEnd
+                    }
+                })
+                .populate("user", "username fullname avatar following followers");
+
+            let stats = {}
+            if (recordStats) {
+                const { viewCount, visitCount, user } = recordStats
+                stats = {
+                    viewCount, visitCount, user
+                }
+            }
+
+            statCache = {
+                cacheTime: moment(),
+                data: stats,
+            };
+
+            res.status(200).json(responseDTO.success("Get data in successfully", stats));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));;

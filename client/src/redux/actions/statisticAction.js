@@ -12,12 +12,23 @@ export const getAllStatistics = ({ type, token }) => async (dispatch) => {
     try {
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: true });
         const res = await getDataApi(`statistic?type=${type}`, token);
-        console.log(res.data)
+        dispatch({ type: STATISTIC_TYPES.LOADING, payload: false });
         dispatch({ type: STATISTIC_TYPES.GET_STASTS, payload: res.data.results });
-        sessionStorage.setItem("visit", "x");
-        dispatch({ type: STATISTIC_TYPES.LOADING, payload: false })
     } catch (err) {
         console.log(err)
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
+    }
+}
+
+export const getTotalStatistics = (token) => async (dispatch) => {
+    try {
+        dispatch({ type: STATISTIC_TYPES.LOADING, payload: true });
+        const res = await getDataApi("statistic", token);
+        console.log(res.data);
+        
+        dispatch({ type: STATISTIC_TYPES.LOADING, payload: false });
+        dispatch({ type: STATISTIC_TYPES.GET_STASTS, payload: res.data.results });
+    } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
     }
 }

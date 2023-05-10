@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
 
 import Visits from './Visits';
 import Views from './Views';
+// import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
-    const { auth, notify, statisitc } = useSelector(state => state);
-    // const dispatch = useDispatch();
+    const { auth, notify } = useSelector(state => state);
+    const dispatch = useDispatch();
     const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
@@ -27,6 +28,14 @@ const RightSideBar = () => {
         setSearch('');
         setUsers(auth.user.following);
     }
+    // useEffect(() => {
+    //     if (sessionStorage.getItem('visit') === null) {
+    //         dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token }));
+    //     }else{
+    //         dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
+    //     }
+    // }, [auth.token, dispatch]);
+
     return (
         <div className='sidebar static'>
             <div className='widget mt-3'>
@@ -62,7 +71,7 @@ const RightSideBar = () => {
                         {/* <!-- Tab panes --> */}
                         <div className="tab-content">
                             {
-                                visitTab ? <Visits auth={auth} statisitc={statisitc} /> : <Views auth={auth} statisitc={statisitc}/>
+                                visitTab ? <Visits auth={auth} dispatch={dispatch} /> : <Views auth={auth} dispatch={dispatch}/>
                                 // visitTab ? <Visits  /> : <Views />
                             }
 
