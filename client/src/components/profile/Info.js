@@ -5,31 +5,41 @@ import Followers from "./Followers";
 import Following from "./Following";
 import EditProfile from "./EditProfile";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
+import { useDispatch, useSelector } from "react-redux";
 
 const Info = ({ auth, id, dispatch, profile }) => {
+    const { auth } = useSelector(state => state);
+    const dispatch = useDispatch();
+
     const [userData, setUserData] = useState([]);
     const [onEdit, setOnEdit] = useState(false)
 
-    const [showFollowers, setShowFollowers] = useState(false)
-    const [showFollowing, setShowFollowing] = useState(false)
+    const [showFollowers, setShowFollowers] = useState(false);
+    const [showFollowing, setShowFollowing] = useState(false);
+
+    useEffect(() => {
+        sessionStorage.setItem("visit", "x");
+        dispatch()
+    }, [auth.token, dispatch]);
+
     useEffect(() => {
         if (auth.user._id === id) {
             setUserData([auth.user])
-        }else{
+        } else {
             const user = profile.users.filter(u => u._id === id);
             setUserData(user)
         }
     }, [auth.user, id, profile.users, dispatch]);
 
-   
+
     useEffect(() => {
-        if(showFollowers || showFollowing || onEdit){
-            dispatch({ type: GLOBALTYPES.MODAL, payload: true})
-        }else{
-            dispatch({ type: GLOBALTYPES.MODAL, payload: false})
+        if (showFollowers || showFollowing || onEdit) {
+            dispatch({ type: GLOBALTYPES.MODAL, payload: true })
+        } else {
+            dispatch({ type: GLOBALTYPES.MODAL, payload: false })
         }
-    },[showFollowers, showFollowing, onEdit, dispatch])
-    
+    }, [showFollowers, showFollowing, onEdit, dispatch])
+
     return (
         <div className="info">
             {
