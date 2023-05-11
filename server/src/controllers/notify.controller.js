@@ -18,6 +18,7 @@ class NotifyController {
             responseDTO.serverError(error.message);
         }
     }
+    
     async CreateNotify(req, res) {
         try {
             if (req.body.recipients.includes(req.user._id.toString())) return;
