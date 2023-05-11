@@ -6,7 +6,8 @@ const notifySchema = new mongoose.Schema({
     url: String,
     content: String,
     image: String,
-    recipients: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+    // recipients: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+    recipients: [mongoose.Types.ObjectId],
     isRead: { type: Boolean, default: false }
 }, { timestamps: true });
 
