@@ -7,8 +7,8 @@ let statCache;
 
 class StatisticController {
     async FetchAllStats(req, res) {
+        console.log(">>>>>>>",req.query)
         try {
-            const today = moment().format("LL");
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
@@ -29,7 +29,7 @@ class StatisticController {
 
                 const updatedStats = await statisticModel.findOneAndUpdate(
                     {
-                        user: req.user._id,
+                        user: req.query.id,
                         loggedAt: {
                             $gt: dayStart,
                             $lte: dayEnd
@@ -39,8 +39,8 @@ class StatisticController {
                         viewCount: statisticRecord.viewCount,
                         visitCount: statisticRecord.visitCount,
                         loggedAt: now,
-                        user: req.user._id,
-                        // clients: recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
+                        user: req.user.id,
+                        clients: req.query.id !== req.user._id && recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
                     }
                 });
                 statCache = undefined;
@@ -49,7 +49,7 @@ class StatisticController {
                 const newStats = new statisticModel({
                     viewCount: 1,
                     visitCount: 1,
-                    user: req.user._id,
+                    user: req.query.id,
                     clients: []
                 });
 
@@ -60,12 +60,12 @@ class StatisticController {
                 }));
             }
         } catch (error) {
+            console.log(error)
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
     async GetTotalStats(req, res) {
         try {
-            console.log({ statCache })
             if (statCache) {
                 const { cacheTime, data } = statCache;
                 const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
@@ -80,10 +80,10 @@ class StatisticController {
             const recordStats = await statisticModel
                 .findOne({
                     user: req.user._id,
-                    loggedAt: {
-                        $gt: dayStart,
-                        $lte: dayEnd
-                    }
+                    // loggedAt: {
+                    //     $gt: dayStart,
+                    //     $lte: dayEnd
+                    // }
                 })
                 .populate("user", "username fullname avatar following followers");
 

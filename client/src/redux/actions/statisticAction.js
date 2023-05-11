@@ -8,13 +8,12 @@ export const STATISTIC_TYPES = {
 }
 
 
-export const getAllStatistics = ({id, type, auth }) => async (dispatch) => {
+export const fetchAllStatistics = ({id, type, auth }) => async (dispatch) => {
     try {
-        const res = await getDataApi(`statistic?type=${type}`, auth.token);
-        dispatch({ type: STATISTIC_TYPES.UPDATE_STATS, payload: res.data.results });
+        await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);
     } catch (err) {
-        console.log(err)
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
+        console.log(err.response)
+        // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
 
@@ -22,7 +21,6 @@ export const getTotalStatistics = (token) => async (dispatch) => {
     try {
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: true });
         const res = await getDataApi("statistic", token);
-        console.log(res.data);
         
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: false });
         dispatch({ type: STATISTIC_TYPES.GET_STASTS, payload: res.data.results });
