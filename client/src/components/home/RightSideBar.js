@@ -8,7 +8,7 @@ import Views from './Views';
 // import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
-    const { auth, notify } = useSelector(state => state);
+    const { auth, notify, statistic } = useSelector(state => state);
     const dispatch = useDispatch();
     const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
@@ -49,7 +49,7 @@ const RightSideBar = () => {
                         <Link to={`profile/${auth.user._id}`} title="" className="underline">My page</Link>
                         <span>
                             <i className="fas fa-comment" />
-                            <Link to="insight.html" title="">Messages <em>9</em></Link> 
+                            <Link to="insight.html" title="">Messages <em>9</em></Link>
                         </span>
                         <span>
                             <i className="fas fa-bell" />
@@ -70,9 +70,14 @@ const RightSideBar = () => {
                         {/* <!-- Tab panes --> */}
                         <div className="tab-content">
                             {
-                                visitTab ? <Visits auth={auth} dispatch={dispatch} /> : <Views auth={auth} dispatch={dispatch}/>
-                                // visitTab ? <Visits  /> : <Views />
+                                statistic.loading
+                                    ? <div className='spinner-border d-block mx-auto' role='status'>
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    :
+                                    visitTab ? <Visits auth={auth} dispatch={dispatch} /> : <Views auth={auth} dispatch={dispatch} />
                             }
+
 
                         </div>
                     </div>

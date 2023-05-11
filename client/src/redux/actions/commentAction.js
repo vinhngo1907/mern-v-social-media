@@ -9,11 +9,9 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
     try {
         const data = { ...newComment, postId: post._id, postUserId: post.user._id }
         const res = await postDataApi('comment', data, auth.token);
-        // console.log(res.data.results)
+        
         const newData = { ...res.data.results, user: auth.user }
-        // console.log({ newData })
         const newPost = { ...post, comments: [...post.comments, newData] }
-        // console.log({ newPost })
 
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
@@ -73,6 +71,7 @@ export const removeComment = ({ comment, post, auth }) => async (dispatch) => {
     const newPost = {
         ...post, comments: post.comments.filter(cm => !deletedArr.find(da => cm._id === da._id))
     }
+    
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
     
     try {
