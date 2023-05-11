@@ -95,7 +95,10 @@
     padding-bottom: 0;
 }
 
-.notification-box>ul li>i.del {
+.notification-box>ul li>div>i.del {
+    /* position: absolute;
+    top: 50%;
+    right: 5px; */
     cursor: pointer;
     display: inline-block;
     opacity: 0;
@@ -103,10 +106,11 @@
     vertical-align: top;
     visibility: hidden;
     transition: all 0.2s linear 0s;
+    /* transform: translate(-50%, -50%); */
     color: red;
 }
 
-.notification-box>ul li:hover>i.del {
+.notification-box>ul li:hover>div>i.del {
     opacity: 1;
     visibility: visible;
 }

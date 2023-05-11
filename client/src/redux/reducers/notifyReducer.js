@@ -1,4 +1,4 @@
-import { DeleteData } from "../actions/globalTypes";
+import { EditData } from "../actions/globalTypes";
 import { NOTIFY_TYPES } from "../actions/notifyAction";
 
 const initialState = {
@@ -14,16 +14,39 @@ const notifyReducer = (state = initialState, action) => {
                 data: action.payload
             }
 
+
         case NOTIFY_TYPES.CREATE_NOTIFY:
             return {
                 ...state,
                 data: [action.payload, ...state.data]
             };
+
         case NOTIFY_TYPES.UPDATE_NOTIFY:
             return {
                 ...state,
-                data: DeleteData(state.data, action.payload._id)
-            }
+                data: EditData(state.data, action.payload, action.payload._id)
+            };
+
+        case NOTIFY_TYPES.UPDATE_SOUND:
+            return {
+                ...state,
+                sound: action.payload
+            };
+
+        case NOTIFY_TYPES.REMOVE_NOTIFY:
+            return {
+                ...state,
+                data: state.data.filter(item => (
+                    item.id !== action.payload.id || item.url !== action.payload.url
+                ))
+            };
+
+        case NOTIFY_TYPES.DELETE_ALL_NOTIFIES:
+            return {
+                ...state,
+                data: action.payload
+            };
+        
         default:
             return state;
     }

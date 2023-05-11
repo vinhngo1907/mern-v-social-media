@@ -3,6 +3,7 @@ import Avatar from "../components/other/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { removeNotify, NOTIFY_TYPES } from "../redux/actions/notifyAction";
 import moment from "moment";
+import LeftSideBar from "../components/home/LeftSideBar";
 
 const Notifications = () => {
     const { auth, notify } = useSelector(state => state);
@@ -18,10 +19,12 @@ const Notifications = () => {
         dispatch({ type: NOTIFY_TYPES.UPDATE_SOUND, payload: !notify.sound })
     }
 
-
     return (
-        <div className="notifications">
-            <div className="col-md-6">
+        <div className="notifications row mx-0 ">
+            <div className="left_sidebar col-md-3">
+                <LeftSideBar />
+            </div>
+            <div className="main_sidebar py-3 col-md-6">
                 <div className="central-meta">
                     <div className="editing-interest">
                         <h5 className="f-title">
@@ -37,6 +40,7 @@ const Notifications = () => {
                             }
                             All Notifications
                         </h5>
+                        <hr />
                         <div className="notification-box">
                             <ul>
                                 {
@@ -46,17 +50,45 @@ const Notifications = () => {
                                         :
                                         notify.data.map((noti, index) => (
                                             <li key={`${noti._id}-${index}`}>
-                                                <figure>
-                                                    <Avatar
-                                                        src="https://res.cloudinary.com/v-webdev/image/upload/v1679677989/test/ispwvdjdqgkami7ndqha.jpg"
-                                                        size="big-avatar"
-                                                    />
-                                                </figure>
-                                                <div className="notifi-meta">
-                                                    <p>bob frank like your post</p>
-                                                    <span>{moment(noti.createdAt).fromNow()}</span>
+                                                <div className="d-flex position-relative align-items-center justify-content-between">
+
+                                                    <div className='d-flex' style={{ flexDirection: "column" }}>
+                                                        <div className="d-flex">
+                                                            <figure>
+                                                                <Avatar
+                                                                    src={noti.user.avatar}
+                                                                    size="big-avatar"
+                                                                />
+                                                            </figure>
+                                                            <strong className="mr-1">{noti.user.username}</strong>
+                                                        </div>
+                                                        <span>{noti.text}</span>
+                                                    </div>
+
+
+                                                    <div className="notifi-meta">
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <p>
+                                                                {noti.content && noti.content.length >= 45
+                                                                    ? `${noti.content.slice(0, 46)}...`
+                                                                    : noti.content
+                                                                }
+                                                            </p>
+                                                            {
+                                                                noti.image &&
+                                                                <div style={{ width: '30px' }}>
+                                                                    {
+                                                                        noti.image.match(/video/i)
+                                                                            ? <video src={noti.image} width="100%" />
+                                                                            : <Avatar src={noti.image} size="medium-avatar" />
+                                                                    }
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <span>{moment(noti.createdAt).fromNow()}</span>
+                                                    </div>
+                                                    <i className="del fa fa-close" onClick={() => handleDelete(noti)} />
                                                 </div>
-                                                <i className="del fa fa-close" onClick={() => handleDelete(noti)} />
                                             </li>
                                         ))
                                 }
