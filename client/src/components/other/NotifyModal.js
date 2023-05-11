@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from "moment";
 import Avatar from './Avatar';
-import { isReadNotify } from '../../redux/actions/notifyAction';
+import { NOTIFY_TYPES, deleteAllNotifies, isReadNotify } from '../../redux/actions/notifyAction';
 import NotiNotice from "../../assets/notice.png";
 
 const NotifyModal = () => {
@@ -13,10 +13,36 @@ const NotifyModal = () => {
         dispatch(isReadNotify({ msg, auth }))
     }
 
+    const handleSound = () => {
+        dispatch({ type: NOTIFY_TYPES.UPDATE_SOUND, payload: !notify.sound })
+    }
+
+    const handleDeleteAll = () => {
+        const newArr = notify.data.filter(noti => noti.isRead === false);
+        if (newArr.length === 0) return dispatch(deleteAllNotifies(auth.token))
+
+        if (window.confirm(`You have ${newArr.length} unread notices. Are you sure you want to delete all?`)) {
+            return dispatch(deleteAllNotifies(auth.token))
+        }
+    }
+
     return (
         <div style={{ minWidth: '300px' }}>
             <div className="dropdown-menu-header px-3">
-                <span> Notifications </span>
+                <span>
+                    {
+                        notify.sound
+                            ? <i className="fas fa-bell text-danger mr-2"
+                                style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                                onClick={handleSound} />
+
+                            : <i className="fas fa-bell-slash text-danger mr-2"
+                                style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                                onClick={handleSound} />
+                    }
+                    Notifications
+
+                </span>
             </div>
             <hr className="mt-0" />
             {
@@ -84,14 +110,16 @@ const NotifyModal = () => {
             {
                 notify.data.length > 0 && <div className="dropdown-menu-footer">
                     <div className='text-left text-primary ml-2'>
-                        View more
-                    </div>
-                    <div className='text-right text-danger mr-2'>
-                        Delete all
-                        <Link to="#">
+
+                        <Link to="/notifications">
                             <span>
+                                View more
                             </span>
                         </Link>
+                    </div>
+                    <div className='text-right text-danger mr-2' onClick={handleDeleteAll}>
+                        Delete all
+
                     </div>
                 </div>
             }

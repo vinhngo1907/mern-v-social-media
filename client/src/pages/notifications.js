@@ -1,71 +1,65 @@
 import React from "react";
 import Avatar from "../components/other/Avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { removeNotify, NOTIFY_TYPES } from "../redux/actions/notifyAction";
+import moment from "moment";
 
 const Notifications = () => {
+    const { auth, notify } = useSelector(state => state);
+    const dispatch = useDispatch();
+
+    const handleDelete = (noti) => {
+        if (window.confirm("Are you sure?")) {
+            dispatch(removeNotify({ msg: noti, auth }))
+        }
+    }
+
+    const handleSound = () => {
+        dispatch({ type: NOTIFY_TYPES.UPDATE_SOUND, payload: !notify.sound })
+    }
+
+
     return (
         <div className="notifications">
             <div className="col-md-6">
                 <div className="central-meta">
                     <div className="editing-interest">
-                        <h5 className="f-title"><i className="fas fa-bell"></i>All Notifications </h5>
+                        <h5 className="f-title">
+                            {
+                                notify.sound
+                                    ? <i className="fas fa-bell text-danger mr-2"
+                                        style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                                        onClick={handleSound} />
+
+                                    : <i className="fas fa-bell-slash text-danger mr-2"
+                                        style={{ fontSize: '1.2rem', cursor: 'pointer' }}
+                                        onClick={handleSound} />
+                            }
+                            All Notifications
+                        </h5>
                         <div className="notification-box">
                             <ul>
-                                <li>
-                                    <figure>
-                                        <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1679677989/test/ispwvdjdqgkami7ndqha.jpg"
-                                            size="big-avatar" />
-                                    </figure>
-                                    <div className="notifi-meta">
-                                        <p>bob frank like your post</p>
-                                        <span>30 mints ago</span>
+                                {
+                                    notify.loading ? <div className="d-block mx-auto spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
                                     </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
-                                <li>
-                                    <figure>
-                                        <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1674274804/test/c6vrerzsuhnroq5czb6j.jpg"
-                                            size="big-avatar" />
-                                    </figure>
-                                    <div className="notifi-meta">
-                                        <p>Sarah Hetfield commented on your photo. </p>
-                                        <span>1 hours ago</span>
-                                    </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
-                                <li>
-                                    <figure>
-                                        <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683457124/v-media/profileImg_cven4n.jpg"
-                                            size="big-avatar" /></figure>
-                                    <div className="notifi-meta">
-                                        <p>Mathilda Brinker commented on your new profile status. </p>
-                                        <span>2 hours ago</span>
-                                    </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
-                                <li>
-                                    <figure><Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683457061/v-media/user-avatar_b27qe1.jpg" size="big-avatar" /></figure>
-                                    <div className="notifi-meta">
-                                        <p>Green Goo Rock invited you to attend to his event Goo in Gotham Bar. </p>
-                                        <span>2 hours ago</span>
-                                    </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
-                                <li>
-                                    <figure><Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683457061/v-media/user-avatar2_atyzq8.jpg" size="big-avatar" /></figure>
-                                    <div className="notifi-meta">
-                                        <p>Chris Greyson liked your profile status. </p>
-                                        <span>1 day ago</span>
-                                    </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
-                                <li>
-                                    <figure><Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683457123/v-media/p13_qlshae.jpg" size="big-avatar" /></figure>
-                                    <div className="notifi-meta">
-                                        <p>You and Nicholas Grissom just became friends. Write on his wall. </p>
-                                        <span>2 days ago</span>
-                                    </div>
-                                    <i className="del fa fa-close"></i>
-                                </li>
+                                        :
+                                        notify.data.map((noti, index) => (
+                                            <li key={`${noti._id}-${index}`}>
+                                                <figure>
+                                                    <Avatar
+                                                        src="https://res.cloudinary.com/v-webdev/image/upload/v1679677989/test/ispwvdjdqgkami7ndqha.jpg"
+                                                        size="big-avatar"
+                                                    />
+                                                </figure>
+                                                <div className="notifi-meta">
+                                                    <p>bob frank like your post</p>
+                                                    <span>{moment(noti.createdAt).fromNow()}</span>
+                                                </div>
+                                                <i className="del fa fa-close" onClick={() => handleDelete(noti)} />
+                                            </li>
+                                        ))
+                                }
                             </ul>
                         </div>
                     </div>

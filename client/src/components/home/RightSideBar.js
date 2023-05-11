@@ -72,7 +72,7 @@ const RightSideBar = () => {
                             {
                                 statistic.loading
                                     ? <div className='spinner-border d-block mx-auto' role='status'>
-                                        <span class="sr-only">Loading...</span>
+                                        <span className="sr-only">Loading...</span>
                                     </div>
                                     :
                                     visitTab ? <Visits auth={auth} dispatch={dispatch} /> : <Views auth={auth} dispatch={dispatch} />
