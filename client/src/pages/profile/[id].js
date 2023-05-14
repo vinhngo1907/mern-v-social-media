@@ -5,7 +5,7 @@ import { getProfileUsers } from "../../redux/actions/profileAction";
 import Info from "../../components/profile/Info";
 import Saved from "../../components/profile/Saved";
 import Posts from "../../components/profile/Posts";
-import LeftSideBar from "../../components/home/LeftSideBar";
+import LeftSideBar from "../../components/global/LeftSideBar";
 
 const Profile = () => {
     const { auth, profile } = useSelector(state => state);

@@ -1,6 +1,6 @@
 import React from "react";
-import LeftSideBar from "../components/home/LeftSideBar";
-import RightSideBar from "../components/home/RightSideBar";
+import LeftSideBar from "../components/global/LeftSideBar";
+import RightSideBar from "../components/global/RightSideBar";
 import Status from "../components/home/Status";
 import { useSelector } from "react-redux";
 import Posts from "../components/home/Posts";

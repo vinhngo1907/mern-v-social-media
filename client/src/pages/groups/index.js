@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LeftSideBar from "../../components/home/LeftSideBar";
+import LeftSideBar from "../../components/global/LeftSideBar";
 
 const Groups = () => {
     return (

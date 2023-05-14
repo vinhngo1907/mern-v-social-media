@@ -5,6 +5,8 @@
     margin-top: 15px;
     border-radius: 3px;
     background: #fbfbfb;
+    border-radius: 16px;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,.1), 0 32px 64px -48px rgba(0,0,0,.5);
 }
 
 .message_header {
@@ -24,6 +26,7 @@
     outline: none;
     background: #f8f8f8;
     padding: 0 5px;
+    border-radius: 20px;
 }
 
 .message_chat_list {

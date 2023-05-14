@@ -3,7 +3,7 @@ import Avatar from "../components/other/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { removeNotify, NOTIFY_TYPES } from "../redux/actions/notifyAction";
 import moment from "moment";
-import LeftSideBar from "../components/home/LeftSideBar";
+import LeftSideBar from "../components/global/LeftSideBar";
 
 const Notifications = () => {
     const { auth, notify } = useSelector(state => state);
