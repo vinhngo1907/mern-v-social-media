@@ -7,7 +7,7 @@ import {
 import UserCard from '../other/UserCard';
 import { getSuggestion } from '../../redux/actions/suggestionAction';
 import FollowBtn from '../other/FollowBtn';
-import Social from '../statistics/Social';
+import Social from '../statistic/Social';
 
 const LeftSideBar = ({ type }) => {
     const { auth, suggestion } = useSelector(state => state);
