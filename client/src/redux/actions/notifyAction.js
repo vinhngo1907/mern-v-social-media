@@ -26,6 +26,7 @@ export const createNotify = ({ msg, auth }) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
+
 export const removeNotify = ({ msg, auth }) => async (dispatch) => {
     try {
         await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token);

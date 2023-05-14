@@ -18,7 +18,7 @@ class NotifyController {
             responseDTO.serverError(error.message);
         }
     }
-    
+
     async CreateNotify(req, res) {
         try {
             if (req.body.recipients.includes(req.user._id.toString())) return;
@@ -38,8 +38,7 @@ class NotifyController {
 
     async RemoveNotify(req, res) {
         try {
-            const { id } = req.params;
-            const removedNotify = await notifyModel.findOneAndDelete({ _id: id, url: req.query.url });
+            const removedNotify = await notifyModel.findOneAndDelete({ id: req.params.id, url: req.query.url });
             if (!removedNotify) return res.status(400).json(responseDTO.badRequest("This notify not found"));
 
             res.json(responseDTO.success("Deleted notify in successfully", removedNotify));
