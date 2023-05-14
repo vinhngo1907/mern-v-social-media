@@ -91,6 +91,7 @@ export const deletePost = ({ post, auth }) => async (dispatch) => {
         const res = await deleteDataApi(`post/${post._id}`, auth.token);
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
+
         // Notify
         const msg = {
             id: post._id,
@@ -101,7 +102,7 @@ export const deletePost = ({ post, auth }) => async (dispatch) => {
 
         dispatch(removeNotify({ msg, auth }))
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
 

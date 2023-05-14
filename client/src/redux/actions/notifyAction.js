@@ -15,7 +15,7 @@ export const getAllNotifies = (token) => async (dispatch) => {
         const res = await getDataApi('notify', token);
         dispatch({ type: NOTIFY_TYPES.GET_NOTIFIES, payload: res.data.results })
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
 
@@ -23,14 +23,14 @@ export const createNotify = ({ msg, auth }) => async (dispatch) => {
     try {
         await postDataApi('notify', msg, auth.token);
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
 export const removeNotify = ({ msg, auth }) => async (dispatch) => {
     try {
         await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token);
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: err.response.data.message || err })
     }
 }
 
@@ -39,7 +39,7 @@ export const isReadNotify = ({ msg, auth }) => async (dispatch) => {
         dispatch({ type: NOTIFY_TYPES.UPDATE_NOTIFY, payload: { ...msg, isRead: true } });
         await patchDataApi(`notify/${msg._id}`, null, auth.token);
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
 
@@ -48,6 +48,6 @@ export const deleteAllNotifies = (token) => async (dispatch) => {
     try {
         await deleteDataApi('notify', token);
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: err?.response?.data?.message || err })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
 }
