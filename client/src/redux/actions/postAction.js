@@ -1,5 +1,5 @@
-import { getDataApi, patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
-import { imageUpload } from "../../utils/imageUpload";
+import { deleteDataApi, getDataApi, patchDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
+import { imageDestroy, imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
 import { createNotify, removeNotify } from "./notifyAction";
 
@@ -43,11 +43,11 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
             text: 'added a new post.',
             recipients: res.data.results.user.followers,
             url: `/post/${res.data.results._id}`,
-            content, 
+            content,
             image: media[0].url
         }
 
-        dispatch(createNotify({msg, auth}))
+        dispatch(createNotify({ msg, auth }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
@@ -76,9 +76,30 @@ export const editPost = ({ content, images, auth, status }) => async (dispatch) 
     }
 }
 
-export const deletePost = ({ post, auth }) => (dispatch) => {
+export const deletePost = ({ post, auth }) => async (dispatch) => {
     try {
+        if (post.images.length > 0) {
+            post.images.forEach(img => {
+                imageDestroy(img, auth.token)
+            });
+        }
 
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+
+        dispatch({ type: POST_TYPES.DELETE_POST, payload: post });
+
+        const res = await deleteDataApi(`post/${post._id}`, auth.token);
+
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
+        // Notify
+        const msg = {
+            id: post._id,
+            text: 'deleted a post',
+            recipients: res.data.results.user.followers,
+            url: `/post/${post._id}`,
+        }
+
+        dispatch(removeNotify({ msg, auth }))
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
@@ -115,14 +136,14 @@ export const unLikePost = ({ post, auth }) => async (dispatch) => {
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
         await patchDataApi(`post/${post._id}/unlike`, null, auth.token);
 
-         // Notify
-         const msg = {
+        // Notify
+        const msg = {
             id: auth.user._id,
             text: 'like your post.',
             recipients: [post.user._id],
             url: `/post/${post._id}`,
         }
-        dispatch(removeNotify({msg, auth}))
+        dispatch(removeNotify({ msg, auth }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });

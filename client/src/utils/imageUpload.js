@@ -1,4 +1,5 @@
 import axios from "axios";
+import { postDataApi } from "./fetchData";
 
 export const checkImage = (file) => {
     let err = "";
@@ -36,4 +37,9 @@ export const imageUpload = async (images, token) => {
         imgArr.push({ public_id: data.public_id, url: data.url });
     }
     return imgArr;
+}
+
+export const imageDestroy = async (img, token) => {
+    const res = await postDataApi('upload/destroy', { public_id: img.public_id }, token);
+    return res.data;
 }

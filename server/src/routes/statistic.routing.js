@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { StatisticController } = require("../controllers");
-const statisticCtrl = new StatisticController;
+const statisticCtrl = new StatisticController();
 const { userAuth } = require('../middleware');
 
 /**
