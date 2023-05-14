@@ -3,5 +3,6 @@ module.exports = {
     postModel: require("./post.model"),
     notifyModel: require("./notify.model"),
     commentModel: require("./comment.model"),
-    statisticModel: require("./statistic.model")
+    statisticModel: require("./statistic.model"),
+    socialModel: require("./social.model")
 }

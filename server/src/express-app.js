@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require('node-color-log');
 const cron = require('cron');
+const {jobsUtil} = require("./utils");
 
 const WebRoute = require('./routes');
 
@@ -23,13 +24,13 @@ module.exports = async (app) => {
         useTempFiles: true
     }));
 
-    // const { CronJob } = cron;
-    // const job = new CronJob('*/10 * * * *', async () => {
-    //     logger.info('Fetching all stats');
-    //     await fetchAllStats();
+    const { CronJob } = cron;
+    const job = new CronJob('*/10 * * * *', async () => {
+        logger.info('Fetching all stats');
+        await jobsUtil.FetchAllStats();
         
-    // });
-    // job.start();
+    });
+    job.start();
     //api
     WebRoute(app);
 
