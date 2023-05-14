@@ -1,5 +1,7 @@
 "use strict";
 const axios = require("axios");
+const moment = require("moment");
+const logger = require("node-color-log");
 const { YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID } = require("../../configs");
 const { modelSchema } = require("../../db");
 const { socialModel } = modelSchema;
@@ -13,7 +15,7 @@ class Job {
         const ENDPOINT = `${YOUTUBE_API_URL}/channels?part=statistics&id=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`;
         try {
             const respone = await axios.get(ENDPOINT);
-            const channel = respone.data.items(0);
+            const channel = respone.data.items[0];
             const {
                 statistics: {
                     viewCount,
@@ -29,7 +31,7 @@ class Job {
                 loggedAt: today
             }
 
-            let result = await socialModel.findOneAndUpdate({ youtube: { loggedAt: loggedAt } }, {
+            let result = await socialModel.findOneAndUpdate({ youtube: { loggedAt: today } }, {
                 $set: {
                     viewCount: +viewCount,
                     subscriberCount: +subscriberCount,
@@ -39,11 +41,12 @@ class Job {
 
 
             if (!result) {
-                result = await socialModel.create(youtubeRecord);
+                result = await socialModel.create({ youtube: youtubeRecord });
             }
             return result;
         } catch (error) {
-            console.error(error);
+            console.log(error);
+            logger.error(error.message);
         }
     }
 
