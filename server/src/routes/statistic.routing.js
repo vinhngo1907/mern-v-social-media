@@ -15,6 +15,6 @@ router.get('/', userAuth, statisticCtrl.GetTotalStats);
  * @desc Get statistics
  * @access Private
  */
-router.get('/fetch', userAuth, statisticCtrl.FetchAllStats);
+router.get('/fetch', userAuth, statisticCtrl.GetAllStats);
 
 module.exports = router;

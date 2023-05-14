@@ -24,6 +24,17 @@ module.exports = {
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
-    API_KEY: process.env.API_KEY, 
-    API_SECRET: process.env.API_SECRET
+    API_KEY: process.env.API_KEY,
+    API_SECRET: process.env.API_SECRET,
+
+    YOUTUBE_API_URL: process.env.YOUTUBE_API_URL,
+    YOUTUBE_API_KEY : process.env.YOUTUBE_API_KEY,
+    YOUTUBE_CHANNEL_ID : process.env.YOUTUBE_CHANNEL_ID,
+
+    FACEBOOK_API_URL : process.env.FACEBOOK_API_URL,
+    FACEBOOK_PAGE_ID : process.env.FACEBOOK_PAGE_ID,
+    FACEBOOK_CLIENT_ID : process.env.FACEBOOK_CLIENT_ID,
+    FACEBOOK_CLIENT_SECRET : process.env.FACEBOOK_CLIENT_SECRET,
+
+    GITHUB_API_URL : process.env.GITHUB_API_URL,
 };

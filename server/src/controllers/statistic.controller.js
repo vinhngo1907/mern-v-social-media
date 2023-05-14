@@ -6,7 +6,7 @@ const moment = require("moment-timezone");
 let statCache;
 
 class StatisticController {
-    async FetchAllStats(req, res) {
+    async GetAllStats(req, res) {
         console.log(">>>>>>>",req.query)
         try {
             const now = moment(new Date());
