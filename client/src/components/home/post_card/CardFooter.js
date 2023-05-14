@@ -66,18 +66,26 @@ const CardFooter = ({ post }) => {
     return (
         <div className="card_footer">
             <div className="card_icon_menu">
-                <div className="d-flex align-items-center justify-content-between">
-                    <LikeButton
-                        isLike={isLike}
-                        handleLike={handleLike}
-                        handleUnLike={handleUnLike}
-                    />
+                <div className="we-video-info d-flex align-items-center justify-content-between">
+                    <span className="like" title={isLike ? "unlikes" : "likes"}>
+                        <LikeButton
+                            isLike={isLike}
+                            handleLike={handleLike}
+                            handleUnLike={handleUnLike}
+                        />
+                        <ins>{post.likes.length}</ins>
+                    </span>
 
-                    <Link to={`/post/${post._id}`} className="text-dark">
-                        <i className="far fa-comment" />
-                    </Link>
+                    <span className="cmt" title="comments">
+                        <Link to={`/post/${post._id}`} className="text-dark">
+                            <i className="far fa-comment" />
+                            <ins>{post.comments.length}</ins>
+                        </Link>
+                    </span>
 
-                    <i className="fa fa-share-alt" onClick={() => setIsShare(!isShare)} />
+                    <span className="share" title="share">
+                        <i className="fa fa-share-alt" onClick={() => setIsShare(!isShare)} />
+                    </span>
                     {/* <Link  to="#" onClick={() => setIsShare(!isShare)}  className="social-media">
                         <div className="social-menu">
                             <div className="btn trigger"><i className="fa fa-share-alt"></i></div>
@@ -112,16 +120,19 @@ const CardFooter = ({ post }) => {
                         </div>
                     </Link> */}
                 </div>
-                {
-                    saved
-                        ? <i className="fas fa-bookmark text-info"
-                            onClick={handleUnSavePost} />
+                <div className="we-video-info">
+                    <span>
+                        {
+                            saved
+                                ? <i className="fas fa-bookmark text-info"
+                                    onClick={handleUnSavePost} />
 
-                        : <i className="far fa-bookmark"
-                            onClick={handleSavePost} />
-                }
+                                : <i className="far fa-bookmark"
+                                    onClick={handleSavePost} />
+                        }</span>
+                </div>
             </div>
-            <div className="d-flex justify-content-between">
+            {/* <div className="d-flex justify-content-between">
                 <h6 style={{ padding: '0 25px', cursor: 'pointer' }}>
                     {post.likes.length} likes
                 </h6>
@@ -129,7 +140,7 @@ const CardFooter = ({ post }) => {
                 <h6 style={{ padding: '0 25px', cursor: 'pointer' }}>
                     {post.comments.length} comments
                 </h6>
-            </div>
+            </div> */}
 
             {/* Share post */}
         </div>
