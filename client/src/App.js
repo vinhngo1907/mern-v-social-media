@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./pages/home";
@@ -20,6 +20,7 @@ let scroll = 0;
 function App() {
 	const { auth, status } = useSelector(state => state);
 	const dispatch = useDispatch();
+	const [scrollTop, setScrollTop] = useState(0);
 
 	useEffect(() => {
 		dispatch(refreshToken())
@@ -36,7 +37,8 @@ function App() {
 
 	window.addEventListener('scroll', () => {
 		if (window.location.pathname === '/') {
-			scroll = window.pageYOffset
+			scroll = window.pageYOffset;
+			setScrollTop(window.pageYOffset);
 			return scroll;
 		}
 	})
@@ -66,7 +68,8 @@ function App() {
 					</Switch>
 				</div>
 			</div>
-			{auth.token && <ScrollTop scroll={scroll} />}
+
+			{auth.token && <ScrollTop scroll={scrollTop} />}
 		</Router>
 	)
 }
