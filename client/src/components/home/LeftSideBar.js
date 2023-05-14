@@ -7,6 +7,7 @@ import {
 import UserCard from '../other/UserCard';
 import { getSuggestion } from '../../redux/actions/suggestionAction';
 import FollowBtn from '../other/FollowBtn';
+import Social from '../statistics/Social';
 
 const LeftSideBar = ({ type }) => {
     const { auth, suggestion } = useSelector(state => state);
@@ -40,26 +41,8 @@ const LeftSideBar = ({ type }) => {
                     }
                 </ul>
             </div>
-            <div className="widget mt-3">
-                <h4 className="widget-title">Socials</h4>
-                <ul className="socials overlay-scrollbar scrollbar-hover px-3">
-                    <li className="facebook">
-                        <Link title="facebook" to="/">
-                            <i className="fa fa-facebook" /> <span>facebook</span> <ins>45 likes</ins>
-                        </Link>
-                    </li>
-                    <li className="twitter">
-                        <Link title="twitter" to="/">
-                            <i className="fa fa-twitter" /> <span>twitter</span><ins>25 likes</ins>
-                        </Link>
-                    </li>
-                    <li className="google">
-                        <Link title="google" to="#">
-                            <i className="fa fa-google" /> <span>google</span><ins>35 likes</ins>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            <Social />
+            
             <div className='widget mt-3'>
                 <div className="d-flex justify-content-between align-items-center my-2 position-relative">
                     <h4 className="widget-title">Suggestion</h4>

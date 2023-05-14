@@ -199,8 +199,12 @@ li.twitter {
     background: #38bff1;
 }
 
-li.google {
+li.youtube {
     background: #f24756;
+}
+
+li.github {
+    background: #444;
 }
 
 a:hover.facebook {
@@ -211,11 +215,15 @@ a:hover.instagram {
     background: #444;
 }
 
+a:hover.github {
+    background: #444;
+}
+
 a:hover.twitter {
     background: #55acee;
 }
 
-a:hover.google {
+a:hover.youtube {
     background: #dd4b39;
 }
 
