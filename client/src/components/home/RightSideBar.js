@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
-import Visits from './Visits';
-import Views from './Views';
+import Visits from '../statistics/Visits';
+import Views from '../statistics/Views';
 // import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
