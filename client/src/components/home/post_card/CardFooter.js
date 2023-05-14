@@ -28,7 +28,7 @@ const CardFooter = ({ post }) => {
 
         setLoadLike(true);
         await dispatch(likePost({ post, auth }));
-        setIsLike(false);
+        setLoadLike(false);
     }
 
     const handleUnLike = async () => {
@@ -36,7 +36,7 @@ const CardFooter = ({ post }) => {
 
         setLoadLike(true);
         await dispatch(unLikePost({ post, auth }));
-        setIsLike(false)
+        setLoadLike(false)
     }
 
     // Save

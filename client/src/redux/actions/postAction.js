@@ -131,7 +131,6 @@ export const likePost = ({ post, auth }) => async (dispatch) => {
 }
 
 export const unLikePost = ({ post, auth }) => async (dispatch) => {
-    console.log({ post })
     const newPost = { ...post, likes: post.likes.filter(l => l._id !== auth.user._id) }
     try {
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
