@@ -36,13 +36,13 @@ class CommentController {
     }
     async UpdateComment(req, res) {
         try {
-            if(req.body.content === "" || !req.body.content)  
+            if (req.body.content === "" || !req.body.content)
                 return res.status(400).json(responseDTO.badRequest("Please comment something nice!"))
 
             const updatedComment = await commentModel.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, {
                 ...req.body
             }, { new: true, runValidators: true }).populate("user likes", "avatar fullname username followers following");
-            if (!updatedComment) 
+            if (!updatedComment)
                 return res.status(400).json(responseDTO.badRequest("This comment does not exist!"));
 
             res.json(responseDTO.success("Created new comment in successfully", updatedComment))
@@ -87,11 +87,11 @@ class CommentController {
     }
     async RemoveComment(req, res) {
         try {
-            const post = await postModel.findOne({comments: req.params.id});
-            if(!post)  return res.status(400).json(responseDTO.badRequest("You can not delete comment from other post or/and user"));
+            const post = await postModel.findOne({ comments: req.params.id });
+            if (!post) return res.status(400).json(responseDTO.badRequest("You can not delete comment from other post or/and user"));
 
-            const deletedComment = await commentModel.findOneAndDelete({_id: req.params.id});
-            if(!deletedComment) return res.status(400).json(responseDTO.badRequest("This comment does not exist"));
+            const deletedComment = await commentModel.findOneAndDelete({ _id: req.params.id });
+            if (!deletedComment) return res.status(400).json(responseDTO.badRequest("This comment does not exist"));
 
             res.json(responseDTO.success("Deleted comment in successfully", deletedComment))
         } catch (error) {
