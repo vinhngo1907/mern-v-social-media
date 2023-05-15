@@ -127,13 +127,13 @@ ul{
 @import url("./header.css");
 
 /* ---------- User Card------------ */
-@import url("./user-card.css");
+@import url("./user_card.css");
 
 /* ---------- Sidebar------------ */
 @import url("./sidebar.css");
 
 /* ---------- Status Modal------------ */
-@import url("./status-modal.css");
+@import url("./status_modal.css");
 
 /* ---------- Widget------------ */
 @import url("./widget.css");

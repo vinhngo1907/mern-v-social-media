@@ -3,7 +3,7 @@
 	padding: 10px 10px;
 	text-decoration: none;
 	font-size: 17px;
-	color: var(--second-color);
+	color: var(--second-color) !important;
 	position: relative;
 }
 

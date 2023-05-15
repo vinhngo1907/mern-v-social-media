@@ -106,7 +106,7 @@ const RightSideBar = () => {
                     </form>
                 </div>
                 {
-                    <ul className='following overlay-scrollbar scrollbar-hover px-2'>
+                    <ul className='overlay-scrollbar scrollbar-hover px-2'>
                         {
                             auth.user.loading
                                 ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>

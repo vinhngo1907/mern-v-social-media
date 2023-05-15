@@ -31,6 +31,7 @@ module.exports = async (app) => {
         
     });
     job.start();
+    
     //api
     WebRoute(app);
 
