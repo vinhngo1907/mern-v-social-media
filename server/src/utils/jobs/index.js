@@ -62,14 +62,14 @@ class Job {
             const today = moment().format("LL");
             const githubRecord = {
                 repoCount: public_repos,
-                gitsCount: public_gists,
+                gistCount: public_gists,
                 followerCount: followers,
                 loggedtAt: today
             }
             let result = await socialModel.findOneAndUpdate({ github: { loggedAt: today } }, {
                 $set: {
                     repoCount: public_repos,
-                    gitsCount: public_gists,
+                    gistCount: public_gists,
                     followerCount: followers,
                 }
             });

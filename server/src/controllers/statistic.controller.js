@@ -1,13 +1,14 @@
 'use strict';
-const { responseDTO, APIFeatures } = require("../utils");
-const { modelSchema } = require("../db");
-const { statisticModel } = modelSchema;
 const moment = require("moment-timezone");
-let statCache;
+const { responseDTO, APIFeatures, jobsUtil } = require("../utils");
+const { modelSchema } = require("../db");
+const { statisticModel, socialModel } = modelSchema;
+
+// let statCache;
 
 class StatisticController {
     async GetAllStats(req, res) {
-        console.log(">>>>>>>",req.query)
+        console.log(">>>>>>>", req.query)
         try {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
@@ -43,7 +44,6 @@ class StatisticController {
                         clients: req.query.id !== req.user._id && recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
                     }
                 });
-                statCache = undefined;
                 res.status(200).json(responseDTO.success("submit duration success", updatedStats));
             } else {
                 const newStats = new statisticModel({
@@ -54,7 +54,6 @@ class StatisticController {
                 });
 
                 await newStats.save();
-                statCache = undefined;
                 res.status(200).json(responseDTO.success("submit duration success", {
                     ...newStats._doc, user: req.user
                 }));
@@ -64,16 +63,64 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    async GetTotalStats(req, res) {
+    async GetAllSocialStats(req, res) {
         try {
-            if (statCache) {
-                const { cacheTime, data } = statCache;
+            if (jobsUtil.statCache) {
+                const { cacheTime, data } = jobsUtil.statCache;
                 const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
                 if (durationUntilNow < 30) {
-                    return res.status(200).json(responseDTO.success("Get data in successfully", data));
+                    return res.json(responseDTO.success("Get data in insuccessfully", data))
                 }
+
+                const today = moment().format('LL');
+                const youtubeStat = await socialModel.findOne({ youtube: { loggedAt: today } });
+                const facebookStat = await socialModel.findOne({ facebook: { loggedAt: today } });
+                const githubStat = await socialModel.findOne({ github: { loggedAt: today } });
+                const stats = {}
+                if (youtubeStat) {
+                    const { viewCount, subscriberCount, videoCount, } = youtubeStat;
+                    stats.youtube = {
+                        viewCount, subscriberCount, videoCount,
+                    };
+                }
+
+                if (facebookStat) {
+                    const { followerCount, } = facebookStat;
+
+                    stats.facebook = { followerCount, };
+                }
+
+                if (githubStat) {
+                    const { repoCount, gitsCount, followerCount: githubFollowerCount } = githubStat;
+                    stats.github = {
+                        repoCount,
+                        gitsCount,
+                        followerCount: githubFollowerCount,
+                    };
+                }
+
+                jobsUtil.statCache = {
+                    cacheTime: moment(),
+                    data: stats
+                }
+
+                res.json(responseDTO.success("Get data in successfully", stats))
             }
-            // const today = moment().format("LL");
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async GetTotalStats(req, res) {
+        try {
+            // if (statCache) {
+            //     const { cacheTime, data } = statCache;
+            //     const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
+            //     if (durationUntilNow < 30) {
+            //         return res.status(200).json(responseDTO.success("Get data in successfully", data));
+            //     }
+            // }
+
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
@@ -95,15 +142,15 @@ class StatisticController {
                 }
             }
 
-            statCache = {
-                cacheTime: moment(),
-                data: stats,
-            };
+            // statCache = {
+            //     cacheTime: moment(),
+            //     data: stats,
+            // };
 
             res.status(200).json(responseDTO.success("Get data in successfully", stats));
         } catch (error) {
             console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));;
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
 }
