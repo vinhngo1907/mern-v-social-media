@@ -25,7 +25,7 @@ class Job {
                     videoCount
                 }
             } = channel;
-            
+
             // const today = moment().format("LL");
             // const youtubeRecord = {
             //     viewCount: +viewCount,
@@ -36,7 +36,7 @@ class Job {
 
             let result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
-                loggedAt: { $eq: oldData.loggedAt }
+                loggedAt: { $eq: socialData.loggedAt }
             }, {
                 youtube: {
                     viewCount: +viewCount,
@@ -100,16 +100,22 @@ class Job {
             logger.error(error.message);
         }
     }   
-
+    
     async FetchAllStats() {
         const oldData = await socialModel.findOne({ loggedAt: { $eq: moment().format("LL") } });
         if (!oldData) {
-            await socialModel.create({
+            const newData = socialModel({
                 github: {},
                 youtube: {},
                 facebook: {},
                 loggedAt: moment().format("LL")
-            })
+            });
+            await newData.save();
+
+            await Job.FetchYoutubeStats(newData);
+            await Job.FetchFaceBookStats(newData);
+            await Job.FetchGitHubStats(newData);
+            this.statCache = undefined;
         }
 
         if (oldData) {

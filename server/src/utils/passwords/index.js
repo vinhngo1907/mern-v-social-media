@@ -16,14 +16,6 @@ class Password {
     ) {
         return (await this.GeneratePassword(enteredPassword, salt) === savedPassword);
     }
-    
-    static ToUnix(date){
-        return Math.floor(date.getTime()/1000)
-    }
-
-    static expiredTimestamp(exp){
-        return Password.ToUnix(new Date()) > exp;
-    }
 }
 
 module.exports = new Password();
