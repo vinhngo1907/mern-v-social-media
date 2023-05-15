@@ -2,6 +2,7 @@
 const moment = require("moment-timezone");
 const { responseDTO, APIFeatures, jobsUtil } = require("../utils");
 const { modelSchema } = require("../db");
+const logger = require("node-color-log");
 const { statisticModel, socialModel } = modelSchema;
 
 // let statCache;
@@ -65,11 +66,13 @@ class StatisticController {
     }
     async GetAllSocialStats(req, res) {
         try {
+            console.log(jobsUtil.statCache)
             if (jobsUtil.statCache) {
+                logger.info("Get statCache")
                 const { cacheTime, data } = jobsUtil.statCache;
                 const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
                 if (durationUntilNow < 30) {
-                    return res.json(responseDTO.success("Get data in insuccessfully", data))
+                    res.json(responseDTO.success("Get data in insuccessfully", data))
                 }
             }
 
