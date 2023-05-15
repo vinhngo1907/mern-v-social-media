@@ -25,13 +25,14 @@ class Job {
                     videoCount
                 }
             } = channel;
-            const today = moment().format("LL");
-            const youtubeRecord = {
-                viewCount: +viewCount,
-                subscriberCount: +subscriberCount,
-                videoCount: viewCount,
-                loggedAt: today
-            }
+            
+            // const today = moment().format("LL");
+            // const youtubeRecord = {
+            //     viewCount: +viewCount,
+            //     subscriberCount: +subscriberCount,
+            //     videoCount: viewCount,
+            //     loggedAt: today
+            // }
 
             let result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
@@ -64,13 +65,13 @@ class Job {
                 followers
             } = response.data;
 
-            const today = moment().format("LL");
-            const githubRecord = {
-                repoCount: public_repos,
-                gistCount: public_gists,
-                followerCount: followers,
-                loggedtAt: today
-            }
+            // const today = moment().format("LL");
+            // const githubRecord = {
+            //     repoCount: public_repos,
+            //     gistCount: public_gists,
+            //     followerCount: followers,
+            //     loggedtAt: today
+            // }
             let result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
                 loggedAt: { $eq: socialData.loggedAt }
