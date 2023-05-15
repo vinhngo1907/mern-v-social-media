@@ -25,7 +25,7 @@ module.exports = async (app) => {
     }));
 
     const { CronJob } = cron;
-    const job = new CronJob('*/2 * * * *', async () => {
+    const job = new CronJob('*/10 * * * *', async () => {
         logger.info('Fetching all stats');
         await jobsUtil.FetchAllStats();
         
