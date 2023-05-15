@@ -46,14 +46,16 @@ const RightSideBar = () => {
                         </Link>
                     </figure>
                     <div className="page-meta">
-                        <Link to={`profile/${auth.user._id}`} title="" className="underline">My page</Link>
+                        <Link to={`profile/${auth.user._id}`}
+                            style={{ fontWeight: "600", color: "#088DCD" }}
+                            title="" className="underline">My page</Link>
                         <span>
                             <i className="fas fa-comment" />
-                            <Link to="insight.html" title="">Messages <em>9</em></Link>
+                            <Link to="insight.html" title="messages" style={{ color: "#545454" }}>Messages <em>9</em></Link>
                         </span>
                         <span>
                             <i className="fas fa-bell" />
-                            <Link to="insight.html" title="">Notifications <em>{notify.data.length}</em></Link>
+                            <Link to="insight.html" title="notifications" style={{ color: "#545454" }}>Notifications <em>{notify.data.length}</em></Link>
                         </span>
                     </div>
                     <div className="page-likes">

@@ -14,7 +14,7 @@ const UserCard = ({ children, user, border, type }) => {
                     className={`d-flex align-items-center ${type === 'home' ? '' : 'user_card'}`}>
                     <Avatar src={user.avatar} size={type === "home" ? 'large-avatar' : 'big-avatar'} />
                     <div className="ml-3" style={{ transform: 'translateY(-2px)' }}>
-                        <span className="d-block">{user.username}</span>
+                        <span className="d-block" style={{color:"#545454"}}>{user.username}</span>
                         <small style={{ opacity: 0.7 }}>
                             {user.fullname}
                         </small>

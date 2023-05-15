@@ -5,7 +5,7 @@ import Followers from "./Followers";
 import Following from "./Following";
 import EditProfile from "./EditProfile";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import { fetchAllStatistics } from "../../redux/actions/statisticAction";
+// import { fetchAllStatistics } from "../../redux/actions/statisticAction";
 
 const Info = ({ auth, id, dispatch, profile }) => {
 
@@ -33,15 +33,15 @@ const Info = ({ auth, id, dispatch, profile }) => {
         }
     }, [showFollowers, showFollowing, onEdit, dispatch]);
 
-    useEffect(() => {
-        if (sessionStorage.getItem('visit') === null) {
-            dispatch(fetchAllStatistics({ id, type: 'visit-pageview', auth }))
-        } else {
-            dispatch(fetchAllStatistics({ id, type: 'pageview', auth }))
-        }
+    // useEffect(() => {
+    //     if (sessionStorage.getItem('visit') === null) {
+    //         dispatch(fetchAllStatistics({ id, type: 'visit-pageview', auth }))
+    //     } else {
+    //         dispatch(fetchAllStatistics({ id, type: 'pageview', auth }))
+    //     }
 
-        sessionStorage.setItem("visit", "x");
-    }, [id, auth, dispatch]);
+    //     sessionStorage.setItem("visit", "x");
+    // }, [id, auth, dispatch]);
 
     return (
         <div className="info">

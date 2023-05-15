@@ -71,41 +71,41 @@ class StatisticController {
                 if (durationUntilNow < 30) {
                     return res.json(responseDTO.success("Get data in insuccessfully", data))
                 }
-
-                const today = moment().format('LL');
-                const youtubeStat = await socialModel.findOne({ youtube: { loggedAt: today } });
-                const facebookStat = await socialModel.findOne({ facebook: { loggedAt: today } });
-                const githubStat = await socialModel.findOne({ github: { loggedAt: today } });
-                const stats = {}
-                if (youtubeStat) {
-                    const { viewCount, subscriberCount, videoCount, } = youtubeStat;
-                    stats.youtube = {
-                        viewCount, subscriberCount, videoCount,
-                    };
-                }
-
-                if (facebookStat) {
-                    const { followerCount, } = facebookStat;
-
-                    stats.facebook = { followerCount, };
-                }
-
-                if (githubStat) {
-                    const { repoCount, gitsCount, followerCount: githubFollowerCount } = githubStat;
-                    stats.github = {
-                        repoCount,
-                        gitsCount,
-                        followerCount: githubFollowerCount,
-                    };
-                }
-
-                jobsUtil.statCache = {
-                    cacheTime: moment(),
-                    data: stats
-                }
-
-                res.json(responseDTO.success("Get data in successfully", stats))
             }
+
+            const today = moment().format('LL');
+            const youtubeStat = await socialModel.findOne({ youtube: { loggedAt: today } });
+            const facebookStat = await socialModel.findOne({ facebook: { loggedAt: today } });
+            const githubStat = await socialModel.findOne({ github: { loggedAt: today } });
+            const stats = {}
+            if (youtubeStat) {
+                const { viewCount, subscriberCount, videoCount, } = youtubeStat;
+                stats.youtube = {
+                    viewCount, subscriberCount, videoCount,
+                };
+            }
+
+            if (facebookStat) {
+                const { followerCount, } = facebookStat;
+
+                stats.facebook = { followerCount, };
+            }
+
+            if (githubStat) {
+                const { repoCount, gistCount, followerCount: githubFollowerCount } = githubStat;
+                stats.github = {
+                    repoCount,
+                    gistCount,
+                    followerCount: githubFollowerCount,
+                };
+            }
+
+            jobsUtil.statCache = {
+                cacheTime: moment(),
+                data: stats
+            }
+
+            res.json(responseDTO.success("Get data in successfully", stats))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

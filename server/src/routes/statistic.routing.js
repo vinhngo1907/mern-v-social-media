@@ -17,4 +17,11 @@ router.get('/', userAuth, statisticCtrl.GetTotalStats);
  */
 router.get('/fetch', userAuth, statisticCtrl.GetAllStats);
 
+/**
+ * @route GET api/statistic/socials
+ * @desc Get statistics socials
+ * @access Private
+ */
+router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
+
 module.exports = router;
