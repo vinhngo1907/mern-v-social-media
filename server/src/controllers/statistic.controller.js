@@ -66,7 +66,6 @@ class StatisticController {
     }
     async GetAllSocialStats(req, res) {
         try {
-            console.log(jobsUtil.statCache)
             if (jobsUtil.statCache) {
                 logger.info("Get statCache")
                 const { cacheTime, data } = jobsUtil.statCache;
@@ -77,25 +76,24 @@ class StatisticController {
             }
 
             const today = moment().format('LL');
-            const youtubeStat = await socialModel.findOne({ youtube: { loggedAt: today } });
-            const facebookStat = await socialModel.findOne({ facebook: { loggedAt: today } });
-            const githubStat = await socialModel.findOne({ github: { loggedAt: today } });
+            const socialStats = await socialModel.findOne({ loggedAt: today });
             const stats = {}
-            if (youtubeStat) {
-                const { viewCount, subscriberCount, videoCount, } = youtubeStat;
+            const { youtube, github, facebook } = socialStats;
+            if (youtube) {
+                const { viewCount, subscriberCount, videoCount, } = youtube;
                 stats.youtube = {
                     viewCount, subscriberCount, videoCount,
                 };
             }
 
-            if (facebookStat) {
-                const { followerCount, } = facebookStat;
+            if (facebook) {
+                const { followerCount, } = facebook;
 
                 stats.facebook = { followerCount, };
             }
 
-            if (githubStat) {
-                const { repoCount, gistCount, followerCount: githubFollowerCount } = githubStat;
+            if (github) {
+                const { repoCount, gistCount, followerCount: githubFollowerCount } = github;
                 stats.github = {
                     repoCount,
                     gistCount,
