@@ -45,12 +45,24 @@ const StatusModal = () => {
         newArr.splice(index, 1);
         setImages(newArr)
     }
-    const handleStream = (e) => {
+    
+    const handleStream = () => {
         setStream(true);
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(mediaStream => {
+                    videoRef.current.srcObject = mediaStream
+                    videoRef.current.play()
+
+                    const track = mediaStream.getTracks()
+                    setTracks(track[0])
+                }).catch(err => console.log(err))
+        }
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
             navigator.mediaDevices.getDisplayMedia({ video: true })
                 .then(mediaStream => {
-                    videoRef.current.srcObject = mediaStream;
+                    videoRef.current.srcObject = mediaStream
                     videoRef.current.play()
 
                     const track = mediaStream.getTracks()
@@ -71,13 +83,17 @@ const StatusModal = () => {
         let URL = canvasRef.current.toDataURL()
         setImages([...images, { camera: URL }])
     }
+
     const handleStopStream = () => {
-        tracks.stop()
+        if (tracks) {
+            tracks.stop()
+        }
         setStream(false)
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!content || content==='' || images.length === 0)
+        if (!content || content === '' || images.length === 0)
             return dispatch({
                 type: GLOBALTYPES.ALERT, payload: { error: "Please add your media." }
             });
@@ -88,8 +104,9 @@ const StatusModal = () => {
             dispatch(createPost({ content, images, auth }))
         }
 
-        setContent('');
-        setImages([]);
+        setContent('')
+        setImages([])
+        if (tracks) tracks.stop()
         dispatch({ type: GLOBALTYPES.STATUS, payload: false })
     }
     return (
