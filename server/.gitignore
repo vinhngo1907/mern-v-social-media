@@ -9,3 +9,4 @@ package-*.json
 .DS_Store
 tmp
 request.http
+app_error.log
