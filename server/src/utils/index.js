@@ -6,5 +6,6 @@ module.exports = {
     validation: require("./validations"),
     passwordUtil: require("./passwords"),
     jobsUtil: require("./jobs"),
-    timeUtil: require("./time")
+    timeUtil: require("./time"),
+    errorUtil: require("./errors")
 }
