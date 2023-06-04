@@ -10,7 +10,7 @@ class ConversationController {
             const features = new APIFeatures(conversationModel.find({
                 recipients: req.user._id
             }), req.query).paginating().sorting();
-            
+
             const conversation = await features.query;
 
             res.status(200).json(responseDTO.success("Get data in successfully", conversation));
@@ -22,7 +22,17 @@ class ConversationController {
 
     async DeleteConversation(req, res) {
         try {
-
+            const deletedConversation = await conversationModel.findOneAndDelete({
+                _id: req.params.id, $or: [
+                    { sender: req.user._id },
+                    { recipient: req.user._id }
+                ]
+            });
+            if (!deletedConversation)
+                return res.status(400).json(responseDTO.badRequest("This conversation does not exist"));
+            await messageModel.deleteMany({
+                conversation: deletedConversation._id
+            });
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
