@@ -11,4 +11,11 @@ const messageCtrl = new MessageController();
  */
 router.post("/", userAuth, messageCtrl.CreateMessage);
 
+/**
+ * @route POST api/create
+ * @desc Post message
+ * @access Private
+ */
+router.get("/", userAuth, messageCtrl.GetMessage);
+
 module.exports = router;

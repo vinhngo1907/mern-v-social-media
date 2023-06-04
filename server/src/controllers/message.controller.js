@@ -31,6 +31,22 @@ class MessageController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async GetMessage(req, res) {
+        try {
+            const features = new APIFeatures(messageModel.find({
+                $or: [
+                    { sender: req.user._id },
+                    { recipient: req.user._id }
+                ]
+            }), req.query).paginating().sorting();
+            const messages = await features.query;
+            res.status(200).json(responseDTO.success("Get data in successfully", messages))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = MessageController;
