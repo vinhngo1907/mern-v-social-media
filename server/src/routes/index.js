@@ -6,6 +6,7 @@ const uploadRouter = require("./upload.routing");
 const notifyRouter = require("./notify.routing");
 const statisticRouter = require("./statistic.routing");
 const commentRouter = require("./comment.routing");
+const messageRouter = require("./message.routing");
 
 const { BASE_URL } = require("../configs");
 
@@ -17,6 +18,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/notify", notifyRouter);
     app.use(BASE_URL + "/statistic", statisticRouter);
     app.use(BASE_URL + "/comment", commentRouter);
+    app.use(BASE_URL + "/message", messageRouter);
 }
 
 module.exports = WebRoute;

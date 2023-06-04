@@ -5,7 +5,7 @@ const { modelSchema } = require("../db");
 const { conversationModel, messageModel } = modelSchema;
 
 class MessageController {
-    async createMessage() {
+    async CreateMessage(req, res) {
         try {
             const { sender, recipient, text, media, call } = req.body;
             if (!recipient || (!text.trim() && media.length === 0 && !call)) return;
@@ -33,4 +33,4 @@ class MessageController {
     }
 }
 
-module.exports = new MessageController;
+module.exports = MessageController;
