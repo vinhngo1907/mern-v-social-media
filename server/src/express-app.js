@@ -9,6 +9,7 @@ const cron = require('cron');
 const {jobsUtil} = require("./utils");
 
 const WebRoute = require('./routes');
+const ErrorHandler = require('./utils/errors');
 
 module.exports = async (app) => {
     app.enable('trust proxy');
@@ -36,5 +37,5 @@ module.exports = async (app) => {
     WebRoute(app);
 
     // error handling
-    // errorHandler(app);
+    await ErrorHandler(app);
 }
