@@ -6,4 +6,5 @@ module.exports = {
     UploadController: require("./upload.controller"),
     NotifyController: require("./notify.controller"),
     StatisticController: require("./statistic.controller"),
+    MessageController: require("./message.controller")
 }

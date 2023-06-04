@@ -4,5 +4,7 @@ module.exports = {
     notifyModel: require("./notify.model"),
     commentModel: require("./comment.model"),
     statisticModel: require("./statistic.model"),
-    socialModel: require("./social.model")
+    socialModel: require("./social.model"),
+    conversationModel: require("./conversation.model"),
+    messageModel: require("./message.model")
 }

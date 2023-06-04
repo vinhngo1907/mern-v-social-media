@@ -15,7 +15,7 @@ class NotifyController {
             res.json(responseDTO.success("Get data successfully", notifies));
         } catch (error) {
             console.log(error);
-            responseDTO.serverError(error.message);
+            return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
 
