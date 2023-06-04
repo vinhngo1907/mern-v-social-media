@@ -47,6 +47,18 @@ class MessageController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async DeleteMessage(req, res) {
+        try {
+            const deletedMessage = await messageModel.findOneAndDelete({ _id: req.params.id, sender: req.user._id });
+            if (!deletedMessage) return res.status(400).json(responseDTO.badRequest("This message does not exist"));
+
+            res.status(200).json(responseDTO.success("Deleted message in successfully"));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = MessageController;

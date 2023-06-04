@@ -23,6 +23,6 @@ router.get("/", userAuth, messageCtrl.GetMessage);
  * @desc Delete message by id
  * @access Private
  */
-router.delete("/:id", userAuth, messageCtrl.DeleteMessage);
+// router.delete("/:id", userAuth, messageCtrl.DeleteMessage);
 
 module.exports = router;
