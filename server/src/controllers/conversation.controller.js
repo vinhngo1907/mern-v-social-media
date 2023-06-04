@@ -23,9 +23,9 @@ class ConversationController {
     async DeleteConversation(req, res) {
         try {
             const deletedConversation = await conversationModel.findOneAndDelete({
-                _id: req.params.id, $or: [
-                    { sender: req.user._id },
-                    { recipient: req.user._id }
+                $or: [
+                    { recipients: [req.user._id, req.params.id] },
+                    { recipients: [req.params.id, req.user._id] }
                 ]
             });
             if (!deletedConversation)
@@ -33,6 +33,7 @@ class ConversationController {
             await messageModel.deleteMany({
                 conversation: deletedConversation._id
             });
+            res.status(200).json(responseDTO.success("Deleted conversation in successfully"))
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
