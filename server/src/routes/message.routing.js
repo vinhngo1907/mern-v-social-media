@@ -5,17 +5,24 @@ const { MessageController } = require("../controllers")
 const messageCtrl = new MessageController();
 
 /**
- * @route POST api/create
+ * @route POST api/message
  * @desc Post message
  * @access Private
  */
 router.post("/", userAuth, messageCtrl.CreateMessage);
 
 /**
- * @route POST api/create
+ * @route POST api/message
  * @desc Post message
  * @access Private
  */
 router.get("/", userAuth, messageCtrl.GetMessage);
+
+/**
+ * @route DELETE api/message
+ * @desc Delete message by id
+ * @access Private
+ */
+router.delete("/:id", userAuth, messageCtrl.DeleteMessage);
 
 module.exports = router;
