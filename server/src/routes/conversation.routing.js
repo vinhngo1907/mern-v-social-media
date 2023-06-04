@@ -9,7 +9,7 @@ const conversationCtrl = new ConversationController();
  * @desc Get conversation
  * @access Private
  */
-router.get("/:id", userAuth, conversationCtrl.GetConversation);
+router.get("/", userAuth, conversationCtrl.GetConversation);
 
 /**
  * @route GET api/conversation
