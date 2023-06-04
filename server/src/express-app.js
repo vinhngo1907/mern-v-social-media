@@ -37,5 +37,5 @@ module.exports = async (app) => {
     WebRoute(app);
 
     // error handling
-    // ErrorHandler(app);
+    app.use(ErrorHandler)
 }
