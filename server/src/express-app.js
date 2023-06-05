@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require('node-color-log');
 const cron = require('cron');
-const {jobsUtil} = require("./utils");
+const { jobsUtil, loggerUtil } = require("./utils");
 
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
@@ -29,12 +29,18 @@ module.exports = async (app) => {
     const job = new CronJob('*/15 * * * *', async () => {
         logger.info('Fetching all stats');
         // await jobsUtil.FetchAllStats();
-        
+
     });
     job.start();
-    
+
     //api
     WebRoute(app);
+
+    // request to handle undefined or all other routes
+    app.get('*', (req, res) => {
+        loggerUtil.info('GET undefined routes');
+        res.send('App works!!!!!');
+    });
 
     // error handling
     app.use(ErrorHandler)

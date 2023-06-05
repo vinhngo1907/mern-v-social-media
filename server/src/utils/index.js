@@ -1,7 +1,7 @@
 module.exports = {
     Mailer: require("./emails"),
     APIFeatures: require("./libs"),
-    Logger: require("./logger"),
+    loggerUtil: require("./logger"),
     signature: require("./tokens"),
     responseDTO: require("./dtos"),
     validation: require("./validations"),
