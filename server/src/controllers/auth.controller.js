@@ -82,6 +82,7 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
     async RefreshToken(req, res) {
         try {
             const rf_token = req.cookies.rf_v_media;

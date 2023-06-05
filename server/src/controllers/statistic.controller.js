@@ -9,7 +9,7 @@ const { statisticModel, socialModel } = modelSchema;
 
 class StatisticController {
     async GetAllStats(req, res) {
-        console.log(">>>>>>>", req.query)
+        // console.log(">>>>>>>", req.query)
         try {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
@@ -64,6 +64,7 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
     async GetAllSocialStats(req, res) {
         try {
             if (jobsUtil.statCache) {
@@ -112,6 +113,7 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
     async GetTotalStats(req, res) {
         try {
             // if (statCache) {
