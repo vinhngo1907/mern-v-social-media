@@ -1,18 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 class Logger {
-    constructor(logText){
-        this.logText = logText;
-    }
-    info() {
-        console.log(`${new Date()}info:::::${this.logText}`);
+    info(logText) {
+        console.log(`${new Date()}info:::::${logText}`);
     }
 
-    debug() {
-        console.log(`${new Date()}debug:::::${this.logText}`);
+    debug(logText) {
+        console.log(`${new Date()}debug:::::${logText}`);
     };
-    error() {
-        console.log(`${new Date()}error:::::${this.logText}`);
+    error(logText) {
+        console.log(`${new Date()}error:::::${logText}`);
     }
 }
 

@@ -33,6 +33,11 @@ module.exports = async (app) => {
     });
     job.start();
 
+    app.get('/', (req, res) => {
+        logger.info('GET /');
+        res.send('App works!!!!!');
+    });
+
     //api
     WebRoute(app);
 

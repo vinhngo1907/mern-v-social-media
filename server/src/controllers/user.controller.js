@@ -39,7 +39,7 @@ class UserController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
+
     async UpdateProfile(req, res) {
         try {
             const { fullname, avatar, gender, } = req.body;
@@ -138,9 +138,24 @@ class UserController {
         }
     }
 
-    async ResetPassword(req,res){
+    async ResetPassword(req, res) {
         try {
-            
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async SearchUser(req, res) {
+        try {
+            const { name } = req.query;
+            const filterArr = [];
+            filterArr.push({ username: { $regex: name, $options: "i" } })
+            filterArr.push({ fullname: { $regex: name, $options: "i" } })
+
+            const users = await userModel.find({ $or: filterArr }).limit(10).select("username fullname avatar");
+            res.status(200).json(responseDTO.success("Get data in successfully", users));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
