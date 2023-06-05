@@ -40,6 +40,13 @@ router.get('/', userAuth, userCtrl.GetAllUser)
 router.get('/suggestion', userAuth, userCtrl.Suggestion);
 
 /** 
+ *  @route GET api/user/search
+ *  @desc Search user
+ *  @access Private
+*/
+router.get('/search', userAuth, userCtrl.SearchUser);
+
+/** 
  *  @route GET api/user/:id
  *  @desc Get user profile
  *  @access Private
@@ -59,12 +66,5 @@ router.patch('/:id/follow', userAuth, userCtrl.Follow);
  *  @access Private
 */
 router.patch('/:id/unfollow', userAuth, userCtrl.UnFollow);
-
-/** 
- *  @route GET api/user/search
- *  @desc Search user
- *  @access Private
-*/
-router.get('/search', userAuth, userCtrl.SearchUser);
 
 module.exports = router;

@@ -5,6 +5,8 @@ import Avatar from "../other/Avatar";
 import UserCard from "../other/UserCard";
 import Visits from '../statistic/Visits';
 import Views from '../statistic/Views';
+import { getDataApi } from "../../utils/fetchData";
+import { GLOBALTYPES } from '../../redux/actions/globalTypes'
 // import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
@@ -12,11 +14,10 @@ const RightSideBar = () => {
     const dispatch = useDispatch();
     const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
+    const [searchUsers, setSearchUsers] = useState([]);
     const [users, setUsers] = useState([]);
+    const [loadSearch, setLoadSearch] = useState(false);
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-    }
     useEffect(() => {
         if (auth.user.following) {
             setUsers(auth.user.following)
@@ -25,7 +26,23 @@ const RightSideBar = () => {
 
     const handleClose = () => {
         setSearch('');
+        setSearchUsers([]);
         setUsers(auth.user.following);
+    }
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!search) return setSearchUsers([])
+        try {
+            setLoadSearch(true);
+            const res = await getDataApi(`user/search?name=${search}`, auth.token);
+            console.log(res.data.results)
+            setSearchUsers(res.data.results);
+            setLoadSearch(false);
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message || error } });
+        }
     }
     // useEffect(() => {
     //     if (sessionStorage.getItem('visit') === null) {
@@ -118,9 +135,20 @@ const RightSideBar = () => {
                                 </div>
                                 : <div className="following">
                                     {
-                                        users.map((user, index) => (
-                                            <UserCard key={user ? user._id : index} user={user} type="home" />
-                                        ))
+                                        loadSearch ?
+                                            <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
+                                                <div className="spinner-border" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                            : searchUsers.length >= 1
+                                                ? searchUsers.map((user, index) => (
+                                                    <UserCard key={user ? user._id : index} user={user} type="home" />
+                                                ))
+                                                :
+                                                users.map((user, index) => (
+                                                    <UserCard key={user ? user._id : index} user={user} type="home" />
+                                                ))
                                     }
                                 </div>
                         }
