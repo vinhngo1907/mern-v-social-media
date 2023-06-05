@@ -60,4 +60,11 @@ router.patch('/:id/follow', userAuth, userCtrl.Follow);
 */
 router.patch('/:id/unfollow', userAuth, userCtrl.UnFollow);
 
+/** 
+ *  @route GET api/user/search
+ *  @desc Search user
+ *  @access Private
+*/
+router.get('/search', userAuth, userCtrl.SearchUser);
+
 module.exports = router;
