@@ -36,7 +36,6 @@ const RightSideBar = () => {
         try {
             setLoadSearch(true);
             const res = await getDataApi(`user/search?name=${search}`, auth.token);
-            console.log(res.data.results)
             setSearchUsers(res.data.results);
             setLoadSearch(false);
         } catch (error) {
@@ -113,12 +112,20 @@ const RightSideBar = () => {
                             {/* <span className="material-icons">search</span> */}
                             {/* <span>Enter to Search</span> */}
                         </div>
+                        {
+                            loadSearch
+                                ? <div className="spinner-border text- position-absolute mt-2"
+                                    style={{ width: '20px', height: "20px", right: "15px" }}
+                                    role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </div>
+                                : <div className="close_search" onClick={handleClose}
+                                    style={{ opacity: searchUsers.length === 0 ? 0 : 1 }}
+                                >
+                                    <i className='fas fa-times-circle' />
+                                </div>
+                        }
 
-                        <div className="close_search" onClick={handleClose}
-                            style={{ opacity: search ? 1 : 0 }}
-                        >
-                            <i className='fas fa-times-circle' />
-                        </div>
 
                         <button type="submit" style={{ display: 'none' }}>Search</button>
 
@@ -155,8 +162,8 @@ const RightSideBar = () => {
                     </ul>
                 }
 
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
