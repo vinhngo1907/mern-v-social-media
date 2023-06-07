@@ -12,7 +12,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.emit('joinUser', auth.user);
-        // return () => socket.off('joinUser');
+        
     }, [socket, auth.user]);
 
     return (

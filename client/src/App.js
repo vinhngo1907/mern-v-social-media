@@ -64,8 +64,8 @@ function App() {
 			<div className='App'>
 				<div className="main">
 					{auth.token && <Header />}
+					{auth.token && <SocketClient />}
 					{status && <StatusModal />}
-					{auth && <SocketClient />}
 					<Switch>
 						<Route exact path="/" component={auth.token ? Home : Login} />
 						<Route exact path="/login" component={Login} />
