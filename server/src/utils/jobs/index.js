@@ -2,7 +2,9 @@
 const axios = require("axios");
 const moment = require("moment");
 const logger = require("node-color-log");
-const { YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, GITHUB_API_URL, GITHUB_USER } = require("../../configs");
+const { YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, GITHUB_API_URL, GITHUB_USER,
+    FACEBOOK_API_URL, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET,FACEBOOK_PAGE_ID
+} = require("../../configs");
 const { modelSchema } = require("../../db");
 const { socialModel } = modelSchema;
 
@@ -11,6 +13,33 @@ class Job {
         this.statCache = statCache;
         this.longLivedFacebookToken = longLivedFacebookToken;
         this.fbPageToken = fbPageToken
+    }
+
+    async GetFacebookAccessToken(shortLivedToken) {
+        try {
+            const ENDPOINT = `${FACEBOOK_API_URL}/oauth/access_token?grant_type=fb_exchange_token&client_id=${FACEBOOK_CLIENT_ID}&client_secret=${FACEBOOK_CLIENT_SECRET}&fb_exchange_token=${shortLivedToken}`;
+            const response = await axios.get(ENDPOINT);
+            this.longLivedFacebookToken = response.data.access_token;
+
+            const PAGE_TOKEN_ENDPOINT = `${FACEBOOK_API_URL}/${FACEBOOK_PAGE_ID}?fields=access_token&access_token=${this.longLivedFacebookToken}`;
+            const pageTokenResponse = await axios.get(PAGE_TOKEN_ENDPOINT);
+            this.fbPageToken = pageTokenResponse;
+        } catch (error) {
+            console.log(error.response?.data);
+            logger.error(error.message);
+            return;
+        }
+    }
+
+    async FetchFacebookImpression() {
+        const ENDPOINT = `${FACEBOOK_API_URL}${FACEBOOK_PAGE_ID}/insights?metric=page_impressions&date_preset=today&access_token=${this.fbPageToken}`;
+        const response = await axios.get(ENDPOINT);
+        console.log({ impression: response });
+        return response.data.data[0]?.values[0]?.value;
+    }
+
+    async FetchFacebookFollowerCount() {
+
     }
 
     static async FetchYoutubeStats(socialData) {
@@ -99,8 +128,8 @@ class Job {
         } catch (error) {
             logger.error(error.message);
         }
-    }   
-    
+    }
+
     async FetchAllStats() {
         const oldData = await socialModel.findOne({ loggedAt: { $eq: moment().format("LL") } });
         if (!oldData) {

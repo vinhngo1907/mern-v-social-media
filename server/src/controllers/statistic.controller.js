@@ -64,6 +64,49 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
+    async GetTotalStats(req, res) {
+        try {
+            // if (statCache) {
+            //     const { cacheTime, data } = statCache;
+            //     const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
+            //     if (durationUntilNow < 30) {
+            //         return res.status(200).json(responseDTO.success("Get data in successfully", data));
+            //     }
+            // }
+
+            const now = moment(new Date());
+            const dayStart = moment(now).startOf("date").toDate();
+            const dayEnd = moment(now).endOf("date").toDate();
+            const recordStats = await statisticModel
+                .findOne({
+                    user: req.user._id,
+                    // loggedAt: {
+                    //     $gt: dayStart,
+                    //     $lte: dayEnd
+                    // }
+                })
+                .populate("user", "username fullname avatar following followers");
+
+            let stats = {}
+            if (recordStats) {
+                const { viewCount, visitCount, user } = recordStats
+                stats = {
+                    viewCount, visitCount, user
+                }
+            }
+
+            // statCache = {
+            //     cacheTime: moment(),
+            //     data: stats,
+            // };
+
+            res.status(200).json(responseDTO.success("Get data in successfully", stats));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 
     async GetAllSocialStats(req, res) {
         try {
@@ -113,49 +156,6 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
-    async GetTotalStats(req, res) {
-        try {
-            // if (statCache) {
-            //     const { cacheTime, data } = statCache;
-            //     const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
-            //     if (durationUntilNow < 30) {
-            //         return res.status(200).json(responseDTO.success("Get data in successfully", data));
-            //     }
-            // }
-
-            const now = moment(new Date());
-            const dayStart = moment(now).startOf("date").toDate();
-            const dayEnd = moment(now).endOf("date").toDate();
-            const recordStats = await statisticModel
-                .findOne({
-                    user: req.user._id,
-                    // loggedAt: {
-                    //     $gt: dayStart,
-                    //     $lte: dayEnd
-                    // }
-                })
-                .populate("user", "username fullname avatar following followers");
-
-            let stats = {}
-            if (recordStats) {
-                const { viewCount, visitCount, user } = recordStats
-                stats = {
-                    viewCount, visitCount, user
-                }
-            }
-
-            // statCache = {
-            //     cacheTime: moment(),
-            //     data: stats,
-            // };
-
-            res.status(200).json(responseDTO.success("Get data in successfully", stats));
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
 }
 
-module.exports = StatisticController
+module.exports = StatisticController;

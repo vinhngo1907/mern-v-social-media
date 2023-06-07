@@ -20,7 +20,7 @@ const Views = ({ auth, dispatch }) => {
                     <Avatar src={auth.user.avatar} size="large-avatar" />
                 </Link>
                 <Link to="#" title={auth.user.username} data-toggle="tooltip" data-original-title={auth.user.username}>
-                    <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683390295/v-media/u12iobqaqukvxtty73qn.jpg" size="large-avatar" />
+                    <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1657934323/v-media/cre10gttmetdvjigw9bc.jpg" size="large-avatar" />
                 </Link>
             </div>
         </div>
