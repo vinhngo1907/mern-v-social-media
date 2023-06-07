@@ -1,5 +1,5 @@
 import { MESSAGE_TYPES } from '../actions/messageAction';
-import { EditData, DeleteData } from '../actions/globalTypes';
+// import { EditData, DeleteData } from '../actions/globalTypes';
 
 const initialState = {
     users: [],

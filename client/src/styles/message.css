@@ -29,6 +29,10 @@
     border-radius: 20px;
 }
 
+.message_back {
+    display: none;
+}
+
 .message_chat_list {
     width: 100%;
     height: calc(100% - 60px);
