@@ -3,24 +3,26 @@ import { EditData, DeleteData } from '../actions/globalTypes';
 
 const initialState = {
     users: [],
-    data:[],
+    data: [],
     resultUsers: 0,
     firstLoad: false,
 }
 
-const messageReducer = (state = initialState, action)=>{
+const messageReducer = (state = initialState, action) => {
     switch (action.type) {
         case MESSAGE_TYPES.ADD_USER:
-            return{
-                ...state,
-                users: state.users.map(u => u._id === action.payload._id ? action.payload: u)
+            if (state.users.every(u => u._id !== action.payload._id)) {
+                return {
+                    ...state,
+                    users: [action.payload, ...state.users]
+                }
             }
         case MESSAGE_TYPES.GET_MESS:
-            return{
+            return {
                 ...state,
                 data: [...state.data, action.payload]
             }
-    
+
         default:
             return state;
     }

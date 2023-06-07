@@ -4,8 +4,8 @@ const socketReducer = (state = {}, action) => {
     switch (action.type) {
         case GLOBALTYPES.SOCKET:
             return action.payload;
-        
-            default:
+
+        default:
             return state;
     }
 }

@@ -4,7 +4,8 @@ import { GLOBALTYPES } from "./globalTypes";
 export const MESSAGE_TYPES = {
     GET_MESS: "GET_MESSAGES",
     CREATE_MESS: "CREATE_MESSAGES",
-    ADD_USER: "ADD_USER"
+    ADD_USER: "ADD_USER",
+    CHECK_ONLINE_OFFLINE: 'CHECK_ONLINE_OFFLINE'
 }
 
 export const getConversations = ({ auth, socket, page = 1 }) => async (dispatch) => {

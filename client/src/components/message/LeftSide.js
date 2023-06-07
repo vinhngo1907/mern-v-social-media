@@ -11,7 +11,7 @@ const LeftSide = () => {
     const [search, setSearch] = useState('');
     const [searchLoad, setSearchLoad] = useState(false);
     const [searchUsers, setSearchUsers] = useState([]);
-    const {id} = useParams();
+    const { id } = useParams();
     const history = useHistory();
 
     const dispatch = useDispatch();
@@ -51,13 +51,25 @@ const LeftSide = () => {
 
     return (
         <>
-            <form className="message_header" onSubmit={handleSearch} >
+            <form className="message_header p-2" onSubmit={handleSearch} >
                 <input type="text" value={search}
                     placeholder="Enter to Search..."
                     onChange={e => setSearch(e.target.value)} />
 
                 <button type="submit" style={{ display: 'none' }}>Search</button>
-                <i className="fas fa-time-circle"/>
+                {
+                    searchLoad
+                        ? <div className="spinner-border text- position-absolute mt-2"
+                            style={{ width: '20px', height: "20px", right: "15px" }}
+                            role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                        : <div className="close_search" onClick={handleClose}
+                            style={{ opacity: searchUsers.length === 0 ? 0 : 1 }}
+                        >
+                            <i className='fas fa-times-circle' />
+                        </div>
+                }
             </form>
             <div className="message_chat_list">
                 {

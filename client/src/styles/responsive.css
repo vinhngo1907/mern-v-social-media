@@ -102,4 +102,7 @@
         max-width: 40px;
         width: 40px;
     }
+    .mess_left{
+        border-right: 0;
+    }
 }
