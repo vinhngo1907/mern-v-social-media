@@ -15,6 +15,9 @@ import Register from "./pages/register";
 import { getAllNotifies } from "./redux/actions/notifyAction";
 import ScrollTop from "./components/other/ScrollTop";
 import { getTotalStatistics } from "./redux/actions/statisticAction";
+import io from "socket.io-client";
+import { GLOBALTYPES } from "./redux/actions/globalTypes";
+import SocketClient from "./SocketClient";
 
 let scroll = 0;
 function App() {
@@ -23,7 +26,11 @@ function App() {
 	const [scrollTop, setScrollTop] = useState(0);
 
 	useEffect(() => {
-		dispatch(refreshToken())
+		dispatch(refreshToken());
+		const socket = io();
+		dispatch({ type: GLOBALTYPES.SOCKET, payload: socket });
+		return () => socket.close();
+
 	}, [dispatch])
 
 	useEffect(() => {
@@ -58,6 +65,7 @@ function App() {
 				<div className="main">
 					{auth.token && <Header />}
 					{status && <StatusModal />}
+					{auth && <SocketClient />}
 					<Switch>
 						<Route exact path="/" component={auth.token ? Home : Login} />
 						<Route exact path="/login" component={Login} />

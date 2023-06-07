@@ -12,6 +12,7 @@ import notify from './notifyReducer';
 import postDetail from './postDetailReducer';
 import discover from './discoverReducer';
 import statistic from './statisticReducer';
+import socket from './socketReducer';
 
 export default combineReducers({
     auth,
@@ -25,5 +26,6 @@ export default combineReducers({
     notify,
     postDetail,
     discover,
-    statistic
+    statistic,
+    socket
 })
