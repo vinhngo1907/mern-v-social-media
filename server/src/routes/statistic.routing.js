@@ -25,6 +25,13 @@ router.get('/fetch', userAuth, statisticCtrl.GetViewAndVisitStats);
 router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
 
 /**
+ * @route POST api/statistic/socials
+ * @desc Get statistics socials
+ * @access Private
+*/
+router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
+
+/**
  * @route GET api/statistic/fb_token
  * @desc Get statistics socials
  * @access Private

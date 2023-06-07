@@ -1,12 +1,10 @@
 const userSocketCtrl = require("../socket-controllers/user-socket.controller");
 const { userSocket } = require("./user-socket.routing");
 
-// module.exports.defaultSocket = (io, socket, users) => {
-
-// }
-
 function defaultSocket(io, socket, users) {
-
+    io.on("disconnect", () => {
+        users = users.filter(u => u.socketId !== socket.Id)
+    })
 }
 
 function SocketRoute(io, socket, users) {

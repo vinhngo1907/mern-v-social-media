@@ -3,15 +3,15 @@ import { GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
     GET_MESS: "GET_MESSAGES",
-    CREATE_MESS: "CREATE_MESSAGES"
+    CREATE_MESS: "CREATE_MESSAGES",
+    ADD_USER: "ADD_USER"
 }
 
-
-export const getConversations = ({auth, socket, page = 1}) => async (dispatch) =>{
+export const getConversations = ({ auth, socket, page = 1 }) => async (dispatch) => {
     try {
-        
+
     } catch (error) {
-        
+
     }
 }
 

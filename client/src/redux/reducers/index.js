@@ -13,6 +13,7 @@ import postDetail from './postDetailReducer';
 import discover from './discoverReducer';
 import statistic from './statisticReducer';
 import socket from './socketReducer';
+import message from './messageReducer';
 
 export default combineReducers({
     auth,
@@ -27,5 +28,6 @@ export default combineReducers({
     postDetail,
     discover,
     statistic,
-    socket
-})
+    socket,
+    message
+});
