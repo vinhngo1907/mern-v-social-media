@@ -3,7 +3,7 @@ const axios = require("axios");
 const moment = require("moment");
 const logger = require("node-color-log");
 const { YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, GITHUB_API_URL, GITHUB_USER,
-    FACEBOOK_API_URL, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET,FACEBOOK_PAGE_ID
+    FACEBOOK_API_URL, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, FACEBOOK_PAGE_ID
 } = require("../../configs");
 const { modelSchema } = require("../../db");
 const { socialModel } = modelSchema;
@@ -39,7 +39,9 @@ class Job {
     }
 
     async FetchFacebookFollowerCount() {
-
+        const FOLLOWER_COUNT_ENDPOINT = `${FACEBOOK_API_URL}/${FACEBOOK_PAGE_ID}?fields=followers_count&access_token=${this.longLivedFacebookToken}`;
+        const response = await axios(FOLLOWER_COUNT_ENDPOINT);
+        return response.data.followers_count;
     }
 
     static async FetchYoutubeStats(socialData) {
