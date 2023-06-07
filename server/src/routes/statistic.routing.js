@@ -21,9 +21,14 @@ router.get('/fetch', userAuth, statisticCtrl.GetAllStats);
  * @route GET api/statistic/socials
  * @desc Get statistics socials
  * @access Private
- */
+*/
 router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
 
+/**
+ * @route GET api/statistic/fb_token
+ * @desc Get statistics socials
+ * @access Private
+*/
 router.get('/fb_token',statisticCtrl.GetFacebookToken);
 
 module.exports = router;
