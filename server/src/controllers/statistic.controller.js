@@ -64,7 +64,7 @@ class StatisticController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
+
     async GetTotalStats(req, res) {
         try {
             // if (statCache) {
@@ -151,6 +151,16 @@ class StatisticController {
             }
 
             res.json(responseDTO.success("Get data in successfully", stats))
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async GetFacebookToken(req, res) {
+        try {
+            await jobsUtil.GetFacebookAccessToken(req.query.token);
+            await jobsUtil.FetchAllStats();
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

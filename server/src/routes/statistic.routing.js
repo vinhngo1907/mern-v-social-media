@@ -24,4 +24,6 @@ router.get('/fetch', userAuth, statisticCtrl.GetAllStats);
  */
 router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
 
+router.get('/api/statistic/fb_token',statisticCtrl.GetFacebookToken);
+
 module.exports = router;

@@ -33,29 +33,19 @@ module.exports = async (app) => {
     });
     job.start();
 
-    // app.get('/', (req, res) => {
-    //     logger.info('GET /');
-    //     res.send('App works!!!!!');
-    // });
+    app.get('/', (req, res) => {
+        logger.info('GET /');
+        res.send('App works!!!!!');
+    });
 
     //api
     WebRoute(app);
 
     // request to handle undefined or all other routes
-    // app.get('*', (req, res) => {
-    //     loggerUtil.info('GET undefined routes');
-    //     res.send('App works!!!!!');
-    // });
-
-    app.get('/api/statistic/fb_token', async (req, res) => {
-        try {
-            await jobsUtil.GetFacebookAccessToken(req.query.token);
-            await jobsUtil.FetchAllStats();
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ message: error.message });
-        }
-    })
+    app.get('*', (req, res) => {
+        loggerUtil.info('GET undefined routes');
+        res.send('App works!!!!!');
+    });
 
     // error handling
     app.use(ErrorHandler)
