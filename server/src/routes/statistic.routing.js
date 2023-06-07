@@ -15,7 +15,7 @@ router.get('/', userAuth, statisticCtrl.GetTotalStats);
  * @desc Get statistics
  * @access Private
  */
-router.get('/fetch', userAuth, statisticCtrl.GetAllStats);
+router.get('/fetch', userAuth, statisticCtrl.GetViewAndVisitStats);
 
 /**
  * @route GET api/statistic/socials

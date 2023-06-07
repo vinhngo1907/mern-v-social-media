@@ -8,7 +8,8 @@ const { statisticModel, socialModel } = modelSchema;
 // let statCache;
 
 class StatisticController {
-    async GetAllStats(req, res) {
+    async GetViewAndVisitStats(req, res) {
+        console.log({ ...req.query })
         // console.log(">>>>>>>", req.query)
         try {
             const now = moment(new Date());
@@ -61,6 +62,20 @@ class StatisticController {
             }
         } catch (error) {
             console.log(error)
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async CountViewAndVisitPage(req, res){
+        try {
+            const now = moment(new Date());
+            const dayStart = moment(now).startOf("date").toDate();
+            const dayEnd = moment(now).endOf("date").toDate();
+            const recordExist = await statisticModel.findOne({ user: req.user._id })
+            
+            res.status(200).json(responseDTO.success("Get statistic in successfully"));
+        } catch (error) {
+            console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
