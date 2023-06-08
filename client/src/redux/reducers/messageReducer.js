@@ -24,8 +24,9 @@ const messageReducer = (state = initialState, action) => {
                 ...state,
                 data: [...state.data, action.payload]
             }
+
         case MESSAGE_TYPES.GET_CONVERSATIONS:
-            return{
+            return {
                 ...state,
                 users: action.payload.newCV,
                 resultUsers: action.payload.result,
