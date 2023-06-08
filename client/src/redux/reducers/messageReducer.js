@@ -19,12 +19,18 @@ const messageReducer = (state = initialState, action) => {
             }
             return state;
 
-        case MESSAGE_TYPES.GET_MESS:
+        case MESSAGE_TYPES.GET_MESSAGES:
             return {
                 ...state,
                 data: [...state.data, action.payload]
             }
-
+        case MESSAGE_TYPES.GET_CONVERSATIONS:
+            return{
+                ...state,
+                users: action.payload.newCV,
+                resultUsers: action.payload.result,
+                firstLoad: true
+            }
         default:
             return state;
     }

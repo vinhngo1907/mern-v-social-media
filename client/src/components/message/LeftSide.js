@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import { getDataApi } from "../../utils/fetchData";
-import { MESSAGE_TYPES } from "../../redux/actions/messageAction";
+import { MESSAGE_TYPES, getConversations } from "../../redux/actions/messageAction";
 import { useHistory, useParams } from "react-router-dom";
 import UserCard from "../other/UserCard";
 
@@ -44,6 +44,11 @@ const LeftSide = () => {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
         }
     }
+
+    useEffect(() => {
+        if (message.firstLoad) return;
+        dispatch(getConversations({ auth }))
+    }, [dispatch, message.firstLoad, auth])
 
     const isActive = (user) => {
         return (id === user._id) ? 'active' : '';

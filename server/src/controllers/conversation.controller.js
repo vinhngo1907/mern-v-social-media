@@ -11,7 +11,7 @@ class ConversationController {
                 recipients: req.user._id
             }), req.query).paginating().sorting();
 
-            const conversation = await features.query;
+            const conversation = await features.query.populate("recipients", "avatar usernam fullname");
 
             res.status(200).json(responseDTO.success("Get data in successfully", conversation));
         } catch (error) {

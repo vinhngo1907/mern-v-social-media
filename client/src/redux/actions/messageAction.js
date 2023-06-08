@@ -2,17 +2,38 @@ import { getDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
-    GET_MESS: "GET_MESSAGES",
+    GET_MESSAGES: "GET_MESSAGES",
+    GET_CONVERSATIONS: 'GET_CONVERSATIONS',
     CREATE_MESS: "CREATE_MESSAGES",
     ADD_USER: "ADD_USER",
-    CHECK_ONLINE_OFFLINE: 'CHECK_ONLINE_OFFLINE'
+    CHECK_ONLINE_OFFLINE: 'CHECK_ONLINE_OFFLINE',
+    DELETE_MESSAGE: "DELETE_MESSAGE",
+    EDIT_MESSAGE: "EDIT_MESSAGE",
+    DELETE_CV: "DELETE_CV",
 }
 
-export const getConversations = ({ auth, socket, page = 1 }) => async (dispatch) => {
+export const getConversations = ({ page = 1, auth }) => async (dispatch) => {
     try {
+        const res = await getDataApi(`conversation?limit=${page * 9}`, auth.token);
+        let newCV = [];
+        res.data.results.forEach(item => {
+            item.recipients.forEach(cv => {
+                if (cv._id !== auth.user._id) {
+                    newCV.push({ ...cv, text: item.text, media: item.media, call: item.call })
+                }
+            })
+        });
 
+        dispatch({
+            type: MESSAGE_TYPES.GET_CONVERSATIONS,
+            payload: {
+                newCV,
+                result: res.data.results.length,
+            }
+        });
     } catch (error) {
-
+        console.log(error);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }
 }
 
