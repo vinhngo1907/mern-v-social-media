@@ -7,7 +7,7 @@ import { useHistory, useParams } from "react-router-dom";
 import UserCard from "../other/UserCard";
 
 const LeftSide = () => {
-    const { auth, message } = useSelector(state => state);
+    const { auth, message, online } = useSelector(state => state);
     const [search, setSearch] = useState('');
     const [searchLoad, setSearchLoad] = useState(false);
     const [searchUsers, setSearchUsers] = useState([]);
@@ -20,11 +20,12 @@ const LeftSide = () => {
         setSearch('');
         setSearchUsers([]);
     }
-    
+
     const handleAddUser = (user) => {
         setSearch('');
         setSearchUsers([]);
         dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: { ...user, media: [], text: '' } });
+        dispatch({ type: MESSAGE_TYPES.CHECK_ONLINE_OFFLINE, payload: online })
         return history.push(`/message/${user._id}`)
     }
 

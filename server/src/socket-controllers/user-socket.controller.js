@@ -1,11 +1,23 @@
 'use strict';
 
+const logger = require("node-color-log");
+
 class UserSocektContoller {
     joinUser(io, socket, users, user) {
         !users.some(u => u.id === user._id) && users.push({ id: user._id, socket: socket.id, followers: user.followers });
     }
-    checkUserOnline(io, socket, users, user){
-        
+    checkUserOnline(io, socket, users, user) {
+        try {
+            const clients = users.filter(u => user.following.find(id => id === u._id));
+            socket.emit("checkUserOnlineToMe", clients);
+            if (clients.length > 0) {
+                clients.forEach(client => {
+                    socket.to(`${client.socketId}`).emit('checkUserOnlineToClient', user._id)
+                })
+            }
+        } catch (error) {
+            logger.error(error.message);
+        }
     }
 }
 

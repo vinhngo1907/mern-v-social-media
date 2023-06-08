@@ -24,13 +24,25 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on('checkUserOnlineToMe', data => {
-            data.forEach(user => {
-                if (!online.includes(user.id)) {
-                    dispatch({ type: GLOBALTYPES.ONLINE, payload: user.id })
+            data.forEach(item => {
+                if (!online.includes(item.id)) {
+                    dispatch({ type: GLOBALTYPES.ONLINE, payload: item.id })
                 }
             })
+        })
+
+        return () => socket.off('checkUserOnlineToMe')
+    }, [socket, dispatch, online]);
+
+    useEffect(() => {
+        socket.on('checkUserOnlineToClient', id => {
+            if (!online.includes(id)) {
+                dispatch({ type: GLOBALTYPES.ONLINE, payload: id })
+            }
         });
-    }, [socket, dispatch, online])
+        return () => socket.off("checkUserOnlineToClient");
+
+    }, [socket, dispatch, online]);
 
     return (
         <>

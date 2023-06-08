@@ -4,4 +4,7 @@ module.exports.userSocket = (io, socket, users) => {
     socket.on("joinUser", (client) => {
         userSocketController.joinUser(io, socket, users, client);
     });
+    socket.on("checkUserOnline", (data) => {
+        userSocketController.checkUserOnline(io, socket, users, data)
+    })
 }
