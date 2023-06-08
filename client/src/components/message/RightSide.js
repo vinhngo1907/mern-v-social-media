@@ -56,7 +56,8 @@ const RightSide = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        if(!text.trim() && media.length === 0) return;
+        
         setText('');
         setMedia([]);
         setLoadMedia(true);
