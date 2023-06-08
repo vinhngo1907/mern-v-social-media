@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import moment from "moment";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import Icons from "../other/Icons";
 import UserCard from "../other/UserCard";
-import { Link, useParams } from "react-router-dom";
+import Avatar from "../other/Avatar";
 
 const RightSide = () => {
     const { auth, message, theme, socket, peer } = useSelector(state => state)
@@ -10,11 +12,11 @@ const RightSide = () => {
     const [text, setText] = useState('');
     const [user, setUser] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
-    const {id} = useParams();
-    
+    const { id } = useParams();
+
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
-        if(newUser) setUser(newUser);
+        if (newUser) setUser(newUser);
     }, [id, message.users])
 
     const handleSubmit = () => {
@@ -25,7 +27,7 @@ const RightSide = () => {
 
     }
 
-    const handleDeleteCV = () =>{
+    const handleDeleteCV = () => {
 
     }
 
@@ -56,7 +58,42 @@ const RightSide = () => {
                     </UserCard>
                 }
             </div>
-            <div className="chat_container"></div>
+            <div className="chat_container">
+
+                <div className={`message_sidebar ${theme ? 'dark' : 'light'} ${showSidebar ? 'show' : ''}`}>
+                    {
+                        user.length !== 0 &&
+                        <div className="chat_user_info text-center py-5">
+                            <div className="chat_user_img">
+                                <Avatar src={user.avatar} size="super-avatar" />
+                            </div>
+                            <div className="chat_user_content">
+                                <Link to="#" className="chat_user_link">
+                                    <div><i className="fas fa-calendar" /> </div>
+                                    <span>{moment(user.createdAt).fromNow()}</span>
+                                </Link>
+                                <Link to="#" className="chat_user_link">
+                                    <div><i className="fas fa-venus-mars" /></div>
+                                    <span>{user.birthday ? user.gender : 'Other'}</span>
+                                </Link>
+                                <Link to="#" className="chat_user_link">
+                                    <div><i className="fas fa-mobile" /></div>
+                                    <span>{`(+84) ${user.mobile}`}</span>
+                                </Link>
+                                <Link to="#" className="chat_user_link">
+                                    <div><i className="fas fa-envelope" /></div>
+                                    <span>{user.email}</span>
+                                </Link>
+                                <Link to="#" className="chat_user_link">
+                                    <div><i className="fas fa-map-marker" /></div>
+                                    <span>{user.address ? user.address : 'No address'}</span>
+                                </Link>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
             <form className="chat_input" onSubmit={handleSubmit} >
                 <input type="text" placeholder="Enter you message..."
                     value={text} onChange={e => setText(e.target.value)}

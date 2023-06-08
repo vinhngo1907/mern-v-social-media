@@ -106,4 +106,8 @@
     .message .message_back {
         display: block;
     }
+
+    .message_sidebar {
+		width: 70%;
+	}
 }

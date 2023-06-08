@@ -10,9 +10,15 @@ const SocketClient = () => {
     const dispatch = useDispatch();
     const audioRef = useRef();
 
+    // join user
     useEffect(() => {
         socket.emit('joinUser', auth.user);
         
+    }, [socket, auth.user]);
+
+    // Check user online/offline
+    useEffect(() => {
+        socket.emit('checkUserOnline', auth.user)
     }, [socket, auth.user]);
 
     return (
