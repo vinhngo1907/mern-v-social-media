@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 // import { deleteMessage, editMessage } from "../../redux/actions/messageAction";
 import { imageShow, videoShow } from "../../utils/mediaShow";
 import Avatar from "../other/Avatar";
-// import Times from "./Times";
+import Times from "./Times";
 
 const MsgDisplay = ({ user, msg, theme, data }) => {
     const { auth, socket } = useSelector(state => state);
@@ -69,11 +69,11 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                         <div className="text-left">
                             <h6>{msg.call.video ? 'Video Call' : 'Audio Call'}</h6>
                             <small>
-                                {/* {
+                                {
                                     msg.call.times > 0
                                         ? <Times total={msg.call.times}/>
                                         : new Date(msg.createdAt).toLocaleTimeString()
-                                } */}
+                                }
                             </small>
                         </div>
                     </button>
