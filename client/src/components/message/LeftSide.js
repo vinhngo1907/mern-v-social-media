@@ -20,6 +20,7 @@ const LeftSide = () => {
         setSearch('');
         setSearchUsers([]);
     }
+    
     const handleAddUser = (user) => {
         setSearch('');
         setSearchUsers([]);

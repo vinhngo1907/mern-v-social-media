@@ -1,20 +1,20 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+// import { useParams } from "react-router-dom";
 // import { deleteMessage, editMessage } from "../../redux/actions/messageAction";
 import { imageShow, videoShow } from "../../utils/mediaShow";
 import Avatar from "../other/Avatar";
 import Times from "./Times";
 
 const MsgDisplay = ({ user, msg, theme, data }) => {
-    const { auth, socket } = useSelector(state => state);
-    const dispatch = useDispatch();
+    const { auth } = useSelector(state => state);
+    // const dispatch = useDispatch();
     const handleDeleteMessage = () => {
         // if (window.confirm("Do you want to continue delete message?")) {
         //     dispatch(deleteMessage({ msg, auth, data, socket }))
         // }
     }
-    const { id } = useParams();
+    // const { id } = useParams();
     const handleEditMessage = () => {
 
     //     dispatch(editMessage({ id, msg, auth, data, socket }))

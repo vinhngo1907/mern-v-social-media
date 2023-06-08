@@ -14,6 +14,7 @@ import discover from './discoverReducer';
 import statistic from './statisticReducer';
 import socket from './socketReducer';
 import message from './messageReducer';
+import online from './onlineReducer';
 
 export default combineReducers({
     auth,
@@ -29,5 +30,6 @@ export default combineReducers({
     discover,
     statistic,
     socket,
-    message
+    message,
+    online
 });

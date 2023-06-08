@@ -6,7 +6,7 @@ import Icons from "../other/Icons";
 import UserCard from "../other/UserCard";
 import Avatar from "../other/Avatar";
 import MsgDisplay from "./MsgDisplay";
-import { createMessage, getMessages } from '../../redux/actions/messageAction';
+import { createMessage, getMessages, loadMoreMessages } from '../../redux/actions/messageAction';
 import { imageShow, videoShow } from '../../utils/mediaShow'
 import { checkImage, imageUpload } from '../../utils/imageUpload'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
@@ -16,7 +16,8 @@ const RightSide = () => {
     const dispatch = useDispatch();
     const [text, setText] = useState('');
     const [media, setMedia] = useState([]);
-    const [loadMedia, setLoadMedia] = useState(false)
+    const [loadMedia, setLoadMedia] = useState(false);
+    const [isLoadMore, setIsLoadMore] = useState(0);
 
     const [user, setUser] = useState([]);
     const [data, setData] = useState([]);
@@ -26,6 +27,7 @@ const RightSide = () => {
     const { id } = useParams();
 
     const refDisplay = useRef();
+    // const pageEnd = useRef();
 
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
@@ -52,12 +54,34 @@ const RightSide = () => {
             }
         }
         getMessagesData()
-    }, [id, dispatch, auth, message.data])
+    }, [id, dispatch, auth, message.data]);
+
+    useEffect(() => {
+        if (isLoadMore > 1) {
+            if (result >= page * 9) {
+                dispatch(loadMoreMessages({ auth, id, page: page + 1 }))
+                setIsLoadMore(1)
+            }
+        }
+    }, [isLoadMore, result, page, dispatch, id, auth]);
+
+    // Load More
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(entries => {
+    //         if (entries[0].isIntersecting) {
+    //             setIsLoadMore(p => p + 1)
+    //         }
+    //     }, {
+    //         threshold: 0.1
+    //     })
+
+    //     observer.observe(pageEnd.current)
+    // }, [setIsLoadMore]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(!text.trim() && media.length === 0) return;
-        
+
         setText('');
         setMedia([]);
         setLoadMedia(true);
