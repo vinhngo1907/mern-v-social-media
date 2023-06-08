@@ -1,10 +1,10 @@
-import { getDataApi } from "../../utils/fetchData";
+import { getDataApi, postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
     GET_MESSAGES: "GET_MESSAGES",
     GET_CONVERSATIONS: 'GET_CONVERSATIONS',
-    CREATE_MESS: "CREATE_MESSAGES",
+    CREATE_MESSAGE: "CREATE_MESSAGES",
     ADD_USER: "ADD_USER",
     CHECK_ONLINE_OFFLINE: 'CHECK_ONLINE_OFFLINE',
     DELETE_MESSAGE: "DELETE_MESSAGE",
@@ -48,8 +48,14 @@ export const getMessages = ({ auth, id, page = 1 }) => async (dispatch) => {
     }
 }
 
-export const createMessage = ({ auth, id, socket }) => async (dispatch) => {
+export const createMessage = ({ auth, id, msg, socket }) => async (dispatch) => {
+    dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg });
+    
+    const { _id, avatar, fullname, username } = auth.user;
+    socket.emit('addMessage', { ...msg, user: { _id, avatar, fullname, username } });
+
     try {
+        await postDataApi(`message`, msg, auth.token);
 
     } catch (error) {
         console.log(error);

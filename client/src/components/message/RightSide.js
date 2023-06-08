@@ -49,8 +49,15 @@ const RightSide = () => {
         getMessagesData()
     }, [id, dispatch, auth, message.data])
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const msg = {
+            text,
+            sender: auth.user._id,
+            recipient: id,
+            media: [],
+            call: {},
+        }
     }
 
     const handleAudioCall = () => {

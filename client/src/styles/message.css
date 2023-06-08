@@ -150,7 +150,6 @@
 }
 
 /* -------- Chat Container ----- */
-/* -------- Chat Container ----- */
 .chat_container {
     /* display: flex;
     position: relative; */
@@ -277,6 +276,7 @@
 .chat_input .dropdown-menu {
     transform: translate3d(-110px, -200px, 0px) !important;
 }
+
 /* -------- message sidebar----- */
 .message_sidebar {
     width: 60%;
