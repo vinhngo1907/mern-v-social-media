@@ -36,10 +36,10 @@ class MessageController {
         try {
             const features = new APIFeatures(messageModel.find({
                 $or: [
-                    { sender: req.user._id },
-                    { recipient: req.user._id }
+                    { sender: req.user._id, recipient: req.params.id },
+                    { sender: req.params.id, recipient: req.user._id }
                 ]
-            }), req.query).paginating().sorting();
+            }), req.query).paginating().sorting("-createdAt");
             const messages = await features.query;
             res.status(200).json(responseDTO.success("Get data in successfully", messages))
         } catch (error) {

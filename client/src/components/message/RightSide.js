@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icons from "../other/Icons";
 import UserCard from "../other/UserCard";
 import Avatar from "../other/Avatar";
+import MsgDisplay from "./MsgDisplay";
+import { getMessages } from '../../redux/actions/messageAction';
 
 const RightSide = () => {
     const { auth, message, theme, socket, peer } = useSelector(state => state)
@@ -17,7 +19,19 @@ const RightSide = () => {
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
         if (newUser) setUser(newUser);
-    }, [id, message.users])
+    }, [id, message.users]);
+
+    useEffect(() => {
+        const getMessagesData = async () => {
+            if (message.data.every(item => item._id !== id)) {
+                await dispatch(getMessages({ id, auth }))
+                // setTimeout(() => {
+                //     refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                // }, 50)
+            }
+        }
+        getMessagesData()
+    }, [id, dispatch, auth, message.data])
 
     const handleSubmit = () => {
 
@@ -38,7 +52,7 @@ const RightSide = () => {
     return (
         <>
             <div className="message_header p-3" style={{ cursor: 'pointer' }}>
-                <div className="message_back"><Link to="/"><i className="fas fa-arrow-left text-dark" /></Link></div>
+                <div className="message_back"><Link to="/message"><i className="fas fa-arrow-left text-dark" /></Link></div>
                 {
                     user.length !== 0 &&
                     <UserCard user={user}>

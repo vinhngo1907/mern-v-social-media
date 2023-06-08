@@ -40,8 +40,8 @@ export const getConversations = ({ page = 1, auth }) => async (dispatch) => {
 export const getMessages = ({ auth, id, page = 1 }) => async (dispatch) => {
     try {
         const res = await getDataApi(`message/${id}`, auth.token);
-        const newMess = { messages: res.data.results.reverse(), result: res.data.results.length }
-        dispatch({ type: MESSAGE_TYPES.GET_MESSAGES, paylaod: { ...newMess, _id: id, page } })
+        const newMess = { messages: res.data.results, result: res.data.results.length }
+        dispatch({ type: MESSAGE_TYPES.GET_MESSAGES, payload: { ...newMess, _id: id, page } })
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });

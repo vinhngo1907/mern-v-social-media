@@ -9,14 +9,14 @@ const messageCtrl = new MessageController();
  * @desc Post message
  * @access Private
  */
-router.post("/", userAuth, messageCtrl.CreateMessage);
+router.get("/:id", userAuth, messageCtrl.GetMessage);
 
 /**
  * @route POST api/message
  * @desc Post message
  * @access Private
  */
-router.get("/", userAuth, messageCtrl.GetMessage);
+router.post("/", userAuth, messageCtrl.CreateMessage);
 
 /**
  * @route DELETE api/message

@@ -6,7 +6,10 @@ import Avatar from "../other/Avatar";
 const MsgDisplay = ({ user, msg, theme, data }) => {
     const { auth } = useSelector(state => state)
     const dispatch = useDispatch()
+    const handleDeleteMessages = () =>{
 
+    }
+    
     return (
         <>
             <div className="chat_title">
