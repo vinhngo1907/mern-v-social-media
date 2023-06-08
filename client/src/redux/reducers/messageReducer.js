@@ -32,6 +32,12 @@ const messageReducer = (state = initialState, action) => {
                 resultUsers: action.payload.result,
                 firstLoad: true
             }
+
+        case MESSAGE_TYPES.CHECK_ONLINE_OFFLINE:
+            return{
+                ...state
+            }
+            
         default:
             return state;
     }

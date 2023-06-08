@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import moment from "moment";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,22 +12,38 @@ const RightSide = () => {
     const { auth, message, theme, socket, peer } = useSelector(state => state)
     const dispatch = useDispatch();
     const [text, setText] = useState('');
+
+    const [media, setMedia] = useState([]);
     const [user, setUser] = useState([]);
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(0);
+    const [result, setResult] = useState(9);
     const [showSidebar, setShowSidebar] = useState(false);
     const { id } = useParams();
 
+    const refDisplay = useRef();
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
         if (newUser) setUser(newUser);
     }, [id, message.users]);
 
     useEffect(() => {
+        const newData = message.data.find(item => item._id === id);
+        if (newData) {
+            setData(newData.messages);
+            setResult(newData.result);
+            setPage(newData.page);
+        }
+
+    }, [id, message.data]);
+
+    useEffect(() => {
         const getMessagesData = async () => {
             if (message.data.every(item => item._id !== id)) {
                 await dispatch(getMessages({ id, auth }))
-                // setTimeout(() => {
-                //     refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                // }, 50)
+                setTimeout(() => {
+                    refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                }, 50)
             }
         }
         getMessagesData()
@@ -72,8 +88,27 @@ const RightSide = () => {
                     </UserCard>
                 }
             </div>
-            <div className="chat_container">
-
+            <div className="chat_container"  style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }}>
+                <div className='chat_display' ref={refDisplay}>
+                {
+                        data.map((item, index) => (
+                            <div key={index}>
+                                {
+                                    item.recipient === auth.user._id &&
+                                    <div className="chat_row other_message">
+                                        <MsgDisplay user={user} theme={theme} msg={item} />
+                                    </div>
+                                }
+                                {
+                                    item.sender === auth.user._id &&
+                                    <div className="chat_row you_message">
+                                        <MsgDisplay user={auth.user} theme={theme} msg={item} data={data} />
+                                    </div>
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
                 <div className={`message_sidebar ${theme ? 'dark' : 'light'} ${showSidebar ? 'show' : ''}`}>
                     {
                         user.length !== 0 &&
