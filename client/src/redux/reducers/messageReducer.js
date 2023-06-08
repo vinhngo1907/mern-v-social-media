@@ -33,11 +33,34 @@ const messageReducer = (state = initialState, action) => {
                 firstLoad: true
             }
 
+        case MESSAGE_TYPES.CREATE_MESSAGE:
+            return {
+                ...state,
+                data: state.data.map(mess =>
+                    mess._id === action.payload.recipient || mess._id === action.payload.sender
+                        ? {
+                            ...mess,
+                            messages: [...mess.messages, action.payload],
+                            result: mess.result + 1,
+                        }
+                        : mess
+                ),
+                user: state.users.map(u =>
+                    u._id === action.payload.sender || u._id === action.payload.recipient
+                        ? {
+                            ...u,
+                            text: action.payload.text,
+                            media: action.payload.media,
+                            call: action.payload.call
+                        }
+                        : u
+                )
+            }
         case MESSAGE_TYPES.CHECK_ONLINE_OFFLINE:
-            return{
+            return {
                 ...state
             }
-            
+
         default:
             return state;
     }

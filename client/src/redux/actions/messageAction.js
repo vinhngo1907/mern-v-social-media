@@ -48,7 +48,7 @@ export const getMessages = ({ auth, id, page = 1 }) => async (dispatch) => {
     }
 }
 
-export const createMessage = ({ auth, id, msg, socket }) => async (dispatch) => {
+export const createMessage = ({ auth, msg, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg });
     
     const { _id, avatar, fullname, username } = auth.user;

@@ -6,14 +6,18 @@ import Icons from "../other/Icons";
 import UserCard from "../other/UserCard";
 import Avatar from "../other/Avatar";
 import MsgDisplay from "./MsgDisplay";
-import { getMessages } from '../../redux/actions/messageAction';
+import { createMessage, getMessages } from '../../redux/actions/messageAction';
+import { imageShow, videoShow } from '../../utils/mediaShow'
+import { checkImage, imageUpload } from '../../utils/imageUpload'
+import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 
 const RightSide = () => {
-    const { auth, message, theme, socket, peer } = useSelector(state => state)
+    const { auth, message, theme, socket } = useSelector(state => state)
     const dispatch = useDispatch();
     const [text, setText] = useState('');
-
     const [media, setMedia] = useState([]);
+    const [loadMedia, setLoadMedia] = useState(false)
+
     const [user, setUser] = useState([]);
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);
@@ -22,6 +26,7 @@ const RightSide = () => {
     const { id } = useParams();
 
     const refDisplay = useRef();
+
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
         if (newUser) setUser(newUser);
@@ -49,15 +54,25 @@ const RightSide = () => {
         getMessagesData()
     }, [id, dispatch, auth, message.data])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setText('');
+        setMedia([]);
+        setLoadMedia(true);
+
+        let newArr = [];
+        if (media.length > 0) newArr = await imageUpload(media);
         const msg = {
             text,
             sender: auth.user._id,
             recipient: id,
-            media: [],
-            call: {},
+            media: newArr,
+            createdAt: new Date().toISOString()
         }
+
+        setLoadMedia(false);
+        await dispatch(createMessage({ auth, msg, socket }))
     }
 
     const handleAudioCall = () => {
@@ -70,6 +85,28 @@ const RightSide = () => {
 
     const handleVideoCall = () => {
 
+    }
+
+    const handleChangeMedia = (e) => {
+        const files = [...e.target.files];
+        let err = "";
+        let newMedia = [];
+
+        files.forEach(file => {
+            err = checkImage(file);
+            if (err !== "") return err;
+
+            return newMedia.push(file)
+        });
+
+        if (err) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
+        setMedia([...media, ...newMedia]);
+    }
+
+    const handleDeleteMedia = (index) => {
+        let newArr = [...media];
+        newArr.splice(index, 1);
+        setMedia(newArr)
     }
 
     return (
@@ -95,9 +132,9 @@ const RightSide = () => {
                     </UserCard>
                 }
             </div>
-            <div className="chat_container"  style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }}>
+            <div className="chat_container" style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }} >
                 <div className='chat_display' ref={refDisplay}>
-                {
+                    {
                         data.map((item, index) => (
                             <div key={index}>
                                 {
@@ -114,6 +151,12 @@ const RightSide = () => {
                                 }
                             </div>
                         ))
+                    }
+                    {
+                        loadMedia &&
+                        <div class="spinner-border d-block mx-auto" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     }
                 </div>
                 <div className={`message_sidebar ${theme ? 'dark' : 'light'} ${showSidebar ? 'show' : ''}`}>
@@ -150,6 +193,20 @@ const RightSide = () => {
 
                 </div>
             </div>
+            <div className="show_media" style={{ display: media.length > 0 ? 'grid' : 'none' }}>
+                {
+                    media.map((item, index) => (
+                        <div key={index} id="file_media">
+                            {
+                                item.type.match(/video/i)
+                                    ? videoShow(URL.createObjectURL(item), theme)
+                                    : imageShow(URL.createObjectURL(item), theme)
+                            }
+                            <span onClick={() => handleDeleteMedia(index)} >&times;</span>
+                        </div>
+                    ))
+                }
+            </div>
             <form className="chat_input" onSubmit={handleSubmit} >
                 <input type="text" placeholder="Enter you message..."
                     value={text} onChange={e => setText(e.target.value)}
@@ -160,6 +217,16 @@ const RightSide = () => {
                     }} />
 
                 <Icons setContent={setText} content={text} theme={theme} />
+                <div className="file_upload">
+                    <i className="fas fa-image text-danger" />
+                    <input type="file" name="file" id="file"
+                        multiple accept="image/*,video/*" onChange={handleChangeMedia} />
+                </div>
+
+                <button type="submit" className="material-icons"
+                    disabled={(text || media.length > 0) ? false : true}>
+                    near_me
+                </button>
             </form>
         </>
     )
