@@ -17,6 +17,8 @@ const messageReducer = (state = initialState, action) => {
                     users: [action.payload, ...state.users]
                 }
             }
+            return state;
+
         case MESSAGE_TYPES.GET_MESS:
             return {
                 ...state,

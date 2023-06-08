@@ -11,6 +11,7 @@ const RightSide = () => {
     const [user, setUser] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
     const {id} = useParams();
+    
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
         if(newUser) setUser(newUser);
