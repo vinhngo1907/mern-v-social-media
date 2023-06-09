@@ -18,4 +18,11 @@ router.post('/create', userAuth, uploadCtrl.post);
  */
 router.post('/destroy', userAuth, uploadCtrl.delete);
 
+/**
+ * @route GET api/upload/get
+ * @desc Get all files
+ * @access Private
+ */
+router.get('/get', userAuth, uploadCtrl.get);
+
 module.exports = router;

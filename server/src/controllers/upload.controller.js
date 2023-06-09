@@ -56,6 +56,18 @@ class UploadController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    get(req, res) {
+        try {
+            cloudinary.v2.api.resources({ type: "upload", prefix: "v-media" }, function (err, result) {
+                if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
+                res.json(responseDTO.success("Get data in successfully", {media: result.resources, result: result.resources.length}))
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 const removeTmp = (path) => {
