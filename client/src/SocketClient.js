@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import audiobell from './audio/got-it-done-613.mp3'
 import { GLOBALTYPES } from './redux/actions/globalTypes';
-// import { MESSAGE_TYPES } from './redux/actions/messageAction';
+import { MESSAGE_TYPES } from './redux/actions/messageAction';
 // import { GLOBALTYPES } from './redux/actions/globalTypes';
 // import { NOTIFY_TYPES } from './redux/actions/notifyAction';
 
@@ -16,6 +16,24 @@ const SocketClient = () => {
         socket.emit('joinUser', auth.user);
 
     }, [socket, auth.user]);
+
+    // Message
+    useEffect(() => {
+        socket.on('addMessageToClient', msg =>{
+            dispatch({type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg})
+
+            dispatch({
+                type: MESSAGE_TYPES.ADD_USER, 
+                payload: {
+                    ...msg.user, 
+                    text: msg.text, 
+                    media: msg.media
+                }
+            })
+        })
+
+        return () => socket.off('addMessageToClient')
+    },[socket, dispatch]);
 
     // Check user online/offline
     useEffect(() => {
