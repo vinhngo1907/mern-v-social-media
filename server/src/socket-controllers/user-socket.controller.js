@@ -6,9 +6,10 @@ class UserSocektContoller {
     joinUser(io, socket, users, user) {
         !users.some(u => u.id === user._id) && users.push({ id: user._id, socket: socket.id, followers: user.followers });
     }
+
     checkUserOnline(io, socket, users, user) {
         try {
-            const clients = users.filter(u => user.following.find(id => id === u._id));
+            const clients = users.filter(u => user.following.find(c => c._id === u.id));
             socket.emit("checkUserOnlineToMe", clients);
             if (clients.length > 0) {
                 clients.forEach(client => {
