@@ -7,7 +7,6 @@ class PostSocketContoller {
         try {
             const ids = [...post.user.followers, post.user._id];
             const clients = users.filter(user => ids.find(id => id === user.id));
-            console.log(clients);
             if (clients.length > 0) {
                 clients.forEach(client => {
                     socket.to(`${client.socketId}`).emit('likeToClient', post)
@@ -20,12 +19,12 @@ class PostSocketContoller {
 
     unLikePost(io, socket, users, post) {
         try {
-            const ids = [...newPost.user.followers, newPost.user._id]
-            const clients = users.filter(user => ids.includes(user.id))
+            const ids = [...post.user.followers, post.user._id];
+            const clients = users.filter(user => ids.find(id => id === user.id));
     
             if(clients.length > 0){
                 clients.forEach(client => {
-                    socket.to(`${client.socketId}`).emit('unLikeToClient', newPost)
+                    socket.to(`${client.socketId}`).emit('unLikeToClient', post)
                 })
             }
         } catch (error) {

@@ -35,7 +35,7 @@ const CardFooter = ({ post }) => {
         if (loadLike) return;
 
         setLoadLike(true);
-        await dispatch(unLikePost({ post, auth }));
+        await dispatch(unLikePost({ post, auth, socket }));
         setLoadLike(false)
     }
 
