@@ -74,7 +74,14 @@ const SocketClient = () => {
 
     }, [socket, dispatch, online]);
 
-
+    useEffect(() => {
+        socket.on('checkUserOffline', id => {
+            if (online.includes(id)) {
+                dispatch({ type: GLOBALTYPES.OFFLINE, payload: id })
+            }
+        });
+        return () => socket.off('checkUserOffline');
+    }, [socket, dispatch]);
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', msg => {
@@ -96,7 +103,7 @@ const SocketClient = () => {
         })
         return socket.off('removeNotifyToClient');
     }, [socket, dispatch]);
-    
+
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>
