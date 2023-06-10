@@ -25,7 +25,7 @@ class UserSocketContoller {
         try {
             const data = users.find(user => user.socketId === socket.id);
             if (data) {
-                const clients = users.filter(u => u.followers.find(user => user._id === u.id));
+                const clients = users.filter(u => data.followers.find(user => user._id === u.id));
                 if (clients.length > 0) {
                     clients.forEach(client => {
                         socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)

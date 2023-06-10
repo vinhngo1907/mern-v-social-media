@@ -77,11 +77,13 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on('checkUserOffline', id => {
             if (online.includes(id)) {
-                dispatch({ type: GLOBALTYPES.OFFLINE, payload: id })
+                dispatch({ type: GLOBALTYPES.OFFLINE, payload: id });
             }
         });
+
         return () => socket.off('checkUserOffline');
-    }, [socket, dispatch]);
+    }, [socket, dispatch, online]);
+
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', msg => {
