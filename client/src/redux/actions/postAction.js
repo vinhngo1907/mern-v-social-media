@@ -145,7 +145,7 @@ export const unLikePost = ({ post, auth, socket }) => async (dispatch) => {
             recipients: [post.user._id],
             url: `/post/${post._id}`,
         }
-        dispatch(removeNotify({ msg, auth }))
+        dispatch(removeNotify({ msg, auth, socket }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
