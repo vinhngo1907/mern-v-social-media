@@ -47,11 +47,11 @@ const SocketClient = () => {
         return () => socket.off('addMessageToClient')
     }, [socket, dispatch]);
 
-    // Check user online/offline
+    // Check user online
     useEffect(() => {
         socket.emit('checkUserOnline', auth.user);
     }, [socket, auth.user]);
-
+    
     useEffect(() => {
         socket.on('checkUserOnlineToMe', data => {
             data.forEach(item => {
@@ -60,10 +60,10 @@ const SocketClient = () => {
                 }
             })
         })
-
+        
         return () => socket.off('checkUserOnlineToMe')
     }, [socket, dispatch, online]);
-
+    
     useEffect(() => {
         socket.on('checkUserOnlineToClient', id => {
             if (!online.includes(id)) {
@@ -71,9 +71,10 @@ const SocketClient = () => {
             }
         });
         return () => socket.off("checkUserOnlineToClient");
-
+        
     }, [socket, dispatch, online]);
-
+    
+    // Check user offline
     useEffect(() => {
         socket.on('checkUserOffline', id => {
             if (online.includes(id)) {

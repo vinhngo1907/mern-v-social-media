@@ -11,7 +11,7 @@ function defaultSocket(io, socket, users) {
 }
 
 function SocketRoute(io, socket, users) {
-    // User join - online
+    // User
     userSocket(io, socket, users);
     
     // Message
