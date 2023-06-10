@@ -20,7 +20,7 @@ const SocketClient = () => {
     // Message
     useEffect(() => {
         socket.on('addMessageToClient', msg =>{
-            dispatch({type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg})
+            dispatch({type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg})
 
             dispatch({
                 type: MESSAGE_TYPES.ADD_USER, 

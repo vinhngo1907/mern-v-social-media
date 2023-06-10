@@ -1,4 +1,3 @@
-const userSocketCtrl = require("../socket-controllers/user-socket.controller");
 const { userSocket } = require("./user-socket.routing");
 const { messageSocket } = require("./message-socket.routing");
 
