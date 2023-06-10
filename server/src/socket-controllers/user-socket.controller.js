@@ -21,9 +21,18 @@ class UserSocketContoller {
         }
     }
 
-    checkUserOffline(io, socket, users, user){
+    checkUserOffline(io, socket, users) {
         try {
-            
+            const data = users.find(user => user.socketId === socket.id);
+            if (data) {
+                const clients = users.filter(u => u.followers.find(user => user._id === u.id));
+                if (clients.length > 0) {
+                    clients.forEach(client => {
+                        socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
+                    })
+                }
+            }
+            users = users.filter(u => u.socketId !== socket.Id);
         } catch (error) {
             logger.error(error.message);
         }
