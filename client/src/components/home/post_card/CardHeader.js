@@ -8,7 +8,7 @@ import { deletePost } from "../../../redux/actions/postAction";
 import { GLOBALTYPES } from "../../../redux/actions/globalTypes";
 
 const CardHeader = ({ post }) => {
-    const { auth } = useSelector(state => state);
+    const { auth, socket } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const history = useHistory();
@@ -22,7 +22,7 @@ const CardHeader = ({ post }) => {
 
     const handleDeletePost = () => {
         if (window.confirm("Are you sure?")) {
-            dispatch(deletePost({ post, auth }))
+            dispatch(deletePost({ post, auth, socket }))
             return history.push("/");
         }
     }

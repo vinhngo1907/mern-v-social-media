@@ -19,7 +19,7 @@ export const getAllNotifies = (token) => async (dispatch) => {
     }
 }
 
-export const createNotify = ({ msg, auth }) => async (dispatch) => {
+export const createNotify = ({ msg, auth, socket }) => async (dispatch) => {
     try {
         await postDataApi('notify', msg, auth.token);
     } catch (err) {
@@ -27,9 +27,10 @@ export const createNotify = ({ msg, auth }) => async (dispatch) => {
     }
 }
 
-export const removeNotify = ({ msg, auth }) => async (dispatch) => {
+export const removeNotify = ({ msg, auth, socket }) => async (dispatch) => {
     try {
         await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token);
+        socket.emit('removeNotify', msg)
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: err.response.data.message || err })
     }

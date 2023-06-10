@@ -25,7 +25,7 @@ export const getAllPosts = (token) => async (dispatch) => {
     }
 }
 
-export const createPost = ({ images, content, auth }) => async (dispatch) => {
+export const createPost = ({ images, content, auth, socket }) => async (dispatch) => {
     let media;
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
@@ -47,7 +47,7 @@ export const createPost = ({ images, content, auth }) => async (dispatch) => {
             image: media[0].url
         }
 
-        dispatch(createNotify({ msg, auth }))
+        dispatch(createNotify({ msg, auth, socket }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
@@ -76,7 +76,7 @@ export const editPost = ({ content, images, auth, status }) => async (dispatch) 
     }
 }
 
-export const deletePost = ({ post, auth }) => async (dispatch) => {
+export const deletePost = ({ post, auth, socket }) => async (dispatch) => {
     try {
         if (post.images.length > 0) {
             post.images.forEach(img => {
@@ -100,7 +100,7 @@ export const deletePost = ({ post, auth }) => async (dispatch) => {
             url: `/post/${post._id}`,
         }
 
-        dispatch(removeNotify({ msg, auth }))
+        dispatch(removeNotify({ msg, auth, socket }))
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }

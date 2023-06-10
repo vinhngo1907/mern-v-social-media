@@ -6,12 +6,12 @@ import moment from "moment";
 import LeftSideBar from "../components/global/LeftSideBar";
 
 const Notifications = () => {
-    const { auth, notify } = useSelector(state => state);
+    const { auth, notify, socket } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const handleDelete = (noti) => {
         if (window.confirm("Are you sure?")) {
-            dispatch(removeNotify({ msg: noti, auth }))
+            dispatch(removeNotify({ msg: noti, auth, socket }))
         }
     }
 
