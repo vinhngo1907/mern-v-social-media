@@ -1,5 +1,6 @@
 const { userSocket } = require("./user-socket.routing");
 const { messageSocket } = require("./message-socket.routing");
+const { notifySocket } = require("./notify-socket.routing");
 
 function defaultSocket(io, socket, users) {
     io.on("disconnect", () => {
@@ -12,7 +13,10 @@ function SocketRoute(io, socket, users) {
     userSocket(io, socket, users);
     
     // Message
-    messageSocket(io, socket, users)
+    messageSocket(io, socket, users);
+
+    // Notify
+    notifySocket(io, socket, users);
     
     // User disconnect - offline
     defaultSocket(io, socket, users);

@@ -4,10 +4,22 @@ import audiobell from './audio/got-it-done-613.mp3'
 import { GLOBALTYPES } from './redux/actions/globalTypes';
 import { MESSAGE_TYPES } from './redux/actions/messageAction';
 // import { GLOBALTYPES } from './redux/actions/globalTypes';
-// import { NOTIFY_TYPES } from './redux/actions/notifyAction';
+import { NOTIFY_TYPES } from './redux/actions/notifyAction';
+
+const spawnNotification = (body, icon, url, title) => {
+    let options = {
+        body, icon
+    }
+    let n = new Notification(title, options)
+
+    n.onclick = e => {
+        e.preventDefault()
+        window.open(url, '_blank')
+    }
+}
 
 const SocketClient = () => {
-    const { auth, socket, online } = useSelector(state => state);
+    const { auth, socket, online, notify } = useSelector(state => state);
     const dispatch = useDispatch();
     const audioRef = useRef();
 
@@ -19,21 +31,21 @@ const SocketClient = () => {
 
     // Message
     useEffect(() => {
-        socket.on('addMessageToClient', msg =>{
-            dispatch({type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg})
+        socket.on('addMessageToClient', msg => {
+            dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg })
 
             dispatch({
-                type: MESSAGE_TYPES.ADD_USER, 
+                type: MESSAGE_TYPES.ADD_USER,
                 payload: {
-                    ...msg.user, 
-                    text: msg.text, 
+                    ...msg.user,
+                    text: msg.text,
                     media: msg.media
                 }
             })
         })
 
         return () => socket.off('addMessageToClient')
-    },[socket, dispatch]);
+    }, [socket, dispatch]);
 
     // Check user online/offline
     useEffect(() => {
@@ -62,6 +74,28 @@ const SocketClient = () => {
 
     }, [socket, dispatch, online]);
 
+
+    // Notification
+    useEffect(() => {
+        socket.on('createNotifyToClient', msg => {
+            dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
+            if (notify.sound) audioRef.current.play()
+            spawnNotification(
+                msg.user.username + ' ' + msg.text,
+                msg.user.avatar,
+                msg.url,
+                'V-NETWORK'
+            )
+        });
+        return socket.off('createNotifyToClient');
+    }, [socket, dispatch, notify.sound]);
+
+    useEffect(() => {
+        socket.on('removeNotifyToClient', msg => {
+            dispatch(({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg }))
+        })
+        return socket.off('removeNotifyToClient');
+    }, [socket, dispatch]);
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>

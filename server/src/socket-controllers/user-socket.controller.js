@@ -20,6 +20,14 @@ class UserSocektContoller {
             logger.error(error.message);
         }
     }
+
+    checkUserOffline(io, socket, users, user){
+        try {
+            
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
 }
 
 module.exports = new UserSocektContoller;

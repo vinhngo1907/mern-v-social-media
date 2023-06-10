@@ -21,7 +21,15 @@ export const getAllNotifies = (token) => async (dispatch) => {
 
 export const createNotify = ({ msg, auth, socket }) => async (dispatch) => {
     try {
-        await postDataApi('notify', msg, auth.token);
+        const res = await postDataApi('notify', msg, auth.token);
+        socket.emit('createNotify', {
+            ...res.data.results,
+            user:{
+                _id: auth.user._id,
+                username: auth.user.username,
+                avatar: auth.user.avatar
+            }
+        });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
