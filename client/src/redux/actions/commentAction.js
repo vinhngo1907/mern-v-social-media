@@ -3,7 +3,7 @@ import { DeleteData, EditData, GLOBALTYPES } from "./globalTypes";
 import { createNotify } from "./notifyAction";
 import { POST_TYPES } from "./postAction"
 
-export const CreateComment = ({ post, newComment, auth }) => async (dispatch) => {
+export const CreateComment = ({ post, newComment, auth, socket }) => async (dispatch) => {
     const newPost = { ...post, comments: [...post.comments, newComment] }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
     try {
@@ -24,7 +24,7 @@ export const CreateComment = ({ post, newComment, auth }) => async (dispatch) =>
             content: post.content,
             image: post.images[0].url
         }
-        dispatch(createNotify({ msg, auth }))
+        dispatch(createNotify({ msg, auth, socket }))
     } catch (err) {
         console.log(err)
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
@@ -66,13 +66,14 @@ export const updateComment = ({ comment, post, content, auth }) => async (dispat
     }
 }
 
-export const removeComment = ({ comment, post, auth }) => async (dispatch) => {
+export const removeComment = ({ comment, post, auth, socket }) => async (dispatch) => {
     const deletedArr = [...post.comments.filter(cm => cm.reply === comment._id), comment]
     const newPost = {
         ...post, comments: post.comments.filter(cm => !deletedArr.find(da => cm._id === da._id))
     }
     
-    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
+    socket.emit('deleteComment', newPost)
     
     try {
         await deleteDataApi(`comment/${comment._id}`, auth.token);

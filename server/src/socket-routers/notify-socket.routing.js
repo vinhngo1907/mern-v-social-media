@@ -7,5 +7,5 @@ module.exports.notifySocket = (io, socket, users) => {
     
     socket.on("removeNotify", (msg) => {
         notifySocketController.removeNotify(io, socket, users, msg);
-    });
+    });  
 }

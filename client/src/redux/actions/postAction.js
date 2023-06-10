@@ -108,9 +108,10 @@ export const deletePost = ({ post, auth, socket }) => async (dispatch) => {
 
 export const likePost = ({ post, auth, socket }) => async (dispatch) => {
     const newPost = { ...post, likes: [...post.likes, auth.user] }
+    socket.emit("likePost", newPost);
     try {
 
-        dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost })
+        dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
         await patchDataApi(`post/${post._id}/like`, null, auth.token);
 
         // Notify
@@ -123,7 +124,7 @@ export const likePost = ({ post, auth, socket }) => async (dispatch) => {
             image: post.images[0].url
         }
 
-        dispatch(createNotify({ msg, auth, socket }))
+        dispatch(createNotify({ msg, auth, socket }));
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });

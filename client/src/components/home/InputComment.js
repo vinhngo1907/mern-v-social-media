@@ -5,7 +5,7 @@ import Icons from "../other/Icons";
 import { CreateComment } from '../../redux/actions/commentAction';
 
 const InputComment = ({ children, post, onReply, setOnReply }) => {
-    const { auth, theme } = useSelector(state => state);
+    const { auth, theme, socket } = useSelector(state => state);
     const [content, setContent] = useState('');
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
             createdAt: new Date().toISOString()
         }
         
-        dispatch(CreateComment({ post, newComment, auth }));
+        dispatch(CreateComment({ post, newComment, auth, socket }));
         setContent('');
         if (setOnReply) return setOnReply(false);
     }

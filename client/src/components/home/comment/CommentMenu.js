@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeComment } from "../../../redux/actions/commentAction"
 
 const CommentMenu = ({ post, comment, setOnEdit }) => {
-    const { auth } = useSelector(state => state)
+    const { auth, socket } = useSelector(state => state)
     const dispatch = useDispatch();
 
     const handleRemove = () => {
         if (window.confirm("Are you sure?")) {
-            dispatch(removeComment({ comment, post, auth }));
+            dispatch(removeComment({ comment, post, auth, socket }));
         }
     }
 
