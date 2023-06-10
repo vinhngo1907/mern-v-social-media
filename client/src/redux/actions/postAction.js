@@ -106,7 +106,7 @@ export const deletePost = ({ post, auth, socket }) => async (dispatch) => {
     }
 }
 
-export const likePost = ({ post, auth }) => async (dispatch) => {
+export const likePost = ({ post, auth, socket }) => async (dispatch) => {
     const newPost = { ...post, likes: [...post.likes, auth.user] }
     try {
 
@@ -123,7 +123,7 @@ export const likePost = ({ post, auth }) => async (dispatch) => {
             image: post.images[0].url
         }
 
-        dispatch(createNotify({ msg, auth }))
+        dispatch(createNotify({ msg, auth, socket }))
     } catch (err) {
         console.log(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });

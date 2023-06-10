@@ -96,6 +96,7 @@ const SocketClient = () => {
         })
         return socket.off('removeNotifyToClient');
     }, [socket, dispatch]);
+    
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>
