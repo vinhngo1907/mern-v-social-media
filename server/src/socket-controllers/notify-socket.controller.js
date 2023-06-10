@@ -2,7 +2,7 @@
 
 const logger = require("node-color-log");
 
-class NotifySocektContoller {
+class NotifySocketContoller {
     createNotify(io, socket, users, msg) {
         try {
             const clients = users.filter(u => msg.recipients.find(id => id === u.id));
@@ -32,4 +32,4 @@ class NotifySocektContoller {
     }
 }
 
-module.exports = new NotifySocektContoller;
+module.exports = new NotifySocketContoller;
