@@ -5,7 +5,7 @@ const logger = require("node-color-log");
 class PostSocketContoller {
     likePost(io, socket, users, post) {
         try {
-
+            users
         } catch (error) {
             logger.error(error.message);
         }
