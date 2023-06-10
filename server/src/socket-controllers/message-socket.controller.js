@@ -2,7 +2,7 @@
 
 const logger = require("node-color-log");
 
-class MessageSocektContoller {
+class MessageSocketContoller {
     addMessage(io, socket, users, msg){
         try {
             const user = users.find(user => user.id === msg.recipient);
@@ -22,4 +22,4 @@ class MessageSocektContoller {
     }
 }
 
-module.exports = new MessageSocektContoller;
+module.exports = new MessageSocketContoller;

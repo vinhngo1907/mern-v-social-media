@@ -2,7 +2,7 @@
 
 const logger = require("node-color-log");
 
-class UserSocektContoller {
+class UserSocketContoller {
     joinUser(io, socket, users, user) {
         !users.some(u => u.id === user._id) && users.push({ id: user._id, socketId: socket.id, followers: user.followers });
     }
@@ -30,4 +30,4 @@ class UserSocektContoller {
     }
 }
 
-module.exports = new UserSocektContoller;
+module.exports = new UserSocketContoller;
