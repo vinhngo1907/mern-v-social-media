@@ -1,4 +1,4 @@
-import { getDataApi, postDataApi } from "../../utils/fetchData";
+import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
@@ -61,13 +61,23 @@ export const loadMoreMessages = ({ auth, id, page = 1 }) => async (dispatch) => 
 
 export const createMessage = ({ auth, msg, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg });
-    
+
     const { _id, avatar, fullname, username } = auth.user;
     socket.emit('addMessage', { ...msg, user: { _id, avatar, fullname, username } });
 
     try {
         await postDataApi(`message`, msg, auth.token);
 
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
+
+export const deleteConversation = ({ auth, id }) => async (dispatch) => {
+    dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
+    try {
+        await deleteDataApi(`conversation/${id}`, auth.token);
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });

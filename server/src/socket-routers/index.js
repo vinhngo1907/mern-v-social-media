@@ -27,7 +27,7 @@ function SocketRoute(io, socket, users) {
     notifySocket(io, socket, users);
     
     // User disconnect - offline
-    // defaultSocket(io, socket, users);
+    defaultSocket(io, socket, users);
 }
 
 module.exports = SocketRoute;

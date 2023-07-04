@@ -1,3 +1,4 @@
+import { DeleteData } from '../actions/globalTypes';
 import { MESSAGE_TYPES } from '../actions/messageAction';
 // import { EditData, DeleteData } from '../actions/globalTypes';
 
@@ -65,7 +66,12 @@ const messageReducer = (state = initialState, action) => {
                     : { ...u, online: false }
                     )
             }
-
+        case MESSAGE_TYPES.DELETE_CV:
+            return{
+                ...state,
+                users: DeleteData(state.users, action.payload),
+                data: DeleteData(state.data, action.payload)
+            }
         default:
             return state;
     }

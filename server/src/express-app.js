@@ -25,13 +25,13 @@ module.exports = async (app) => {
         useTempFiles: true
     }));
 
-    const { CronJob } = cron;
-    const job = new CronJob('*/15 * * * *', async () => {
-        logger.info('Fetching all stats');
-        // await jobsUtil.FetchAllStats();
+    // const { CronJob } = cron;
+    // const job = new CronJob('*/15 * * * *', async () => {
+    //     logger.info('Fetching all stats');
+    //     await jobsUtil.FetchAllStats();
 
-    });
-    job.start();
+    // });
+    // job.start();
 
     app.get('/', (req, res) => {
         logger.info('GET /');

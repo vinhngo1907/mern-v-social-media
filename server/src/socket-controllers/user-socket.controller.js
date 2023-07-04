@@ -4,7 +4,11 @@ const logger = require("node-color-log");
 
 class UserSocketContoller {
     joinUser(io, socket, users, user) {
-        !users.some(u => u.id === user._id) && users.push({ id: user._id, socketId: socket.id, followers: user.followers });
+        try {
+            !users.some(u => u.id === user._id) && users.push({ id: user._id, socketId: socket.id, followers: user.followers });
+        } catch (error) {
+            logger.error(error.message);
+        }
     }
 
     checkUserOnline(io, socket, users, user) {

@@ -11,7 +11,7 @@ module.exports.userSocket = (io, socket, users) => {
     });
 
     // User disconnect - offline
-    socket.on("disconnect", () => {
-        userSocketController.checkUserOffline(io, socket, users)
-    });
+    // socket.on("disconnect", () => {
+    //     userSocketController.checkUserOffline(io, socket, users)
+    // });
 }

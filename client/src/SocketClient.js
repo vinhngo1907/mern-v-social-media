@@ -32,7 +32,8 @@ const SocketClient = () => {
     // Message
     useEffect(() => {
         socket.on('addMessageToClient', msg => {
-            dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg })
+            // console.log({ msg });
+            dispatch({ type: MESSAGE_TYPES.CREATE_MESSAGE, payload: msg });
 
             dispatch({
                 type: MESSAGE_TYPES.ADD_USER,
@@ -44,7 +45,7 @@ const SocketClient = () => {
             })
         })
 
-        return () => socket.off('addMessageToClient')
+        return () => socket.off('addMessageToClient');
     }, [socket, dispatch]);
 
     // Check user online

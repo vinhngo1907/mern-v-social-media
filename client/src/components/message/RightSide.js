@@ -6,14 +6,16 @@ import Icons from "../other/Icons";
 import UserCard from "../other/UserCard";
 import Avatar from "../other/Avatar";
 import MsgDisplay from "./MsgDisplay";
-import { createMessage, getMessages, loadMoreMessages } from '../../redux/actions/messageAction';
+import { createMessage, deleteConversation, getMessages, loadMoreMessages } from '../../redux/actions/messageAction';
 import { imageShow, videoShow } from '../../utils/mediaShow'
 import { checkImage, imageUpload } from '../../utils/imageUpload'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const RightSide = () => {
     const { auth, message, theme, socket } = useSelector(state => state)
     const dispatch = useDispatch();
+    const history = useHistory();
     const [text, setText] = useState('');
     const [media, setMedia] = useState([]);
     const [loadMedia, setLoadMedia] = useState(false);
@@ -80,7 +82,7 @@ const RightSide = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!text.trim() && media.length === 0) return;
+        if (!text.trim() && media.length === 0) return;
 
         setText('');
         setMedia([]);
@@ -105,7 +107,10 @@ const RightSide = () => {
     }
 
     const handleDeleteCV = () => {
-
+        if (window.confirm("Are you sure about that?")) {
+            dispatch(deleteConversation({ auth, id }));
+            return history.push("/message");
+        }
     }
 
     const handleVideoCall = () => {
