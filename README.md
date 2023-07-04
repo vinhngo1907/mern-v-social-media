@@ -1,4 +1,4 @@
-# :v_social_media: V-Dev
+# V-Social-Media
 
 ## Features
 * login to create and enjoy your posts
