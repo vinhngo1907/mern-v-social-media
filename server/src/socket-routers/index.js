@@ -3,29 +3,58 @@ const { messageSocket } = require("./message-socket.routing");
 const { notifySocket } = require("./notify-socket.routing");
 const { postSocket } = require("./post-socket.routing");
 const { commentSocket } = require("./comment-socket.routing");
+const logger = require("../utils/logger");
 
+// module.exports.defaultSocket = (io, socket, users) => {
+//     io.on("disconnect", () => {
+//         const data = users.find(user => user.socketId === socket.id);
+//         if(data){
+//             const clients = users.filter(user =>
+//                 data?.following?.find(u => u === user.id)
+//             );
+//             if (clients.length > 0) {
+//                 clients.forEach(client =>
+//                     socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
+//                 )
+//             }
+//         }
+//         users = users.filter(u => u.socketId !== socket.Id);
+//     })
+// }
 function defaultSocket(io, socket, users) {
     io.on("disconnect", () => {
-        users = users.filter(u => u.socketId !== socket.Id)
+        logger.info("Socket disconnected!!!");
+        const data = users.find(user => user.socketId === socket.id);
+        if (data) {
+            const clients = users.filter(user =>
+                data?.following?.find(u => u === user.id)
+            );
+            if (clients.length > 0) {
+                clients.forEach(client =>
+                    socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
+                )
+            }
+        }
+        users = users.filter(u => u.socketId !== socket.Id);
     })
 }
 
 function SocketRoute(io, socket, users) {
     // User
     userSocket(io, socket, users);
-    
+
     // Message
     messageSocket(io, socket, users);
-    
+
     // Post
     postSocket(io, socket, users);
-    
+
     // Comment
     commentSocket(io, socket, users);
 
     // Notify
     notifySocket(io, socket, users);
-    
+
     // User disconnect - offline
     defaultSocket(io, socket, users);
 }

@@ -89,6 +89,7 @@ const SocketClient = () => {
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', msg => {
+            console.log({ msg });
             dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
             if (notify.sound) audioRef.current.play()
             spawnNotification(
@@ -103,6 +104,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on('removeNotifyToClient', msg => {
+            console.log({ msg })
             dispatch(({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg }))
         })
         return socket.off('removeNotifyToClient');
@@ -111,6 +113,7 @@ const SocketClient = () => {
     // Post
     useEffect(() => {
         socket.on('likeToClient', post => {
+            console.log({ post });
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
         });
 
@@ -120,6 +123,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on('unLikeToClient', post => {
+            console.log({ post });
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
         });
 

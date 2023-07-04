@@ -2,11 +2,11 @@ const SocketRoute = require("./socket-routers");
 
 module.exports = (io) => {
     let users = [];
-    const onConnection = async (socket) => {
+    const onConnection = (socket) => {
         console.log("new connection");
-
+        
         SocketRoute(io, socket, users);
     }
 
-    io.on("connection", onConnection)
+    io.on("connection", onConnection);
 }
