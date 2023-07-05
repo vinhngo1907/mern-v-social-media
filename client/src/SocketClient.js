@@ -88,10 +88,11 @@ const SocketClient = () => {
 
     // Notification
     useEffect(() => {
-        socket.on('createNotifyToClient', msg => {
+        socket.on('createNotifyToClient', (msg) => {
             console.log({ msg });
             dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
-            if (notify.sound) audioRef.current.play()
+
+            if (notify.sound) audioRef.current.play();
             spawnNotification(
                 msg.user.username + ' ' + msg.text,
                 msg.user.avatar,
@@ -113,22 +114,20 @@ const SocketClient = () => {
     // Post
     useEffect(() => {
         socket.on('likeToClient', post => {
-            console.log({ post });
-            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
-        });
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
+        })
 
-        return socket.off("likeToClient");
+        return () => socket.off('likeToClient');
     }, [socket, dispatch]);
-
 
     useEffect(() => {
         socket.on('unLikeToClient', post => {
-            console.log({ post });
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
         });
 
-        return socket.off("unLikeToClient");
-    }, [socket, dispatch])
+        return () => socket.off('unLikeToClient');
+    }, [socket, dispatch]);
+
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>

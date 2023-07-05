@@ -3,37 +3,33 @@
 const logger = require("node-color-log");
 
 class PostSocketContoller {
-    likePost(io, socket, users, post) {
+    likePost(io, socket, users, newPost) {
         logger.info("Like post");
-
         try {
-            const ids = [...post.user.followers, post.user._id];
+            const ids = [...newPost.user.followers, newPost.user._id]
+            const clients = users.filter(user => ids.includes(user.id))
 
-            const clients = users.filter(user => ids.includes(user.id));
-            // console.log({ clients });
             if (clients.length > 0) {
                 clients.forEach(client => {
-                    console.log(client);
-                    socket.to(`${client.socketId}`).emit('likeToClient', post)
-                });
-            };
+                    socket.to(`${client.socketId}`).emit('likeToClient', newPost)
+                })
+            }
         } catch (error) {
             logger.error(error.message);
         }
     }
 
-    unLikePost(io, socket, users, post) {
+    unLikePost(io, socket, users, newPost) {
         logger.info("Unlike post");
         try {
-            const ids = [...post.user.followers, post.user._id];
-            const clients = users.filter(user => ids.includes(user.id));
-            // console.log({ clients });
+            const ids = [...newPost.user.followers, newPost.user._id]
+            const clients = users.filter(user => ids.includes(user.id))
+
             if (clients.length > 0) {
                 clients.forEach(client => {
-                    console.log({client});
-                    socket.to(`${client.socketId}`).emit('unLikeToClient', post)
-                });
-            };
+                    socket.to(`${client.socketId}`).emit('unLikeToClient', newPost)
+                })
+            }
         } catch (error) {
             logger.error(error.message);
         }

@@ -17,7 +17,8 @@ module.exports = async (app) => {
     // app.use(morgan('common'));
     app.use(express.json());
     app.use(cors({
-        origin: "*"
+        origin: "*",
+        credentials: true
     }));
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'))

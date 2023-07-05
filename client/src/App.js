@@ -31,7 +31,7 @@ function App() {
 		dispatch({ type: GLOBALTYPES.SOCKET, payload: socket });
 		return () => socket.close();
 
-	}, [dispatch])
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (auth.token) {
@@ -40,7 +40,7 @@ function App() {
 			dispatch(getAllNotifies(auth.token));
 			dispatch(getTotalStatistics(auth.token));
 		}
-	}, [auth.token, dispatch]);
+	}, [dispatch, auth.token]);
 
 	window.addEventListener('scroll', () => {
 		if (window.location.pathname === '/') {
@@ -48,14 +48,14 @@ function App() {
 			setScrollTop(window.pageYOffset);
 			return scroll;
 		}
-	})
+	});
 
 	// useEffect(() => {
 	// 	console.log(scroll)
 	// 	setTimeout(() => {
 	// 		window.scrollTo({ top: scroll, behavior: 'smooth' })
 	// 	}, 100)
-	// }, [])
+	// }, []);
 
 	useEffect(() => {
 		if (!("Notification" in window)) {
@@ -67,7 +67,7 @@ function App() {
 				if (permission === "granted") { }
 			});
 		}
-	}, [])
+	}, []);
 
 	return (
 		<Router>

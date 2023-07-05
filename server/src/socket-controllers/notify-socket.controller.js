@@ -5,7 +5,9 @@ const logger = require("node-color-log");
 class NotifySocketContoller {
     createNotify(io, socket, users, msg) {
         try {
-            const client = users.find(user => msg.recipients.includes(user.id))
+            console.log({msg});
+            const client = users.find(user => msg.recipients.includes(user.id));
+            console.log({client});
             client && socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
         } catch (error) {
             logger.error(error.message);
