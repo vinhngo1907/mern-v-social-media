@@ -4,20 +4,27 @@ const logger = require("node-color-log");
 
 class NotifySocketContoller {
     createNotify(io, socket, users, msg) {
+        logger.info("Created Notify");
         try {
-            console.log({msg});
+            console.log({users});
             const client = users.find(user => msg.recipients.includes(user.id));
-            console.log({client});
-            client && socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
+            if(client){
+                console.log(client.socketId)
+                socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
+            }
         } catch (error) {
             logger.error(error.message);
         }
     }
 
     removeNotify(io, socket, users, msg) {
+        logger.info("Remove Notify");
         try {
-            const client = users.find(user => msg.recipients.includes(user.id))
-            client && socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg);
+            const client = users.find(user => msg.recipients.includes(user.id.toString()))
+            if(client){
+                console.log(client.socketId)
+                socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg);
+            }
         } catch (error) {
             logger.error(error.message);
         }

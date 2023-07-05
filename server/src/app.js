@@ -11,18 +11,12 @@ const socketApp = require('./socket-app');
 async function StartServer() {
     const app = express();
     const server = require("http").createServer(app);
-
-    await expressApp(app);
-
-    //----------------connect database------------------//
-    databaseConnection();
-
+    const io = require("socket.io")(server);
 
     //----------------start config socket------------------//
     // let users = [];
-    const io = require("socket.io")(server);
     // io.use(isAuthSocket)
-    socketApp(io);
+    socketApp(io, server);
     // let users = [];
     // io.on('connection', socket => {
     //     console.log("new connection");
@@ -31,6 +25,11 @@ async function StartServer() {
     //     userSocket(io, socket, users);
     // });
     //----------------end config socket------------------//
+
+    await expressApp(app);
+
+    //----------------connect database------------------//
+    databaseConnection();
 
     //--------------------build server------------------//
     server.listen(PORT, () => {

@@ -89,7 +89,7 @@ const SocketClient = () => {
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', (msg) => {
-            console.log({ msg });
+            console.log(">>>>>>>>>>> Create Notify To Client <<<<<<<<<<<");
             dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
 
             if (notify.sound) audioRef.current.play();
@@ -101,11 +101,13 @@ const SocketClient = () => {
             )
         });
         return socket.off('createNotifyToClient');
-    }, [socket, dispatch, notify.sound]);
+    }, [socket, dispatch,
+        notify.sound
+    ]);
 
     useEffect(() => {
         socket.on('removeNotifyToClient', msg => {
-            console.log({ msg })
+            // console.log(">>>>>>>>>>> Remove Notify To Client <<<<<<<<<<");
             dispatch(({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg }))
         })
         return socket.off('removeNotifyToClient');
@@ -127,6 +129,23 @@ const SocketClient = () => {
 
         return () => socket.off('unLikeToClient');
     }, [socket, dispatch]);
+
+    // Comments
+    useEffect(() => {
+        socket.on('createCommentToClient', post => {
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
+        })
+
+        return () => socket.off('createCommentToClient')
+    }, [socket, dispatch])
+
+    useEffect(() => {
+        socket.on('deleteCommentToClient', post => {
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
+        })
+
+        return () => socket.off('deleteCommentToClient')
+    }, [socket, dispatch])
 
     return (
         <>
