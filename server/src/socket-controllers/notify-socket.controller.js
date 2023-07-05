@@ -9,7 +9,6 @@ class NotifySocketContoller {
             console.log({users});
             const client = users.find(user => msg.recipients.includes(user.id));
             if(client){
-                console.log(client.socketId)
                 socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
             }
         } catch (error) {
@@ -22,7 +21,6 @@ class NotifySocketContoller {
         try {
             const client = users.find(user => msg.recipients.includes(user.id.toString()))
             if(client){
-                console.log(client.socketId)
                 socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg);
             }
         } catch (error) {

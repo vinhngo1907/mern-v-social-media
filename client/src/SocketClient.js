@@ -101,9 +101,7 @@ const SocketClient = () => {
             )
         });
         return socket.off('createNotifyToClient');
-    }, [socket, dispatch,
-        notify.sound
-    ]);
+    }, [socket, dispatch, notify.sound]);
 
     useEffect(() => {
         socket.on('removeNotifyToClient', msg => {
@@ -145,7 +143,23 @@ const SocketClient = () => {
         })
 
         return () => socket.off('deleteCommentToClient')
-    }, [socket, dispatch])
+    }, [socket, dispatch]);
+
+    useEffect(() => {
+        socket.on("followToClient", (newUser) => {
+            dispatch({ type: GLOBALTYPES.AUTH, payload: { ...auth, user: newUser } });
+        });
+
+        return () => socket.off('followToClient');
+    }, [socket, auth, dispatch]);
+
+    useEffect(() => {
+        socket.on("unFollowToClient", (newUser) => {
+            dispatch({ type: GLOBALTYPES.AUTH, payload: { ...auth, user: newUser } });
+        });
+
+        return () => socket.off('unFollowToClient');
+    }, [socket, auth, dispatch]);
 
     return (
         <>

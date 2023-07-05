@@ -41,6 +41,26 @@ class UserSocketContoller {
             logger.error(error.message);
         }
     }
+
+    follow(io, socket, users, data) {
+        logger.info("Follow");
+        try {
+            const user = users.find(user => user.id === data._id);
+            user && socket.to(`${user.socketId}`).emit('followToClient', data);
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
+
+    unFollow(io, socket, users, data) {
+        logger.info("UnFollow");
+        try {
+            const user = users.find(user => user.id === data._id);
+            user && socket.to(`${user.socketId}`).emit('UnFollowToClient', data);
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
 }
 
 module.exports = new UserSocketContoller;

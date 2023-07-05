@@ -7,8 +7,15 @@ module.exports.userSocket = (io, socket, users) => {
     });
     
     socket.on("checkUserOnline", (data) => {
-        userSocketController.checkUserOnline(io, socket, users, data)
+        userSocketController.checkUserOnline(io, socket, users, data);
     });
+
+    socket.on("follow", (data)=>{
+        userSocketController.follow(io, socket, users, data);
+    });
+    socket.on("unFollow", (data)=>{
+        userSocketController.unFollow(io, socket, users, data);
+    })
 
     // User disconnect - offline
     // socket.on("disconnect", () => {
