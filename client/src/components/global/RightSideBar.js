@@ -10,7 +10,7 @@ import { GLOBALTYPES } from '../../redux/actions/globalTypes'
 // import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
-    const { auth, notify, statistic } = useSelector(state => state);
+    const { auth, notify, statistic, message } = useSelector(state => state);
     const dispatch = useDispatch();
     const [visitTab, setVisitTab] = useState(false);
     const [search, setSearch] = useState('');
@@ -67,11 +67,11 @@ const RightSideBar = () => {
                             title="" className="underline">My page</Link>
                         <span>
                             <i className="fas fa-comment" />
-                            <Link to="insight.html" title="messages" style={{ color: "#545454" }}>Messages <em>9</em></Link>
+                            <Link to="/message" title="messages" style={{ color: "#545454" }}>Messages <em>{message.data.length}</em></Link>
                         </span>
                         <span>
                             <i className="fas fa-bell" />
-                            <Link to="insight.html" title="notifications" style={{ color: "#545454" }}>Notifications <em>{notify.data.length}</em></Link>
+                            <Link to="/notifications" title="notifications" style={{ color: "#545454" }}>Notifications <em>{notify.data.length}</em></Link>
                         </span>
                     </div>
                     <div className="page-likes">

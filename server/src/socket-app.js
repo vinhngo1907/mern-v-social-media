@@ -18,11 +18,11 @@ module.exports = (io, server) => {
     // Create peer server
     ExpressPeerServer(server, { path: '/' });
 
-    // const { CronJob } = cron;
-    // const job = new CronJob('*/15 * * * *', async () => {
-    //     logger.info('Fetching all stats');
-    //     await jobsUtil.FetchAllStats(socketServer, users);
+    const { CronJob } = cron;
+    const job = new CronJob('*/15 * * * *', async () => {
+        logger.info('Fetching all stats');
+        await jobsUtil.FetchAllStats(socketServer, users);
 
-    // });
-    // job.start();
+    });
+    job.start();
 }
