@@ -4,7 +4,7 @@ const logger = require("node-color-log");
 
 class NotifySocketContoller {
     createNotify(io, socket, users, msg) {
-        logger.info("Created Notify");
+        logger.info("Create Notify");
         try {
             // console.log({users});
             const client = users.find(user => msg.recipients.includes(user.id));

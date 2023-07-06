@@ -70,6 +70,7 @@ class Job {
                 loggedAt: { $eq: socialData.loggedAt }
             }, {
                 youtube: {
+                    title: "youtube",
                     viewCount: +viewCount,
                     subscriberCount: +subscriberCount,
                     videoCount: +videoCount,
@@ -107,6 +108,7 @@ class Job {
                 loggedAt: { $eq: socialData.loggedAt }
             }, {
                 github: {
+                    title: "github",
                     repoCount: public_repos,
                     gistCount: public_gists,
                     followerCount: followers,
@@ -138,7 +140,7 @@ class Job {
         }
     }
 
-    async FetchAllStats() {
+    async FetchAllStats(socketServer, users) {
         const oldData = await socialModel.findOne({ loggedAt: { $eq: moment().format("LL") } });
         if (!oldData) {
             const newData = socialModel({
@@ -150,14 +152,14 @@ class Job {
             await newData.save();
 
             await Job.FetchYoutubeStats(newData);
-            await Job.FetchFaceBookStats(newData);
+            // await Job.FetchFaceBookStats(newData);
             await Job.FetchGitHubStats(newData);
             this.statCache = undefined;
         }
 
         if (oldData) {
             await Job.FetchYoutubeStats(oldData);
-            await Job.FetchFaceBookStats(oldData);
+            // await Job.FetchFaceBookStats(oldData);
             await Job.FetchGitHubStats(oldData);
             this.statCache = undefined;
         }

@@ -66,13 +66,13 @@ class StatisticController {
         }
     }
 
-    async CountViewAndVisitPage(req, res){
+    async CountViewAndVisitPage(req, res) {
         try {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
             const recordExist = await statisticModel.findOne({ user: req.user._id })
-            
+
             res.status(200).json(responseDTO.success("Get statistic in successfully"));
         } catch (error) {
             console.log(error);
@@ -124,40 +124,49 @@ class StatisticController {
     }
 
     async GetAllSocialStats(req, res) {
+        logger.info("Get StatCache");
         try {
             if (jobsUtil.statCache) {
-                logger.info("Get statCache")
                 const { cacheTime, data } = jobsUtil.statCache;
                 const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
                 if (durationUntilNow < 30) {
-                    res.json(responseDTO.success("Get data in insuccessfully", data))
+                    return res.json(responseDTO.success("Get data in insuccessfully", data));
                 }
             }
 
             const today = moment().format('LL');
             const socialStats = await socialModel.findOne({ loggedAt: today });
-            const stats = {}
+            const stats = [];
             const { youtube, github, facebook } = socialStats;
             if (youtube) {
                 const { viewCount, subscriberCount, videoCount, } = youtube;
-                stats.youtube = {
-                    viewCount, subscriberCount, videoCount,
-                };
+                // const youtubeStats = {
+                //     viewCount, subscriberCount, videoCount,
+                // };
+                stats.push({ title: "youtube", viewCount, subscriberCount, videoCount, });
             }
 
-            if (facebook) {
-                const { followerCount, } = facebook;
+            // if (facebook) {
+            //     const { followerCount, } = facebook;
 
-                stats.facebook = { followerCount, };
-            }
+            //     stats.facebook = { followerCount, };
+            // }
 
             if (github) {
                 const { repoCount, gistCount, followerCount: githubFollowerCount } = github;
-                stats.github = {
-                    repoCount,
-                    gistCount,
-                    followerCount: githubFollowerCount,
-                };
+                // const githubStats = {
+                //     repoCount,
+                //     gistCount,
+                //     followerCount: githubFollowerCount,
+                // };
+                stats.push(
+                    {
+                        title: "github",
+                        repoCount,
+                        gistCount,
+                        followerCount: githubFollowerCount,
+                    }
+                );
             }
 
             jobsUtil.statCache = {
@@ -165,7 +174,7 @@ class StatisticController {
                 data: stats
             }
 
-            res.json(responseDTO.success("Get data in successfully", stats))
+            res.json(responseDTO.success("Get data in successfully", stats));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

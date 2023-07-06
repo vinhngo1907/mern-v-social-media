@@ -6,7 +6,7 @@ const socialSchema = new Schema({
     youtube: Object,
     facebook: Object,
     loggedAt: { type: String, required: true }
-});
+}, { versionKey: false });
 
 // socialSchema.index({ 
 //     youtube: { loggedAt: 1, unique: true } ,

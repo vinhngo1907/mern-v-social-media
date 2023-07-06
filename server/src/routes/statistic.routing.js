@@ -1,7 +1,7 @@
 const router = require("express").Router();
+const { userAuth } = require('../middleware');
 const { StatisticController } = require("../controllers");
 const statisticCtrl = new StatisticController();
-const { userAuth } = require('../middleware');
 
 /**
  * @route GET api/statistic
@@ -19,13 +19,6 @@ router.get('/fetch', userAuth, statisticCtrl.GetViewAndVisitStats);
 
 /**
  * @route GET api/statistic/socials
- * @desc Get statistics socials
- * @access Private
-*/
-router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
-
-/**
- * @route POST api/statistic/socials
  * @desc Get statistics socials
  * @access Private
 */

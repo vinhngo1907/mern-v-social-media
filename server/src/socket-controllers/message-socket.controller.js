@@ -16,6 +16,7 @@ class MessageSocketContoller {
     }
 
     deleteMessage(io, socket, users, msg){
+        logger.info("Delete Message");
         try {
             
         } catch (error) {

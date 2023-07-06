@@ -12,12 +12,13 @@ import StatusModal from "./components/other/StatusModal";
 import { getSuggestion } from "./redux/actions/suggestionAction";
 import { getAllPosts } from "./redux/actions/postAction";
 import Register from "./pages/register";
-import { getAllNotifies } from "./redux/actions/notifyAction";
 import ScrollTop from "./components/other/ScrollTop";
+import { getAllNotifies } from "./redux/actions/notifyAction";
 import { getTotalStatistics } from "./redux/actions/statisticAction";
 import io from "socket.io-client";
 import { GLOBALTYPES } from "./redux/actions/globalTypes";
 import SocketClient from "./SocketClient";
+import { getSocialStatistics } from "./redux/actions/socialAction";
 
 let scroll = 0;
 function App() {
@@ -39,6 +40,7 @@ function App() {
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
 			dispatch(getTotalStatistics(auth.token));
+			dispatch(getSocialStatistics(auth.token));
 		}
 	}, [dispatch, auth.token]);
 

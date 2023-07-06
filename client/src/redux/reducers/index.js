@@ -15,9 +15,11 @@ import statistic from './statisticReducer';
 import socket from './socketReducer';
 import message from './messageReducer';
 import online from './onlineReducer';
+import social from './socialReducer';
 
 export default combineReducers({
     auth,
+    social,
     alert,
     theme,
     sidebar,

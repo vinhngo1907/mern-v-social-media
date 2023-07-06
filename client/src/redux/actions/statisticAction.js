@@ -7,7 +7,6 @@ export const STATISTIC_TYPES = {
     UPDATE_STATS: 'UPDATE_STATISTICS'
 }
 
-
 export const fetchAllStatistics = ({id, type, auth }) => async (dispatch) => {
     try {
         await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);

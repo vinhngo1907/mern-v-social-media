@@ -1,12 +1,41 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Social = ()=>{
+const Social = () => {
+    const { social } = useSelector(state => state);
+    // const [socialData, setSocialData] = useState([]);
+    // useEffect(() => {
+    //     if(social.data.length > 0){
+    //         setSocialData(soc)
+    //     }
+    // },[social.data]);
     return (
         <div className="widget mt-3">
-                <h4 className="widget-title">Socials</h4>
-                <ul className="socials overlay-scrollbar scrollbar-hover px-3">
-                    <li className="facebook">
+            <h4 className="widget-title">Socials</h4>
+            <ul className="socials overlay-scrollbar scrollbar-hover px-3">
+                {
+                    social.loading && <div className="spinner-border d-block mx-auto" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div> 
+                }
+                {
+                    social.data.length > 0 && social.data.map((s, index) => (
+                        <li className={`${s.title}`} key={index}>
+                            <Link title={s.title} to="/">
+                                <i className={`fa fa-${s.title}`} /> <span>{s.title}</span>
+                                <ins>
+                                    {
+                                        s.title === "github"
+                                            ? `${s.followerCount} followers`
+                                            : `${s.subscriberCount} subscribers`
+                                    }
+                                </ins>
+                            </Link>
+                        </li>
+                    ))
+                }
+                {/* <li className="facebook">
                         <Link title="facebook" to="/">
                             <i className="fa fa-facebook" /> <span>facebook</span> <ins>45 likes</ins>
                         </Link>
@@ -20,9 +49,9 @@ const Social = ()=>{
                         <Link title="youtube" to="#">
                             <i className="fa fa-youtube" /> <span>youtube</span><ins>35 likes</ins>
                         </Link>
-                    </li>
-                </ul>
-            </div>
+                    </li> */}
+            </ul>
+        </div>
     )
 }
 

@@ -5,8 +5,6 @@ const fileUpload = require('express-fileupload');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require('node-color-log');
-const cron = require('cron');
-const { jobsUtil, loggerUtil } = require("./utils");
 
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
@@ -26,14 +24,6 @@ module.exports = async (app) => {
         useTempFiles: true
     }));
 
-    // const { CronJob } = cron;
-    // const job = new CronJob('*/15 * * * *', async () => {
-    //     logger.info('Fetching all stats');
-    //     await jobsUtil.FetchAllStats();
-
-    // });
-    // job.start();
-
     app.get('/', (req, res) => {
         logger.info('GET /');
         res.send('App works!!!!!');
@@ -49,5 +39,5 @@ module.exports = async (app) => {
     });
 
     // error handling
-    app.use(ErrorHandler)
+    app.use(ErrorHandler);
 }
