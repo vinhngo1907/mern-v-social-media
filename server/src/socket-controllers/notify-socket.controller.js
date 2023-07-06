@@ -6,7 +6,7 @@ class NotifySocketContoller {
     createNotify(io, socket, users, msg) {
         logger.info("Created Notify");
         try {
-            console.log({users});
+            // console.log({users});
             const client = users.find(user => msg.recipients.includes(user.id));
             if(client){
                 socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);

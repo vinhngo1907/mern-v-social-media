@@ -82,7 +82,7 @@ export const follow = ({ users, user, auth, socket }) => async (dispatch) => {
             }
         })
     }
-    console.log({newUser});
+    // console.log({newUser});
 
     dispatch({ type: PROFILE_TYPES.FOLLOW, payload: newUser });
 
@@ -122,7 +122,7 @@ export const unFollow = ({ users, user, auth, socket }) => async (dispatch) => {
             }
         })
     }
-    console.log({newUser});
+    // console.log({newUser});
 
     dispatch({ type: PROFILE_TYPES.UNFOLLOW, payload: newUser });
     dispatch({

@@ -89,7 +89,7 @@ const SocketClient = () => {
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', (msg) => {
-            console.log(">>>>>>>>>>> Create Notify To Client <<<<<<<<<<<");
+            // console.log(">>>>>>>>>>> Create Notify To Client <<<<<<<<<<<");
             dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
 
             if (notify.sound) audioRef.current.play();
@@ -100,7 +100,7 @@ const SocketClient = () => {
                 'V-NETWORK'
             )
         });
-        return socket.off('createNotifyToClient');
+        return () => socket.off('createNotifyToClient');
     }, [socket, dispatch, notify.sound]);
 
     useEffect(() => {
@@ -108,7 +108,7 @@ const SocketClient = () => {
             // console.log(">>>>>>>>>>> Remove Notify To Client <<<<<<<<<<");
             dispatch(({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg }))
         })
-        return socket.off('removeNotifyToClient');
+        return () => socket.off('removeNotifyToClient');
     }, [socket, dispatch]);
 
     // Post
@@ -122,7 +122,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on('unLikeToClient', post => {
-            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
         });
 
         return () => socket.off('unLikeToClient');
@@ -131,10 +131,10 @@ const SocketClient = () => {
     // Comments
     useEffect(() => {
         socket.on('createCommentToClient', post => {
-            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
         })
 
-        return () => socket.off('createCommentToClient')
+        return () => socket.off('createCommentToClient');
     }, [socket, dispatch])
 
     useEffect(() => {
@@ -142,9 +142,10 @@ const SocketClient = () => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
         })
 
-        return () => socket.off('deleteCommentToClient')
+        return () => socket.off('deleteCommentToClient');
     }, [socket, dispatch]);
 
+    // Follow - UnFollow
     useEffect(() => {
         socket.on("followToClient", (newUser) => {
             dispatch({ type: GLOBALTYPES.AUTH, payload: { ...auth, user: newUser } });

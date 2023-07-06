@@ -72,11 +72,13 @@ class UserController {
                 $push: { following: id }
             }, { new: true })
             .select("-password -rf_token -salt")
-            .populate("following followers", "-password -rf_token -salt");
+            .populate("following followers", "-password -rf_token -salt -__v");
 
             if (!following) return res.status(400).json(responseDTO.badRequest(`This user ${req.user._id} does not exist`));
 
-            const newUser = await userModel.findOneAndUpdate({ _id: id }, { $push: { followers: req.user._id } }, { new: true });
+            const newUser = await userModel.findOneAndUpdate({ _id: id }, { $push: { followers: req.user._id } }, { new: true })
+            .select("-password -rf_token -salt")
+            .populate("followers following", "-salt -rf_token -password -__v");
 
             res.status(200).json(responseDTO.success("Followed successfully", newUser));
         } catch (error) {
