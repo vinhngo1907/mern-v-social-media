@@ -89,7 +89,7 @@ const RightSide = () => {
         setLoadMedia(true);
 
         let newArr = [];
-        if (media.length > 0) newArr = await imageUpload(media);
+        if (media.length > 0) newArr = await imageUpload(media, auth.token);
         const msg = {
             text,
             sender: auth.user._id,
@@ -99,7 +99,7 @@ const RightSide = () => {
         }
 
         setLoadMedia(false);
-        await dispatch(createMessage({ auth, msg, socket }))
+        await dispatch(createMessage({ auth, msg, socket }));
     }
 
     const handleAudioCall = () => {
@@ -136,7 +136,7 @@ const RightSide = () => {
     const handleDeleteMedia = (index) => {
         let newArr = [...media];
         newArr.splice(index, 1);
-        setMedia(newArr)
+        setMedia(newArr);
     }
 
     return (
