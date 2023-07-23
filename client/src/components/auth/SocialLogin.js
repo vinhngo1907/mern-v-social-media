@@ -3,7 +3,7 @@ import { GoogleLogin } from 'react-google-login';
 import { FacebookLogin } from 'react-facebook-login-lite';
 import { gapi } from "gapi-script"
 import { useDispatch } from "react-redux";
-import { googleLogin } from "../../redux/actions/authAction";
+import { facebookLogin, googleLogin } from "../../redux/actions/authAction";
 
 const SocialLogin = () => {
     const dispatch = useDispatch();
@@ -27,7 +27,9 @@ const SocialLogin = () => {
         console.log(err);
     }
     const onFBSuccess = async (response) => {
-        console.log(response);
+        // console.log(response);
+        const { accessToken, userID } = response.authResponse;
+        dispatch(facebookLogin({ accessToken, userID }));
     }
     return (
         <>
@@ -40,8 +42,9 @@ const SocialLogin = () => {
                 cookiePolicy={'single_host_origin'}
             />
             <FacebookLogin
-                appId="1515286105607652"
+                appId="796679401948799"
                 onSuccess={onFBSuccess}
+                onFailure={onFailure}
             />
         </>
     )

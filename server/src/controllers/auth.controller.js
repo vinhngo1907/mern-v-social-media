@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { userModel } = modelSchema;
 const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET } = require("../configs");
 const { OAuth2Client } = require("google-auth-library");
+const fetch = require("node-fetch");
 
 class AuthController {
     async Login(req, res) {
@@ -82,7 +83,7 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
+
     async RefreshToken(req, res) {
         try {
             const rf_token = req.cookies.rf_v_media;
@@ -94,7 +95,7 @@ class AuthController {
                     return res.status(401).json(responseDTO.unauthorization("Something wrong, please login now!"));
 
                 const user = await userModel.findById(result.userId)
-                .select("-password -salt").populate("following followers", "-rf_token -password -salt");
+                    .select("-password -salt").populate("following followers", "-rf_token -password -salt");
                 if (!user)
                     return res.status(401).json(responseDTO.unauthorization("Authentication failed, please login again!"));
 
@@ -158,7 +159,7 @@ class AuthController {
                     password: hashedPassword,
                     salt
                 }
-                RegisterUser(newUser, req, res)
+                RegisterUser(newUser, req, res);
             }
         } catch (error) {
             console.log(error);
@@ -167,7 +168,24 @@ class AuthController {
     }
     async FacebookLogin(req, res) {
         try {
+            const { accessToken, userID } = req.body;
+            const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+            const data = await fetch(URL).then(res => res.json()).then(res => { return res });
+            
+            const { name, email, picture } = data;
+            const existed = await userModel.findOne({ $or: [{ email: email }, { username: name }] });
 
+            if (existed) {
+                const password = email + FB_SECRET;
+                LoginUser(password, existed, req, res)
+            } else {
+                const salt = await passwordUtil.GenerateSalt();
+                const user = {
+                    type: "facebook",
+                    name, email, avatar: picture.data.url, password: email + FB_SECRET, salt
+                }
+                RegisterUser(user, req, res);
+            }
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

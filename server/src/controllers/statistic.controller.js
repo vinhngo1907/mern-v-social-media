@@ -138,7 +138,6 @@ class StatisticController {
             const socialStats = await socialModel.findOne({ loggedAt: today });
             const stats = [];
             // const { youtube, github, facebook } = socialStats;
-            // console.log({socialStats})
             if (socialStats.youtube) {
                 const { viewCount, subscriberCount, videoCount, } = socialStats.youtube;
                 // const youtubeStats = {
