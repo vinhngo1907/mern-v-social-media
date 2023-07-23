@@ -171,18 +171,24 @@ class AuthController {
             const { accessToken, userID } = req.body;
             const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
             const data = await fetch(URL).then(res => res.json()).then(res => { return res });
-            
+            // console.log({data});
             const { name, email, picture } = data;
             const existed = await userModel.findOne({ $or: [{ email: email }, { username: name }] });
-
+            const password = email + FB_SECRET;
+            
             if (existed) {
-                const password = email + FB_SECRET;
-                LoginUser(password, existed, req, res)
+                LoginUser(password, existed, req, res);
             } else {
                 const salt = await passwordUtil.GenerateSalt();
+                const hashedPassword = await passwordUtil.GeneratePassword(password, salt)
                 const user = {
                     type: "facebook",
-                    name, email, avatar: picture.data.url, password: email + FB_SECRET, salt
+                    username: name,
+                    fullname: name,
+                    email, 
+                    avatar: picture.data.url,
+                    password: hashedPassword, 
+                    salt
                 }
                 RegisterUser(user, req, res);
             }
