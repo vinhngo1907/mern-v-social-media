@@ -137,23 +137,24 @@ class StatisticController {
             const today = moment().format('LL');
             const socialStats = await socialModel.findOne({ loggedAt: today });
             const stats = [];
-            const { youtube, github, facebook } = socialStats;
-            if (youtube) {
-                const { viewCount, subscriberCount, videoCount, } = youtube;
+            // const { youtube, github, facebook } = socialStats;
+            // console.log({socialStats})
+            if (socialStats.youtube) {
+                const { viewCount, subscriberCount, videoCount, } = socialStats.youtube;
                 // const youtubeStats = {
                 //     viewCount, subscriberCount, videoCount,
                 // };
                 stats.push({ title: "youtube", viewCount, subscriberCount, videoCount, });
             }
 
-            // if (facebook) {
-            //     const { followerCount, } = facebook;
+            // if (socialStats.facebook) {
+            //     const { followerCount, } = socialStats.facebook;
 
             //     stats.facebook = { followerCount, };
             // }
 
-            if (github) {
-                const { repoCount, gistCount, followerCount: githubFollowerCount } = github;
+            if (socialStats.github) {
+                const { repoCount, gistCount, followerCount: githubFollowerCount } = socialStats.github;
                 // const githubStats = {
                 //     repoCount,
                 //     gistCount,
