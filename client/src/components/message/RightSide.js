@@ -13,7 +13,7 @@ import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const RightSide = () => {
-    const { auth, message, theme, socket } = useSelector(state => state)
+    const { auth, message, theme, socket, peer } = useSelector(state => state)
     const dispatch = useDispatch();
     const history = useHistory();
     const [text, setText] = useState('');
@@ -29,7 +29,7 @@ const RightSide = () => {
     const { id } = useParams();
 
     const refDisplay = useRef();
-    // const pageEnd = useRef();
+    const pageEnd = useRef();
 
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
@@ -43,8 +43,18 @@ const RightSide = () => {
             setResult(newData.result);
             setPage(newData.page);
         }
-
     }, [id, message.data]);
+
+    useEffect(() => {
+        if (id && message.users.length > 0) {
+            setTimeout(() => {
+                refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            }, 50)
+
+            const newUser = message.users.find(user => user._id === id)
+            if (newUser) setUser(newUser)
+        }
+    }, [message.users, id]);
 
     useEffect(() => {
         const getMessagesData = async () => {
@@ -52,11 +62,24 @@ const RightSide = () => {
                 await dispatch(getMessages({ id, auth }))
                 setTimeout(() => {
                     refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }, 50)
+                }, 50);
             }
         }
-        getMessagesData()
+        getMessagesData();
     }, [id, dispatch, auth, message.data]);
+
+    // Load More
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                setIsLoadMore(p => p + 1)
+            }
+        }, {
+            threshold: 0.1
+        })
+
+        observer.observe(pageEnd.current)
+    }, [setIsLoadMore]);
 
     useEffect(() => {
         if (isLoadMore > 1) {
@@ -65,20 +88,8 @@ const RightSide = () => {
                 setIsLoadMore(1)
             }
         }
-    }, [isLoadMore, result, page, dispatch, id, auth]);
-
-    // Load More
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(entries => {
-    //         if (entries[0].isIntersecting) {
-    //             setIsLoadMore(p => p + 1)
-    //         }
-    //     }, {
-    //         threshold: 0.1
-    //     })
-
-    //     observer.observe(pageEnd.current)
-    // }, [setIsLoadMore]);
+        // eslint-disable-next-line
+    }, [isLoadMore]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,10 +111,40 @@ const RightSide = () => {
 
         setLoadMedia(false);
         await dispatch(createMessage({ auth, msg, socket }));
+        if (refDisplay.current) {
+            refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        }
+    }
+
+    // Call
+    const caller = ({ video }) => {
+        const { _id, username, avatar, fullname } = user;
+        const msg = {
+            sender: auth.user._id,
+            recipient: _id,
+            avatar, username, fullname, video
+        }
+        dispatch({ type: GLOBALTYPES.CALL, payload: msg });
+    }
+    const callUser = ({ video }) => {
+        const { _id, username, avatar, fullname } = auth.user;
+        const msg = {
+            sender: _id,
+            recipient: user._id,
+            avatar, username, fullname, video
+        }
+        if (peer.open) msg.peerId = peer._id
+        socket.emit('startCall', msg);
     }
 
     const handleAudioCall = () => {
+        caller({ video: false });
+        callUser({ video: false })
+    }
 
+    const handleVideoCall = () => {
+        caller({ video: true });
+        callUser({ video: true });
     }
 
     const handleDeleteCV = () => {
@@ -111,10 +152,6 @@ const RightSide = () => {
             dispatch(deleteConversation({ auth, id }));
             return history.push("/message");
         }
-    }
-
-    const handleVideoCall = () => {
-
     }
 
     const handleChangeMedia = (e) => {
@@ -164,6 +201,9 @@ const RightSide = () => {
             </div>
             <div className="chat_container" style={{ height: media.length > 0 ? 'calc(100% - 180px)' : '' }} >
                 <div className='chat_display' ref={refDisplay}>
+                    <button style={{ marginTop: '-25px', opacity: 0 }} ref={pageEnd}>
+                        Load more
+                    </button>
                     {
                         data.map((item, index) => (
                             <div key={index}>
