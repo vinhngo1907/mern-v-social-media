@@ -138,7 +138,7 @@ class StatisticController {
             const socialStats = await socialModel.findOne({ loggedAt: today });
             const stats = [];
             // const { youtube, github, facebook } = socialStats;
-            if (socialStats.youtube) {
+            if (socialStats && socialStats.youtube) {
                 const { viewCount, subscriberCount, videoCount, } = socialStats.youtube;
                 // const youtubeStats = {
                 //     viewCount, subscriberCount, videoCount,
@@ -152,7 +152,7 @@ class StatisticController {
             //     stats.facebook = { followerCount, };
             // }
 
-            if (socialStats.github) {
+            if (socialStats && socialStats.github) {
                 const { repoCount, gistCount, followerCount: githubFollowerCount } = socialStats.github;
                 // const githubStats = {
                 //     repoCount,
