@@ -177,6 +177,21 @@ const SocketClient = () => {
         return () => socket.off('unFollowToClient');
     }, [socket, auth, dispatch]);
 
+    // Calll - End Call
+    useEffect(() => {
+        socket.on("callUserToClient", data => {
+
+        });
+        return () => socket.off("callUserToClient");
+    }, [socket, dispatch]);
+
+    useEffect(() => {
+        socket.on("endCallUserToClient", data => {
+
+        });
+        return () => socket.off("endCallUserToClient");
+    }, [socket, dispatch]);
+
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>

@@ -19,10 +19,12 @@ import io from "socket.io-client";
 import { GLOBALTYPES } from "./redux/actions/globalTypes";
 import SocketClient from "./SocketClient";
 import { getSocialStatistics } from "./redux/actions/socialAction";
+import Peer from "peerjs";
+import CallModal from "./components/message/CallModal";
 
 let scroll = 0;
 function App() {
-	const { auth, status } = useSelector(state => state);
+	const { auth, status, call, modal } = useSelector(state => state);
 	const dispatch = useDispatch();
 	const [scrollTop, setScrollTop] = useState(0);
 
@@ -71,15 +73,24 @@ function App() {
 		}
 	}, []);
 
+	useEffect(() => {
+		const newPeer = new Peer(undefined, {
+			path: '/', secure: true
+		})
+
+		dispatch({ type: GLOBALTYPES.PEER, payload: newPeer })
+	}, [dispatch]);
+
 	return (
 		<Router>
 			<Alert />
 			<input type="checkbox" id="theme" />
-			<div className='App'>
+			<div className={`App ${(status || modal) && 'mode'}`}>
 				<div className="main">
 					{auth.token && <Header />}
 					{auth.token && <SocketClient />}
 					{status && <StatusModal />}
+					{call && <CallModal />}
 					<Switch>
 						<Route exact path="/" component={auth.token ? Home : Login} />
 						<Route exact path="/login" component={Login} />

@@ -3,9 +3,13 @@
 const logger = require("node-color-log");
 
 class CallSocketContoller {
-    editData(users, sender, recipient){
-        
+    editData(data, id, call) {
+        const newData = data.map(item =>
+            item.id === id ? { ...item, call } : item
+        );
+        return newData;
     }
+
     startCall(io, socket, users, data) {
         try {
 
