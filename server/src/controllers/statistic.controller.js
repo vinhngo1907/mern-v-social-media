@@ -82,14 +82,6 @@ class StatisticController {
 
     async GetTotalStats(req, res) {
         try {
-            // if (statCache) {
-            //     const { cacheTime, data } = statCache;
-            //     const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
-            //     if (durationUntilNow < 30) {
-            //         return res.status(200).json(responseDTO.success("Get data in successfully", data));
-            //     }
-            // }
-
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
