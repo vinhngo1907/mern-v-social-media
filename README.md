@@ -5,8 +5,10 @@
 * login to create and enjoy your posts
 * oauth2 with facebook, google and sms 
 * search users by user name and full name
-* Comments, likes and share post
+* comments, likes and share post
+* likes and reply comment
 * realtime chat, phone call, video call
+* notifications for likes, comment,...
 
 ## Installation
 ### To run the app with Node.js and MongoDB
@@ -19,7 +21,7 @@ Open .env and adjust the `MONGODB_URI` to your MongoDB server name (localhost no
 
 1. Run `npm install`.
 
-2. CD client && Run `npm run start` to start the frontend server
+2. CD client && Run `npm run start` to start the frontend client
 
 Wait for the build process to complete
 
