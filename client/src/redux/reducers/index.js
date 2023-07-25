@@ -17,6 +17,7 @@ import message from './messageReducer';
 import online from './onlineReducer';
 import social from './socialReducer';
 import call from './callReducer';
+import peer from './peerReducer';
 
 export default combineReducers({
     auth,
@@ -35,5 +36,6 @@ export default combineReducers({
     socket,
     message,
     online,
-    call
+    call, 
+    peer
 });
