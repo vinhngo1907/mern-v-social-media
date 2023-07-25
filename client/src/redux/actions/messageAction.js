@@ -86,18 +86,25 @@ export const deleteConversation = ({ auth, id }) => async (dispatch) => {
 }
 
 export const deleteMessage = ({ msg, data, auth, socket }) => async (dispatch) => {
+    // console.log({ msg });
     if (msg.media && msg.media.length > 0) {
         msg.media.forEach((img) => {
             imageDestroy(img, auth.token)
         })
     }
     const newData = DeleteData(data, msg._id);
+    // console.log({newData});
     dispatch({
         type: MESSAGE_TYPES.DELETE_MESSAGE, 
         payload: {
             newData,
             _id: msg.recipient
         }
+    });
+
+    socket.emit("deleteMessage", {
+        msg,
+        listMessages: newData
     });
     try {
         await deleteDataApi(`message/${msg._id}`, auth.token);

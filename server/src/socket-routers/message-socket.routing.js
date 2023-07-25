@@ -5,7 +5,7 @@ module.exports.messageSocket = (io, socket, users) => {
         messageSocketController.addMessage(io, socket, users, msg);
     });
 
-    socket.on("deleteMessage", (msg) => {
-        messageSocketController.deleteMessage(io, socket, users, msg);
-    })
+    socket.on("deleteMessage", (data) => {
+        messageSocketController.deleteMessage(io, socket, users, data);
+    });
 }

@@ -20,7 +20,7 @@ const SocialLogin = () => {
     }, []);
 
     const onGGSuccess = (response) => {
-        console.log(response);
+        // console.log(response);
         const { tokenId } = response
         dispatch(googleLogin({ idToken: tokenId }))
     }

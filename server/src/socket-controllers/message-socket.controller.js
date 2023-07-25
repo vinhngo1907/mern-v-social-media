@@ -3,7 +3,7 @@
 const logger = require("node-color-log");
 
 class MessageSocketContoller {
-    addMessage(io, socket, users, msg){
+    addMessage(io, socket, users, msg) {
         // console.log(">>>>>>>>>> user list: <<<<<<<<<<",{users});
         try {
             // console.log(">>>>>>>>>>>> MSG <<<<<<<<<<<<",{msg})
@@ -11,14 +11,16 @@ class MessageSocketContoller {
             // console.log({user});
             user && socket.to(`${user.socketId}`).emit('addMessageToClient', msg);
         } catch (error) {
-           logger.error(error.message); 
+            logger.error(error.message);
         }
     }
 
-    deleteMessage(io, socket, users, msg){
+    deleteMessage(io, socket, users, data) {
         logger.info("Delete Message");
+        const { msg } = data;
         try {
-            
+            const user = users.find(u => u.id === msg.recipient);
+            user && socket.to(`${user.socketId}`).emit("deleteMessageToClient", data);
         } catch (error) {
             logger.error(error.message);
         }
