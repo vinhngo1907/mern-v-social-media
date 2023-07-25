@@ -1,5 +1,5 @@
 import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
-import { GLOBALTYPES } from "./globalTypes";
+import { DeleteData, GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
     GET_MESSAGES: "GET_MESSAGES",
@@ -78,6 +78,23 @@ export const deleteConversation = ({ auth, id }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
     try {
         await deleteDataApi(`conversation/${id}`, auth.token);
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
+
+export const deleteMessage = ({ msg, data, auth }) => async (dispatch) => {
+    const newData = DeleteData(data, msg._id);
+    dispatch({
+        type: MESSAGE_TYPES.DELETE_MESSAGE, 
+        payload: {
+            ...newData,
+            _id: msg.recipient
+        }
+    })
+    try {
+        await deleteDataApi(`message/${msg._id}`, auth.token);
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });

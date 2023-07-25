@@ -127,30 +127,21 @@ class StatisticController {
             }
 
             const today = moment().format('LL');
-            const socialStats = await socialModel.findOne({ loggedAt: today });
+            const socialStats = await socialModel.find({ loggedAt: today });
+            if (!socialStats || socialStats.length === 0) {
+                logger.info(`No youtube stats fetched on ${today}`);
+                return res.json(responseDTO.success("Get data in successfully", []));
+            }
+
             const stats = [];
-            // const { youtube, github, facebook } = socialStats;
-            if (socialStats && socialStats.youtube) {
-                const { viewCount, subscriberCount, videoCount, } = socialStats.youtube;
-                // const youtubeStats = {
-                //     viewCount, subscriberCount, videoCount,
-                // };
+            const { youtube, github, facebook } = socialStats[0];
+            if (youtube) {
+                const { viewCount, subscriberCount, videoCount, } = youtube;
                 stats.push({ title: "youtube", viewCount, subscriberCount, videoCount, });
             }
 
-            // if (socialStats.facebook) {
-            //     const { followerCount, } = socialStats.facebook;
-
-            //     stats.facebook = { followerCount, };
-            // }
-
-            if (socialStats && socialStats.github) {
-                const { repoCount, gistCount, followerCount: githubFollowerCount } = socialStats.github;
-                // const githubStats = {
-                //     repoCount,
-                //     gistCount,
-                //     followerCount: githubFollowerCount,
-                // };
+            if (github) {
+                const { repoCount, gistCount, followerCount: githubFollowerCount } = github;
                 stats.push(
                     {
                         title: "github",
