@@ -1,23 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
-// import { useParams } from "react-router-dom";
-// import { deleteMessage, editMessage } from "../../redux/actions/messageAction";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { deleteMessage, editMessage } from "../../redux/actions/messageAction";
 import { imageShow, videoShow } from "../../utils/mediaShow";
 import Avatar from "../other/Avatar";
 import Times from "./Times";
 
 const MsgDisplay = ({ user, msg, theme, data }) => {
-    const { auth } = useSelector(state => state);
-    // const dispatch = useDispatch();
+    const { auth, socket } = useSelector(state => state);
+    const dispatch = useDispatch();
     const handleDeleteMessage = () => {
-        // if (window.confirm("Do you want to continue delete message?")) {
-        //     dispatch(deleteMessage({ msg, auth, data, socket }))
-        // }
+        if (window.confirm("Do you want to continue delete message?")) {
+            dispatch(deleteMessage({ msg, auth, data, socket }))
+        }
     }
-    // const { id } = useParams();
+    const { id } = useParams();
     const handleEditMessage = () => {
-
-    //     dispatch(editMessage({ id, msg, auth, data, socket }))
+        dispatch(editMessage({ id, msg, auth, data, socket }))
     }
 
     return (
@@ -60,10 +59,10 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                                 filter: theme ? 'invert(1)' : 'invert(0)'
                             }}
                         >
-                           {
+                            {
                                 msg.call.times === 0
-                                ? msg.call.video ? 'videocam_off' : 'phone_disabled'
-                                : msg.call.video ? 'video_camera_front' : 'call'
+                                    ? msg.call.video ? 'videocam_off' : 'phone_disabled'
+                                    : msg.call.video ? 'video_camera_front' : 'call'
                             }
                         </span>
                         <div className="text-left">
@@ -71,7 +70,7 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                             <small>
                                 {
                                     msg.call.times > 0
-                                        ? <Times total={msg.call.times}/>
+                                        ? <Times total={msg.call.times} />
                                         : new Date(msg.createdAt).toLocaleTimeString()
                                 }
                             </small>

@@ -1,4 +1,5 @@
 import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
+import { imageDestroy } from "../../utils/imageUpload";
 import { DeleteData, GLOBALTYPES } from "./globalTypes";
 
 export const MESSAGE_TYPES = {
@@ -84,18 +85,31 @@ export const deleteConversation = ({ auth, id }) => async (dispatch) => {
     }
 }
 
-export const deleteMessage = ({ msg, data, auth }) => async (dispatch) => {
+export const deleteMessage = ({ msg, data, auth, socket }) => async (dispatch) => {
+    if (msg.media && msg.media.length > 0) {
+        msg.media.forEach((img) => {
+            imageDestroy(img, auth.token)
+        })
+    }
     const newData = DeleteData(data, msg._id);
-    console.log({ msg });
-    // dispatch({
-    //     type: MESSAGE_TYPES.DELETE_MESSAGE, 
-    //     payload: {
-    //         newData,
-    //         _id: msg.recipient
-    //     }
-    // });
+    dispatch({
+        type: MESSAGE_TYPES.DELETE_MESSAGE, 
+        payload: {
+            newData,
+            _id: msg.recipient
+        }
+    });
     try {
-        // await deleteDataApi(`message/${msg._id}`, auth.token);
+        await deleteDataApi(`message/${msg._id}`, auth.token);
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
+
+export const editMessage = ({ msg, data, auth }) => async (dispatch) => {
+    try {
+
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
