@@ -13,7 +13,7 @@ module.exports.commentSocket = (io, socket, users) => {
         commentSocketController.likeComment(io, socket, users, comment);
     });
 
-    socket.on("inLikeComment",(comment) =>{
+    socket.on("unLikeComment",(comment) =>{
         commentSocketController.unLikeComment(io, socket, users, comment);
     });   
 }

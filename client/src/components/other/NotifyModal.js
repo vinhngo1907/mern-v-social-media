@@ -50,7 +50,7 @@ const NotifyModal = () => {
                 <img src={NotiNotice} alt="noti" className='w-60 d-block mx-auto' />
             }
 
-            <div className="dropdown-menu-content overlay-scrollbar scrollbar-hover">
+            <div className="dropdown-menu-content overlay-scrollbar scrollbar-hover" style={{ maxHeight: "300px" }}>
                 {
                     notify.data.map((noti, index) => (
                         <div className="dropdown-menu-item position-relative" key={`${noti._id}-${index}`}>
