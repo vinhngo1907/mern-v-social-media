@@ -4,6 +4,7 @@ const { notifySocket } = require("./notify-socket.routing");
 const { postSocket } = require("./post-socket.routing");
 const { commentSocket } = require("./comment-socket.routing");
 const logger = require("../utils/logger");
+const { callSocketController } = require("../socket-controllers");
 
 // module.exports.defaultSocket = (io, socket, users) => {
 //     io.on("disconnect", () => {
@@ -33,6 +34,13 @@ function defaultSocket(io, socket, users) {
                 clients.forEach(client =>
                     socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
                 )
+            }
+            if (data.call) {
+                const callUser = users.find(u => u.id === data.call);
+                if (callUser) {
+                    users = callSocketController.editData(users, callUser.id, null);
+                    socket.to(`${callUser.socketId}`).emit('callerDisconnect');
+                }
             }
         }
         users = users.filter(u => u.socketId !== socket.Id);

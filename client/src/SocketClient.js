@@ -19,7 +19,7 @@ const spawnNotification = (body, icon, url, title) => {
 }
 
 const SocketClient = () => {
-    const { auth, socket, online, notify } = useSelector(state => state);
+    const { auth, socket, online, notify, call } = useSelector(state => state);
     const dispatch = useDispatch();
     const audioRef = useRef();
 
@@ -180,17 +180,17 @@ const SocketClient = () => {
     // Calll - End Call
     useEffect(() => {
         socket.on("callUserToClient", data => {
-
+            dispatch({ type: GLOBALTYPES.CALL, payload: data });
         });
         return () => socket.off("callUserToClient");
     }, [socket, dispatch]);
 
     useEffect(() => {
-        socket.on("endCallUserToClient", data => {
-
+        socket.on("userBusy", (data) => {
+            dispatch({ type: GLOBALTYPES.ALERT, payload: { error: `${call.username} is busy` } })
         });
-        return () => socket.off("endCallUserToClient");
-    }, [socket, dispatch]);
+        return () => socket.off("userBusy");
+    }, [socket, dispatch, call]);
 
     return (
         <>

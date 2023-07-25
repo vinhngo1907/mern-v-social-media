@@ -11,6 +11,7 @@ class CallSocketContoller {
     }
 
     startCall(io, socket, users, data) {
+        logger.info("CALLING...")
         try {
             users = this.editData(users, data.sender, data.recipient);
             const client = users.find(u => u.id === data.recipient);
@@ -29,6 +30,7 @@ class CallSocketContoller {
     }
 
     endCall(io, socket, users, data) {
+        logger.info("END CALL")
         try {
 
         } catch (error) {
