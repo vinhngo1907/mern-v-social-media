@@ -56,18 +56,27 @@ const CallModal = () => {
         addCallMessage(call, times);
         dispatch({ type: GLOBALTYPES.CALL, payload: null });
     }
+    useEffect(() => {
+        
+    }, []);
+    // stream media
+    const openStream = ()=>{
 
-    useEffect(()=>{
+    }
+     // Answer Call
+    const handleAnswer = ()=>{
 
-    },[]);
-    
+    }
+
+    // Disconnect
+
     return (
         <div className="call_modal">
             <div className="call_box" style={{
                 display: (answer && call.video) ? 'none' : 'flex'
             }} >
                 <div className="text-center" style={{ padding: '40px 0' }} >
-                    <Avatar src={call.avatar} size="supper-avatar" />
+                    <Avatar src={call.avatar} size="super-avatar" />
                     <h4>{call.username}</h4>
                     <h6>{call.fullname}</h6>
 
@@ -98,7 +107,30 @@ const CallModal = () => {
                         <small>{seconds.toString().length < 2 ? '0' + seconds : seconds}</small>
                     </div>
                 }
-                {/* call menu */}
+                <div className="call_menu">
+                    <button className="material-icons text-danger"
+                        onClick={handleEndCall}>
+                        call_end
+                    </button>
+
+                    {
+                        (call.recipient === auth.user._id && !answer) &&
+                        <>
+                            {
+                                call.video
+                                    ? <button className="material-icons text-success"
+                                        onClick={handleAnswer}>
+                                        videocam
+                                    </button>
+                                    : <button className="material-icons text-success"
+                                        onClick={handleAnswer}>
+                                        call
+                                    </button>
+                            }
+                        </>
+                    }
+
+                </div>
             </div>
             <div className="show_video" style={{
                 opacity: (answer && call.video) ? '1' : '0',
