@@ -16,6 +16,7 @@ import socket from './socketReducer';
 import message from './messageReducer';
 import online from './onlineReducer';
 import social from './socialReducer';
+import call from './callReducer';
 
 export default combineReducers({
     auth,
@@ -33,5 +34,6 @@ export default combineReducers({
     statistic,
     socket,
     message,
-    online
+    online,
+    call
 });
