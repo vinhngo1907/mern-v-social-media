@@ -116,7 +116,7 @@ class StatisticController {
     }
 
     async GetAllSocialStats(req, res) {
-        logger.info("Get StatCache");
+        logger.info("[>>> GET STATCACHE <<<]");
         try {
             if (jobsUtil.statCache) {
                 const { cacheTime, data } = jobsUtil.statCache;
@@ -134,7 +134,7 @@ class StatisticController {
             }
 
             const stats = [];
-            const { youtube, github, facebook } = socialStats[0];
+            const { youtube, github } = socialStats[0];
             if (youtube) {
                 const { viewCount, subscriberCount, videoCount, } = youtube;
                 stats.push({ title: "youtube", viewCount, subscriberCount, videoCount, });

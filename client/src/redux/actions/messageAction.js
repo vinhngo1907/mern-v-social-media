@@ -86,15 +86,16 @@ export const deleteConversation = ({ auth, id }) => async (dispatch) => {
 
 export const deleteMessage = ({ msg, data, auth }) => async (dispatch) => {
     const newData = DeleteData(data, msg._id);
-    dispatch({
-        type: MESSAGE_TYPES.DELETE_MESSAGE, 
-        payload: {
-            ...newData,
-            _id: msg.recipient
-        }
-    })
+    console.log({ msg });
+    // dispatch({
+    //     type: MESSAGE_TYPES.DELETE_MESSAGE, 
+    //     payload: {
+    //         newData,
+    //         _id: msg.recipient
+    //     }
+    // });
     try {
-        await deleteDataApi(`message/${msg._id}`, auth.token);
+        // await deleteDataApi(`message/${msg._id}`, auth.token);
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });

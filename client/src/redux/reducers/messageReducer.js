@@ -57,21 +57,34 @@ const messageReducer = (state = initialState, action) => {
                         : u
                 )
             }
+
         case MESSAGE_TYPES.CHECK_ONLINE_OFFLINE:
             return {
                 ...state,
-                users: state.users.map(u => 
-                    action.payload.includes(u._id) 
-                    ? { ...u, online: true } 
-                    : { ...u, online: false }
-                    )
+                users: state.users.map(u =>
+                    action.payload.includes(u._id)
+                        ? { ...u, online: true }
+                        : { ...u, online: false }
+                )
             }
+
         case MESSAGE_TYPES.DELETE_CV:
-            return{
+            return {
                 ...state,
                 users: DeleteData(state.users, action.payload),
                 data: DeleteData(state.data, action.payload)
             }
+
+        case MESSAGE_TYPES.DELETE_MESSAGE:
+            return {
+                ...state,
+                data: state.data.map(
+                    (mess) => mess._id === action.payload._id
+                    ? {...mess, messages: action.payload.newData}
+                    : mess
+                )
+            }
+
         default:
             return state;
     }
