@@ -50,7 +50,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on("deleteMessageToClient", (data) => {
-            console.log({ data });
+            // console.log({ data });
             const { msg, listMessages } = data;
             dispatch({
                 type: MESSAGE_TYPES.DELETE_MESSAGE,
