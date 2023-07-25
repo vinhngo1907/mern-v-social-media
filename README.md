@@ -25,7 +25,7 @@ Wait for the build process to complete
 
 3. CD Server && Run `npm run server` to start the api server
 
-Navigate to http://localhost:8000 in your browser to explore the app
+Navigate to http://localhost:5002 in your browser to explore the app
 
 ## Build the app
 * Build manually
