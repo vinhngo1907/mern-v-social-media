@@ -9,7 +9,7 @@ class CommentSocketContoller {
             const ids = [...post.user.followers, post.user._id];
             const clients = users.filter(user => ids.find(id => id === user.id));
             if (clients.length > 0) {
-                clients.forEach(client =>{
+                clients.forEach(client => {
                     socket.to(`${client.socketId}`).emit("createCommentToClient", post)
                 })
             }
@@ -24,7 +24,7 @@ class CommentSocketContoller {
             const ids = [...post.user.followers, post.user._id];
             const clients = users.filter(user => ids.find(id => id === user.id));
             if (clients.length > 0) {
-                clients.forEach(client =>{
+                clients.forEach(client => {
                     socket.to(`${client.socketId}`).emit("deleteCommentToClient", post)
                 })
             }
@@ -34,13 +34,20 @@ class CommentSocketContoller {
     }
 
     likeComment(io, socket, users, comment) {
+        try {
 
+        } catch (error) {
+            logger.error(error.message);
+        }
     }
 
     unLikeComment(io, socket, users, comment) {
+        try {
 
+        } catch (error) {
+            logger.error(error.message);
+        }
     }
-
 }
 
 module.exports = new CommentSocketContoller;

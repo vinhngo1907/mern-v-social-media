@@ -11,7 +11,7 @@ class CallSocketContoller {
     }
 
     startCall(io, socket, users, data) {
-        logger.info("CALLING...")
+        logger.info("CALLING...");
         try {
             users = this.editData(users, data.sender, data.recipient);
             const client = users.find(u => u.id === data.recipient);
@@ -25,16 +25,16 @@ class CallSocketContoller {
                 }
             }
         } catch (error) {
-            logger.info(error.message);
+            logger.error(error.message);
         }
     }
 
     endCall(io, socket, users, data) {
-        logger.info("END CALL")
+        logger.info("END CALL");
         try {
 
         } catch (error) {
-            logger.info(error.message);
+            logger.error(error.message);
         }
     }
 }
