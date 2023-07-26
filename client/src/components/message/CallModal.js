@@ -58,16 +58,60 @@ const CallModal = () => {
         dispatch({ type: GLOBALTYPES.CALL, payload: null });
     }
     useEffect(() => {
+        if (answer) {
+            setTotal(0);
+        } else {
+            const timer = setTimeout(() => {
+                socket.emit('endCall', { ...call, times: 0 });
+                addCallMessage(call, 0);
+                dispatch({ type: GLOBALTYPES.CALL, payload: null });
+            }, 15000);
 
-    }, []);
+            return () => clearTimeout(timer);
+        }
+    }, [dispatch, answer, call, socket, addCallMessage]);
+
     // stream media
-    const openStream = () => {
-
+    const openStream = (video) => {
+        const config = { audio: true, video };
+        return navigator.mediaDevices.getUserMedia(config);
     }
+
+    const playStream = (tag, stream) => {
+        console.log({ tag });
+        console.log({ stream });
+        let video = tag;
+        video.srcOject = stream;
+        video.play();
+    }
+
     // Answer Call
     const handleAnswer = () => {
+        openStream(call.video).then(stream => {
+            playStream(youVideo.current, stream);
+            const track = stream.getTracks();
+            console.log({ track });
+            setTracks(track);
 
+            const newCall = peer.call(call.peerId, stream);
+            newCall.on('stream', (remoteStream) => {
+                playStream(otherVideo.current, remoteStream);
+            });
+            setAnswer(true);
+            setNewCall(newCall);
+        })
     }
+    useEffect(() => {
+        peer.on('call', newCall => {
+            openStream(call.video)
+                .then(stream => {
+                    if (youVideo.current) {
+                        playStream(youVideo.current, stream)
+                    }
+                    const track = stream.getTracks();
+                })
+        });
+    }, [peer, call.video]);
 
     // Disconnect
 
