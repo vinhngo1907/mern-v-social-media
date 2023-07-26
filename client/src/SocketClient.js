@@ -180,6 +180,7 @@ const SocketClient = () => {
     // Calll User
     useEffect(() => {
         socket.on("callUserToClient", data => {
+            console.log({ data });
             dispatch({ type: GLOBALTYPES.CALL, payload: data });
         });
         return () => socket.off("callUserToClient");

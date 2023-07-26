@@ -5,6 +5,7 @@ const { postSocket } = require("./post-socket.routing");
 const { commentSocket } = require("./comment-socket.routing");
 const logger = require("../utils/logger");
 const { callSocketController } = require("../socket-controllers");
+const { callSocket } = require("./call-socket.routing");
 
 // module.exports.defaultSocket = (io, socket, users) => {
 //     io.on("disconnect", () => {
@@ -62,7 +63,10 @@ function SocketRoute(io, socket, users) {
 
     // Notify
     notifySocket(io, socket, users);
-
+    
+    // Call
+    callSocket(io, socket, users);
+    
     // User disconnect - offline
     defaultSocket(io, socket, users);
 }
