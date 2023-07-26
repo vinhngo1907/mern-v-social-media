@@ -177,7 +177,7 @@ const SocketClient = () => {
         return () => socket.off('unFollowToClient');
     }, [socket, auth, dispatch]);
 
-    // Calll - End Call
+    // Calll User
     useEffect(() => {
         socket.on("callUserToClient", data => {
             dispatch({ type: GLOBALTYPES.CALL, payload: data });

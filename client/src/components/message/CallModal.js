@@ -3,6 +3,7 @@ import Avatar from "../other/Avatar";
 import { useDispatch, useSelector } from "react-redux"
 import { createMessage } from '../../redux/actions/messageAction'
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
+import RingRing from '../../audio/ringring.mp3'
 
 const CallModal = () => {
     const { auth, socket, peer, call, theme } = useSelector(state => state);
@@ -100,6 +101,7 @@ const CallModal = () => {
     const handleAnswer = () => {
         openStream(call.video).then(stream => {
             playStream(youVideo.current, stream);
+
             const track = stream.getTracks();
             console.log({ track });
             setTracks(track);
@@ -108,10 +110,12 @@ const CallModal = () => {
             newCall.on('stream', (remoteStream) => {
                 playStream(otherVideo.current, remoteStream);
             });
+
             setAnswer(true);
             setNewCall(newCall);
-        })
+        });
     }
+
     useEffect(() => {
         peer.on('call', newCall => {
             openStream(call.video)
@@ -119,8 +123,10 @@ const CallModal = () => {
                     if (youVideo.current) {
                         playStream(youVideo.current, stream)
                     }
+
                     const track = stream.getTracks();
                     setTracks(track);
+
                     newCall.answer(stream);
                     newCall.on('stream', (remoteStream) => {
                         if (otherVideo.current) {
@@ -140,8 +146,10 @@ const CallModal = () => {
         socket.on('callerDisconnect', () => {
             tracks && tracks.forEach(track => track.stop());
             if (newCall) newCall.close();
+
             let times = answer ? total : 0;
             addCallMessage(call, times, true);
+
             dispatch({ type: GLOBALTYPES.CALL, payload: null });
             dispatch({
                 type: GLOBALTYPES.ALERT,
@@ -151,6 +159,24 @@ const CallModal = () => {
         return () => socket.off('callerDisconnect');
     }, [socket, tracks, addCallMessage, dispatch, answer, total, newCall, call]);
 
+    // Play - Pause Audio
+    const playAudio = (audio) => {
+        audio.play();
+    }
+    const pauseAudio = (audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+    }
+
+    useEffect(() => {
+        let newAudio = new Audio(RingRing);
+        if (answer) {
+            pauseAudio(newAudio);
+        } else {
+            playAudio(newAudio);
+        }
+        return () => pauseAudio(newAudio);
+    }, [answer]);
 
     return (
         <div className="call_modal">
