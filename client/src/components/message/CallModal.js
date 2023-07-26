@@ -37,6 +37,7 @@ const CallModal = () => {
 
     // end call
     const addCallMessage = useCallback((call, times, disconnect) => {
+        console.log({ call })
         if (call.recipient !== auth.user._id || disconnect) {
             const msg = {
                 sender: call.sender,
@@ -90,8 +91,6 @@ const CallModal = () => {
     }
 
     const playStream = (tag, stream) => {
-        console.log({ tag });
-        console.log({ stream });
         let video = tag;
         video.srcOject = stream;
         video.play();
@@ -103,7 +102,6 @@ const CallModal = () => {
             playStream(youVideo.current, stream);
 
             const track = stream.getTracks();
-            console.log({ track });
             setTracks(track);
 
             const newCall = peer.call(call.peerId, stream);

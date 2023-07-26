@@ -37,6 +37,7 @@ function defaultSocket(io, socket, users) {
                 )
             }
             if (data.call) {
+                console.log({data});
                 const callUser = users.find(u => u.id === data.call);
                 if (callUser) {
                     users = callSocketController.editData(users, callUser.id, null);

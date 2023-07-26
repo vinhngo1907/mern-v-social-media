@@ -12,7 +12,7 @@ class CallSocketContoller {
 
     startCall(io, socket, users, data) {
         logger.info("CALLING...");
-        console.log({ data });
+        // console.log({ data });
         try {
             users = this.editData(users, data.sender, data.recipient);
             const client = users.find(u => u.id === data.recipient);
@@ -32,12 +32,14 @@ class CallSocketContoller {
 
     endCall(io, socket, users, data) {
         logger.info("END CALL");
-        console.log({ data });
+        // console.log({ data });
         try {
             const client = users.find(u => u.id === data.sender);
             if (client) {
+                // socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 users = this.editData(users, client.id, null);
+                // console.log({ client });
                 if (client.call) {
                     const clientCall = users.find(u => u.id === client.call);
                     clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data);
