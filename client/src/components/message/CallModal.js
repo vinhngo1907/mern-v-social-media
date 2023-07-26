@@ -25,12 +25,13 @@ const CallModal = () => {
             setTimeout(setTime, 1000);
         }
         setTime();
+        return () => setTotal(0);
     }, []);
 
     useEffect(() => {
         setSeconds(total % 60);
-        setMinutes(total / 60);
-        setHours(total / 3600);
+        setMinutes(parseInt(total / 60));
+        setHours(parseInt(total / 3600));
     }, [total]);
 
     // end call
@@ -57,14 +58,14 @@ const CallModal = () => {
         dispatch({ type: GLOBALTYPES.CALL, payload: null });
     }
     useEffect(() => {
-        
+
     }, []);
     // stream media
-    const openStream = ()=>{
+    const openStream = () => {
 
     }
-     // Answer Call
-    const handleAnswer = ()=>{
+    // Answer Call
+    const handleAnswer = () => {
 
     }
 

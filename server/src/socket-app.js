@@ -19,7 +19,7 @@ module.exports = (io, server) => {
     ExpressPeerServer(server, { path: '/' });
 
     const { CronJob } = cron;
-    const job = new CronJob('*/15 * * * *', async () => {
+    const job = new CronJob('*/30 * * * *', async () => {
         logger.info('Fetching all stats');
         await jobsUtil.FetchAllStats(socketServer, users);
 
