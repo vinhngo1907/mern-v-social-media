@@ -109,12 +109,38 @@ const CallModal = () => {
                         playStream(youVideo.current, stream)
                     }
                     const track = stream.getTracks();
-                })
+                    setTracks(track);
+                    newCall.answer(stream);
+                    newCall.on('stream', (remoteStream) => {
+                        if (otherVideo.current) {
+                            playStream(otherVideo.current, remoteStream);
+                        }
+                    });
+
+                    setAnswer(true);
+                    setNewCall(newCall);
+                });
         });
+        return () => peer.removeListener('call');
     }, [peer, call.video]);
 
     // Disconnect
+    useEffect(() => {
+        socket.on('callerDisconnect', () => {
+            tracks && tracks.forEach(track => track.stop());
+            if (newCall) newCall.close();
+            let times = answer ? total : 0;
+            addCallMessage(call, times, true);
+            dispatch({ type: GLOBALTYPES.CALL, payload: null });
+            dispatch({
+                type: GLOBALTYPES.ALERT,
+                payload: { error: `The ${call.username} disconnect` }
+            });
+        });
+        return () => socket.off('callerDisconnect');
+    }, [socket, tracks, addCallMessage, dispatch, answer, total, newCall, call]);
 
+    
     return (
         <div className="call_modal">
             <div className="call_box" style={{
