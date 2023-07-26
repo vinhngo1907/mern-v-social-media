@@ -1,10 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/other/Avatar";
+import { useSelector } from "react-redux";
 
-const UserCard = ({ children, user, border, type }) => {
+const UserCard = ({ children, user, border, handleClose, setShowFollowers, setShowFollowing, type, msg }) => {
+    const { theme } = useSelector(state => state);
     const handleCloseAll = () => {
+        if (handleClose) handleClose();
+        if (setShowFollowers) setShowFollowers(false);
+        if (setShowFollowing) setShowFollowing(false);
+    }
 
+    const showMessage = (user) => {
+        return (
+            <>
+                <div style={{ fill: theme ? 'invert(1)' : 'invert(0)' }}>
+                    {user.text}
+                </div>
+                {
+                    user.media.length > 0 &&
+                    <div>{user.media.length}<i className="fas fa-image" /></div>
+                }
+            </>
+        )
     }
 
     return (
@@ -14,9 +32,16 @@ const UserCard = ({ children, user, border, type }) => {
                     className={`d-flex align-items-center ${type === 'home' ? '' : 'user_card'}`}>
                     <Avatar src={user.avatar} size={type === "home" ? 'large-avatar' : 'big-avatar'} />
                     <div className="ml-3" style={{ transform: 'translateY(-2px)' }}>
-                        <span className="d-block" style={{color:"#545454"}}>{user.username}</span>
+                        <span className="d-block" style={{ color: "#545454" }}>{user.username}</span>
                         <small style={{ opacity: 0.7 }}>
                             {user.fullname}
+                        </small>
+                        <small style={{ opacity: 0.7 }}>
+                            {
+                                msg
+                                    ? showMessage(user)
+                                    : user.fullname
+                            }
                         </small>
                     </div>
                 </Link>
