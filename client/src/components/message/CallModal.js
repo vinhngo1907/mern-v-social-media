@@ -71,6 +71,17 @@ const CallModal = () => {
         }
     }, [dispatch, answer, call, socket, addCallMessage]);
 
+    useEffect(() => {
+        socket.on('endCallToClient', (data) => {
+            tracks && tracks.forEach(track => track.stop());
+            if (newCall) newCall.close();
+
+            addCallMessage(data, data.times);
+            dispatch({ type: GLOBALTYPES.CALL, payload: null });
+        });
+        return () => socket.off('endCallToClient');
+    }, [socket, newCall, tracks, addCallMessage, dispatch]);
+
     // stream media
     const openStream = (video) => {
         const config = { audio: true, video };
@@ -140,7 +151,7 @@ const CallModal = () => {
         return () => socket.off('callerDisconnect');
     }, [socket, tracks, addCallMessage, dispatch, answer, total, newCall, call]);
 
-    
+
     return (
         <div className="call_modal">
             <div className="call_box" style={{
