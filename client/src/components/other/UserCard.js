@@ -34,9 +34,6 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
                     <div className="ml-3" style={{ transform: 'translateY(-2px)' }}>
                         <span className="d-block" style={{ color: "#545454" }}>{user.username}</span>
                         <small style={{ opacity: 0.7 }}>
-                            {user.fullname}
-                        </small>
-                        <small style={{ opacity: 0.7 }}>
                             {
                                 msg
                                     ? showMessage(user)
