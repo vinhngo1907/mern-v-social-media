@@ -1,10 +1,15 @@
 const path = require("path");
 const rfs = require("rotating-file-stream");
+const loggerDefault = require("./default.logger");
+const moment = require("moment-timezone");
+
+const today = moment().toDate();
+// console.log(today.toJSON().slice(0,10));
 
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 const accessLogStream = rfs.createStream(
-    `${(new Date().toJSON().slice(0, 10))}-access.log`, {
+    `${(today.toJSON().slice(0, 10))}-access.log`, {
     interval: '1d', // rotate daily
     path: path.join('./src/', 'logs/access'),
 });
@@ -26,8 +31,10 @@ const getCustomErrorMorganFormat = () => JSON.stringify({
     headers_count: 'req-headers-length',
     error: ':error',
 });
+
 module.exports = {
     accessLogStream,
     errorLogStream,
-    getCustomErrorMorganFormat
+    getCustomErrorMorganFormat,
+    loggerDefault
 };

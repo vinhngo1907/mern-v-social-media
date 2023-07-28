@@ -9,7 +9,7 @@ const logger = require('node-color-log');
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
 // const { loggerUtil } = require('./utils');
-const { errorLogStream, accessLogStream, getCustomErrorMorganFormat } = require('./utils/logger');
+const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefault } = require('./utils/logger');
 
 module.exports = async (app) => {
     app.enable('trust proxy');
@@ -52,7 +52,7 @@ module.exports = async (app) => {
 
     // request to handle undefined or all other routes
     app.get('*', (req, res) => {
-        // loggerUtil.info('GET undefined routes');
+        loggerDefault.info('GET undefined routes');
         res.send('App works!!!!!');
     });
 

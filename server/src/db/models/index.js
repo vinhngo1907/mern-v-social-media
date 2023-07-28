@@ -6,5 +6,6 @@ module.exports = {
     statisticModel: require("./statistic.model"),
     socialModel: require("./social.model"),
     conversationModel: require("./conversation.model"),
-    messageModel: require("./message.model")
+    messageModel: require("./message.model"),
+    groupModel: require("./group.model")
 }

@@ -129,7 +129,7 @@ class StatisticController {
             const today = moment().format('LL');
             const socialStats = await socialModel.find({ loggedAt: today });
             if (!socialStats || socialStats.length === 0) {
-                logger.info(`No youtube stats fetched on ${today}`);
+                logger.info(`No social stats fetched on ${today}`);
                 return res.json(responseDTO.success("Get data in successfully", []));
             }
 

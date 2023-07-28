@@ -3,7 +3,7 @@ const rfs = require("rotating-file-stream");
 
 /* eslint-disable no-console */
 /* eslint-disable func-names */
-class Logger {
+class LoggerDefault {
     info(logText) {
         console.log(`${new Date()}info:::::${logText}`);
     }
@@ -30,16 +30,16 @@ class Logger {
     }
 }
 
-exports.accessLogStream = rfs.createStream(
-    `${(new Date().toJSON().slice(0, 10))}-access.log`, {
-    interval: '1d', // rotate daily
-    path: path.join('./src/', 'logs/access'),
-});
+// exports.accessLogStream = rfs.createStream(
+//     `${(new Date().toJSON().slice(0, 10))}-access.log`, {
+//     interval: '1d', // rotate daily
+//     path: path.join('./src/', 'logs/access'),
+// });
 
-exports.errorLogStream = rfs.createStream(
-    `${(new Date().toJSON().slice(0, 10))}-error.log`, {
-    interval: '1d', // rotate daily
-    path: path.join('./src/', 'logs/error'),
-});
+// exports.errorLogStream = rfs.createStream(
+//     `${(new Date().toJSON().slice(0, 10))}-error.log`, {
+//     interval: '1d', // rotate daily
+//     path: path.join('./src/', 'logs/error'),
+// });
 
-module.exports = new Logger;
+module.exports = new LoggerDefault;
