@@ -9,8 +9,7 @@ const logger = require('node-color-log');
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
 const { loggerUtil } = require('./utils');
-const { errorLogStream, accessLogStream,
-    getCustomErrorMorganFormat} = require('./utils/logger');
+const { errorLogStream, accessLogStream, getCustomErrorMorganFormat } = require('./utils/logger');
 
 module.exports = async (app) => {
     app.enable('trust proxy');
@@ -22,7 +21,7 @@ module.exports = async (app) => {
         origin: "*",
         credentials: true
     }));
-    
+
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'));
     app.use(fileUpload({
@@ -38,7 +37,7 @@ module.exports = async (app) => {
             stream: errorLogStream,
         })
     );
-    
+
     app.use(
         !isProduction ? morgan('combined', { stream: accessLogStream, }) : morgan("dev")
     );
