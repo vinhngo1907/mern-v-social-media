@@ -8,7 +8,7 @@ const logger = require('node-color-log');
 
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
-const { loggerUtil } = require('./utils');
+// const { loggerUtil } = require('./utils');
 const { errorLogStream, accessLogStream, getCustomErrorMorganFormat } = require('./utils/logger');
 
 module.exports = async (app) => {
@@ -24,10 +24,6 @@ module.exports = async (app) => {
 
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'));
-    app.use(fileUpload({
-        useTempFiles: true
-    }));
-
     // Morgan - Logger
     const isProduction = process.env.NODE_ENV === "production";
     morgan.token('error', (err, req, res, next) => `${err?.stack}`);
@@ -42,6 +38,10 @@ module.exports = async (app) => {
         !isProduction ? morgan('combined', { stream: accessLogStream, }) : morgan("dev")
     );
 
+    app.use(fileUpload({
+        useTempFiles: true
+    }));
+
     app.get('/', (req, res) => {
         logger.info('GET /');
         res.send('App works!!!!!');
@@ -52,7 +52,7 @@ module.exports = async (app) => {
 
     // request to handle undefined or all other routes
     app.get('*', (req, res) => {
-        loggerUtil.info('GET undefined routes');
+        // loggerUtil.info('GET undefined routes');
         res.send('App works!!!!!');
     });
 
