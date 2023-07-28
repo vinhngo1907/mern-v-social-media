@@ -1,12 +1,12 @@
-class ResponseDTO{
-    success(message = 'Success', data){
+class ResponseDTO {
+    success(message = 'Success', data) {
         return {
             status: 200,
             message: message,
             results: data,
         };
     }
-    badRequest(message = 'Bad request.'){
+    badRequest(message = 'Bad request.') {
         return {
             status: 400,
             message: message,
