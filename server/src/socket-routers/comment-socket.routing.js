@@ -9,11 +9,11 @@ module.exports.commentSocket = (io, socket, users) => {
         commentSocketController.deleteComment(io, socket, users, post);
     })
 
-    socket.on("likeComment", (comment) => {
-        commentSocketController.likeComment(io, socket, users, comment);
+    socket.on("likeComment", (post) => {
+        commentSocketController.likeComment(io, socket, users, post);
     });
 
-    socket.on("unLikeComment",(comment) =>{
-        commentSocketController.unLikeComment(io, socket, users, comment);
+    socket.on("unLikeComment",(post) =>{
+        commentSocketController.unLikeComment(io, socket, users, post);
     });   
 }

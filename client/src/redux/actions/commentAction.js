@@ -38,15 +38,15 @@ export const likeComment = ({ comment, post, auth, socket }) => async (dispatch)
     const newComment = { ...comment, likes: [...comment.likes, auth.user] }
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
-    
+
+    console.log({ newComment });
     // Socket
     socket.emit('likeComment', newPost);
-    
+
     try {
         const res = await patchDataApi(`comment/${comment._id}/like`, null, auth.token);
-        console.log(res.data);
-        const { user, tag, reply } = newComment
-        if (reply && user !== tag._id) {
+        console.log(">>>>>>", res.data.results);
+        if (newComment.user !== auth.user._id && newComment.reply) {
             const recipients = [newComment.postUserId, newComment.tag._id];
             const msg = {
                 id: res.results._id,
@@ -59,7 +59,8 @@ export const likeComment = ({ comment, post, auth, socket }) => async (dispatch)
             dispatch(createNotify({ msg, auth, socket }));
         }
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        console.log(err);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response?.data?.message } })
     }
 }
 
@@ -68,6 +69,8 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) };
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
+    // Socket
+    socket.emit('unLikeComment', newPost);
     try {
         await patchDataApi(`comment/${comment._id}/unlike`, null, auth.token);
     } catch (err) {
