@@ -5,7 +5,7 @@ const { modelSchema } = require("../db");
 const { groupModel } = modelSchema;
 
 class GroupController {
-    async createGroup(req, res) {
+    async CreateGroup(req, res) {
         try {
             const { name, additionalInfo } = req.body;
             const newGroup = new groupModel({
@@ -18,7 +18,18 @@ class GroupController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-
+    async GetUserGroups(req, res) {
+        try {
+            const apiFatures = new APIFeatures(groupModel.find({
+                members: req.user._id
+            }), req.query).paginating().sorting();
+            const groups = await apiFatures.query.populate("user members", "fullname username avatar");
+            res.json(responseDTO.success("Get data in successfully", groups));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = GroupController;

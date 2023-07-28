@@ -7,5 +7,6 @@ module.exports = {
     NotifyController: require("./notify.controller"),
     StatisticController: require("./statistic.controller"),
     MessageController: require("./message.controller"),
-    ConversationController: require("./conversation.controller")
+    ConversationController: require("./conversation.controller"),
+    GroupController: require("./group.controller")
 }
