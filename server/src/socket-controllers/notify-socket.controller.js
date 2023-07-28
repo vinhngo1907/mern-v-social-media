@@ -7,9 +7,13 @@ class NotifySocketContoller {
         logger.info("Create Notify");
         try {
             // console.log({users});
-            const client = users.find(user => msg.recipients.includes(user.id));
-            if(client){
-                socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
+            // const client = users.find(user => msg.recipients.includes(user.id));
+            const clients = users.filter(user => msg.recipients.includes(user.id));
+            // console.log({clients});
+            if (clients) {
+                clients.forEach((client) => {
+                    socket.to(`${client.socketId}`).emit('createNotifyToClient', msg);
+                })
             }
         } catch (error) {
             logger.error(error.message);
@@ -20,7 +24,8 @@ class NotifySocketContoller {
         logger.info("Remove Notify");
         try {
             const client = users.find(user => msg.recipients.includes(user.id.toString()))
-            if(client){
+            // console.log({client})
+            if (client) {
                 socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg);
             }
         } catch (error) {

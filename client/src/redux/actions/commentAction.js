@@ -38,19 +38,26 @@ export const likeComment = ({ comment, post, auth, socket }) => async (dispatch)
     const newComment = { ...comment, likes: [...comment.likes, auth.user] }
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
-
+    
+    // Socket
+    socket.emit('likeComment', newPost);
+    
     try {
         const res = await patchDataApi(`comment/${comment._id}/like`, null, auth.token);
         console.log(res.data);
-        // const msg = {
-        //     id: res.results._id,
-        //     text: newComment.reply ? 'liked your reply for a comment.' : 'has liked on your comment.',
-        //     recipients: newComment.reply ? [newComment.tag._id] : [post.user._id],
-        //     url: `/post/${post._id}`,
-        //     content: post.content,
-        //     image: post.images[0].url
-        // }
-        // dispatch(createNotify({ msg, auth, socket }));
+        const { user, tag, reply } = newComment
+        if (reply && user !== tag._id) {
+            const recipients = [newComment.postUserId, newComment.tag._id];
+            const msg = {
+                id: res.results._id,
+                text: newComment.reply ? 'liked your reply for a comment.' : 'has liked on your comment.',
+                recipients: recipients,
+                url: `/post/${post._id}`,
+                content: post.content,
+                image: post.images[0].url
+            }
+            dispatch(createNotify({ msg, auth, socket }));
+        }
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
