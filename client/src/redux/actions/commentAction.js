@@ -45,13 +45,20 @@ export const likeComment = ({ comment, post, auth, socket }) => async (dispatch)
 
     try {
         const res = await patchDataApi(`comment/${comment._id}/like`, null, auth.token);
-        console.log(">>>>>>", res.data.results);
-        if (newComment.user !== auth.user._id && newComment.reply) {
-            const recipients = [newComment.postUserId, newComment.tag._id];
+        // console.log(">>>>>>", res.data.results);
+        // console.log(newComment.user, auth.user._id, newComment.reply)
+        if (newComment.user._id !== auth.user._id) {
+            // let recipients = []
+            // if (newComment.reply) {
+            //     recipients.push(newComment.tag._id);
+            // }
+            // if (post.user._id !== auth.user._id) {
+            //     recipients.push(post.user._id)
+            // }
             const msg = {
-                id: res.results._id,
+                id: res.data.results._id,
                 text: newComment.reply ? 'liked your reply for a comment.' : 'has liked on your comment.',
-                recipients: recipients,
+                recipients: [newComment.user._id],
                 url: `/post/${post._id}`,
                 content: post.content,
                 image: post.images[0].url
@@ -72,7 +79,25 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
     // Socket
     socket.emit('unLikeComment', newPost);
     try {
+        let recipients = [];
+        if (newComment.reply) {
+            recipients.push(newComment.tag._id);
+        }
+
+        if (post.user._id !== auth.user._id) {
+            recipients.push(post.user._id);
+        }
+
         await patchDataApi(`comment/${comment._id}/unlike`, null, auth.token);
+
+        // Notify
+        const msg = {
+            id: newComment._id,
+            text: 'unlike a comment from your post.',
+            recipients,
+            url: `/post/${post._id}`,
+        }
+        dispatch(removeNotify({ msg, auth, socket }));
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } });
     }
