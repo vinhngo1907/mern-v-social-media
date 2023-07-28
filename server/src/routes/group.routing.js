@@ -9,7 +9,7 @@ const groupCtrl = new GroupController();
  * @desc Get group
  * @access Private
  */
-router.get("/", userAuth, groupCtrl.CreateGroup);
+router.post("/", userAuth, groupCtrl.CreateGroup);
 
 /**
  * @route GET api/group
