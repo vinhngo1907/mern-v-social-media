@@ -1,7 +1,5 @@
 const path = require("path");
 const rfs = require("rotating-file-stream");
-const moment = require('moment-timezone');
-const fs = require("fs");
 
 /* eslint-disable no-console */
 /* eslint-disable func-names */
