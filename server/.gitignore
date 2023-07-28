@@ -10,3 +10,4 @@ package-*.json
 tmp
 request.http
 app_error.log
+logs

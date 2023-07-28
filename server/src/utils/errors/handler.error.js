@@ -5,7 +5,7 @@ const { AppError } = require('./app.error');
 const LogErrors = createLogger({
     transports: [
         new transports.Console(),
-        new transports.File({ filename: 'app_error.log' })
+        new transports.File({ filename: './src/logs/app_error.log' })
     ]
 });
 

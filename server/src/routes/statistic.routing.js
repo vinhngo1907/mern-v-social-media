@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { userAuth } = require('../middleware');
 const { StatisticController } = require("../controllers");
 const statisticCtrl = new StatisticController();
+const rateLimit = require("express-rate-limit");
+const slowDown = require("express-slow-down");
 
 /**
  * @route GET api/statistic
@@ -22,13 +24,23 @@ router.get('/fetch', userAuth, statisticCtrl.GetViewAndVisitStats);
  * @desc Get statistics socials
  * @access Private
 */
-router.get('/socials', userAuth, statisticCtrl.GetAllSocialStats);
+const statApiRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100,
+});
+
+const speedLimiter = slowDown({
+    windowMs: 30 * 1000,
+    delayAfter: 1,
+    delayMs: 500,
+});
+router.get('/socials', statApiRateLimiter, speedLimiter, userAuth, statisticCtrl.GetAllSocialStats);
 
 /**
  * @route GET api/statistic/fb_token
  * @desc Get statistics socials
  * @access Private
 */
-router.get('/fb_token',statisticCtrl.GetFacebookToken);
+router.get('/fb_token', statisticCtrl.GetFacebookToken);
 
 module.exports = router;
