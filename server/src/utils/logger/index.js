@@ -3,19 +3,20 @@ const rfs = require("rotating-file-stream");
 const loggerDefault = require("./default.logger");
 const moment = require("moment-timezone");
 
-const today = moment().toDate();
-// console.log(today.toJSON().slice(0,10));
+const today = moment(new Date()).tz("Asia/Ho_Chi_Minh").format('YYYY-MM-DD');
+// console.log({today})
 
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 const accessLogStream = rfs.createStream(
-    `${(today.toJSON().slice(0, 10))}-access.log`, {
+    // `${(today.toJSON().slice(0, 10))}-access.log`, {
+    `${(today)}-access.log`, {
     interval: '1d', // rotate daily
     path: path.join('./src/', 'logs/access'),
 });
 
 const errorLogStream = rfs.createStream(
-    `${(new Date().toJSON().slice(0, 10))}-error.log`, {
+    `${today}-error.log`, {
     interval: '1d', // rotate daily
     path: path.join('./src/', 'logs/error'),
 });
