@@ -9,6 +9,9 @@
 * likes and reply comment
 * realtime chat, phone call, video call
 * notifications for likes, comment,...
+* people nearby, posts explore
+* group chat,
+* other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
 
 ## Installation
 ### To run the app with Node.js and MongoDB
