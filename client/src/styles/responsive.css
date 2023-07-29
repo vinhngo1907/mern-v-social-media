@@ -1,4 +1,8 @@
 @media (max-width: 766px) {
+    .header .navbar {
+        width: 100%;
+    }
+
     .header .navbar .logo {
         display: none;
     }
@@ -108,6 +112,6 @@
     }
 
     .message_sidebar {
-		width: 70%;
-	}
+        width: 70%;
+    }
 }
