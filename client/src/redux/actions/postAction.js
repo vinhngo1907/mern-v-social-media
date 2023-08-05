@@ -36,7 +36,7 @@ export const createPost = ({ images, content, auth, socket }) => async (dispatch
         dispatch({ type: POST_TYPES.CREATE_POST, payload: { ...res.data.results, user: auth.user } });
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
-
+        socket.emit("createPost", { ...res.data.results, user: auth.user });
         // Notify
         const msg = {
             id: res.data.results._id,

@@ -28,10 +28,10 @@ async function StartServer() {
 
     await expressApp(app);
 
-    //----------------connect database------------------//
+    //----------------connect to database------------------//
     databaseConnection();
 
-    //--------------------build server------------------//
+    //--------------------starting and build the server------------------//
     server.listen(PORT, () => {
         console.log(`Server started on port ${PORT}`);
     }).on('error', (err) => {

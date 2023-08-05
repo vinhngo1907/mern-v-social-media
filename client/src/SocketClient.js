@@ -165,7 +165,7 @@ const SocketClient = () => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
         });
 
-        return () => socket.of('likeCommentToClient');
+        return () => socket.off('likeCommentToClient');
     }, [socket, dispatch]);
     
     useEffect(() => {
@@ -173,7 +173,7 @@ const SocketClient = () => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
         });
 
-        return () => socket.of('unLiekCommentToClient');
+        return () => socket.off('unLiekCommentToClient');
     }, [socket, dispatch]);
 
     // Follow - UnFollow

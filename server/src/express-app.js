@@ -13,10 +13,14 @@ const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefau
 
 module.exports = async (app) => {
     app.enable('trust proxy');
+    
+    // adding Helmet to enhance your API's security
     app.use(helmet());
 
-    // Middlewares
+    // using bodyParser to parse JSON bodies into JS objects
     app.use(express.json());
+
+    // enabling CORS for all requests
     app.use(cors({
         origin: "*",
         credentials: true
@@ -24,9 +28,12 @@ module.exports = async (app) => {
 
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'));
-    // Morgan - Logger
+    
+    // configure isProduction variable
     const isProduction = process.env.NODE_ENV === "production";
     morgan.token('error', (err, req, res, next) => `${err?.stack}`);
+
+    // adding morgan to log HTTP requests
     app.use(
         morgan(getCustomErrorMorganFormat(), {
             skip: (req, res) => (res.statusCode < 400),
@@ -34,9 +41,7 @@ module.exports = async (app) => {
         })
     );
 
-    app.use(
-        !isProduction ? morgan('combined', { stream: accessLogStream, }) : morgan("dev")
-    );
+    app.use(!isProduction ? morgan('combined', { stream: accessLogStream, }) : morgan("dev"));
 
     app.use(fileUpload({
         useTempFiles: true
@@ -56,6 +61,6 @@ module.exports = async (app) => {
         res.send('App works!!!!!');
     });
 
-    // error handling
+    // Error handlers & middlewares
     app.use(ErrorHandler);
 }

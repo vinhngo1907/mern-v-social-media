@@ -3,7 +3,7 @@ const { ExpressPeerServer } = require('peer');
 const logger = require("node-color-log");
 const cron = require('cron');
 const { jobsUtil } = require("./utils");
-let ioSocket = null;
+// let ioSocket = null;
 
 module.exports = (io, server) => {
     let users = [];
@@ -25,6 +25,4 @@ module.exports = (io, server) => {
         
     });
     job.start();
-    ioSocket = io;
 }
-exports.ioSocket = ioSocket;
