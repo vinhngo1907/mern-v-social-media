@@ -80,7 +80,7 @@ class StatisticController {
         }
     }
 
-    async GetTotalStats(req, res) {
+    async GetAllTotalStats(req, res) {
         try {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();

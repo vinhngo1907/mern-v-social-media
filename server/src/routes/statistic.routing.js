@@ -10,7 +10,7 @@ const slowDown = require("express-slow-down");
  * @desc Get total statistics
  * @access Private
  */
-router.get('/', userAuth, statisticCtrl.GetTotalStats);
+router.get('/', userAuth, statisticCtrl.GetAllTotalStats);
 
 /**
  * @route GET api/statistic/fetch
