@@ -34,6 +34,24 @@ class PostSocketContoller {
             logger.error(error.message);
         }
     }
+
+    createPost(io, socket, users, post) {
+        logger.info("Create post");
+        try {
+
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
+
+    deletePost(io, socket, users, post) {
+        logger.info("Delete post");
+        try {
+
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
 }
 
 module.exports = new PostSocketContoller;
