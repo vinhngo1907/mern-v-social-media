@@ -88,6 +88,8 @@ export const deletePost = ({ post, auth, socket }) => async (dispatch) => {
 
         dispatch({ type: POST_TYPES.DELETE_POST, payload: post });
 
+        socket.emit("deletePost", post);
+
         const res = await deleteDataApi(`post/${post._id}`, auth.token);
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
