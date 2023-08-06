@@ -7,12 +7,18 @@ export const STATISTIC_TYPES = {
     UPDATE_STATS: 'UPDATE_STATISTICS'
 }
 
-export const fetchAllStatistics = ({id, type, auth }) => async (dispatch) => {
+export const fetchAllStatistics = ({ id, type, auth }) => async (dispatch) => {
     try {
-        await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);
+        const firstStats = sessionStorage.getItem("visit");
+        if (firstStats) {
+            await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);
+        } else {
+            await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);
+            sessionStorage.setItem("visit", "x");
+        }
     } catch (err) {
-        console.log(err.response)
-        // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        console.log(err?.response)
+        // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response?.data?.message || err } })
     }
 }
 
@@ -20,7 +26,7 @@ export const getTotalStatistics = (token) => async (dispatch) => {
     try {
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: true });
         const res = await getDataApi("statistic", token);
-        
+
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: false });
         dispatch({ type: STATISTIC_TYPES.GET_STASTS, payload: res.data.results });
     } catch (err) {

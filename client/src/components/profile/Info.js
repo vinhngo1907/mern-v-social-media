@@ -5,7 +5,7 @@ import Followers from "./Followers";
 import Following from "./Following";
 import EditProfile from "./EditProfile";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-// import { fetchAllStatistics } from "../../redux/actions/statisticAction";
+import { fetchAllStatistics } from "../../redux/actions/statisticAction";
 
 const Info = ({ auth, id, dispatch, profile }) => {
 
@@ -17,10 +17,10 @@ const Info = ({ auth, id, dispatch, profile }) => {
 
     useEffect(() => {
         if (auth.user._id === id) {
-            setUserData([auth.user])
+            setUserData([auth.user]);
         } else {
             const user = profile.users.filter(u => u._id === id);
-            setUserData(user)
+            setUserData(user);
         }
     }, [auth.user, id, profile.users, dispatch]);
 
@@ -33,15 +33,16 @@ const Info = ({ auth, id, dispatch, profile }) => {
         }
     }, [showFollowers, showFollowing, onEdit, dispatch]);
 
-    // useEffect(() => {
-    //     if (sessionStorage.getItem('visit') === null) {
-    //         dispatch(fetchAllStatistics({ id, type: 'visit-pageview', auth }))
-    //     } else {
-    //         dispatch(fetchAllStatistics({ id, type: 'pageview', auth }))
-    //     }
-
-    //     sessionStorage.setItem("visit", "x");
-    // }, [id, auth, dispatch]);
+    useEffect(() => {
+        if (userData && userData.length >= 1) {
+            console.log({ userData })
+            if (sessionStorage.getItem('visit') === null) {
+                dispatch(fetchAllStatistics({ id, type: 'visit-pageview', auth }));
+            } else {
+                dispatch(fetchAllStatistics({ id, type: 'pageview', auth }));
+            }
+        }
+    }, [id, auth, dispatch, userData]);
 
     return (
         <div className="info">

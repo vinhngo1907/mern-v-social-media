@@ -26,12 +26,13 @@ async function StartServer() {
     // });
     //----------------end config socket------------------//
 
+    //----------------config routes----------------------//
     await expressApp(app);
 
     //----------------connect to database------------------//
     databaseConnection();
 
-    //--------------------starting and build the server------------------//
+    //-------------starting and build the server-----------//
     server.listen(PORT, () => {
         console.log(`Server started on port ${PORT}`);
     }).on('error', (err) => {

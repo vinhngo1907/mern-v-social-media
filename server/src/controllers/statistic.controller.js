@@ -9,73 +9,38 @@ const { statisticModel, socialModel } = modelSchema;
 
 class StatisticController {
     async GetViewAndVisitStats(req, res) {
-        console.log({ ...req.query })
-        // console.log(">>>>>>>", req.query)
+        const { type, id } = req.query;
         try {
             const now = moment(new Date());
-            const dayStart = moment(now).startOf("date").toDate();
-            const dayEnd = moment(now).endOf("date").toDate();
-            const recordExist = await statisticModel.findOne({ user: req.user._id })
-
+            const today = now.toDate();
+            const startOfDate = moment(now).startOf("date").toDate();
+            const endOfDate = moment(now).endOf("date").toDate();
+            const recordExist = await statisticModel.findOne({ user: id })
+            // const {viewCount, visitCount} = recordExist;
             let statisticRecord = {
                 viewCount: 0,
                 visitCount: 0
             }
-
-            if (recordExist) {
-                const { viewCount, visitCount } = recordExist;
-                statisticRecord.viewCount = viewCount + 1;
-
-                if (req.query.type === "visit-pageview") {
-                    statisticRecord.visitCount = visitCount + 1;
-                }
-
-                const updatedStats = await statisticModel.findOneAndUpdate(
-                    {
-                        user: req.query.id,
-                        loggedAt: {
-                            $gt: dayStart,
-                            $lte: dayEnd
-                        }
-                    }, {
+            
+            const stats = await statisticModel.findOneAndUpdate(
+                { user: id },
+                {
                     $set: {
-                        viewCount: statisticRecord.viewCount,
-                        visitCount: statisticRecord.visitCount,
-                        loggedAt: now,
-                        user: req.user.id,
-                        clients: req.query.id !== req.user._id && recordExist.clients.every(c => c !== req.user._id) && [...recordExist.clients, req.user._id]
+                        viewCount: recordExist && recordExist.viewCount+1,
+                        visitCount: type === "visit-pageview" && recordExist?.visitCount+1,
+                        loggedAt: today
                     }
-                });
-                res.status(200).json(responseDTO.success("submit duration success", updatedStats));
-            } else {
-                const newStats = new statisticModel({
-                    viewCount: 1,
-                    visitCount: 1,
-                    user: req.query.id,
-                    clients: []
-                });
+                },
+                { upsert: true, new: true }
+            );
 
-                await newStats.save();
-                res.status(200).json(responseDTO.success("submit duration success", {
-                    ...newStats._doc, user: req.user
-                }));
-            }
+            logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
+            res.status(200).json(responseDTO.success("submit duration success", {
+                ...stats._doc, user: req.user
+            }));
         } catch (error) {
-            console.log(error)
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
-    async CountViewAndVisitPage(req, res) {
-        try {
-            const now = moment(new Date());
-            const dayStart = moment(now).startOf("date").toDate();
-            const dayEnd = moment(now).endOf("date").toDate();
-            const recordExist = await statisticModel.findOne({ user: req.user._id })
-
-            res.status(200).json(responseDTO.success("Get statistic in successfully"));
-        } catch (error) {
-            console.log(error);
+            // console.log(error);
+            logger.error(error.message);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
@@ -102,11 +67,6 @@ class StatisticController {
                     viewCount, visitCount, user
                 }
             }
-
-            // statCache = {
-            //     cacheTime: moment(),
-            //     data: stats,
-            // };
 
             res.status(200).json(responseDTO.success("Get data in successfully", stats));
         } catch (error) {
