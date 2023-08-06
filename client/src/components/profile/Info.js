@@ -35,12 +35,13 @@ const Info = ({ auth, id, dispatch, profile }) => {
 
     useEffect(() => {
         if (userData && userData.length >= 1) {
-            console.log({ userData })
-            if (sessionStorage.getItem('visit') === null) {
-                dispatch(fetchAllStatistics({ id, type: 'visit-pageview', auth }));
+            console.log({ userData });
+            if (sessionStorage.getItem('visit') == null) {
+                dispatch(fetchAllStatistics({ id: userData[0]._id, type: 'visit-pageview', auth }));
             } else {
-                dispatch(fetchAllStatistics({ id, type: 'pageview', auth }));
+                dispatch(fetchAllStatistics({ id: userData[0]._id, type: 'pageview', auth }));
             }
+            sessionStorage.setItem("visit", "x");
         }
     }, [id, auth, dispatch, userData]);
 

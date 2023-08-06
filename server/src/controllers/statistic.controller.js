@@ -15,29 +15,40 @@ class StatisticController {
             const today = now.toDate();
             const startOfDate = moment(now).startOf("date").toDate();
             const endOfDate = moment(now).endOf("date").toDate();
-            const recordExist = await statisticModel.findOne({ user: id })
-            // const {viewCount, visitCount} = recordExist;
-            let statisticRecord = {
-                viewCount: 0,
-                visitCount: 0
-            }
-            
-            const stats = await statisticModel.findOneAndUpdate(
-                { user: id },
-                {
-                    $set: {
-                        viewCount: recordExist && recordExist.viewCount+1,
-                        visitCount: type === "visit-pageview" && recordExist?.visitCount+1,
-                        loggedAt: today
-                    }
-                },
-                { upsert: true, new: true }
-            );
+            const recordExist = await statisticModel.findOne({ user: id });
 
-            logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
-            res.status(200).json(responseDTO.success("submit duration success", {
-                ...stats._doc, user: req.user
-            }));
+            if (recordExist) {
+                recordExist.loggedAt = today;
+                recordExist.viewCount += 1;
+                if (type === "visit-pageview") {
+                    recordExist.visitCount += 1
+                }
+                if (recordExist.clients.every(c => c !== id)) {
+                    recordExist.clients.push(id);
+                }
+
+                await recordExist.save();
+                logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
+                res.status(200).json(responseDTO.success("submit duration success", {
+                    ...recordExist._doc, user: req.user
+                }));
+            } else {
+                const stats = new statisticModel({
+                    $set: {
+                        viewCount: 1,
+                        visitCount: 1,
+                        loggedAt: today,
+                        user: id,
+                        clients: [id]
+                    }
+                });
+                await stats.save();
+                logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
+                res.status(200).json(responseDTO.success("submit duration success", {
+                    ...stats._doc, user: req.user
+                }));
+            }
+
         } catch (error) {
             // console.log(error);
             logger.error(error.message);
