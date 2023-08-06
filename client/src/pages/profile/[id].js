@@ -8,7 +8,7 @@ import Posts from "../../components/profile/Posts";
 import LeftSideBar from "../../components/global/LeftSideBar";
 
 const Profile = () => {
-    const { auth, profile } = useSelector(state => state);
+    const { auth, profile, socket } = useSelector(state => state);
 
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -26,7 +26,7 @@ const Profile = () => {
                 <LeftSideBar type="profile"/>
             </div>
             <div className="main_sidebar col-md-8">
-                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
+                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} />
                 {
                     auth.user._id === id &&
                     <div className="profile_tab">

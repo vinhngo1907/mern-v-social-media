@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
-// import { getAllStatistics } from "../../redux/actions/statisticAction";
 import { useSelector } from "react-redux";
 
-const Likes = ({ auth, dispatch }) => {
+const Likes = () => {
     const { statistic } = useSelector(state => state);
+    const [data, setData] = useState([]);
     
-
+    useEffect(()=>{
+        if(statistic.clients && statistic.clients.length >= 0){
+            setData(statistic.clients);
+        }
+    },[statistic.clients]);
     return (
         <div className="tab-pane active fade show" id="link1">
             <span><i className="fas fa-heart" />{statistic.visitCount}</span>
             <Link to="#" title="weekly-likes">35 new visits this week</Link>
             <div className="users-thumb-list">
-                <Link to="#" title={auth.user.username} data-toggle="tooltip" data-original-title={auth.user.username}>
-                    <Avatar src={auth.user.avatar} size="large-avatar" />
-                </Link>
+                {
+                    data.map((client) => (
+                        <Link to="#" key={client._id} title={client.username}
+                            data-toggle="tooltip" data-original-title={client.username}>
+                            <Avatar src={client.avatar} size="large-avatar" />
+                        </Link>
+                    ))
+                }
+                {/* 
                 <Link to="#" title="Frank" data-toggle="tooltip" data-original-title="frank">
                     <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1683457061/v-media/team1_lmbsvs.jpg" size="large-avatar" />
                 </Link>
@@ -33,7 +43,7 @@ const Likes = ({ auth, dispatch }) => {
                 </Link>
                 <Link to="#" title="Maria" data-toggle="tooltip" data-original-title="Maria">
                     <Avatar src="https://res.cloudinary.com/v-webdev/image/upload/v1661564774/v-chat-app/lbjsdbxitqr0t4rakwiv.jpg" size="large-avatar" />
-                </Link>
+                </Link> */}
             </div>
         </div>
 

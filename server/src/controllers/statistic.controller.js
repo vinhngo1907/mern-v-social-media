@@ -15,7 +15,8 @@ class StatisticController {
             const today = now.toDate();
             // const startOfDate = moment(now).startOf("date").toDate();
             // const endOfDate = moment(now).endOf("date").toDate();
-            const recordExist = await statisticModel.findOne({ user: id });
+            const recordExist = await statisticModel.findOne({ user: id })
+                .populate("user clients folowers following", "username fullname avatar following followers");
 
             if (recordExist) {
                 recordExist.loggedAt = today;
@@ -23,27 +24,31 @@ class StatisticController {
                 if (type === "visit-pageview") {
                     recordExist.visitCount += 1
                 }
-                if (recordExist.clients.every(c => c.toString() !== id.toString())) {
-                    recordExist.clients.push(id);
+                if (recordExist.clients.every(c => c._id.toString() !== req.user._id.toString())) {
+                    recordExist.clients.push(req.user._id);
                 }
 
-                await recordExist.save();
+                await recordExist.save()
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
                 return res.json(responseDTO.success("submit duration success", {
                     ...recordExist._doc, user: req.user
                 }));
-            } 
+            }
             else {
                 const stats = new statisticModel({
-                    $set: {
-                        viewCount: 1,
-                        visitCount: 1,
-                        loggedAt: today,
-                        user: id,
-                        clients: [id]
-                    }
+                    viewCount: 1,
+                    visitCount: 1,
+                    loggedAt: today,
+                    user: id,
+                    clients: []
                 });
+
+                if (req.user._id.toString() !== id.toString()) {
+                    stats.clients.push(req.user._id)
+                }
+
                 await stats.save();
+                await stats.populate("user clients folowers following", "username fullname avatar following followers");
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
                 return res.json(responseDTO.success("submit duration success", {
                     ...stats._doc, user: req.user
@@ -70,13 +75,13 @@ class StatisticController {
                     //     $lte: dayEnd
                     // }
                 })
-                .populate("user", "username fullname avatar following followers");
+                .populate("user clients folowers following", "username fullname avatar following followers");
 
             let stats = {}
             if (recordStats) {
-                const { viewCount, visitCount, user } = recordStats
+                const { viewCount, visitCount, user, clients } = recordStats
                 stats = {
-                    viewCount, visitCount, user
+                    viewCount, visitCount, user, clients
                 }
             }
 

@@ -8,7 +8,7 @@ import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import { STATISTIC_TYPES } from "../../redux/actions/statisticAction";
 import { getDataApi } from "../../utils/fetchData";
 
-const Info = ({ auth, id, dispatch, profile }) => {
+const Info = ({ auth, profile, dispatch, id, socket }) => {
     const [userData, setUserData] = useState([]);
     const [onEdit, setOnEdit] = useState(false)
 
@@ -36,15 +36,14 @@ const Info = ({ auth, id, dispatch, profile }) => {
     useEffect(() => {
         const handleFetchStats = async () => {
             if (userData && userData.length >= 1) {
-                // console.log({ userData });
                 const firstStats = sessionStorage.getItem("visit");
                 if (firstStats == null) {
-                    // dispatch(fetchStatistics({ id: userData[0]._id, type: 'visit-pageview', auth }));
                     const res = await getDataApi(`statistic/fetch?type=visit-pageview&id=${userData[0]._id}`, auth.token);
+                    console.log(res.data.results)
                     dispatch({ type: STATISTIC_TYPES.GET_STATS, payload: res.data.results });
                 } else {
-                    // dispatch(fetchStatistics({ id: userData[0]._id, type: 'pageview', auth }));
                     const res = await getDataApi(`statistic/fetch?id=${userData[0]._id}`, auth.token);
+                    console.log(res.data.results);
                     dispatch({ type: STATISTIC_TYPES.UPDATE_STATS, payload: res.data.results });
                 }
                 sessionStorage.setItem("visit", "x");

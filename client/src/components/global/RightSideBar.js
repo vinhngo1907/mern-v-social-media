@@ -20,7 +20,7 @@ const RightSideBar = () => {
 
     useEffect(() => {
         if (auth.user.following) {
-            setUsers(auth.user.following)
+            setUsers(auth.user.following);
         }
     }, [auth.user.following])
 
@@ -43,13 +43,6 @@ const RightSideBar = () => {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message || error } });
         }
     }
-    // useEffect(() => {
-    //     if (sessionStorage.getItem('visit') === null) {
-    //         dispatch(getAllStatistics({ type: 'visit-pageview', token: auth.token }));
-    //     }else{
-    //         dispatch(getAllStatistics({ type: 'pageview', token: auth.token }));
-    //     }
-    // }, [auth.token, dispatch]);
 
     return (
         <div className='sidebar static'>
@@ -93,7 +86,7 @@ const RightSideBar = () => {
                                         <span className="sr-only">Loading...</span>
                                     </div>
                                     :
-                                    visitTab ? <Visits auth={auth} dispatch={dispatch} /> : <Views auth={auth} dispatch={dispatch} />
+                                    visitTab ? <Visits /> : <Views />
                             }
 
 
