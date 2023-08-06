@@ -13,8 +13,8 @@ class StatisticController {
         try {
             const now = moment(new Date());
             const today = now.toDate();
-            const startOfDate = moment(now).startOf("date").toDate();
-            const endOfDate = moment(now).endOf("date").toDate();
+            // const startOfDate = moment(now).startOf("date").toDate();
+            // const endOfDate = moment(now).endOf("date").toDate();
             const recordExist = await statisticModel.findOne({ user: id });
 
             if (recordExist) {
@@ -23,16 +23,17 @@ class StatisticController {
                 if (type === "visit-pageview") {
                     recordExist.visitCount += 1
                 }
-                if (recordExist.clients.every(c => c !== id)) {
+                if (recordExist.clients.every(c => c.toString() !== id.toString())) {
                     recordExist.clients.push(id);
                 }
 
                 await recordExist.save();
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
-                res.status(200).json(responseDTO.success("submit duration success", {
+                return res.json(responseDTO.success("submit duration success", {
                     ...recordExist._doc, user: req.user
                 }));
-            } else {
+            } 
+            else {
                 const stats = new statisticModel({
                     $set: {
                         viewCount: 1,
@@ -44,7 +45,7 @@ class StatisticController {
                 });
                 await stats.save();
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
-                res.status(200).json(responseDTO.success("submit duration success", {
+                return res.json(responseDTO.success("submit duration success", {
                     ...stats._doc, user: req.user
                 }));
             }

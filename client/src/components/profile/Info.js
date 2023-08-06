@@ -5,10 +5,10 @@ import Followers from "./Followers";
 import Following from "./Following";
 import EditProfile from "./EditProfile";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import { fetchAllStatistics } from "../../redux/actions/statisticAction";
+import { STATISTIC_TYPES } from "../../redux/actions/statisticAction";
+import { getDataApi } from "../../utils/fetchData";
 
 const Info = ({ auth, id, dispatch, profile }) => {
-
     const [userData, setUserData] = useState([]);
     const [onEdit, setOnEdit] = useState(false)
 
@@ -34,16 +34,24 @@ const Info = ({ auth, id, dispatch, profile }) => {
     }, [showFollowers, showFollowing, onEdit, dispatch]);
 
     useEffect(() => {
-        if (userData && userData.length >= 1) {
-            console.log({ userData });
-            if (sessionStorage.getItem('visit') == null) {
-                dispatch(fetchAllStatistics({ id: userData[0]._id, type: 'visit-pageview', auth }));
-            } else {
-                dispatch(fetchAllStatistics({ id: userData[0]._id, type: 'pageview', auth }));
+        const handleFetchStats = async () => {
+            if (userData && userData.length >= 1) {
+                // console.log({ userData });
+                const firstStats = sessionStorage.getItem("visit");
+                if (firstStats == null) {
+                    // dispatch(fetchStatistics({ id: userData[0]._id, type: 'visit-pageview', auth }));
+                    const res = await getDataApi(`statistic/fetch?type=visit-pageview&id=${userData[0]._id}`, auth.token);
+                    dispatch({ type: STATISTIC_TYPES.GET_STATS, payload: res.data.results });
+                } else {
+                    // dispatch(fetchStatistics({ id: userData[0]._id, type: 'pageview', auth }));
+                    const res = await getDataApi(`statistic/fetch?id=${userData[0]._id}`, auth.token);
+                    dispatch({ type: STATISTIC_TYPES.UPDATE_STATS, payload: res.data.results });
+                }
+                sessionStorage.setItem("visit", "x");
             }
-            sessionStorage.setItem("visit", "x");
         }
-    }, [id, auth, dispatch, userData]);
+        return () => handleFetchStats();
+    }, [dispatch, id, auth, userData]);
 
     return (
         <div className="info">
