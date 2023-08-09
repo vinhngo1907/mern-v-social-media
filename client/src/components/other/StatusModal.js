@@ -45,7 +45,7 @@ const StatusModal = () => {
         newArr.splice(index, 1);
         setImages(newArr)
     }
-    
+
     const handleStream = () => {
         setStream(true);
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -99,9 +99,9 @@ const StatusModal = () => {
             });
 
         if (status.onEdit) {
-            dispatch(editPost({ content, images, auth, status }))
+            dispatch(editPost({ content, images, auth, status, socket }));
         } else {
-            dispatch(createPost({ content, images, auth, socket }))
+            dispatch(createPost({ content, images, auth, socket }));
         }
 
         setContent('')

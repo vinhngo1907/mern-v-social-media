@@ -142,6 +142,29 @@ const SocketClient = () => {
 
         return () => socket.off('unLikeToClient');
     }, [socket, dispatch]);
+    useEffect(() => {
+        socket.on('createPostToClient', (post) => {
+            console.log({post});
+            dispatch({ type: POST_TYPES.CREATE_POST, payload: post })
+        });
+
+        return () => socket.off("createPostToClient");
+    }, [socket, dispatch]);
+
+    useEffect(() => {
+        socket.on('editPostToClient', (post) => {
+            dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
+        });
+        return () => socket.off("editPostToClient");
+    }, [socket, dispatch]);
+
+    useEffect(() => {
+        socket.on('deletePostToClient', (post) => {
+            dispatch({ type: POST_TYPES.DELETE_POST, payload: post });
+        });
+
+        return () => socket.off('deletePostToClient');
+    }, [socket, dispatch]);
 
     // Comments
     useEffect(() => {
@@ -167,7 +190,7 @@ const SocketClient = () => {
 
         return () => socket.off('likeCommentToClient');
     }, [socket, dispatch]);
-    
+
     useEffect(() => {
         socket.on('unLiekCommentToClient', post => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });

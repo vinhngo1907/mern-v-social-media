@@ -34,9 +34,9 @@ export const createPost = ({ images, content, auth, socket }) => async (dispatch
         const res = await postDataApi('post', { content, images: media }, auth.token);
 
         dispatch({ type: POST_TYPES.CREATE_POST, payload: { ...res.data.results, user: auth.user } });
+        socket.emit("createPost", { ...res.data.results, user: auth.user });
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
-        socket.emit("createPost", { ...res.data.results, user: auth.user });
         // Notify
         const msg = {
             id: res.data.results._id,
@@ -54,7 +54,7 @@ export const createPost = ({ images, content, auth, socket }) => async (dispatch
     }
 }
 
-export const editPost = ({ content, images, auth, status }) => async (dispatch) => {
+export const editPost = ({ content, images, auth, status, socket }) => async (dispatch) => {
     let media = [];
     const imgNewUrl = images.filter(img => !img.url);
     const imgOldUrl = images.filter(img => img.url);
@@ -69,6 +69,8 @@ export const editPost = ({ content, images, auth, status }) => async (dispatch) 
         }, auth.token);
 
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: res.data.results })
+        socket.emit("editPost", res.data.results);
+
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
     } catch (err) {
         console.log(err);

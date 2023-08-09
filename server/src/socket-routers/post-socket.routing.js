@@ -12,6 +12,10 @@ module.exports.postSocket = (io, socket, users) => {
     socket.on("createPost", (post) => {
         postSocketController.createPost(io, socket, users, post);
     });
+    
+    socket.on("editPost", (post) => {
+        postSocketController.editPost(io, socket, users, post);
+    });
 
     socket.on("deletePost", (post) => {
         postSocketController.deletePost(io, socket, users, post);
