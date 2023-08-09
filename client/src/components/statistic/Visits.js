@@ -6,16 +6,18 @@ import { useSelector } from "react-redux";
 const Likes = () => {
     const { statistic } = useSelector(state => state);
     const [data, setData] = useState([]);
+    const [visitCount, setVisitCount] = useState(0);
     
     useEffect(()=>{
         if(statistic.clients && statistic.clients.length >= 0){
             setData(statistic.clients);
+            setVisitCount(statistic.visitCount);
         }
-    },[statistic.clients]);
+    },[statistic.clients, statistic.visitCount]);
     return (
         <div className="tab-pane active fade show" id="link1">
             <span><i className="fas fa-heart" />{statistic.visitCount}</span>
-            <Link to="#" title="weekly-likes">35 new visits this week</Link>
+            <Link to="#" title="weekly-likes">{visitCount} new visits this week</Link>
             <div className="users-thumb-list">
                 {
                     data.map((client) => (

@@ -127,13 +127,12 @@ class Job {
 
     static async FetchFaceBookStats(socialData) {
         try {
-            
             const today = moment().format("LL");
             let result = await socialModel.findOne({
                 _id: socialData._id,
                 loggedAt: today
-            },{
-                facebook:{}
+            }, {
+                facebook: {}
             })
         } catch (error) {
             logger.error(error.message);

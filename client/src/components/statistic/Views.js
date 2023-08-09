@@ -6,17 +6,19 @@ import { useSelector } from "react-redux";
 const Views = () => {
     const { statistic } = useSelector(state => state);
     const [data, setData] = useState([]);
-    
-    useEffect(()=>{
-        if(statistic.clients && statistic.clients.length >= 0){
+    const [viewCount, setViewCount] = useState(0);
+
+    useEffect(() => {
+        if (statistic.clients && statistic.clients.length >= 0) {
             setData(statistic.clients);
+            setViewCount(statistic.viewCount);
         }
-    },[statistic.clients]);
-    
+    }, [statistic.clients, statistic.viewCount]);
+
     return (
         <div className="tab-pane fade active show" id="link2">
             <span><i className="fas fa-eye" />{statistic.viewCount}</span>
-            <Link to="#" title="weekly-likes">440 new views this week</Link>
+            <Link to="#" title="weekly-likes">{viewCount} new views this week</Link>
             <div className="users-thumb-list">
                 {
                     data.map((client, index) => (
