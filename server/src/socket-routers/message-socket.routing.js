@@ -9,6 +9,10 @@ module.exports.messageSocket = (io, socket, users) => {
         messageSocketController.deleteMessage(io, socket, users, data);
     });
 
+    socket.on("addConversation", (data) => {
+        messageSocketController.addConversation(io, socket, users, data);
+    });
+
     socket.on("deleteConversation", (data) => {
         messageSocketController.deleteConversation(io, socket, users, data);
     });
