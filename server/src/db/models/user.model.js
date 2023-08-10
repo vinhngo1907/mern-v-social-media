@@ -38,9 +38,11 @@ const UserSchema = new Schema({
 	saved: [{ type: Schema.Types.ObjectId }],
 	salt: { type: String },
 	type: { type: String, default: "register" },
-	rf_token: { type: String }
+	rf_token: { type: String },
+	roles: [{ type: Schema.Types.ObjectId, ref: "role"}]
 }, {
-	timestamps: true
+	timestamps: true,
+	versionKey: false
 });
 
-module.exports = mongoose.model('user', UserSchema)
+module.exports = mongoose.model('user', UserSchema);
