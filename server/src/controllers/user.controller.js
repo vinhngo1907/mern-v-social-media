@@ -7,7 +7,6 @@ const { userModel } = modelSchema;
 class UserController {
     async GetAllUser(req, res) {
         try {
-            // const users = await userModel.find()
             const { name } = req.query;
             let filterArr = [];
             if (name) {
@@ -21,7 +20,7 @@ class UserController {
             }).select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
 
             const users = await features.query;
-            res.status(200).json(responseDTO.success("Get data successfully", users))
+            res.status(200).json(responseDTO.success("Get data successfully", users));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

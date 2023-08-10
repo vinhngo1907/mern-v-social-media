@@ -9,7 +9,8 @@ const messageSchema = new Schema({
     media: Array,
     call: Object
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 module.exports = mongoose.model('message', messageSchema);

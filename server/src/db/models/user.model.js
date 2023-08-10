@@ -41,6 +41,6 @@ const UserSchema = new Schema({
 	rf_token: { type: String }
 }, {
 	timestamps: true
-})
+});
 
 module.exports = mongoose.model('user', UserSchema)

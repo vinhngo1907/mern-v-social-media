@@ -20,11 +20,32 @@ class GroupController {
     }
     async GetUserGroups(req, res) {
         try {
-            const apiFatures = new APIFeatures(groupModel.find({
+            const features = new APIFeatures(groupModel.find({
                 members: req.user._id
             }), req.query).paginating().sorting();
-            const groups = await apiFatures.query.populate("user members", "fullname username avatar");
+            const groups = await features.query.populate("user members", "fullname username avatar");
             res.json(responseDTO.success("Get data in successfully", groups));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async GetAllGroups(req, res) {
+        const { name } = req.query;
+        try {
+            let obj = {};
+            if (name) {
+                obj = {
+                    ...obj,
+                    name: { $regex: name, $option: "i" }
+                }
+            }
+            const features = new APIFeatures(groupModel.find({
+                ...obj
+            }), req.query).paginating().sorting();
+            const groups = await features.query;
+            res.status(200).json(responseDTO.success("Get data successfully", groups));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
