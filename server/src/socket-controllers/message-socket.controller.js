@@ -26,6 +26,15 @@ class MessageSocketContoller {
         }
     }
 
+    addConversation(io, socket, users, data) {
+        logger.info("Add Conversation");
+        try {
+
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
+
     deleteConversation(io, socket, users, data) {
         logger.info("Delete Conversation");
         try {
