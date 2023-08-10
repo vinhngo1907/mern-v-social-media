@@ -63,6 +63,21 @@ const SocketClient = () => {
         return () => socket.off("deleteMessageToClient");
     }, [socket, dispatch]);
 
+    // Conversation
+    useEffect(() => {
+        socket.on("addConversationToClient", (data) => {
+
+        });
+        return () => socket.off("addConversationToClient");
+    }, [socket, dispatch]);
+    
+    useEffect(() => {
+        socket.on("deleteConversationToClient", (data) => {
+
+        });
+        return () => socket.off("deleteConversationToClient");
+    }, [socket, dispatch]);
+
     // Check user online
     useEffect(() => {
         socket.emit('checkUserOnline', auth.user);
@@ -144,7 +159,7 @@ const SocketClient = () => {
     }, [socket, dispatch]);
     useEffect(() => {
         socket.on('createPostToClient', (post) => {
-            console.log({post});
+            console.log({ post });
             dispatch({ type: POST_TYPES.CREATE_POST, payload: post })
         });
 
