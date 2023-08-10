@@ -16,6 +16,13 @@ router.post("/", userAuth, groupCtrl.CreateGroup);
  * @desc Get groups by user
  * @access Private
  */
-router.get("/", userAuth, groupCtrl.GetUserGroups);
+router.get("/by", userAuth, groupCtrl.GetUserGroups);
+
+/**
+ * @route GET api/group
+ * @desc Get all groups
+ * @access Private
+ */
+router.get("/search", userAuth, groupCtrl.GetAllGroups);
 
 module.exports = router;

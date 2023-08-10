@@ -18,6 +18,7 @@ class GroupController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
     async GetUserGroups(req, res) {
         try {
             const features = new APIFeatures(groupModel.find({
