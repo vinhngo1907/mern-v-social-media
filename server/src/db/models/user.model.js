@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
 	email: {
@@ -20,10 +20,7 @@ const UserSchema = new Schema({
 		trim: true,
 		maxLength: 25
 	},
-	password: {
-		type: String,
-		required: true
-	},
+	password: { type: String, required: true },
 	avatar: {
 		type: String,
 		default: "https://res.cloudinary.com/v-webdev/image/upload/v1661947123/v-chat-app/profile-user_p2khhu.png"
@@ -39,7 +36,7 @@ const UserSchema = new Schema({
 	salt: { type: String },
 	type: { type: String, default: "register" },
 	rf_token: { type: String },
-	roles: [{ type: Schema.Types.ObjectId, ref: "role"}]
+	roles: [{ type: Schema.Types.ObjectId, ref: "role" }]
 }, {
 	timestamps: true,
 	versionKey: false

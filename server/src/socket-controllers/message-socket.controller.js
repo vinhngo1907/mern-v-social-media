@@ -25,6 +25,15 @@ class MessageSocketContoller {
             logger.error(error.message);
         }
     }
+
+    deleteConversation(io, socket, users, data) {
+        logger.info("Delete Conversation");
+        try {
+
+        } catch (error) {
+            logger.error(error.message);
+        }
+    }
 }
 
 module.exports = new MessageSocketContoller;

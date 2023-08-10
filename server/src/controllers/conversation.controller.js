@@ -28,12 +28,14 @@ class ConversationController {
                     { recipients: [req.params.id, req.user._id] }
                 ]
             });
+            
             if (!deletedConversation)
                 return res.status(400).json(responseDTO.badRequest("This conversation does not exist"));
+
             await messageModel.deleteMany({
                 conversation: deletedConversation._id
             });
-            res.status(200).json(responseDTO.success("Deleted conversation in successfully"))
+            res.status(200).json(responseDTO.success("Deleted conversation in successfully", deletedConversation));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

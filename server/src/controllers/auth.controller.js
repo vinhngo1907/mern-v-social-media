@@ -171,11 +171,11 @@ class AuthController {
             const { accessToken, userID } = req.body;
             const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
             const data = await fetch(URL).then(res => res.json()).then(res => { return res });
-            console.log({data});
+            // console.log({data});
             const { name, email, picture } = data;
             const existed = await userModel.findOne({ $or: [{ email: email }, { username: name }] });
             const password = email + FB_SECRET;
-            
+
             if (existed) {
                 LoginUser(password, existed, req, res);
             } else {
@@ -185,9 +185,9 @@ class AuthController {
                     type: "facebook",
                     username: name,
                     fullname: name,
-                    email, 
+                    email,
                     avatar: picture?.data.url,
-                    password: hashedPassword, 
+                    password: hashedPassword,
                     salt
                 }
                 RegisterUser(user, req, res);
@@ -206,6 +206,23 @@ class AuthController {
         }
     }
 
+    async ForgotPassword(req, res) {
+        try {
+            const { account } = req.body;
+            if (!account) {
+                return res.status(400).json(responseDTO.badRequest("This account does not exist!!!"));
+            }
+            const resetToken = await signature.GenerateActiveToken({});
+            const url = `${CLIENT_URL}/reset/${resetToken}`;
+            const mailer = new Mailer(email, url, "Reset your account");
+            mailer.sendMail();
+            res.status(200).json(responseDTO.success('Successfully, please check your email!'));
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 const LoginUser = async (password, user, req, res) => {
     try {

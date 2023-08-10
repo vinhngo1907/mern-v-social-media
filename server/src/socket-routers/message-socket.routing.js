@@ -8,4 +8,8 @@ module.exports.messageSocket = (io, socket, users) => {
     socket.on("deleteMessage", (data) => {
         messageSocketController.deleteMessage(io, socket, users, data);
     });
+
+    socket.on("deleteConversation", (data) => {
+        messageSocketController.deleteConversation(io, socket, users, data);
+    });
 }

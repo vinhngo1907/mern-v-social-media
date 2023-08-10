@@ -149,7 +149,7 @@ const RightSide = () => {
 
     const handleDeleteCV = () => {
         if (window.confirm("Are you sure about that?")) {
-            dispatch(deleteConversation({ auth, id }));
+            dispatch(deleteConversation({ auth, id, socket }));
             return history.push("/message");
         }
     }

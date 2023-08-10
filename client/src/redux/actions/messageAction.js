@@ -1,6 +1,7 @@
 import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
 import { imageDestroy } from "../../utils/imageUpload";
 import { DeleteData, GLOBALTYPES } from "./globalTypes";
+import { createNotify, removeNotify } from "./notifyAction";
 
 export const MESSAGE_TYPES = {
     GET_MESSAGES: "GET_MESSAGES",
@@ -69,16 +70,29 @@ export const createMessage = ({ auth, msg, socket }) => async (dispatch) => {
     try {
         await postDataApi(`message`, msg, auth.token);
 
+        // dispatch(createNotify({msg, auth, socket}));
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }
 }
 
-export const deleteConversation = ({ auth, id }) => async (dispatch) => {
+export const deleteConversation = ({ auth, id, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
     try {
-        await deleteDataApi(`conversation/${id}`, auth.token);
+        const res = await deleteDataApi(`conversation/${id}`, auth.token);
+        socket.emit("deleteConversation", {...res.data.results, user: auth.user.followers});
+
+        // Notify
+        // const msg = {
+        //     id: res.data.results._id,
+        //     text:'deleted a conversation',
+        //     recipients: [id],
+        //     url: `/message/${id}`
+        // }
+
+        // dispatch(removeNotify({msg, auth, socket}));
+
     } catch (error) {
         console.log(error);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
@@ -95,7 +109,7 @@ export const deleteMessage = ({ msg, data, auth, socket }) => async (dispatch) =
     const newData = DeleteData(data, msg._id);
     // console.log({newData});
     dispatch({
-        type: MESSAGE_TYPES.DELETE_MESSAGE, 
+        type: MESSAGE_TYPES.DELETE_MESSAGE,
         payload: {
             newData,
             _id: msg.recipient
