@@ -107,7 +107,7 @@ const RightSideBar = () => {
                         </div>
                         {
                             loadSearch
-                                ? <div className="spinner-border text- position-absolute mt-2"
+                                ? <div className="spinner-border position-absolute mt-2"
                                     style={{ width: '20px', height: "20px", right: "15px" }}
                                     role="status">
                                     <span className="sr-only">Loading...</span>
@@ -125,21 +125,17 @@ const RightSideBar = () => {
                     </form>
                 </div>
                 {
-                    <ul className='overlay-scrollbar scrollbar-hover px-2'>
+                    <ul className='overlay-scrollbar scrollbar-hover px-3 my-2'>
                         {
                             auth.user.loading
-                                ? <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
-                                    <div className="spinner-border" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
+                                ? <div className="spinner-border d-block mx-auto my-2" role="status">
+                                    <span className="sr-only">Loading...</span>
                                 </div>
                                 : <div className="following">
                                     {
                                         loadSearch ?
-                                            <div className='position-asolute' style={{ top: "50%", left: "50%", translate: ("50%", "50%") }}>
-                                                <div className="spinner-border" role="status">
-                                                    <span className="sr-only">Loading...</span>
-                                                </div>
+                                            <div className="spinner-border d-block mx-auto my-2" role="status">
+                                                <span className="sr-only">Loading...</span>
                                             </div>
                                             : searchUsers.length >= 1
                                                 ? searchUsers.map((user, index) => (

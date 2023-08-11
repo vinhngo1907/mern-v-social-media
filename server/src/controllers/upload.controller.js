@@ -49,7 +49,7 @@ class UploadController {
 
             cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                res.json(responseDTO.success("Deleted Image in successfully"))
+                res.json(responseDTO.success("Deleted Image in successfully"));
             })
         } catch (error) {
             console.log(error);
@@ -61,7 +61,7 @@ class UploadController {
         try {
             cloudinary.v2.api.resources({ type: "upload", prefix: "v-media" }, function (err, result) {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                res.json(responseDTO.success("Get data in successfully", {media: result.resources, result: result.resources.length}))
+                res.json(responseDTO.success("Get data in successfully", { media: result.resources, result: result.resources.length }))
             })
         } catch (error) {
             console.log(error);

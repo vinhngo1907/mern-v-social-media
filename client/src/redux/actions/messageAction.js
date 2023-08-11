@@ -1,7 +1,7 @@
 import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
 import { imageDestroy } from "../../utils/imageUpload";
 import { DeleteData, GLOBALTYPES } from "./globalTypes";
-import { createNotify, removeNotify } from "./notifyAction";
+// import { createNotify, removeNotify } from "./notifyAction";
 
 export const MESSAGE_TYPES = {
     GET_MESSAGES: "GET_MESSAGES",
