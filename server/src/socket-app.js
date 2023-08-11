@@ -29,7 +29,7 @@ function SocketApp(io, server) {
     const { CronJob } = cron;
     const job = new CronJob('*/30 * * * *', async () => {
         logger.info('Fetching all stats');
-        await jobsUtil.FetchAllStats(socketServer, users);
+        await jobsUtil.FetchAllStats();
 
     });
     

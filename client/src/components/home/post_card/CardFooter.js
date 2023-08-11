@@ -86,11 +86,17 @@ const CardFooter = ({ post }) => {
                     <span className="share" title="share">
                         <i className="fa fa-share-alt" onClick={() => setIsShare(!isShare)} />
                     </span>
-                    {/* <Link  to="#" onClick={() => setIsShare(!isShare)}  className="social-media">
-                        <div className="social-menu">
-                            <div className="btn trigger"><i className="fa fa-share-alt"></i></div>
+                    {/* <Link to="#" onClick={() => setIsShare(!isShare)} className="social-media">
+                        <div className="social-menu active">
+                            <div className="btn trigger">
+                                <i className="fa fa-share-alt" />
+                            </div>
                             <div className="rotater">
-                                <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-html5"></i></Link></div>
+                                <div className="btn btn-icon">
+                                    <Link to="#" title="">
+                                        <i className="fa fa-html5" />
+                                    </Link>
+                                </div>
                             </div>
                             <div className="rotater">
                                 <div className="btn btn-icon"><Link to="#" title=""><i className="fa fa-facebook"></i></Link></div>

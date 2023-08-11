@@ -2,17 +2,20 @@
 const axios = require("axios");
 const moment = require("moment");
 const logger = require("node-color-log");
-const { YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, GITHUB_API_URL, GITHUB_USER,
+const { 
+    YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, 
+    GITHUB_API_URL, GITHUB_USER,
     FACEBOOK_API_URL, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, FACEBOOK_PAGE_ID
 } = require("../../configs");
 const { modelSchema } = require("../../db");
+const { socketInfo } = require("../../socket-app");
 const { socialModel } = modelSchema;
 
 class Job {
     constructor(statCache, longLivedFacebookToken, fbPageToken) {
         this.statCache = statCache;
         this.longLivedFacebookToken = longLivedFacebookToken;
-        this.fbPageToken = fbPageToken
+        this.fbPageToken = fbPageToken;
     }
 
     async GetFacebookAccessToken(shortLivedToken) {
@@ -57,14 +60,6 @@ class Job {
                 }
             } = channel;
 
-            // const today = moment().format("LL");
-            // const youtubeRecord = {
-            //     viewCount: +viewCount,
-            //     subscriberCount: +subscriberCount,
-            //     videoCount: viewCount,
-            //     loggedAt: today
-            // }
-
             let result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
                 loggedAt: { $eq: socialData.loggedAt }
@@ -76,10 +71,7 @@ class Job {
                     videoCount: +videoCount,
                 }
             });
-
-            // if (!result) {
-            //     result = await socialModel.create({ youtube: youtubeRecord });
-            // }
+            // socketInfo.socket.emit("fetchYoutubeStats", )
             return result;
         } catch (error) {
             console.log(error);
@@ -133,13 +125,13 @@ class Job {
                 loggedAt: today
             }, {
                 facebook: {}
-            })
+            });
         } catch (error) {
             logger.error(error.message);
         }
     }
 
-    async FetchAllStats(socketServer, users) {
+    async FetchAllStats() {
         const oldData = await socialModel.findOne({ loggedAt: { $eq: moment().format("LL") } });
         if (!oldData) {
             const newData = socialModel({
