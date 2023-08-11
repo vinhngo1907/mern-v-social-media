@@ -81,7 +81,7 @@ export const deleteConversation = ({ auth, id, socket }) => async (dispatch) => 
     dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
     try {
         const res = await deleteDataApi(`conversation/${id}`, auth.token);
-        socket.emit("deleteConversation", {...res.data.results, user: auth.user.followers});
+        socket.emit("deleteConversation", {...res.data.results, user: auth.user});
 
         // Notify
         // const msg = {

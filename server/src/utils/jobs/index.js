@@ -72,7 +72,11 @@ class Job {
                     videoCount: +videoCount,
                 }
             });
-            // socketInfo.socket.emit("fetchYoutubeStats", )
+            // console.log({ socketInfo });
+            if (socketInfo && socketInfo.socket) {
+                // const { socket } = socketInfo;
+                socketInfo.socket.emit("fetchYoutubeStats", { youtube: result.youtube });
+            }
             return result;
         } catch (error) {
             console.log(error);
@@ -89,13 +93,6 @@ class Job {
                 followers
             } = response.data;
 
-            // const today = moment().format("LL");
-            // const githubRecord = {
-            //     repoCount: public_repos,
-            //     gistCount: public_gists,
-            //     followerCount: followers,
-            //     loggedtAt: today
-            // }
             let result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
                 loggedAt: { $eq: socialData.loggedAt }
@@ -108,14 +105,12 @@ class Job {
                 }
             });
 
-            // if (!result) {
-            //     result = await socialModel.create({ github: githubRecord })
-            // }
-            console.log({ socketInfo })
+            // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
                 // const { socket } = socketInfo;
-                socketInfo.socket.emit("fetchYoutubeStats", { youtube: result.youtube });
+                socketInfo.socket.emit("fetchGithubStats", { github: result.github });
             }
+           
             return result;
         } catch (error) {
             console.log(error);

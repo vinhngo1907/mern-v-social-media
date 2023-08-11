@@ -28,6 +28,7 @@ class MessageSocketContoller {
 
     addConversation(io, socket, users, data) {
         logger.info("Add Conversation");
+        console.log({ data });
         try {
 
         } catch (error) {
@@ -38,7 +39,19 @@ class MessageSocketContoller {
     deleteConversation(io, socket, users, data) {
         logger.info("Delete Conversation");
         try {
-
+            const ids = [];
+            let id = "";
+            for (let i = 0; i < data.recipients.length; i++) {
+                if (data.recipients[i].toString() !== data.user._id.toString()) {
+                    ids.push(data.recipients[i]);
+                }else{
+                    id = data.recipients[i]
+                }
+            }
+            // console.log({ ids });
+            const user = users.find(u => ids.includes(u.id));
+            // console.log({ user });
+            user && socket.to(`${user.socketId}`).emit("deleteConversationToClient", id);
         } catch (error) {
             logger.error(error.message);
         }

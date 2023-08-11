@@ -52,7 +52,8 @@ class Mailer {
             return result;
         } catch (error) {
             logger.error(error.message);
-            return responseDTO.badRequest(error.message);
+            return;
+            // return responseDTO.badRequest(error.message);
         }
     }
 }

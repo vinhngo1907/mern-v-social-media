@@ -41,6 +41,7 @@ class CallSocketContoller {
                 users = this.editData(users, client.id, null);
                 // console.log({ client });
                 if (client.call) {
+                    console.log(client.call);
                     const clientCall = users.find(u => u.id === client.call);
                     clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data);
 

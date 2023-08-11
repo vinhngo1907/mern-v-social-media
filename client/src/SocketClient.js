@@ -66,14 +66,14 @@ const SocketClient = () => {
     // Conversation
     useEffect(() => {
         socket.on("addConversationToClient", (data) => {
-
+            // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
         });
         return () => socket.off("addConversationToClient");
     }, [socket, dispatch]);
-    
+
     useEffect(() => {
         socket.on("deleteConversationToClient", (data) => {
-
+            dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: data })
         });
         return () => socket.off("deleteConversationToClient");
     }, [socket, dispatch]);
@@ -234,7 +234,6 @@ const SocketClient = () => {
     // Calll User
     useEffect(() => {
         socket.on("callUserToClient", data => {
-            console.log({ data });
             dispatch({ type: GLOBALTYPES.CALL, payload: data });
         });
         return () => socket.off("callUserToClient");
