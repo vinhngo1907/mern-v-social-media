@@ -26,7 +26,7 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
     }
 
     return (
-        <div className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}>
+        <div className={`d-flex px-2 align-items-center justify-content-between w-100 ${border}`}>
             <div>
                 <Link to={`/profile/${user._id}`} onClick={handleCloseAll}
                     className={`d-flex align-items-center ${type === 'home' ? '' : 'user_card'}`}>

@@ -58,6 +58,17 @@ const LeftSide = () => {
 
     return (
         <>
+            <div className="message_header w-100 p-2">
+                <h4>My Chats</h4>
+                <div
+                    className="d-flex align-items-center justify-content-between"
+                >
+                    <button type="button" className="btn btn-light border">
+                        New group chat
+                        <i className="fas fa-plus pl-2" />
+                    </button>
+                </div>
+            </div>
             <form className="message_header p-2" onSubmit={handleSearch} >
                 <input type="text" value={search}
                     placeholder="Enter to Search..."
