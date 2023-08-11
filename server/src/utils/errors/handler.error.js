@@ -1,6 +1,6 @@
 const { createLogger, transports } = require('winston');
 const { AppError } = require('./app.error');
-
+const { responseDTO } = require('..');
 
 const LogErrors = createLogger({
     transports: [
@@ -34,7 +34,7 @@ class ErrorLogger {
     }
 }
 
-const ErrorHandler = async (err, req, res, next) =>{
+const ErrorHandler = async (err, req, res, next) => {
 
     const errorLogger = new ErrorLogger();
 
@@ -58,13 +58,15 @@ const ErrorHandler = async (err, req, res, next) =>{
         if (errorLogger.isTrustError(err)) {
             if (err.errorStack) {
                 const errorDescription = err.errorStack;
-                return res.status(err.statusCode).json({ 'message': errorDescription })
+                // return res.status(err.statusCode).json({ 'message': errorDescription });
+                return res.status(err.statusCode).json(responseDTO.serverError(errorDescription));
             }
-            return res.status(err.statusCode).json({ 'message': err.message })
+            return res.status(err.statusCode).json(responseDTO.serverError(err.message));
         } else {
             //process exit // terriablly wrong with flow need restart
         }
-        return res.status(err.statusCode).json({ 'message': err.message });
+        // return res.status(err.statusCode).json({ 'message': err.message });
+        return res.status(err.statusCode).json(responseDTO.serverError(err.message));
     }
     next();
 }

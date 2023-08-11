@@ -13,7 +13,7 @@ const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefau
 
 module.exports = async (app) => {
     app.enable('trust proxy');
-    
+
     // adding Helmet to enhance your API's security
     app.use(helmet());
 
@@ -28,7 +28,7 @@ module.exports = async (app) => {
 
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'));
-    
+
     // configure isProduction variable
     const isProduction = process.env.NODE_ENV === "production";
     morgan.token('error', (err, req, res, next) => `${err?.stack}`);
