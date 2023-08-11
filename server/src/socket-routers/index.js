@@ -23,6 +23,7 @@ const { callSocket } = require("./call-socket.routing");
 //         users = users.filter(u => u.socketId !== socket.Id);
 //     })
 // }
+
 function defaultSocket(io, socket, users) {
     io.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
