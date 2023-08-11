@@ -63,14 +63,22 @@ const SocketClient = () => {
         return () => socket.off("deleteMessageToClient");
     }, [socket, dispatch]);
 
-    // Conversation
+    // Statistics
     useEffect(() => {
-        socket.on("addConversationToClient", (data) => {
+        socket.on("fetchYoutubeStats", (data) => {
             // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
         });
-        return () => socket.off("addConversationToClient");
+        return () => socket.off("fetchYoutubeStats");
     }, [socket, dispatch]);
-
+    
+    useEffect(() => {
+        socket.on("fetchGithubStats", (data) => {
+            // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
+        });
+        return () => socket.off("fetchGithubStats");
+    }, [socket, dispatch]);
+    
+    // Conversation
     useEffect(() => {
         socket.on("deleteConversationToClient", (data) => {
             dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: data })
