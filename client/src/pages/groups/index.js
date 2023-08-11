@@ -4,11 +4,12 @@ import LeftSideBar from "../../components/global/LeftSideBar";
 
 const Groups = () => {
     return (
-        <div className="row mx-auto">
+        <div className="home-group row mx-auto">
             <div className="left_sidebar col-md-3">
 				<LeftSideBar />
 			</div>
             <div className="main_sidebar col-md-6 overlay-scrollbar scrollbar-hover">
+                <div className="my-3 p-20"></div>
                 <div className="central-meta">
                     <div className="groups">
                         <span><i className="fa fa-users" /> joined Groups</span>

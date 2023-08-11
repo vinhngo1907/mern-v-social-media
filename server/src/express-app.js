@@ -49,7 +49,7 @@ module.exports = async (app) => {
 
     app.get('/', (req, res) => {
         logger.info('GET /');
-        res.send('App works!!!!!');
+        res.send('Hế lố hế lố, V Dev đây!, App works!!!!!');
     });
 
     // Api routes

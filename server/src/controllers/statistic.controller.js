@@ -1,11 +1,9 @@
 'use strict';
 const moment = require("moment-timezone");
-const { responseDTO, APIFeatures, jobsUtil } = require("../utils");
+const { responseDTO, jobsUtil } = require("../utils");
 const { modelSchema } = require("../db");
 const logger = require("node-color-log");
 const { statisticModel, socialModel } = modelSchema;
-
-// let statCache;
 
 class StatisticController {
     async GetViewAndVisitStats(req, res) {
@@ -67,19 +65,14 @@ class StatisticController {
             const now = moment(new Date());
             const dayStart = moment(now).startOf("date").toDate();
             const dayEnd = moment(now).endOf("date").toDate();
+            
             const recordStats = await statisticModel
-                .findOne({
-                    user: req.user._id,
-                    // loggedAt: {
-                    //     $gt: dayStart,
-                    //     $lte: dayEnd
-                    // }
-                })
+                .findOne({ user: req.user._id, })
                 .populate("user clients folowers following", "username fullname avatar following followers");
 
             let stats = {}
             if (recordStats) {
-                const { viewCount, visitCount, user, clients } = recordStats
+                const { viewCount, visitCount, user, clients } = recordStats;
                 stats = {
                     viewCount, visitCount, user, clients
                 }
