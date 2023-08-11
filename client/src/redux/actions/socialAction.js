@@ -4,7 +4,9 @@ import { getDataApi } from "../../utils/fetchData";
 export const SOCIAL_TYPES = {
     LOADING: 'LOADING_SOCIAL',
     GET_SOCIAL_STATS: 'GET_SOCIAL',
-    UPDATE_SOCIAL_STATS: 'UPDATE_SOCIAL'
+    UPDATE_SOCIAL_STATS: 'UPDATE_SOCIAL',
+    UPDATE_GITHUB_STATS:"UPDATE_GITHUB_STATS",
+    UPDATE_YT_STATS:"UPDATE_YT_STATS",
 }
 
 export const getSocialStatistics = (token) => async (dispatch) => {

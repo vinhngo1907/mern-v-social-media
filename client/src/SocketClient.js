@@ -66,6 +66,7 @@ const SocketClient = () => {
     // Statistics
     useEffect(() => {
         socket.on("fetchYoutubeStats", (data) => {
+            console.log({data});
             // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
         });
         return () => socket.off("fetchYoutubeStats");
@@ -73,6 +74,7 @@ const SocketClient = () => {
     
     useEffect(() => {
         socket.on("fetchGithubStats", (data) => {
+            console.log({data});
             // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
         });
         return () => socket.off("fetchGithubStats");

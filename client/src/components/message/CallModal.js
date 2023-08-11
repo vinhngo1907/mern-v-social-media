@@ -37,7 +37,6 @@ const CallModal = () => {
 
     // end call
     const addCallMessage = useCallback((call, times, disconnect) => {
-        console.log({ call })
         if (call.recipient !== auth.user._id || disconnect) {
             const msg = {
                 sender: call.sender,
@@ -105,7 +104,7 @@ const CallModal = () => {
             setTracks(track);
 
             const newCall = peer.call(call.peerId, stream);
-            newCall.on('stream', (remoteStream) => {
+            newCall.on('stream', function (remoteStream) {
                 playStream(otherVideo.current, remoteStream);
             });
 
@@ -119,7 +118,7 @@ const CallModal = () => {
             openStream(call.video)
                 .then(stream => {
                     if (youVideo.current) {
-                        playStream(youVideo.current, stream)
+                        playStream(youVideo.current, stream);
                     }
 
                     const track = stream.getTracks();
@@ -155,7 +154,7 @@ const CallModal = () => {
             });
         });
         return () => socket.off('callerDisconnect');
-    }, [socket, tracks, addCallMessage, dispatch, answer, total, newCall, call]);
+    }, [socket, tracks, dispatch, call, addCallMessage, answer, total, newCall]);
 
     // Play - Pause Audio
     const playAudio = (audio) => {
