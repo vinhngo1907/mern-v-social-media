@@ -22,7 +22,17 @@ class PostController {
             if (!content || images.length === 0) {
                 return res.status(400).json(responseDTO.badRequest("Please post something nice!"));
             }
-            const updatedPost = await postModel.findOneAndUpdate({ _id: req.params.id }, { ...req.body }, { new: true, runValidators: true });
+            const updatedPost = await postModel.findOneAndUpdate(
+                { _id: req.params.id },
+                { ...req.body },
+                { new: true, runValidators: true }
+            ).populate({
+                path: "comments",
+                populate: {
+                    path: "user likes",
+                    select: "username email avatar followers following"
+                }
+            });
             if (!updatedPost) return res.status(400).json(responseDTO.badRequest("This post does not exist"));
 
             res.json(responseDTO.success("Updated post in successfully", { ...updatedPost._doc, user: req.user }));

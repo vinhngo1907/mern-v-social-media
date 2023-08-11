@@ -57,7 +57,7 @@ class PostSocketContoller {
         logger.info("Edit post");
         try {
             const ids = [...post.user.followers];
-            console.log({ ids });
+            // console.log({ ids });
             const clients = users.filter((user) => ids.includes(user.id));
             if (clients && clients.length > 0) {
                 clients.forEach((client) => {
