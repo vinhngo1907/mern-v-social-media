@@ -4,9 +4,9 @@ const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, SENDER_MAIL, OAUTH_PLAYGROUND, 
 const nodemailer = require("nodemailer");
 const { google } = require('googleapis')
 const { OAuth2 } = google.auth;
-
+const logger = require("node-color-log");
 // const { OAuth2Client } = require("google-auth-library");
-const ResponseDTO = require("../dtos");
+// const { responseDTO } = require("../../utils");
 
 class Mailer {
     constructor(to, url, txt) {
@@ -51,8 +51,8 @@ class Mailer {
             const result = await transport.sendMail(mailOptions);
             return result;
         } catch (error) {
-            console.log(error);
-            return ResponseDTO.badRequest(error.message);
+            logger.error(error.message);
+            return responseDTO.badRequest(error.message);
         }
     }
 }

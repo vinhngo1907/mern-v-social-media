@@ -2,11 +2,12 @@
 const axios = require("axios");
 const moment = require("moment");
 const logger = require("node-color-log");
-const { 
-    YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID, 
+const {
+    YOUTUBE_API_KEY, YOUTUBE_API_URL, YOUTUBE_CHANNEL_ID,
     GITHUB_API_URL, GITHUB_USER,
     FACEBOOK_API_URL, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, FACEBOOK_PAGE_ID
 } = require("../../configs");
+
 const { modelSchema } = require("../../db");
 const { socketInfo } = require("../../socket-app");
 const { socialModel } = modelSchema;
@@ -110,6 +111,11 @@ class Job {
             // if (!result) {
             //     result = await socialModel.create({ github: githubRecord })
             // }
+            console.log({ socketInfo })
+            if (socketInfo && socketInfo.socket) {
+                // const { socket } = socketInfo;
+                socketInfo.socket.emit("fetchYoutubeStats", { youtube: result.youtube });
+            }
             return result;
         } catch (error) {
             console.log(error);

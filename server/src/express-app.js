@@ -1,17 +1,27 @@
 const express = require('express');
+const cron = require('cron');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const fileUpload = require('express-fileupload');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require('node-color-log');
-
 const WebRoute = require('./routes');
 const ErrorHandler = require('./utils/errors');
 // const { loggerUtil } = require('./utils');
 const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefault } = require('./utils/logger');
+const { jobsUtil } = require("./utils");
 
 module.exports = async (app) => {
+    // cron job fetch stats
+    const { CronJob } = cron;
+    const job = new CronJob('*/15 * * * *', async () => {
+        logger.info('Fetching all stats');
+        await jobsUtil.FetchAllStats();
+    });
+
+    job.start();
+
     app.enable('trust proxy');
 
     // adding Helmet to enhance your API's security

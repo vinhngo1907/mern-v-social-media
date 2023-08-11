@@ -1,8 +1,6 @@
 const SocketRoute = require("./socket-routers");
 const { ExpressPeerServer } = require('peer');
 const logger = require("node-color-log");
-const cron = require('cron');
-const { jobsUtil } = require("./utils");
 
 const socketInfo = {
     io: undefined,
@@ -25,15 +23,6 @@ function SocketApp(io, server) {
 
     // Create peer server
     ExpressPeerServer(server, { path: '/' });
-
-    const { CronJob } = cron;
-    const job = new CronJob('*/30 * * * *', async () => {
-        logger.info('Fetching all stats');
-        await jobsUtil.FetchAllStats();
-
-    });
-    
-    job.start();
 }
 module.exports = {
     socketApp: SocketApp,

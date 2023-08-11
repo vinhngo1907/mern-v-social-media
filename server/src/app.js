@@ -3,10 +3,6 @@ const { PORT } = require("./configs");
 const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
-// const { messageSocket } = require('./socket-routers/message-socket.routing');
-// const { userSocket } = require('./socket-routers/user-socket.routing');
-// const { notifySocket } = require('./socket-routers/notify-socket.routing');
-// const { defaultSocket } = require('./socket-routers');
 
 async function StartServer() {
     const app = express();
@@ -14,16 +10,8 @@ async function StartServer() {
     const io = require("socket.io")(server);
 
     //----------------start config socket------------------//
-    // let users = [];
-    // io.use(isAuthSocket)
     socketApp(io, server);
-    // let users = [];
-    // io.on('connection', socket => {
-    //     console.log("new connection");
 
-    //     // User join - online
-    //     userSocket(io, socket, users);
-    // });
     //----------------end config socket------------------//
 
     //----------------config routes----------------------//
