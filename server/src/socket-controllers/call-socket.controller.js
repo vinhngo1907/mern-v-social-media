@@ -4,9 +4,7 @@ const logger = require("node-color-log");
 
 class CallSocketContoller {
     editData(data, id, call) {
-        const newData = data.map(item =>
-            item.id === id ? { ...item, call } : item
-        );
+        const newData = data.map(item => item.id === id ? { ...item, call } : item);
         return newData;
     }
 

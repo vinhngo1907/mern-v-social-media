@@ -32,13 +32,15 @@ function defaultSocket(io, socket, users) {
             const clients = users.filter(user =>
                 data?.following?.find(u => u === user.id)
             );
+
             if (clients.length > 0) {
                 clients.forEach(client =>
                     socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
                 )
             }
+
             if (data.call) {
-                console.log({data});
+                // console.log({ data });
                 const callUser = users.find(u => u.id === data.call);
                 if (callUser) {
                     users = callSocketController.editData(users, callUser.id, null);
@@ -46,6 +48,7 @@ function defaultSocket(io, socket, users) {
                 }
             }
         }
+        
         users = users.filter(u => u.socketId !== socket.Id);
     })
 }
@@ -65,10 +68,10 @@ function SocketRoute(io, socket, users) {
 
     // Notify
     notifySocket(io, socket, users);
-    
+
     // Call
     callSocket(io, socket, users);
-    
+
     // User disconnect - offline
     defaultSocket(io, socket, users);
 }
