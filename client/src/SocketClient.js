@@ -5,6 +5,7 @@ import { MESSAGE_TYPES } from './redux/actions/messageAction';
 import { GLOBALTYPES } from './redux/actions/globalTypes';
 import { NOTIFY_TYPES } from './redux/actions/notifyAction';
 import { POST_TYPES } from './redux/actions/postAction';
+import { SOCIAL_TYPES } from './redux/actions/socialAction';
 
 const spawnNotification = (body, icon, url, title) => {
     let options = {
@@ -66,20 +67,20 @@ const SocketClient = () => {
     // Statistics
     useEffect(() => {
         socket.on("fetchYoutubeStats", (data) => {
-            console.log({data});
-            // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
+            console.log({ data });
+            dispatch({ type: SOCIAL_TYPES.UPDATE_GITHUB_STATS, payload: data });
         });
         return () => socket.off("fetchYoutubeStats");
     }, [socket, dispatch]);
-    
+
     useEffect(() => {
         socket.on("fetchGithubStats", (data) => {
-            console.log({data});
-            // dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: data });
+            console.log({ data });
+            dispatch({ type: SOCIAL_TYPES.UPDATE_YT_STATS, payload: data });
         });
         return () => socket.off("fetchGithubStats");
     }, [socket, dispatch]);
-    
+
     // Conversation
     useEffect(() => {
         socket.on("deleteConversationToClient", (data) => {

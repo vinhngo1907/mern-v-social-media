@@ -17,16 +17,17 @@ class StatisticController {
                 .populate("user clients folowers following", "username fullname avatar following followers");
 
             if (recordExist) {
-                recordExist.loggedAt = today;
+                recordExist.loggedAt = now;
                 recordExist.viewCount += 1;
                 if (type === "visit-pageview") {
                     recordExist.visitCount += 1
                 }
+
                 if (recordExist.clients.every(c => c._id.toString() !== req.user._id.toString())) {
                     recordExist.clients.push(req.user._id);
                 }
 
-                await recordExist.save()
+                await recordExist.save();
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
                 return res.json(responseDTO.success("submit duration success", {
                     ...recordExist._doc, user: req.user
@@ -36,7 +37,7 @@ class StatisticController {
                 const stats = new statisticModel({
                     viewCount: 1,
                     visitCount: 1,
-                    loggedAt: today,
+                    loggedAt: now,
                     user: id,
                     clients: []
                 });
@@ -63,14 +64,20 @@ class StatisticController {
     async GetAllTotalStats(req, res) {
         try {
             const now = moment(new Date());
-            const dayStart = moment(now).startOf("date").toDate();
-            const dayEnd = moment(now).endOf("date").toDate();
-            
+            // const dayStart = moment(now).startOf("date").toDate();
+            // const dayEnd = moment(now).endOf("date").toDate();
+            const timeQuery = moment(now).subtract(7, "d").toDate();
+
             const recordStats = await statisticModel
-                .findOne({ user: req.user._id, })
+                .findOne({
+                    user: req.user._id,
+                    loggedAt: {
+                        $gte: timeQuery
+                    }
+                })
                 .populate("user clients folowers following", "username fullname avatar following followers");
 
-            let stats = {}
+            let stats = {};
             if (recordStats) {
                 const { viewCount, visitCount, user, clients } = recordStats;
                 stats = {

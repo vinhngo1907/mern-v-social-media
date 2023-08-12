@@ -61,7 +61,7 @@ class Job {
                 }
             } = channel;
 
-            let result = await socialModel.findOneAndUpdate({
+            const result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
                 loggedAt: { $eq: socialData.loggedAt }
             }, {
@@ -72,10 +72,11 @@ class Job {
                     videoCount: +videoCount,
                 }
             });
+            // console.log(result.youtube);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
                 // const { socket } = socketInfo;
-                socketInfo.socket.emit("fetchYoutubeStats", { youtube: result.youtube });
+                socketInfo.socket.emit("fetchYoutubeStats", result.youtube);
             }
             return result;
         } catch (error) {
@@ -93,7 +94,7 @@ class Job {
                 followers
             } = response.data;
 
-            let result = await socialModel.findOneAndUpdate({
+            const result = await socialModel.findOneAndUpdate({
                 _id: socialData._id,
                 loggedAt: { $eq: socialData.loggedAt }
             }, {
@@ -104,13 +105,13 @@ class Job {
                     followerCount: followers,
                 }
             });
-
+            // console.log(result.github);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
                 // const { socket } = socketInfo;
-                socketInfo.socket.emit("fetchGithubStats", { github: result.github });
+                socketInfo.socket.emit("fetchGithubStats", result.github);
             }
-           
+
             return result;
         } catch (error) {
             console.log(error);
