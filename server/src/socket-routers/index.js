@@ -8,28 +8,11 @@ const logger = require("node-color-log");
 const { callSocketController } = require("../socket-controllers");
 const { callSocket } = require("./call-socket.routing");
 
-// module.exports.defaultSocket = (io, socket, users) => {
-//     io.on("disconnect", () => {
-//         const data = users.find(user => user.socketId === socket.id);
-//         if(data){
-//             const clients = users.filter(user =>
-//                 data?.following?.find(u => u === user.id)
-//             );
-//             if (clients.length > 0) {
-//                 clients.forEach(client =>
-//                     socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
-//                 )
-//             }
-//         }
-//         users = users.filter(u => u.socketId !== socket.Id);
-//     })
-// }
-
 function defaultSocket(io, socket, users) {
     socket.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
         const data = users.find(user => user.socketId === socket.id);
-        console.log(">>>>>>>",{data});
+        console.log(">>>>>>>", { data });
         if (data) {
             const clients = users.filter(user =>
                 data?.following?.find(u => u === user.id)
@@ -52,9 +35,8 @@ function defaultSocket(io, socket, users) {
         }
         
         users = users.filter(u => u.socketId !== socket.id);
-        // console.log({users})
-    })
-}
+    });
+};
 
 function SocketRoute(io, socket, users) {
     // User
