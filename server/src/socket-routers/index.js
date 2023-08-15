@@ -3,7 +3,8 @@ const { messageSocket } = require("./message-socket.routing");
 const { notifySocket } = require("./notify-socket.routing");
 const { postSocket } = require("./post-socket.routing");
 const { commentSocket } = require("./comment-socket.routing");
-const logger = require("../utils/logger");
+// const logger = require("../utils/logger");
+const logger = require("node-color-log");
 const { callSocketController } = require("../socket-controllers");
 const { callSocket } = require("./call-socket.routing");
 
@@ -25,9 +26,10 @@ const { callSocket } = require("./call-socket.routing");
 // }
 
 function defaultSocket(io, socket, users) {
-    io.on("disconnect", () => {
+    socket.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
         const data = users.find(user => user.socketId === socket.id);
+        console.log(">>>>>>>",{data});
         if (data) {
             const clients = users.filter(user =>
                 data?.following?.find(u => u === user.id)
@@ -40,7 +42,7 @@ function defaultSocket(io, socket, users) {
             }
 
             if (data.call) {
-                // console.log({ data });
+                console.log({ data });
                 const callUser = users.find(u => u.id === data.call);
                 if (callUser) {
                     users = callSocketController.editData(users, callUser.id, null);
@@ -49,7 +51,8 @@ function defaultSocket(io, socket, users) {
             }
         }
         
-        users = users.filter(u => u.socketId !== socket.Id);
+        users = users.filter(u => u.socketId !== socket.id);
+        // console.log({users})
     })
 }
 

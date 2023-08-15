@@ -118,7 +118,8 @@ const RightSide = () => {
 
     // Call
     const caller = ({ video }) => {
-        const { _id, username, avatar, fullname } = user;
+        const { _id, avatar, username, fullname } = user;
+
         const msg = {
             sender: auth.user._id,
             recipient: _id,
@@ -127,13 +128,15 @@ const RightSide = () => {
         dispatch({ type: GLOBALTYPES.CALL, payload: msg });
     }
     const callUser = ({ video }) => {
-        const { _id, username, avatar, fullname } = auth.user;
+        const { _id, avatar, username, fullname } = auth.user;
+        
         const msg = {
             sender: _id,
             recipient: user._id,
             avatar, username, fullname, video
         }
-        if (peer.open) msg.peerId = peer._id
+
+        if (peer.open) msg.peerId = peer._id;
         socket.emit('startCall', msg);
     }
 

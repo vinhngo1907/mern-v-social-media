@@ -58,6 +58,7 @@ const CallModal = () => {
         addCallMessage(call, times);
         dispatch({ type: GLOBALTYPES.CALL, payload: null });
     }
+
     useEffect(() => {
         if (answer) {
             setTotal(0);
@@ -73,7 +74,8 @@ const CallModal = () => {
     }, [dispatch, answer, call, socket, addCallMessage]);
 
     useEffect(() => {
-        socket.on('endCallToClient', (data) => {
+        socket.on('endCallToClient', data => {
+            console.log(">>>>>>>>>>>",{data})
             tracks && tracks.forEach(track => track.stop());
             if (newCall) newCall.close();
 
@@ -81,7 +83,7 @@ const CallModal = () => {
             dispatch({ type: GLOBALTYPES.CALL, payload: null });
         });
         return () => socket.off('endCallToClient');
-    }, [socket, newCall, tracks, addCallMessage, dispatch]);
+    }, [socket, dispatch, tracks, addCallMessage, newCall])
 
     // stream media
     const openStream = (video) => {

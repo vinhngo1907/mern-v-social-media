@@ -33,11 +33,11 @@ class CallSocketContoller {
         // console.log({ data });
         try {
             const client = users.find(u => u.id === data.sender);
+            // console.log({ client });
             if (client) {
-                // socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 users = this.editData(users, client.id, null);
-                // console.log({ client });
+                console.log({client})
                 if (client.call) {
                     console.log(client.call);
                     const clientCall = users.find(u => u.id === client.call);
