@@ -75,15 +75,15 @@ const CallModal = () => {
 
     useEffect(() => {
         socket.on('endCallToClient', data => {
-            console.log(">>>>>>>>>>>",{data})
-            tracks && tracks.forEach(track => track.stop());
-            if (newCall) newCall.close();
+            console.log(">>>>>>>>>>",{data});
+            tracks && tracks.forEach(track => track.stop())
+            if(newCall) newCall.close()
+            addCallMessage(data, data.times)
+            dispatch({ type: GLOBALTYPES.CALL, payload: null })
+        })
 
-            addCallMessage(data, data.times);
-            dispatch({ type: GLOBALTYPES.CALL, payload: null });
-        });
-        return () => socket.off('endCallToClient');
-    }, [socket, dispatch, tracks, addCallMessage, newCall])
+        return () => socket.off('endCallToClient')
+    },[socket, dispatch, tracks, addCallMessage, newCall])
 
     // stream media
     const openStream = (video) => {
