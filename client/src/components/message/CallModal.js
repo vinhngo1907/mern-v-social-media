@@ -93,8 +93,8 @@ const CallModal = () => {
 
     // Stream Media
     const openStream = (video) => {
-        const config = { audio: true, video }
-        return navigator.mediaDevices.getUserMedia(config)
+        const config = { audio: true, video };
+        return navigator.mediaDevices.getUserMedia(config);
     }
 
     const playStream = (tag, stream) => {
@@ -114,6 +114,7 @@ const CallModal = () => {
             newCall.on('stream', function (remoteStream) {
                 playStream(otherVideo.current, remoteStream);
             });
+
             setAnswer(true);
             setNewCall(newCall);
         });
@@ -125,20 +126,22 @@ const CallModal = () => {
                 if (youVideo.current) {
                     playStream(youVideo.current, stream)
                 }
-                const track = stream.getTracks()
-                setTracks(track)
+                const track = stream.getTracks();
+                setTracks(track);
 
-                newCall.answer(stream)
+                newCall.answer(stream);
                 newCall.on('stream', function (remoteStream) {
                     if (otherVideo.current) {
                         playStream(otherVideo.current, remoteStream)
                     }
                 });
-                setAnswer(true)
-                setNewCall(newCall)
-            })
-        })
-        return () => peer.removeListener('call')
+
+                setAnswer(true);
+                setNewCall(newCall);
+            });
+        });
+        
+        return () => peer.removeListener('call');
     }, [peer, call.video])
 
     // Disconnect
