@@ -38,4 +38,9 @@ module.exports = {
 
     GITHUB_API_URL: process.env.GITHUB_API_URL,
     GITHUB_USER: process.env.GITHUB_USER,
+
+    ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
+    AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
+    PHONE_NUMB: process.env.TWILIO_PHONE_NUMBER,
+    SERVICE_ID: process.env.TWILIO_SERVICE_ID,
 };

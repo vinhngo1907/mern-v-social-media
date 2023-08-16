@@ -1,4 +1,7 @@
+
+const { ACCOUNT_SID, AUTH_TOKEN, PHONE_NUMB, SERVICE_ID } = require("../../configs");
 const { Twilio } = require("twilio");
+const client = new Twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 class Mobile {
     constructor(to, body, txt) {
@@ -9,6 +12,13 @@ class Mobile {
 
     async SendSMS() {
         try {
+            client.messages
+                .create({
+                    body: `V-Network ${this.txt} - ${this.body}`,
+                    from: PHONE_NUMB,
+                    to: this.to
+                })
+                .then(message => console.log(message.sid));
 
         } catch (error) {
             console.log(error);
@@ -16,9 +26,36 @@ class Mobile {
         }
     }
 
-    async SendOTP() {
+    async SendOTP(channel) {
         try {
+            const data = await client
+                .verify
+                .services(SERVICE_ID)
+                .verifications
+                .create({
+                    to: this.to,
+                    channel
+                });
 
+            return data;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    }
+
+    async SMSVerify(code) {
+        try {
+            const data = await client
+                .verify
+                .services(SERVICE_ID)
+                .verificationChecks
+                .create({
+                    to: this.to,
+                    code
+                });
+
+            return data;
         } catch (error) {
             console.log(error);
             return error;
