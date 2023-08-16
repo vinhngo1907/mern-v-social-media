@@ -38,17 +38,15 @@ class CallSocketContoller {
             if (client) {
                 socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 users = this.editData(users, client.id, null);
-                // users = this.editData(users, data.sender, null);
-
+                // console.log({new: users});
                 if (client.call) {
                     const clientCall = users.find(u => u.id === client.call);
                     clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data);
 
                     users = this.editData(users, client.call, null);
                 }
-                // users = this.editData(users, data.recipient, null);
             }
-            // console.log({ new: users });
+            console.log({ new: users });
         } catch (error) {
             logger.error(error.message);
         }

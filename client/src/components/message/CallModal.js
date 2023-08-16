@@ -53,8 +53,9 @@ const CallModal = () => {
     const handleEndCall = () => {
         tracks && tracks.forEach(track => track.stop());
         if (newCall) newCall.close();
-        let times = answer ? total : 0;
+        let times = answer ? total : 0
         socket.emit('endCall', { ...call, times });
+
         addCallMessage(call, times);
         dispatch({ type: GLOBALTYPES.CALL, payload: null });
     }
@@ -75,17 +76,17 @@ const CallModal = () => {
 
     useEffect(() => {
         socket.on('endCallToClient', data => {
-            console.log(">>>>>>>>>>",{data});
-            tracks && tracks.forEach(track => track.stop())
-            if(newCall) newCall.close()
+            console.log(">>>>>>>>", { data });
+            tracks && tracks.forEach(track => track.stop());
+            if (newCall) newCall.close();
             addCallMessage(data, data.times)
-            dispatch({ type: GLOBALTYPES.CALL, payload: null })
-        })
+            dispatch({ type: GLOBALTYPES.CALL, payload: null });
+        });
 
-        return () => socket.off('endCallToClient')
-    },[socket, dispatch, tracks, addCallMessage, newCall])
+        return () => socket.off('endCallToClient');
+    }, [socket, dispatch, tracks, addCallMessage, newCall]);
 
-    // stream media
+    // Stream Media
     const openStream = (video) => {
         const config = { audio: true, video };
         return navigator.mediaDevices.getUserMedia(config);
@@ -93,7 +94,7 @@ const CallModal = () => {
 
     const playStream = (tag, stream) => {
         let video = tag;
-        video.srcOject = stream;
+        video.srcObject = stream;
         video.play();
     }
 
@@ -159,12 +160,13 @@ const CallModal = () => {
     }, [socket, tracks, dispatch, call, addCallMessage, answer, total, newCall]);
 
     // Play - Pause Audio
-    const playAudio = (audio) => {
-        audio.play();
+    const playAudio = (newAudio) => {
+        newAudio.play();
     }
-    const pauseAudio = (audio) => {
-        audio.pause();
-        audio.currentTime = 0;
+
+    const pauseAudio = (newAudio) => {
+        newAudio.pause();
+        newAudio.currentTime = 0;
     }
 
     useEffect(() => {
