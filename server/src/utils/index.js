@@ -1,5 +1,6 @@
 module.exports = {
     Mailer: require("./emails"),
+    Mobile: require("./mobiles"),
     APIFeatures: require("./libs"),
     loggerUtil: require("./logger"),
     signature: require("./tokens"),
