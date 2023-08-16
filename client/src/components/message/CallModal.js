@@ -54,40 +54,41 @@ const CallModal = () => {
     }, [auth, dispatch, socket])
 
     const handleEndCall = () => {
-        tracks && tracks.forEach(track => track.stop())
-        if (newCall) newCall.close()
-        let times = answer ? total : 0
-        socket.emit('endCall', { ...call, times })
+        tracks && tracks.forEach(track => track.stop());
+        if (newCall) newCall.close();
+        let times = answer ? total : 0;
+        socket.emit('endCall', { ...call, times });
 
-        addCallMessage(call, times)
+        addCallMessage(call, times);
         dispatch({ type: GLOBALTYPES.CALL, payload: null })
     }
 
     useEffect(() => {
         if (answer) {
-            setTotal(0)
+            setTotal(0);
         } else {
             const timer = setTimeout(() => {
-                socket.emit('endCall', { ...call, times: 0 })
-                addCallMessage(call, 0)
+                socket.emit('endCall', { ...call, times: 0 });
+                addCallMessage(call, 0);
                 dispatch({ type: GLOBALTYPES.CALL, payload: null })
-            }, 15000)
+            }, 15000);
 
-            return () => clearTimeout(timer)
+            return () => clearTimeout(timer);
         }
 
-    }, [dispatch, answer, call, socket, addCallMessage])
+    }, [dispatch, answer, call, socket, addCallMessage]);
 
     useEffect(() => {
         socket.on('endCallToClient', data => {
-            tracks && tracks.forEach(track => track.stop())
-            if (newCall) newCall.close()
-            addCallMessage(data, data.times)
-            dispatch({ type: GLOBALTYPES.CALL, payload: null })
-        })
+            tracks && tracks.forEach(track => track.stop());
+            if (newCall) newCall.close();
 
-        return () => socket.off('endCallToClient')
-    }, [socket, dispatch, tracks, addCallMessage, newCall])
+            addCallMessage(data, data.times);
+            dispatch({ type: GLOBALTYPES.CALL, payload: null });
+        });
+
+        return () => socket.off('endCallToClient');
+    }, [socket, dispatch, tracks, addCallMessage, newCall]);
 
 
     // Stream Media
@@ -99,24 +100,24 @@ const CallModal = () => {
     const playStream = (tag, stream) => {
         let video = tag;
         video.srcObject = stream;
-        video.play()
+        video.play();
     }
 
     // Answer Call
     const handleAnswer = () => {
         openStream(call.video).then(stream => {
-            playStream(youVideo.current, stream)
-            const track = stream.getTracks()
-            setTracks(track)
+            playStream(youVideo.current, stream);
+            const track = stream.getTracks();
+            setTracks(track);
 
             const newCall = peer.call(call.peerId, stream);
             newCall.on('stream', function (remoteStream) {
-                playStream(otherVideo.current, remoteStream)
+                playStream(otherVideo.current, remoteStream);
             });
-            setAnswer(true)
-            setNewCall(newCall)
-        })
-    }
+            setAnswer(true);
+            setNewCall(newCall);
+        });
+    };
 
     useEffect(() => {
         peer.on('call', newCall => {
@@ -166,7 +167,7 @@ const CallModal = () => {
     }
 
     const pauseAudio = (newAudio) => {
-        console.log("pause",newAudio)
+        console.log("pause", newAudio)
         newAudio.pause()
         newAudio.currentTime = 0
     }
