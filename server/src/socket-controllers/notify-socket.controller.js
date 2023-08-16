@@ -23,7 +23,7 @@ class NotifySocketContoller {
     removeNotify(io, socket, users, msg) {
         logger.info("Remove Notify");
         try {
-            console.log({msg});
+            // console.log({msg});
             // const client = users.find(user => msg.recipients.includes(user.id.toString()))
             // socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg);
             const clients = users.filter(user => msg.recipients.includes(user.id.toString()))
