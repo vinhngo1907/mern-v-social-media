@@ -39,7 +39,7 @@ export const likeComment = ({ comment, post, auth, socket }) => async (dispatch)
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
-    console.log({ newComment });
+    // console.log({ newComment });
     // Socket
     socket.emit('likeComment', newPost);
 
@@ -69,9 +69,11 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) };
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
+    console.log({newComment});
     // Socket
     socket.emit('unLikeComment', newPost);
     try {
+        await patchDataApi(`comment/${comment._id}/unlike`, null, auth.token);
         let recipients = [];
         if (newComment.reply) {
             recipients.push(newComment.tag._id);
@@ -80,9 +82,6 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
         if (post.user._id !== auth.user._id) {
             recipients.push(post.user._id);
         }
-
-        await patchDataApi(`comment/${comment._id}/unlike`, null, auth.token);
-
         // Notify
         const msg = {
             id: newComment._id,

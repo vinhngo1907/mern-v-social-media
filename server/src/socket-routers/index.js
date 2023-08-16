@@ -12,28 +12,30 @@ function defaultSocket(io, socket, users) {
     socket.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
         const data = users.find(user => user.socketId === socket.id);
-        console.log(">>>>>>>", { data });
+        // console.log(">>>>>>>", { data });
         if (data) {
+            // console.log(">>>>>>>", data?.followers);
+            // console.log(">>>>>>>", data?.following);
             const clients = users.filter(user =>
-                data?.following?.find(u => u === user.id)
+                data.followers.find(u => u._id === user.id)
             );
 
             if (clients.length > 0) {
-                clients.forEach(client =>
-                    socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
-                )
+                clients.forEach(client => {
+                    socket.to(`${client.socketId}`).emit('CheckUserOffline', data.id)
+                });
             }
 
+            // console.log({ data });
             if (data.call) {
-                console.log({ data });
-                const callUser = users.find(u => u.id === data.call);
+                const callUser = users.find(user => user.id === data.call);
                 if (callUser) {
                     users = callSocketController.editData(users, callUser.id, null);
                     socket.to(`${callUser.socketId}`).emit('callerDisconnect');
                 }
             }
         }
-        
+
         users = users.filter(u => u.socketId !== socket.id);
     });
 };
