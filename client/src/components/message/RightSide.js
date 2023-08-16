@@ -137,7 +137,7 @@ const RightSide = () => {
         }
 
         if (peer.open) msg.peerId = peer._id;
-        socket.emit('startCall', msg);
+        socket.emit('callUser', msg);
     }
 
     const handleAudioCall = () => {
