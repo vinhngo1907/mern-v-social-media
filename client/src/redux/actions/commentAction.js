@@ -82,6 +82,10 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
         if (post.user._id !== auth.user._id) {
             recipients.push(post.user._id);
         }
+        
+        if(newComment.user._id !== auth.user._id){
+            recipients.push(newComment.user._id);
+        }
         // Notify
         const msg = {
             id: newComment._id,
