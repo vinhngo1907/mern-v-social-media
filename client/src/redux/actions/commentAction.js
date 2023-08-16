@@ -69,7 +69,7 @@ export const unLikeComment = ({ comment, post, auth, socket }) => async (dispatc
     const newPost = { ...post, comments: EditData(post.comments, comment._id, newComment) };
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
 
-    console.log({newComment});
+    // console.log({newComment});
     // Socket
     socket.emit('unLikeComment', newPost);
     try {
