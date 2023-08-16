@@ -61,4 +61,6 @@ function SocketRoute(io, socket, users) {
     defaultSocket(io, socket, users);
 }
 
-module.exports = SocketRoute;
+module.exports = {
+    socketRoute: SocketRoute
+};
