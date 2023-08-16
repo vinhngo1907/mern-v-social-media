@@ -12,9 +12,11 @@ class CallSocketContoller {
         logger.info("CALLING...");
         // console.log({ data });
         try {
+            console.log({ old: users });
             users = this.editData(users, data.sender, data.recipient);
             const client = users.find(u => u.id === data.recipient);
             if (client) {
+                console.log({client});
                 if (client.call) {
                     socket.emit("userBusy", data);
                     users = this.editData(users, data.sender, null);
@@ -23,6 +25,7 @@ class CallSocketContoller {
                     socket.to(`${client.socketId}`).emit('callUserToClient', data);
                 }
             }
+            console.log({ new: users });
         } catch (error) {
             logger.error(error.message);
         }
@@ -42,7 +45,7 @@ class CallSocketContoller {
             if (client) {
                 socket.to(`${client.socketId}`).emit('endCallToClient', data);
                 users = this.editData(users, client.id, null);
-                // console.log({new: users});
+                console.log(">>>>> End Call",{new: users});
                 if (client.call) {
                     const clientCall = users.find(u => u.id === client.call);
                     clientCall && socket.to(`${clientCall.socketId}`).emit('endCallToClient', data);
@@ -50,7 +53,7 @@ class CallSocketContoller {
                     users = this.editData(users, client.call, null);
                 }
             }
-            console.log({ new: users });
+            // console.log({ new: users });
         } catch (error) {
             logger.error(error.message);
         }
