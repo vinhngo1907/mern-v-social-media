@@ -26,8 +26,7 @@ function defaultSocket(io, socket, users) {
                     socket.to(`${client.socketId}`).emit('CheckUserOffline', data.id)
                 });
             }
-
-            // console.log({ data });
+            console.log({data})
             if (data.call) {
                 const callUser = users.find(user => user.id === data.call);
                 if (callUser) {
@@ -44,7 +43,7 @@ function defaultSocket(io, socket, users) {
 function SocketRoute(io, socket, users) {
     // User
     userSocket(io, socket, users);
-
+   
     // Message
     messageSocket(io, socket, users);
 

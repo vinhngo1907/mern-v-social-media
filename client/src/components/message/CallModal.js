@@ -122,27 +122,29 @@ const CallModal = () => {
 
     useEffect(() => {
         peer.on('call', newCall => {
-            openStream(call.video).then(stream => {
-                if (youVideo.current) {
-                    playStream(youVideo.current, stream)
-                }
-                const track = stream.getTracks();
-                setTracks(track);
-
-                newCall.answer(stream);
-                newCall.on('stream', function (remoteStream) {
-                    if (otherVideo.current) {
-                        playStream(otherVideo.current, remoteStream)
+            console.log({newCall})
+            openStream(call.video)
+                .then(stream => {
+                    if (youVideo.current) {
+                        playStream(youVideo.current, stream)
                     }
-                });
+                    const track = stream.getTracks();
+                    setTracks(track);
 
-                setAnswer(true);
-                setNewCall(newCall);
-            });
+                    newCall.answer(stream);
+                    newCall.on('stream', function (remoteStream) {
+                        if (otherVideo.current) {
+                            playStream(otherVideo.current, remoteStream)
+                        }
+                    });
+
+                    setAnswer(true);
+                    setNewCall(newCall);
+                });
         });
-        
+
         return () => peer.removeListener('call');
-    }, [peer, call.video])
+    }, [peer, call.video]);
 
     // Disconnect
     useEffect(() => {
@@ -165,14 +167,14 @@ const CallModal = () => {
 
     // Play - Pause Audio
     const playAudio = (newAudio) => {
-        console.log("Play", newAudio);
+        // console.log("Play", newAudio);
         newAudio.play()
     }
 
     const pauseAudio = (newAudio) => {
-        console.log("pause", newAudio)
-        newAudio.pause()
-        newAudio.currentTime = 0
+        // console.log("pause", newAudio)
+        newAudio.pause();
+        newAudio.currentTime = 0;
     }
 
     useEffect(() => {

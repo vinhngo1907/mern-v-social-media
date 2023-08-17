@@ -39,7 +39,7 @@ class CallSocketContoller {
             // console.log({ old: users });
             // console.log({ client });
             const clientEndCall = users.find(u => u.id === data.recipient);
-            if(clientEndCall){
+            if (clientEndCall) {
                 socket.to(`${clientEndCall.socketId}`).emit('endCallToClient', data);
             }
             if (client) {
