@@ -8,7 +8,7 @@ const Inbox = () => {
             </form>
             <ul id="message-list" className="message-list ps-container ps-theme-default ps-active-y" 
             data-ps-id="b1231cdc-1727-6c3c-2176-f543ee9bd1c7">
-                <li className="unread">
+                {/* <li className="unread">
                     <input className="select-message" type="checkbox" />
                     <span className="star-this starred"><i className="fa fa-star-o" /></span>
 
@@ -121,7 +121,7 @@ const Inbox = () => {
                     <span className="make-important"><i className="fa fa-thumb-tack" /></span>
 
                     <p>Reader will be distracted by the nalanye..</p>
-                </li>
+                </li> */}
                 {/* <div className="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
                     <div className="ps-scrollbar-x" tabIndex="0" style="left: 0px; width: 0px;"></div>
                 </div>
