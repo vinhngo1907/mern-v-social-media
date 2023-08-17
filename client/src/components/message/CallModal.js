@@ -93,13 +93,13 @@ const CallModal = () => {
 
     // Stream Media
     const openStream = (video) => {
-        console.log({video})
+        console.log({ video })
         const config = { audio: true, video };
         return navigator.mediaDevices.getUserMedia(config);
     }
 
     const playStream = (tag, stream) => {
-        console.log({tag, stream});
+        console.log({ tag, stream });
         let video = tag;
         video.srcObject = stream;
         video.play();
@@ -124,9 +124,10 @@ const CallModal = () => {
 
     useEffect(() => {
         peer.on('call', newCall => {
-            console.log({newCall})
+            console.log({ newCall })
             openStream(call.video)
                 .then(stream => {
+                    console.log({ stream });
                     if (youVideo.current) {
                         playStream(youVideo.current, stream)
                     }
@@ -135,6 +136,7 @@ const CallModal = () => {
 
                     newCall.answer(stream);
                     newCall.on('stream', function (remoteStream) {
+                        console.log({ remoteStream });
                         if (otherVideo.current) {
                             playStream(otherVideo.current, remoteStream)
                         }
@@ -142,7 +144,8 @@ const CallModal = () => {
 
                     setAnswer(true);
                     setNewCall(newCall);
-                });
+                })
+                .catch(error =>console.error('Error accessing media devices.', error));
         });
 
         return () => peer.removeListener('call');
