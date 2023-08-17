@@ -24,7 +24,7 @@ const RegisterForm = () => {
 					name="fullname" value={fullname} onChange={handleChangeInput}
 					placeholder="Your name is up to 25 chars." />
 			</div>
-			 <div className="form-group mb-3">
+			<div className="form-group mb-3">
 				<label htmlFor="username" className="form-label">username</label>
 
 				<input type="text" className="form-control" id="username"
@@ -34,7 +34,7 @@ const RegisterForm = () => {
 			<div className="form-group mb-3">
 				<label htmlFor="email">Email address</label>
 				<input type="email" className="form-control" id="email" name="email"
-					aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleChangeInput}/>
+					aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleChangeInput} />
 			</div>
 			<div className="form-group mb-3">
 				<label htmlFor="password" className="form-label">Password</label>
@@ -46,6 +46,7 @@ const RegisterForm = () => {
 						name="password" value={password}
 						onChange={handleChangeInput}
 						placeholder="Password must be at least 6 chars."
+						autoComplete="on"
 					/>
 
 					<small onClick={() => setTypePass(!typePass)}>
@@ -65,6 +66,7 @@ const RegisterForm = () => {
 						name="cf_password" value={cf_password}
 						onChange={handleChangeInput}
 						placeholder="Your confirm password."
+						autoComplete="on"
 					/>
 
 					<small onClick={() => setTypeCfPass(!typeCfPass)}>

@@ -38,6 +38,7 @@ const LoginPass = () => {
 							name="password" value={password}
 							onChange={handleChangeInput}
 							placeholder="Enter password"
+							autoComplete="on"
 						/>
 
 						<small onClick={() => setTypePass(!typePass)}>

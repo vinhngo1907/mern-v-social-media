@@ -21,6 +21,7 @@ import SocketClient from "./SocketClient";
 import { getSocialStatistics } from "./redux/actions/socialAction";
 import Peer from "peerjs";
 import CallModal from "./components/message/CallModal";
+import ForgotPassord from "./pages/forgot_password";
 
 let scroll = 0;
 function App() {
@@ -95,6 +96,7 @@ function App() {
 						<Route exact path="/" component={auth.token ? Home : Login} />
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
+						<Route exact path="/forgot_password" component={ForgotPassord} />
 
 						<PrivateRouter exact path="/:page" component={PageRender} />
 						<PrivateRouter exact path="/:page/:id" component={PageRender} />

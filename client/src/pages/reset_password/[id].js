@@ -38,6 +38,7 @@ const ResetPassword = () => {
                             className="form-control"
                             id="password"
                             name="password"
+                            autoComplete='on'
                         />
                         <small > show
                         </small>
