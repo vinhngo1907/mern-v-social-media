@@ -15,10 +15,10 @@ const LeftSideBar = ({ type }) => {
     const dispatch = useDispatch();
     const navLink = [
         { path: "/", icon: "fas fa-clipboard", content: "News feed" },
-        { path: "inbox.html", icon: "fas fa-mouse", content: "Inbox" },
+        { path: "/inbox", icon: "fas fa-mouse", content: "Inbox" },
         { path: "/groups", icon: "fas fa-users", content: "Groups" },
         { path: "images.html", icon: "fas fa-image", content: "Images" },
-        { path: "timeline-videos.html", icon: "fas fa-video", content: "Videos" },
+        { path: "/videos", icon: "fas fa-video", content: "Videos" },
         { path: "/message", icon: "fas fa-comments", content: "Messages" },
         { path: "/notifications", icon: "fas fa-bell", content: "Notifications" },
         { path: "timeline-videos.html", icon: "fas fa-share", content: "People nearby" },
