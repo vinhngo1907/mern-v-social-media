@@ -86,3 +86,11 @@ export const facebookLogin = (data) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
+
+export const loginSMS = (data) => async (dispatch) => {
+    try {
+
+    } catch (error) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
