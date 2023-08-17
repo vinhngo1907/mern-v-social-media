@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { forgotPassword } from "../redux/actions/userAction";
 
 const ForgotPassord = () => {
-    const [account, setAccount] = useState();
+    const [account, setAccount] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(forgotPassword(account));
     }
-    
+
     return (
         <div className="auth_page">
             <div className="auth_box" style={{ maxWidth: '550px' }}>

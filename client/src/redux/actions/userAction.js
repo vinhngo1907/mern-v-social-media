@@ -2,7 +2,7 @@ import { GLOBALTYPES } from "./globalTypes"
 
 export const forgotPassword = (data) => async (dispatch) => {
     try {
-
+        console.log(data);
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }
