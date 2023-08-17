@@ -7,18 +7,18 @@ import RingRing from '../../audio/ringring.mp3'
 
 const CallModal = () => {
     const { call, auth, peer, socket, theme } = useSelector(state => state)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const [hours, setHours] = useState(0)
-    const [mins, setMins] = useState(0)
-    const [second, setSecond] = useState(0)
-    const [total, setTotal] = useState(0)
+    const [hours, setHours] = useState(0);
+    const [mins, setMins] = useState(0);
+    const [second, setSecond] = useState(0);
+    const [total, setTotal] = useState(0);
 
-    const [answer, setAnswer] = useState(false)
-    const youVideo = useRef()
-    const otherVideo = useRef()
-    const [tracks, setTracks] = useState(null)
-    const [newCall, setNewCall] = useState(null)
+    const [answer, setAnswer] = useState(false);
+    const youVideo = useRef();
+    const otherVideo = useRef();
+    const [tracks, setTracks] = useState(null);
+    const [newCall, setNewCall] = useState(null);
 
     // Set Time
     useEffect(() => {
@@ -26,10 +26,10 @@ const CallModal = () => {
             setTotal(t => t + 1)
             setTimeout(setTime, 1000)
         }
-        setTime()
+        setTime();
 
-        return () => setTotal(0)
-    }, [])
+        return () => setTotal(0);
+    }, []);
 
     useEffect(() => {
         setSecond(total % 60)
@@ -93,11 +93,13 @@ const CallModal = () => {
 
     // Stream Media
     const openStream = (video) => {
+        console.log({video})
         const config = { audio: true, video };
         return navigator.mediaDevices.getUserMedia(config);
     }
 
     const playStream = (tag, stream) => {
+        console.log({tag, stream});
         let video = tag;
         video.srcObject = stream;
         video.play();
