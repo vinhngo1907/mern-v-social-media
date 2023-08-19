@@ -55,10 +55,10 @@ function SocketRoute(io, socket, users) {
     notifySocket(io, socket, users);
 
     // Call
-    callSocket(io, socket, users);
+    // callSocket(io, socket, users);
 
     // User disconnect - offline
-    defaultSocket(io, socket, users);
+    // defaultSocket(io, socket, users);
 }
 
 module.exports = {
