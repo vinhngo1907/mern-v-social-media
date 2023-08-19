@@ -1,9 +1,9 @@
 "use strict"
-const { responseDTO, validation, passwordUtil, Mailer, signature } = require("../utils");
+const { responseDTO, validation, passwordUtil, Mailer, signature, Mobile } = require("../utils");
 const { modelSchema } = require("../db");
 const jwt = require("jsonwebtoken");
 const { userModel } = modelSchema;
-const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET } = require("../configs");
+const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET, PHONE_SECRET } = require("../configs");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 
@@ -32,13 +32,13 @@ class AuthController {
 
     async Register(req, res) {
         try {
-            const { fullname, username, email, mobile, password } = req.body;
-            if (validation.ValidateMobile(mobile)) {
-                res.status(200).json(responseDTO.success('Successfully, please check your phone!'));
-            }
+            // const { fullname, username, email, mobile, password } = req.body;
+            const { fullname, username, account, password } = req.body;
 
-            if (validation.ValidateEmail(email)) {
+            const salt = await passwordUtil.GenerateSalt();
+            const newPassword = await passwordUtil.GeneratePassword(password, salt);
 
+            if (validation.ValidateEmail(account)) {
                 const checkUser = validation.ValidaiteRegister(req.body);
 
                 // Simple validate
@@ -47,18 +47,30 @@ class AuthController {
                 }
 
                 const newUserName = username.toLowerCase().replace(/ /g, '');
-
-                const salt = await passwordUtil.GenerateSalt();
-                const newPassword = await passwordUtil.GeneratePassword(password, salt);
                 const newUser = {
-                    fullname, username: newUserName, email, password: newPassword, salt
+                    fullname, username: newUserName, email: account, password: newPassword, salt
+                }
+
+                const activeToken = await signature.GenerateActiveToken(newUser);
+                const url = `${CLIENT_URL}/active/${activeToken}`;
+
+                const mailer = new Mailer(account, url, "Verify your email address");
+                mailer.sendMail();
+                return res.status(200).json(responseDTO.success('Successfully, please check your email!'));
+            }
+
+            if (validation.ValidateMobile(account)) {
+                const newUser = {
+                    mobile: account, password: newPassword, salt, username: account, fullname: account
                 }
                 const activeToken = await signature.GenerateActiveToken(newUser);
-                const url = `${CLIENT_URL}/active/${activeToken}`
-                const mailer = new Mailer(email, url, "Verify your email address");
-                mailer.sendMail();
-                res.status(200).json(responseDTO.success('Successfully, please check your email!'));
+                const url = `${CLIENT_URL}/active/${activeToken}`;
+
+                const mobiler = new Mobile(account, url, "Verify your mobile sms");
+                await mobiler.SendSMS();
+                return res.json(responseDTO.success('Successfully, please check your phone!'));
             }
+
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -197,9 +209,44 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
     async LoginSMS(req, res) {
         try {
+            const { phone } = req.body;
+            const mobile = new Mobile(phone, "", "");
+            const data = await mobile.SendOTP(phone, 'sms');
 
+            res.json(responseDTO.success("Login SMS successfully", data));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async VerifySMS(req, res) {
+        try {
+            const { phone, code } = req.body;
+            const mobile = new Mobile(phone, "", "");
+            const data = await mobile.VerifySMS(phone, code);
+            if (!data?.valid) return res.status(400).json(responseDTO.badRequest("Invalid Authentication"));
+
+            const password = phone + PHONE_SECRET;
+
+            const user = await userModel.findOne({ mobile: phone, type: 'sms' });
+            if (user) {
+                return LoginUser(password, user, req, res);
+            } else {
+                const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
+                const salt = await passwordUtil.GenerateSalt();
+                const newUser = {
+                    type: "sms",
+                    password: hashedPassword,
+                    salt,
+                    mobile: phone,
+                    username: phone
+                }
+                return RegisterUser(newUser, req, res);
+            }
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

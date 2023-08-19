@@ -40,11 +40,18 @@ router.post('/refresh-token', authCtrl.RefreshToken);
 router.post('/logout', userAuth, authCtrl.Logout);
 
 /** 
- *  @route POST api/auth/sms-login
+ * @route POST api/auth/sms-login
  * @desc Login user by sms
  * @access Public
 */
-router.post('/sms-login', authCtrl.LoginSMS);
+// router.post('/sms-login', authCtrl.LoginSMS);
+
+/** 
+ * @route POST api/auth/verify-sms
+ * @desc Login user by sms
+ * @access Public
+*/
+router.post('/sms-verify', authCtrl.VerifySMS);
 
 /** 
  * @route POST api/auth/google-login

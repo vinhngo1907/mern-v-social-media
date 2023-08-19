@@ -9,11 +9,11 @@ class Validation {
     }
     ValidaiteRegister(user) {
         let error = "";
-        const { email, username } = user;
-        if (!email || !username) {
+        const { account, username } = user;
+        if (!account || !username) {
             error = "Missing username or/and email"
         }
-        if (!this.ValidateEmail(email)) {
+        if (!this.ValidateEmail(account)) {
             error = "Email format is incorrect"
         }
         return error;

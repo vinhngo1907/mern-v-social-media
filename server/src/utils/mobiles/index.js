@@ -44,7 +44,7 @@ class Mobile {
         }
     }
 
-    async SMSVerify(code) {
+    async VerifySMS(code) {
         try {
             const data = await client
                 .verify
