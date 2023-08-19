@@ -44,7 +44,7 @@ router.post('/logout', userAuth, authCtrl.Logout);
  * @desc Login user by sms
  * @access Public
 */
-// router.post('/sms-login', authCtrl.LoginSMS);
+router.post('/sms-login', authCtrl.LoginSMS);
 
 /** 
  * @route POST api/auth/verify-sms

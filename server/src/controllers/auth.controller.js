@@ -61,7 +61,7 @@ class AuthController {
 
             if (validation.ValidateMobile(account)) {
                 const newUser = {
-                    mobile: account, password: newPassword, salt, username: account, fullname: account
+                    mobile: account, password: newPassword, salt, username: account, fullname: account, email: account
                 }
                 const activeToken = await signature.GenerateActiveToken(newUser);
                 const url = `${CLIENT_URL}/active/${activeToken}`;
