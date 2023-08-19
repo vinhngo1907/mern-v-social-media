@@ -35,8 +35,7 @@ class AuthController {
             // const { fullname, username, email, mobile, password } = req.body;
             const { fullname, username, account, password } = req.body;
 
-            const salt = await passwordUtil.GenerateSalt();
-            const newPassword = await passwordUtil.GeneratePassword(password, salt);
+           
 
             if (validation.ValidateEmail(account)) {
                 const checkUser = validation.ValidaiteRegister(req.body);
@@ -45,6 +44,8 @@ class AuthController {
                 if (checkUser) {
                     return res.status(400).json(responseDTO.badRequest(checkUser))
                 }
+                const salt = await passwordUtil.GenerateSalt();
+                const newPassword = await passwordUtil.GeneratePassword(password, salt);
 
                 const newUserName = username.toLowerCase().replace(/ /g, '');
                 const newUser = {
@@ -60,8 +61,10 @@ class AuthController {
             }
 
             if (validation.ValidateMobile(account)) {
+                const salt = await passwordUtil.GenerateSalt();
+                const newPassword = await passwordUtil.GeneratePassword(password, salt);
                 const newUser = {
-                    mobile: account, password: newPassword, salt, username: account, fullname: account, email: account, type: "sms"
+                    mobile: account, password: newPassword, salt, username: account, fullname: account, email: account, type: "sms",
                 }
                 const activeToken = await signature.GenerateActiveToken(newUser);
                 const url = `${CLIENT_URL}/active/${activeToken}`;
@@ -178,6 +181,7 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+    
     async FacebookLogin(req, res) {
         try {
             const { accessToken, userID } = req.body;
