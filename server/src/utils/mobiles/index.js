@@ -11,6 +11,7 @@ class Mobile {
     }
 
     async SendSMS() {
+        // console.log(this.body);
         try {
             client.messages
                 .create({
@@ -27,6 +28,7 @@ class Mobile {
     }
 
     async SendOTP(channel) {
+        console.log({channel})
         try {
             const data = await client
                 .verify
@@ -39,7 +41,7 @@ class Mobile {
 
             return data;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             return error;
         }
     }

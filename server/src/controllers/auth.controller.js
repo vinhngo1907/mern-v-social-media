@@ -61,7 +61,7 @@ class AuthController {
 
             if (validation.ValidateMobile(account)) {
                 const newUser = {
-                    mobile: account, password: newPassword, salt, username: account, fullname: account, email: account
+                    mobile: account, password: newPassword, salt, username: account, fullname: account, email: account, type: "sms"
                 }
                 const activeToken = await signature.GenerateActiveToken(newUser);
                 const url = `${CLIENT_URL}/active/${activeToken}`;
@@ -214,7 +214,7 @@ class AuthController {
         try {
             const { phone } = req.body;
             const mobile = new Mobile(phone, "", "");
-            const data = await mobile.SendOTP(phone, 'sms');
+            const data = await mobile.SendOTP('sms');
 
             res.json(responseDTO.success("Login SMS successfully", data));
         } catch (error) {
@@ -227,7 +227,7 @@ class AuthController {
         try {
             const { phone, code } = req.body;
             const mobile = new Mobile(phone, "", "");
-            const data = await mobile.VerifySMS(phone, code);
+            const data = await mobile.VerifySMS(code);
             if (!data?.valid) return res.status(400).json(responseDTO.badRequest("Invalid Authentication"));
 
             const password = phone + PHONE_SECRET;
@@ -236,14 +236,16 @@ class AuthController {
             if (user) {
                 return LoginUser(password, user, req, res);
             } else {
-                const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
                 const salt = await passwordUtil.GenerateSalt();
+                const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
                 const newUser = {
                     type: "sms",
                     password: hashedPassword,
                     salt,
                     mobile: phone,
-                    username: phone
+                    username: phone,
+                    email: phone,
+                    fullname: phone
                 }
                 return RegisterUser(newUser, req, res);
             }
