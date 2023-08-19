@@ -11,12 +11,10 @@ const { callSocket } = require("./call-socket.routing");
 function defaultSocket(io, socket, users) {
     socket.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
-        console.log({ users });
+        // console.log({ users });
+        // console.log({ usersCache });
         const data = users.find(user => user.socketId === socket.id);
-        // console.log(">>>>>>>", { data });
         if (data) {
-            // console.log(">>>>>>>", data?.followers);
-            // console.log(">>>>>>>", data?.following);
             const clients = users.filter(user =>
                 data.followers.find(u => u._id === user.id)
             );
