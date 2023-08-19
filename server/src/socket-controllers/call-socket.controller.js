@@ -33,6 +33,7 @@ class CallSocketContoller {
 
     endCall(io, socket, users, data) {
         logger.info("END CALL");
+        // console.log({users});
         try {
             const client = users.find(u => u.id === data.sender);
             const clientEndCall = users.find(u => u.id === data.recipient);

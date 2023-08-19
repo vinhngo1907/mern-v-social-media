@@ -10,10 +10,10 @@ const socketInfo = {
 
 function SocketApp(io, server) {
     let users = [];
-    let socketServer = null;
+    // let socketServer = null;
     const onConnection = (socket) => {
         logger.info("NEW CONNECTION");
-        socketServer = socket;
+        // socketServer = socket;
         socketRoute(io, socket, users);
         socketInfo.io = io;
         socketInfo.socket = socket;
