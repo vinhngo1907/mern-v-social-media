@@ -1,4 +1,5 @@
 const { socketRoute } = require("./socket-routers");
+// const { userSocket, callSocket, commentSocket, postSocket, notifySocket, defaultSocket, messageSocket } = require("./socket-routers");
 const { ExpressPeerServer } = require('peer');
 const logger = require("node-color-log");
 
@@ -20,6 +21,7 @@ function SocketApp(io, server) {
         logger.info("NEW CONNECTION");
         // socketServer = socket;
         socketRoute(io, socket, users);
+
         // socket.on("callUser", (data) => {
         //     // console.log({old: users});
         //     logger.info("CALLING...");
@@ -37,7 +39,7 @@ function SocketApp(io, server) {
         //     // console.log({new: users});
         // });
 
-        // Call
+        // // Call
         // socket.on("endCall", (data) => {
         //     const client = users.find(u => u.id === data.sender);
         //     // const clientEndCall = users.find(u => u.id === data.recipient);
@@ -56,7 +58,7 @@ function SocketApp(io, server) {
         //     }
         // });
         
-        // User disconnect - offline
+        // // User disconnect - offline
         // socket.on("disconnect", () => {
         //     logger.info("Socket disconnected!!!");
         //     const data = users.find(user => user.socketId === socket.id);
@@ -82,6 +84,7 @@ function SocketApp(io, server) {
     
         //     users = users.filter(u => u.socketId !== socket.id);
         // });
+        // defaultSocket(io, socket, users);
         socketInfo.io = io;
         socketInfo.socket = socket;
         socketInfo.users = users;
