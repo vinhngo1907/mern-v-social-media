@@ -11,8 +11,6 @@ const { callSocket } = require("./call-socket.routing");
 function defaultSocket(io, socket, users) {
     socket.on("disconnect", () => {
         logger.info("Socket disconnected!!!");
-        // console.log({ users });
-        // console.log({ usersCache });
         const data = users.find(user => user.socketId === socket.id);
         if (data) {
             const clients = users.filter(user =>
@@ -35,13 +33,14 @@ function defaultSocket(io, socket, users) {
         }
 
         users = users.filter(u => u.socketId !== socket.id);
+        console.log({ users });
     });
 };
 
 function SocketRoute(io, socket, users) {
     // User
     userSocket(io, socket, users);
-   
+
     // Message
     messageSocket(io, socket, users);
 
