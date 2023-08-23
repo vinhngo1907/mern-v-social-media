@@ -7,6 +7,11 @@ const logger = require("node-color-log");
 const { callSocketController } = require("../socket-controllers");
 const { callSocket } = require("./call-socket.routing");
 
+function editData(data, id, call) {
+    const newData = data.map(item => item.id === id ? { ...item, call } : item);
+    return newData;
+}
+
 function defaultSocket(io, socket, users) {
     socket.on('disconnect', () => {
         logger.info("SOCKET DISCONNECT!!!");
