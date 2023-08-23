@@ -1,4 +1,5 @@
 const { socketRoute } = require("./socket-routers");
+// const { userSocket, callSocket, commentSocket, postSocket, notifySocket, defaultSocket, messageSocket } = require("./socket-routers");
 const { ExpressPeerServer } = require('peer');
 const logger = require("node-color-log");
 
@@ -22,6 +23,7 @@ function SocketApp(io, server) {
     // Create peer server
     ExpressPeerServer(server, { path: '/' });
 }
+
 module.exports = {
     socketApp: SocketApp,
     socketInfo: socketInfo

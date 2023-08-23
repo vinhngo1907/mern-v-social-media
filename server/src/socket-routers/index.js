@@ -8,36 +8,35 @@ const { callSocketController } = require("../socket-controllers");
 const { callSocket } = require("./call-socket.routing");
 
 function defaultSocket(io, socket, users) {
-    socket.on("disconnect", () => {
-        logger.warn("SOCKET DISCONNECT!!!");
-        const data = users.find(user => user.socketId === socket.id);
-        console.log({data});
+    socket.on('disconnect', () => {
+        logger.info("SOCKET DISCONNECT!!!");
+        const data = users.find(user => user.socketId === socket.id)
         if (data) {
             const clients = users.filter(user =>
-                data?.followers.find(u => u._id === user.id)
-            );
+                data.followers.find(u => u._id === user.id)
+            )
 
             if (clients.length > 0) {
-                clients.forEach(client =>
-                    socket.to(`${client.socketId}`).emit('checkUserOffline', data.id)
-                )
+                clients.forEach(client => {
+                    socket.to(`${client.socketId}`).emit('CheckUserOffline', data.id)
+                })
             }
 
             if (data.call) {
-                // console.log({ data });
-                const callUser = users.find(u => u.id === data.call);
+                const callUser = users.find(user => user.id === data.call)
                 if (callUser) {
-                    users = callSocketController.editData(users, callUser.id, null);
-                    socket.to(`${callUser.socketId}`).emit('callerDisconnect');
+                    users = editData(users, callUser.id, null)
+                    socket.to(`${callUser.socketId}`).emit('callerDisconnect')
                 }
             }
         }
 
-        users = users.filter(u => u.socketId !== socket.Id);
-    })
+        users = users.filter(user => user.socketId !== socket.id)
+    });
 }
 
 function SocketRoute(io, socket, users) {
+    console.log({users});
     // User
     userSocket(io, socket, users);
 

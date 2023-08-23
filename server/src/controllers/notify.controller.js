@@ -38,8 +38,13 @@ class NotifyController {
 
     async RemoveNotify(req, res) {
         try {
-            const removedNotify = await notifyModel.findOneAndDelete({ id: req.params.id, url: req.query.url });
-            if (!removedNotify) return res.status(400).json(responseDTO.badRequest("This notify not found"));
+
+            const removedNotify = await notifyModel.findOneAndDelete({
+                id: req.params.id,
+                url: req.query.url
+            });
+            // if (!removedNotify) 
+            //     return res.status(400).json(responseDTO.badRequest("This notify not found"));
 
             res.json(responseDTO.success("Deleted notify in successfully", removedNotify));
         } catch (error) {
