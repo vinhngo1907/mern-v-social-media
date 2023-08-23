@@ -6,9 +6,8 @@ class PostSocketContoller {
     likePost(io, socket, users, post) {
         logger.info("Like post");
         try {
-            const ids = [...post.user.followers, post.user._id]
-            const clients = users.filter(user => ids.includes(user.id))
-
+            const ids = [...post.user.followers, post.user._id];
+            const clients = users.filter(user => ids.includes(user.id));
             if (clients.length > 0) {
                 clients.forEach(client => {
                     socket.to(`${client.socketId}`).emit('likeToClient', post)

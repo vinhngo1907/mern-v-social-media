@@ -1,5 +1,4 @@
 const { socketRoute } = require("./socket-routers");
-// const { userSocket, callSocket, commentSocket, postSocket, notifySocket, defaultSocket, messageSocket } = require("./socket-routers");
 const { ExpressPeerServer } = require('peer');
 const logger = require("node-color-log");
 
@@ -11,10 +10,8 @@ const socketInfo = {
 
 function SocketApp(io, server) {
     let users = [];
-    // let socketServer = null;
     const onConnection = (socket) => {
         logger.info("NEW CONNECTION");
-        // socketServer = socket;
         socketRoute(io, socket, users);
         socketInfo.io = io;
         socketInfo.socket = socket;
