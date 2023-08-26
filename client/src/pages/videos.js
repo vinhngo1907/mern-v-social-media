@@ -7,7 +7,7 @@ import LeftSideBar from "../components/global/LeftSideBar";
 
 const Videos = () => {
     return (
-        <div className="notifications row mx-0 ">
+        <div className="home row mx-0 ">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>

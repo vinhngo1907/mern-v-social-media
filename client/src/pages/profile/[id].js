@@ -21,7 +21,7 @@ const Profile = () => {
     }, [id, profile.ids, dispatch, auth]);
 
     return (
-        <div className="profile row">
+        <div className="profile row mx-0">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar type="profile"/>
             </div>

@@ -20,7 +20,7 @@ const Notifications = () => {
     }
 
     return (
-        <div className="notifications row mx-0 ">
+        <div className="notifications row mx-0">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>

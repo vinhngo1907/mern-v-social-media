@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Images = () => {
     return (
-        <div className="profile row">
+        <div className="home row mx-0">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>
