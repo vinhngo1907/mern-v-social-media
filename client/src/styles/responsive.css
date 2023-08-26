@@ -114,4 +114,15 @@
     .message_sidebar {
         width: 70%;
     }
+
+    .photos > li {
+        border: 2px solid #fff;
+        float: left;
+        margin: 0;
+        min-width: 50%;
+        width: 50%;
+    }
+    .photos > li a {
+        overflow: unset;
+    }
 }

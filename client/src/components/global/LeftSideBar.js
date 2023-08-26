@@ -17,7 +17,7 @@ const LeftSideBar = ({ type }) => {
         { path: "/", icon: "fas fa-clipboard", content: "News feed" },
         { path: "/inbox", icon: "fas fa-mouse", content: "Inbox" },
         { path: "/groups", icon: "fas fa-users", content: "Groups" },
-        { path: "images.html", icon: "fas fa-image", content: "Images" },
+        { path: "/images", icon: "fas fa-image", content: "Images" },
         { path: "/videos", icon: "fas fa-video", content: "Videos" },
         { path: "/message", icon: "fas fa-comments", content: "Messages" },
         { path: "/notifications", icon: "fas fa-bell", content: "Notifications" },

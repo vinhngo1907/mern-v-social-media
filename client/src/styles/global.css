@@ -90,6 +90,8 @@ a:hover {
 
 img {
     object-fit: cover;
+    height: auto;
+    max-width: 100%;
 }
 
 textarea {
@@ -104,9 +106,11 @@ textarea {
 .menu-bar {
     cursor: pointer;
 }
+
 ul{
     list-style: none;
 }
+
 .notification-box>ul li figure img {
     border-radius: 100%;
 }
@@ -170,3 +174,6 @@ ul{
 
 /* --------- Call Modal ------ */
 @import url("./call_modal.css");
+
+/* --------- Explore ------ */
+@import url("./explore.css");

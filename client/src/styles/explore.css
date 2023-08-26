@@ -1,0 +1,33 @@
+/*--- photos page ---*/
+
+.photos {
+    list-style: outside none none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.photos>li {
+    display: inline-block;
+    min-width: 32.3%;
+    width: 32.3%;
+    margin: 0 1.3px;
+}
+
+.photos>li:hover a img {
+    transform: scale(1.01);
+}
+
+.photos>li a {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+}
+
+.photos>li a img {
+    width: 100%;
+}
+
+.strip {
+    display: inline-block;
+    position: relative;
+}
