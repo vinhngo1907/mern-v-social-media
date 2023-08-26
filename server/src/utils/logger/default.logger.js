@@ -6,14 +6,15 @@ const rfs = require("rotating-file-stream");
 class LoggerDefault {
     info(logText) {
         console.log(`${new Date()}info:::::${logText}`);
-    }
+    };
 
     debug(logText) {
         console.log(`${new Date()}debug:::::${logText}`);
     };
+
     error(logText) {
         console.log(`${new Date()}error:::::${logText}`);
-    }
+    };
 
     getCustomErrorMorganFormat() {
         return JSON.stringify({
