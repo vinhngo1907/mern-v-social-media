@@ -43,3 +43,7 @@
     color: white;
     margin: 0 25px;
 }
+
+.post_thumb>.strip:hover img {
+    transform: scale(1.01);
+}

@@ -25,7 +25,7 @@ const Profile = () => {
             <div className="left_sidebar col-md-3">
                 <LeftSideBar type="profile"/>
             </div>
-            <div className="main_sidebar col-md-8">
+            <div className="main_sidebar col-md-9">
                 <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} />
                 {
                     auth.user._id === id &&
