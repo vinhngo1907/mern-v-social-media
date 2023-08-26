@@ -48,7 +48,9 @@ class StatisticController {
 
                 await stats.save();
                 await stats.populate("user clients folowers following", "username fullname avatar following followers");
+                
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
+                
                 return res.json(responseDTO.success("submit duration success", {
                     ...stats._doc, user: req.user
                 }));
@@ -106,7 +108,7 @@ class StatisticController {
             const today = moment().format('LL');
             const socialStats = await socialModel.find({ loggedAt: today });
             if (!socialStats || socialStats.length === 0) {
-                logger.info(`No social stats fetched on ${today}`);
+                logger.warn(`No social stats fetched on ${today}`);
                 return res.json(responseDTO.success("Get data in successfully", []));
             }
 
