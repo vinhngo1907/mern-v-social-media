@@ -20,7 +20,7 @@ const Images = () => {
                     <ul className="photos">
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683475997/v-media/t9oylydkvuiime7lucty.jpg" alt="" />
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683457124/v-media/profileImg_cven4n.jpg" alt="" />
                             </Link>
                         </li>
                         <li>
@@ -41,48 +41,59 @@ const Images = () => {
 
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021030/v-media/photo1_zu5lxg.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021030/v-media/photo1_zu5lxg.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo11_yfjb2y.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo11_yfjb2y.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo13_qzblgw.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo13_qzblgw.jpg" alt="" />
+                            </Link>
                         </li>
 
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021481/v-media/photo-33_ux4e5h.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021481/v-media/photo-33_ux4e5h.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo12_d9tgln.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo12_d9tgln.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo8_a5sj2m.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo8_a5sj2m.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo10_mkjl6i.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo10_mkjl6i.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
                             <Link className="strip" to="#" title="">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693022056/v-media/photo-99_t2timb.jpg" alt="" /></Link>
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693022056/v-media/photo-99_t2timb.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
-                            <Link className="strip" to="images/resources/photo-99.jpg" title="">
-                                <img src="images/resources/photo12.jpg" alt="" /></Link>
+                            <Link className="strip" to="#" title="">
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo7_zz0djy.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
-                            <Link className="strip" to="images/resources/photo-66.jpg" title="">
-                                <img src="images/resources/photo6.jpg" alt="" /></Link>
+                            <Link className="strip" to="#" title="">
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1679677989/test/ispwvdjdqgkami7ndqha.jpg" alt="" />
+                            </Link>
                         </li>
                         <li>
-                            <Link className="strip" to="images/resources/photo-66.jpg" title="">
-                                <img src="images/resources/photo13.jpg" alt="" /></Link>
+                            <Link className="strip" to="#" title="">
+                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1674274804/test/c6vrerzsuhnroq5czb6j.jpg" alt="" />
+                            </Link>
                         </li>
                     </ul>
                 </div>
