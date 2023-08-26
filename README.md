@@ -7,8 +7,8 @@
 * search users by user name and full name
 * comments, likes and share post
 * likes and reply comment
-* realtime chat, phone call, video call
-* notifications for likes, comment,...
+* realtime chat, phone call, video call, comment, likes, follow
+* notifications for likes, comment, follow...
 * people nearby, posts explore
 * group chat,
 * other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
