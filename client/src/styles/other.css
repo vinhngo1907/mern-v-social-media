@@ -222,3 +222,29 @@
 #topcontrol:hover {
     transform: rotate(0);
 }
+
+/* Custom styles for the modal container */
+.modal {
+    display: flex;
+    align-items: stretch;
+    /* Stretch modal to match browser height */
+    justify-content: flex-end;
+    /* Align modal to the right */
+}
+
+.modal-body {
+    min-width: 500px;
+    height: 500px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.modal-body img,
+.modal-body video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}

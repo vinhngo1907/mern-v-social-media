@@ -124,7 +124,7 @@ const Images = () => {
                             <span className="sr-only">Loading...</span>
                         </div>
                             :
-                            <ItemGallery images={medias.images} result={medias.result} />
+                            <ItemGallery items={medias.images} result={medias.result} />
                     }
                     {
                         load && <div className="spinner-border d-block mx-auto text-primary" role="status">
