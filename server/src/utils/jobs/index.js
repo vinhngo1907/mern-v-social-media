@@ -75,7 +75,7 @@ class Job {
             // console.log(result.youtube);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
-                // const { socket } = socketInfo;
+                logger.info("Fetch Youtube Stats");
                 socketInfo.socket.emit("fetchYoutubeStats", result.youtube);
             }
             return result;
@@ -108,7 +108,7 @@ class Job {
             // console.log(result.github);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
-                // const { socket } = socketInfo;
+                logger.info("Fetch Github Stats");
                 socketInfo.socket.emit("fetchGithubStats", result.github);
             }
 
