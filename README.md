@@ -1,17 +1,17 @@
 # V-Social-Media
 
 ## Features
-* [*] HTTP basic
-* [*] login to create and enjoy your posts
-* [*] oauth2 with facebook, google and sms 
-* [*] search users by user name and full name
-* [*] comments, likes and share post
-* [*] likes and reply comment
-* [*] realtime chat, phone call, video call, comment, likes, follow
-* [*] notifications for likes, comment, follow...
-* [*] people nearby, posts explore
-* [*] group chat,
-* [*] other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
+* [x] HTTP basic
+* [x] login to create and enjoy your posts
+* [x] oauth2 with facebook, google and sms 
+* [x] search users by user name and full name
+* [x] comments, likes and share post
+* [x] likes and reply comment
+* [x] realtime chat, phone call, video call, comment, likes, follow
+* [x] notifications for likes, comment, follow...
+* [x] people nearby, posts explore
+* [x] group chat,
+* [x] other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
 
 ## Installation
 ### To run the app with Node.js and MongoDB
