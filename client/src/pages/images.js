@@ -119,94 +119,12 @@ const Images = () => {
                             </Link>
                         </li>
                     </ul> */}
-                    {/* <div className="post_thumb">
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683457124/v-media/profileImg_cven4n.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo5_jpcyas.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021030/v-media/photo4_g3lulp.jpg" alt="" />
-                            </div>
-                        </Link>
-
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021030/v-media/photo1_zu5lxg.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo11_yfjb2y.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021480/v-media/photo13_qzblgw.jpg" alt="" />
-                            </div>
-                        </Link>
-
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021481/v-media/photo-33_ux4e5h.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo12_d9tgln.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo8_a5sj2m.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021584/v-media/photo10_mkjl6i.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693022056/v-media/photo-99_t2timb.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo7_zz0djy.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1679677989/test/ispwvdjdqgkami7ndqha.jpg" alt="" />
-                            </div>
-                        </Link>
-                        <Link className="strip" to="#" title="">
-                            <div className="post_thumb_display">
-                                <img src="https://res.cloudinary.com/v-webdev/image/upload/v1674274804/test/c6vrerzsuhnroq5czb6j.jpg" alt="" />
-                            </div>
-                        </Link>
-                    </div> */}
                     {
                         medias.loading ? <div className='d-block mx-auto text-dark spinner-boder' role='status'>
                             <span className="sr-only">Loading...</span>
                         </div>
                             :
                             <ItemGallery images={medias.images} result={medias.result} />
-                    }
-                    {
-
                     }
                     {
                         load && <div className="spinner-border d-block mx-auto text-primary" role="status">
