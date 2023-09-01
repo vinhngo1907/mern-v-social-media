@@ -19,6 +19,7 @@ import social from './socialReducer';
 import call from './callReducer';
 import peer from './peerReducer';
 import medias from './mediaExploreReducer';
+import videos from './videoExploreReducer';
 
 export default combineReducers({
     auth,
@@ -39,5 +40,6 @@ export default combineReducers({
     online,
     call, 
     peer,
-    medias
+    medias,
+    videos
 });

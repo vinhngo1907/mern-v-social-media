@@ -22,6 +22,7 @@ import { getSocialStatistics } from "./redux/actions/socialAction";
 import Peer from "peerjs";
 import CallModal from "./components/message/CallModal";
 import ForgotPassord from "./pages/forgot_password";
+import { getDiscoverImages } from "./redux/actions/discoverAction";
 
 let scroll = 0;
 function App() {
@@ -44,6 +45,7 @@ function App() {
 			dispatch(getAllNotifies(auth.token));
 			dispatch(getTotalStatistics(auth.token));
 			dispatch(getSocialStatistics(auth.token));
+			dispatch(getDiscoverImages(auth.token));
 		}
 	}, [dispatch, auth.token]);
 
