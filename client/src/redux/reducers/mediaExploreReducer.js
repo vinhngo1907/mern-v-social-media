@@ -8,7 +8,7 @@ const initialState = {
     result: 9
 }
 
-const exploreReducer = (state = initialState, action) => {
+const mediaExploreReducer = (state = initialState, action) => {
     switch (action.type) {
         case DISCOVER_IMAGES_TYPES.LOADING:
             return {
@@ -35,4 +35,4 @@ const exploreReducer = (state = initialState, action) => {
     }
 }
 
-export default exploreReducer;
+export default mediaExploreReducer;
