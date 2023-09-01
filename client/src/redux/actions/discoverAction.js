@@ -7,6 +7,18 @@ export const DISCOVER_TYPES = {
     UPDATE_POST: 'UPDATE_DISCOVER_POST'
 }
 
+export const DISCOVER_IMAGES_TYPES = {
+    LOADING: 'LOADING_IMAGES',
+    GET_POSTS: 'GET_DISCOVER_IMAGES',
+    UPDATE_POST: 'UPDATE_DISCOVER_IMAGE'
+}
+
+export const DISCOVER_VIDEOS_TYPES = {
+    LOADING: 'LOADING_VIDEOS',
+    GET_POSTS: 'GET_DISCOVER_VIDEOS',
+    UPDATE_POST: 'UPDATE_DISCOVER_VIDEO'
+}
+
 export const getDiscoverPosts = (token) => async (dispatch) => {
     try {
         dispatch({ type: DISCOVER_TYPES.LOADING, payload: true })
@@ -16,5 +28,13 @@ export const getDiscoverPosts = (token) => async (dispatch) => {
         dispatch({ type: DISCOVER_TYPES.LOADING, payload: false })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } })
+    }
+}
+
+export const getDiscoverImages = (token) => async (dispatch) => {
+    try {
+        
+    } catch (err) {
+        dispatch({type:GLOBALTYPES.ALERT, payload: {error: err.response.data.message || err}});
     }
 }

@@ -3,6 +3,9 @@ const router = express.Router();
 const { userAuth } = require('../middleware');
 const { UploadController } = require("../controllers");
 const uploadCtrl = new UploadController();
+const rateLimit = require("express-rate-limit");
+const slowDown = require("express-slow-down");
+
 
 /**
  * @route POST api/upload/create
@@ -23,6 +26,16 @@ router.post('/destroy', userAuth, uploadCtrl.delete);
  * @desc Get all files
  * @access Private
  */
-router.get('/get', userAuth, uploadCtrl.get);
+const uploadApiRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100,
+});
+
+const speedLimiter = slowDown({
+    windowMs: 30 * 1000,
+    delayAfter: 1,
+    delayMs: 500,
+});
+router.get('/get', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.get);
 
 module.exports = router;
