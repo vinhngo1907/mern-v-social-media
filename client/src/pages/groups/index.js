@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LeftSideBar from "../../components/global/LeftSideBar";
+import RightSideBar from "../../components/global/RightSideBar";
 
 const Groups = () => {
     return (
@@ -118,6 +119,9 @@ const Groups = () => {
                     <div className="lodmore"><button className="btn-view btn-load-more"></button></div>
                 </div>
             </div>
+            <div className="right_sidebar col-md-3">
+				<RightSideBar />
+			</div>
         </div>
     )
 }

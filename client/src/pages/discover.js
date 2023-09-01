@@ -5,6 +5,7 @@ import { GLOBALTYPES } from '../redux/actions/globalTypes';
 import { getDataApi } from '../utils/fetchData';
 import PostThumb from "../components/other/PostThumb";
 import LoadMoreBtn from '../components/other/LoadMoreBtn';
+import LeftSideBar from '../components/global/LeftSideBar';
 
 const Discover = () => {
 	const { auth, discover } = useSelector(state => state);
@@ -28,23 +29,28 @@ const Discover = () => {
 		}
 	}
 	return (
-		<div>
-			{
-				discover.loading ? <div className='d-block mx-auto text-dark spinner-boder' role='status'>
-					<span className="sr-only">Loading...</span>
-				</div>
-					:
-					<PostThumb posts={discover.posts} result={discover.result} />
-			}
-			{
-				load && <div className="spinner-border d-block mx-auto text-primary" role="status">
-					<span className="sr-only">Loading...</span>
-				</div>
-			}
-			{
-				!discover.loading
-				&& <LoadMoreBtn load={load} page={discover.page} result={discover.result} handleLoadMore={handleLoadMore} />
-			}
+		<div className='home row mx-0'>
+			<div className="left_sidebar col-md-3">
+                <LeftSideBar />
+            </div>
+			<div className="main_sidebar py-1 col-md-6">
+				{
+					discover.loading ? <div className='d-block mx-auto text-dark spinner-boder' role='status'>
+						<span className="sr-only">Loading...</span>
+					</div>
+						:
+						<PostThumb posts={discover.posts} result={discover.result} />
+				}
+				{
+					load && <div className="spinner-border d-block mx-auto text-primary" role="status">
+						<span className="sr-only">Loading...</span>
+					</div>
+				}
+				{
+					!discover.loading
+					&& <LoadMoreBtn load={load} page={discover.page} result={discover.result} handleLoadMore={handleLoadMore} />
+				}
+			</div>
 		</div>
 	)
 }

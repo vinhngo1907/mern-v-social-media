@@ -35,7 +35,6 @@ const ItemGallery = ({ items, result }) => {
             {items.map((item, index) => (
                 <Link className="strip" to="#" title="">
                     <div className="post_thumb_display">
-                        {/* <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683457124/v-media/profileImg_cven4n.jpg" alt="" /> */}
                         {
                             item.url.match(/video/i)
                                 ? <video controls src={item.url} alt={item.url} onClick={() => handleItemClick(index)}
@@ -49,7 +48,7 @@ const ItemGallery = ({ items, result }) => {
             }
 
             {showModal && (
-                <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+                <div className={`modal ${showModal ? 'show' : ''}`} tabIndex="-1" role="dialog" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header">

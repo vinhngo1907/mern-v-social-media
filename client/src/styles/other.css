@@ -223,13 +223,33 @@
     transform: rotate(0);
 }
 
-/* Custom styles for the modal container */
+/* Add this to your existing CSS or stylesheet */
 .modal {
-    display: flex;
-    align-items: stretch;
-    /* Stretch modal to match browser height */
-    justify-content: flex-end;
-    /* Align modal to the right */
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    overflow: hidden;
+    outline: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.modal.show {
+    display: block;
 }
 
 .modal-body {
