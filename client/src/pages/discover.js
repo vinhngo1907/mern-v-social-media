@@ -37,7 +37,7 @@ const Discover = () => {
 					<PostThumb posts={discover.posts} result={discover.result} />
 			}
 			{
-				load && <div className='d-block mx-auto text-primary spinner-boder' role='status'>
+				load && <div className="spinner-border d-block mx-auto text-primary" role="status">
 					<span className="sr-only">Loading...</span>
 				</div>
 			}
