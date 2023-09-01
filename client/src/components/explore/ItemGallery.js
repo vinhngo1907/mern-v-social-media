@@ -72,16 +72,15 @@ const ItemGallery = ({ images, result }) => {
                                 />
                             </div>
                             <div className="modal-footer">
-                                {currentImageIndex > 0 && (
-                                    <button className="btn btn-secondary" onClick={handlePrevImage}>
-                                        Previous
-                                    </button>
-                                )}
-                                {currentImageIndex < images.length - 1 && (
-                                    <button className="btn btn-primary" onClick={handleNextImage}>
-                                        Next
-                                    </button>
-                                )}
+                                <span className="mr-auto">
+                                    {currentImageIndex + 1} of {images.length}
+                                </span>
+                                <button className="btn btn-link" onClick={handlePrevImage}>
+                                    &lt;
+                                </button>
+                                <button className="btn btn-link" onClick={handleNextImage}>
+                                    &gt;
+                                </button>
                             </div>
                         </div>
                     </div>
