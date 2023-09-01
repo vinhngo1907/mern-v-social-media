@@ -200,10 +200,10 @@ const Images = () => {
                     </div> */}
                     {
                         medias.loading ? <div className='d-block mx-auto text-dark spinner-boder' role='status'>
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                        :
-                        <ItemGallery images={medias.posts} result={medias.result} />
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                            :
+                            <ItemGallery images={medias.images} result={medias.result} />
                     }
                     {
 
