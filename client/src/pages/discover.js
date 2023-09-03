@@ -35,7 +35,7 @@ const Discover = () => {
             </div>
 			<div className="main_sidebar py-1 col-md-6">
 				{
-					discover.loading ? <div className='d-block mx-auto text-dark spinner-boder' role='status'>
+					discover.loading ? <div className='d-block mx-auto text-dark spinner-border' role='status'>
 						<span className="sr-only">Loading...</span>
 					</div>
 						:

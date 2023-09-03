@@ -9,7 +9,7 @@ cloudinary.config({
     api_secret: `${API_SECRET}`
 
 });
-
+let allImages = [];
 class UploadController {
     post(req, res) {
         try {
@@ -68,12 +68,12 @@ class UploadController {
                 next_cursor: nextPageCursor,
             }, function (err, result) {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-
+                allImages.push(...result.resources);
                 // nextPageCursor = result.next_cursor;
                 res.json(responseDTO.success("Get data in successfully", {
-                    medias: result.resources,
+                    medias: allImages,
                     result: result.resources.length,
-                    nextPageCursor
+                    nextPageCursor: result.next_cursor
                 }));
             });
         } catch (error) {
