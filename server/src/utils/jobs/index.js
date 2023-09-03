@@ -75,6 +75,7 @@ class Job {
             // console.log(result.youtube);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
+                console.log({socketInfo});
                 logger.info("Fetch Youtube Stats");
                 socketInfo.socket.emit("fetchYoutubeStats", result.youtube);
             }

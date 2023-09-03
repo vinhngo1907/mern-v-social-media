@@ -59,10 +59,23 @@ class UploadController {
 
     get(req, res) {
         try {
-            cloudinary.v2.api.resources({ type: "upload", prefix: "v-media" }, function (err, result) {
+            const num = req.query.num || 9;
+            let nextPageCursor = req.query.next_cursor || null;
+            cloudinary.v2.api.resources({
+                type: "upload",
+                prefix: "v-media",
+                max_results: num,
+                next_cursor: nextPageCursor,
+            }, function (err, result) {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                res.json(responseDTO.success("Get data in successfully", { medias: result.resources, result: result.resources.length }))
-            })
+
+                // nextPageCursor = result.next_cursor;
+                res.json(responseDTO.success("Get data in successfully", {
+                    medias: result.resources,
+                    result: result.resources.length,
+                    nextPageCursor
+                }));
+            });
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

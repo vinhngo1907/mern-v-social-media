@@ -32,19 +32,20 @@ const ItemGallery = ({ items, result }) => {
 
     return (
         <div className='post_thumb'>
-            {items.map((item, index) => (
-                <Link className="strip" to="#" title="">
-                    <div className="post_thumb_display">
-                        {
-                            item.url.match(/video/i)
-                                ? <video controls src={item.url} alt={item.url} onClick={() => handleItemClick(index)}
-                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-                                : <img src={item.url} alt={item.url} onClick={() => handleItemClick(index)}
-                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-                        }
-                    </div>
-                </Link>
-            ))
+            {
+                items.map((item, index) => (
+                    <Link className="strip" to="#" title="" key={`${item.public_id}-${index}`}>
+                        <div className="post_thumb_display">
+                            {
+                                item.url.match(/video/i)
+                                    ? <video controls src={item.url} alt={item.url} onClick={() => handleItemClick(index)}
+                                        style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
+                                    : <img src={item.url} alt={item.url} onClick={() => handleItemClick(index)}
+                                        style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
+                            }
+                        </div>
+                    </Link>
+                ))
             }
 
             {showModal && (

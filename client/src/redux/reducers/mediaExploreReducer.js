@@ -5,7 +5,8 @@ const initialState = {
     loading: false,
     firstLoad: false,
     page: 2,
-    result: 9
+    result: 9,
+    nextPageCursor: null
 }
 
 const mediaExploreReducer = (state = initialState, action) => {
@@ -21,6 +22,7 @@ const mediaExploreReducer = (state = initialState, action) => {
                 ...state,
                 images: action.payload.medias,
                 result: action.payload.result,
+                nextPageCursor: action.payload.nextPageCursor,
                 firstLoad: true
             }
         case DISCOVER_IMAGES_TYPES.UPDATE_IMAGE:
@@ -28,7 +30,8 @@ const mediaExploreReducer = (state = initialState, action) => {
                 ...state,
                 images: action.payload.medias,
                 result: action.payload.result,
-                page: state.page + 1
+                page: state.page + 1,
+                nextPageCursor: action.payload.nextPageCursor
             }
         default:
             return state;

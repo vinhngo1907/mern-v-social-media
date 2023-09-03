@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LeftSideBar from "../components/global/LeftSideBar";
-// import { Link } from "react-router-dom";
 import { DISCOVER_IMAGES_TYPES, getDiscoverImages } from "../redux/actions/discoverAction";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
 import LoadMoreBtn from "../components/other/LoadMoreBtn";
