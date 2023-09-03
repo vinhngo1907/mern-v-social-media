@@ -11,6 +11,7 @@ const Videos = () => {
     const { auth, videos } = useSelector(state => state);
     const [load, setLoad] = useState(false);
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (!videos.firstLoad) {
             // dispatch()
@@ -27,17 +28,46 @@ const Videos = () => {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response.data.message || error } });
         }
     }
+    const changeMute = () => {
 
+    }
     return (
         <div className="home row mx-0 ">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>
-            <div className="main_sidebar py-3 col-md-8">
+            <div className="main_sidebar py-3 col-md-9">
                 <div className="central-meta">
                     <div className="editing-interest">
                         <h5 className="f-title">Explore Videos</h5>
                     </div>
+                    <main>
+                        <div id="videos-container" className="row">
+                            <div className="col-md-8 current-video">
+                                <div id="main-video">
+                                    <div id="video">
+                                        {/* <p className="videos-container__header" style="margin-left: 0.6667em; width: 100%">Currently playing</span> */}
+                                        <div id="video-react" style={{width:"100%;"}}>
+                                            <button id="muted" onclick={changeMute}>
+                                                <i className="fas fa-volume-mute"></i>
+                                            </button>
+                                            <input id="volume-control" type="range" min="0" max="100" value="0" />
+                                        </div>
+                                        <div id="videoPlaying"></div>
+                                        <div id="video-content">
+                                            <div id="titlePlayingVideo"></div>
+                                        </div>
+                                        <div className="video-voting">
+                                            <div id="playing-video-voting" className=" playing-vote"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-4 videos-container__tracks" id="queueTracks">
+                                {/* <p className="videos-container__header">Tracks</span> */}
+                            </div>
+                        </div>
+                    </main>
                     {
                         videos.loading ? <div className='d-block mx-auto text-dark spinner-border' role='status'>
                             <span className="sr-only">Loading...</span>
