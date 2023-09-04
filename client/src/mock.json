@@ -1,0 +1,12 @@
+{
+    "videos": [
+        {
+            "public_id": "samples/elephants",
+            "url": "https://res.cloudinary.com/v-webdev/video/upload/v1652077550/samples/elephants.mp4"
+        },
+        {
+            "public_id": "samples/sea-turtle",
+            "url": "https://res.cloudinary.com/v-webdev/video/upload/v1652077548/samples/sea-turtle.mp4"
+        }
+    ]
+}
