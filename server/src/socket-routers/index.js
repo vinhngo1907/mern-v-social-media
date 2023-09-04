@@ -192,7 +192,19 @@ function SocketRoute(io, socketInfo) {
         });
 
         socket.on("editPost", (post) => {
-            // postSocketController.editPost(io, socket, users, post);
+            logger.info("Edit post");
+            try {
+                const ids = [...post.user.followers];
+                // console.log({ ids });
+                const clients = users.filter((user) => ids.includes(user.id));
+                if (clients && clients.length > 0) {
+                    clients.forEach((client) => {
+                        socket.to(`${client.socketId}`).emit('editPostToClient', post);
+                    });
+                };
+            } catch (error) {
+                logger.error(error.message);
+            }
         });
 
         socket.on("deletePost", (post) => {

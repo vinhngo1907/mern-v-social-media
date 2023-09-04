@@ -58,7 +58,6 @@ class UploadController {
     }
 
     get(req, res) {
-        console.log("test")
         try {
             const num = Number(req.query.num) || 9;
             let nextPageCursor = req.query.next_cursor || null;
