@@ -46,7 +46,9 @@ const Videos = () => {
                             <div className="col-md-8 current-video">
                                 <div id="main-video">
                                     <div id="video">
-                                        {/* <p className="videos-container__header" style="margin-left: 0.6667em; width: 100%">Currently playing</span> */}
+                                        <p className="videos-container__header" style={{"marginLeft": "0.6667em", width: "100%"}}>
+                                            Currently playing
+                                        </p>
                                         <div id="video-react" style={{width:"100%;"}}>
                                             <button id="muted" onclick={changeMute}>
                                                 <i className="fas fa-volume-mute"></i>
