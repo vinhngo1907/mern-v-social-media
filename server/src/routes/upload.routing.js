@@ -38,4 +38,12 @@ const speedLimiter = slowDown({
 });
 router.get('/get', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.get);
 
+/**
+ * @route GET api/upload/video
+ * @desc Get all videos
+ * @access Private
+ */
+
+router.get('/videos', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.getVideos);
+
 module.exports = router;

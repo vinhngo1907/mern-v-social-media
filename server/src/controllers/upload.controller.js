@@ -58,6 +58,7 @@ class UploadController {
     }
 
     get(req, res) {
+        console.log("test")
         try {
             const num = Number(req.query.num) || 9;
             let nextPageCursor = req.query.next_cursor || null;
@@ -68,7 +69,38 @@ class UploadController {
                 next_cursor: nextPageCursor,
             }, function (err, result) {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                // allImages.push(...result.resources);
+
+                result.resources.forEach(item => {
+                    if (!allImages.some((existingItem) => existingItem.public_id === item.public_id)) {
+                        allImages.push(item);
+                    }
+                });
+
+                res.json(responseDTO.success("Get data in successfully", {
+                    medias: allImages,
+                    result: allImages.length,
+                    nextPageCursor: result.next_cursor
+                }));
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    getVideos(req, res) {
+        try {
+            const num = Number(req.query.num) || 9;
+            let nextPageCursor = req.query.next_cursor || null;
+            cloudinary.v2.api.resources({
+                type: "upload",
+                prefix: "samples",
+                max_results: num,
+                resource_type: "video",
+                next_cursor: nextPageCursor,
+            }, function (err, result) {
+                if (err) return res.status(400).json(responseDTO.badRequest('No videos Selected'));
+
                 result.resources.forEach(item => {
                     if (!allImages.some((existingItem) => existingItem.public_id === item.public_id)) {
                         allImages.push(item);
