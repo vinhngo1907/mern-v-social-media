@@ -59,7 +59,7 @@ class UploadController {
 
     get(req, res) {
         try {
-            const num = req.query.num || 9;
+            const num = Number(req.query.num) || 9;
             let nextPageCursor = req.query.next_cursor || null;
             cloudinary.v2.api.resources({
                 type: "upload",
@@ -68,11 +68,16 @@ class UploadController {
                 next_cursor: nextPageCursor,
             }, function (err, result) {
                 if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                allImages.push(...result.resources);
-                // nextPageCursor = result.next_cursor;
+                // allImages.push(...result.resources);
+                result.resources.forEach(item => {
+                    if (!allImages.some((existingItem) => existingItem.public_id === item.public_id)) {
+                        allImages.push(item);
+                    }
+                });
+
                 res.json(responseDTO.success("Get data in successfully", {
                     medias: allImages,
-                    result: result.resources.length,
+                    result: allImages.length,
                     nextPageCursor: result.next_cursor
                 }));
             });
