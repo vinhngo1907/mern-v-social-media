@@ -46,10 +46,10 @@ const Videos = () => {
                             <div className="col-md-8 current-video">
                                 <div id="main-video">
                                     <div id="video">
-                                        <p className="videos-container__header" style={{"marginLeft": "0.6667em", width: "100%"}}>
+                                        <p className="videos-container__header" style={{ "marginLeft": "0.6667em", width: "100%" }}>
                                             Currently playing
                                         </p>
-                                        <div id="video-react" style={{width:"100%;"}}>
+                                        <div id="video-react" style={{ width: "100%;" }}>
                                             <button id="muted" onclick={changeMute}>
                                                 <i className="fas fa-volume-mute"></i>
                                             </button>
@@ -66,7 +66,33 @@ const Videos = () => {
                                 </div>
                             </div>
                             <div className="col-md-4 videos-container__tracks" id="queueTracks">
-                                {/* <p className="videos-container__header">Tracks</span> */}
+                                <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
+                                    <div className="col-1 videos-container__track-no" >1</div>
+                                    <div className="col-3 videos-container__track-image">
+                                        <img src="https://i.ytimg.com/vi/ywbKigZxuD8/default.jpg" className="thumbnail" />
+                                        <div className="video-voting" id="queueTracks-6456514bc2b036a247ac62dd">
+
+                                            <i className="fas fa-arrow-up q-m"
+                                            // onclick="toggleLikeVideo('6456514bc2b036a247ac62dd')"
+                                            ></i>
+                                            <h5 className="vote-counter" style={{
+                                                paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem"
+                                            }}>2</h5>
+                                            <i className="fas fa-arrow-down q-m"
+                                            // onclick="toggleDislikeVideo('6456514bc2b036a247ac62dd')"
+                                            ></i>
+
+                                        </div>
+                                    </div>
+                                    <div className="col-8 videos-container__track-info">
+                                        <div className="videos-container__track-info__video-name">
+                                            🎶 Nightcore ▶ 😿 UNDERWATER 😿 (Lyrics) | Nikki Flores
+                                        </div>
+                                        <div className="videos-container__track-info__suggested">
+                                            Suggested by <strong classname="sugested-author">vinhtrungngo1907</strong>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </main>
