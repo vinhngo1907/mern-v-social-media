@@ -16,9 +16,9 @@
 
 .comet-avatar {
     display: table-cell;
-    max-width: 7.6%;
+    max-width: 8%;
     vertical-align: top;
-    width: 7.6%;
+    width: 8%;
 }
 
 /* .post-comment .comet-avatar {
