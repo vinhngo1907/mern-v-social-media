@@ -8,5 +8,6 @@ module.exports = {
     StatisticController: require("./statistic.controller"),
     MessageController: require("./message.controller"),
     ConversationController: require("./conversation.controller"),
-    GroupController: require("./group.controller")
+    GroupController: require("./group.controller"),
+    VideoController: require("./video.controller")
 }

@@ -13,8 +13,8 @@ let playingVideo = null;
 let currentVideoStartedTime = null;
 // import io from '../../index.js';
 
-const videoController = {
-    getVideoById: async (id)=> {
+class VideoController {
+    async getVideoById(req, res) {
         try {
             return await postModel.findById(id);
         } catch (error) {
@@ -23,4 +23,4 @@ const videoController = {
     }
 }
 
-module.exports = videoController;
+module.exports = VideoController;
