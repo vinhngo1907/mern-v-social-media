@@ -2,6 +2,7 @@ module.exports = {
     Mailer: require("./emails"),
     Mobile: require("./mobiles"),
     APIFeatures: require("./libs"),
+    Queue: require("./queue"),
     loggerUtil: require("./logger"),
     signature: require("./tokens"),
     responseDTO: require("./dtos"),

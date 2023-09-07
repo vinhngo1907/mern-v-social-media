@@ -8,4 +8,4 @@ class Queue {
     setItems(items) { this.q = items; }
 }
 
-module.exports = new Queue;
+module.exports = Queue;
