@@ -1,8 +1,10 @@
 "use strict"
-const { responseDTO, validation, Queue } = require("../utils");
+// const { responseDTO, validation, Queue } = require("../utils");
+const Queue = require("../utils/queue");
 const { modelSchema } = require("../db");
 const { userModel, postModel } = modelSchema;
 const moment = require("moment-timezone");
+
 const videoQueue = new Queue();
 
 let seniorSongs = [];
@@ -14,4 +16,8 @@ let currentVideoStartedTime = null;
 
 exports.getTracksQueue = async () => {
     return songsForQueue;
+}
+
+exports.getPlayingVideo = async () => {
+
 }
