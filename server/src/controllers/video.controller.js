@@ -4,7 +4,7 @@ const { videoService } = require("../services");
 class VideoController {
     async getById(req, res, next) {
         try {
-            return await videoService.getVideoById(id);
+            return await videoService.getVideoById(req.params.id);
         } catch (error) {
             next(error);
         }

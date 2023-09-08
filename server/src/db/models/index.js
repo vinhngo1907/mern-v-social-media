@@ -7,5 +7,6 @@ module.exports = {
     socialModel: require("./social.model"),
     conversationModel: require("./conversation.model"),
     messageModel: require("./message.model"),
-    groupModel: require("./group.model")
+    groupModel: require("./group.model"),
+    videoModel: require("./video.model")
 }
