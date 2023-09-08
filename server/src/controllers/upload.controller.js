@@ -42,8 +42,16 @@ class UploadController {
                 removeTmp(file.tempFilePath)
                 return res.status(400).json(responseDTO.badRequest('The file format is incorrect.'))
             }
+            let resource_type = 'auto';
+            if (file.mimetype.startsWith('image/')) {
+                resource_type = 'image';
+            } else if (file.mimetype.startsWith('video/')) {
+                resource_type = 'video';
+            }
 
-            cloudinary.v2.uploader.upload(file.tempFilePath, { folder: "v-media" }, async (err, result) => {
+            cloudinary.v2.uploader.upload(file.tempFilePath, {
+                folder: "v-media", resource_type: resource_type, allowed_formats: ['jpeg', 'jpg', 'png', 'mp4'],
+            }, async (err, result) => {
                 try {
                     if (err) {
                         console.log(err);
