@@ -1,6 +1,6 @@
 "use strict";
 
-const { videoService } = require("../services")
+const { videoService } = require("../services");
 class VideoController {
     async getById(req, res, next) {
         try {
@@ -9,6 +9,7 @@ class VideoController {
             next(error);
         }
     }
+    
     async getAll(req, res, next) {
         try {
             const videos = await videoService.getAll();
