@@ -11,6 +11,15 @@ cloudinary.config({
     api_secret: `${API_SECRET}`
 
 });
+
+
+// Transformation to generate a thumbnail
+const thumbnailTransformation = {
+    width: 100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+    crop: 'fill' // Crop method (fill, scale, etc.)
+};
+
 let allImages = [];
 class UploadController {
     post(req, res) {
@@ -19,35 +28,46 @@ class UploadController {
                 return res.status(400).json(responseDTO.badRequest('No files were uploaded.'));
             }
             const { file } = req.files;
-            if (file.size > 1024 * 1024) {
+            if (file.size > 5 * 1024 * 1024) {
                 removeTmp(file.tempFilePath)
                 return res.status(400).json(responseDTO.badRequest('The large file size is 1mb.'));
             }
 
-            if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png' && file.mimetype !== "image/jpg") {
+            if (
+                file.mimetype !== 'image/jpeg' &&
+                file.mimetype !== 'image/png' &&
+                file.mimetype !== "image/jpg" &&
+                file.mimetype !== "video/mp4"
+            ) {
                 removeTmp(file.tempFilePath)
                 return res.status(400).json(responseDTO.badRequest('The file format is incorrect.'))
             }
 
             cloudinary.v2.uploader.upload(file.tempFilePath, { folder: "v-media" }, async (err, result) => {
-                if (err) {
-                    console.log(err);
-                    throw err;
+                try {
+                    if (err) {
+                        console.log(err);
+                        throw err;
+                    }
+
+                    if (result.resource_type === "video") {
+                        const { secure_url, public_id } = result;
+                        const newVideo = new videoModel({
+                            videoId: public_id,
+                            videoUrl: secure_url,
+                            user: req.user._id,
+                            title: "sample",
+                            duration: result?.duration || 0,
+                            thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
+                        });
+                        await newVideo.save();
+                    }
+                    removeTmp(file.tempFilePath);
+                    res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }));
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).json(responseDTO.serverError('Internal server error'));
                 }
-                removeTmp(file.tempFilePath);
-                // if (result.resource_type === "video") {
-                //     const { secure_url, public_id, } = result;
-                //     const newVideo = new videoModel({
-                //         videoId: public_id,
-                //         videoUrl: secure_url,
-                //         user: req.user._id,
-                //         title: "sample",
-                //         duration: 0,
-                //         thumbnailUrl: ""
-                //     });
-                //     await newVideo.save();
-                // }
-                res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }))
             });
 
         } catch (error) {
