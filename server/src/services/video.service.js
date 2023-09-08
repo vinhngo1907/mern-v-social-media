@@ -1,6 +1,6 @@
 "use strict"
-// const { responseDTO, validation, Queue } = require("../utils");
 const Queue = require("../utils/queue");
+const { responseDTO, validation } = require("../utils");
 const { modelSchema } = require("../db");
 const { userModel, postModel } = modelSchema;
 const moment = require("moment-timezone");
@@ -20,4 +20,20 @@ exports.getTracksQueue = async () => {
 
 exports.getPlayingVideo = async () => {
 
+}
+
+exports.getVideoById = async (id) => {
+    try {
+        return await postModel.findById({_id: id});
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.getAll = async () => {
+    try {
+        return songsForQueue;
+    } catch (error) {
+        throw error;
+    }
 }

@@ -1,6 +1,7 @@
 const logger = require("node-color-log");
 const { videoService } = require("../services");
-const { getTracksQueue } = videoService
+const { getTracksQueue } = videoService;
+
 function editData(data, id, call) {
     const newData = data.map(item => item.id === id ? { ...item, call } : item);
     return newData;

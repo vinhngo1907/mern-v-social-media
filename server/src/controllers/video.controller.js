@@ -1,13 +1,20 @@
-"use strict"
-const { responseDTO, validation, Queue } = require("../utils");
-const { modelSchema } = require("../db");
-const { userModel, postModel } = modelSchema;
+"use strict";
+
+const { videoService } = require("../services")
 class VideoController {
-    async getVideoById(req, res) {
+    async getById(req, res, next) {
         try {
-            return await postModel.findById(id);
+            return await videoService.getVideoById(id);
         } catch (error) {
-            throw error;
+            next(error);
+        }
+    }
+    async getAll(req, res, next) {
+        try {
+            const videos = await videoService.getAll();
+            return res.json(videos);
+        } catch (error) {
+            next(error);
         }
     }
 }
