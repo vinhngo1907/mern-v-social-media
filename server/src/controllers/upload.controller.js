@@ -2,6 +2,8 @@ const fs = require("fs");
 const cloudinary = require('cloudinary');
 const { CLOUD_NAME, API_KEY, API_SECRET } = require("../configs");
 const { responseDTO } = require("../utils");
+const { modelSchema } = require("../db");
+const { videoModel } = modelSchema;
 
 cloudinary.config({
     cloud_name: `${CLOUD_NAME}`,
@@ -33,6 +35,18 @@ class UploadController {
                     throw err;
                 }
                 removeTmp(file.tempFilePath);
+                // if (result.resource_type === "video") {
+                //     const { secure_url, public_id, } = result;
+                //     const newVideo = new videoModel({
+                //         videoId: public_id,
+                //         videoUrl: secure_url,
+                //         user: req.user._id,
+                //         title: "sample",
+                //         duration: 0,
+                //         thumbnailUrl: ""
+                //     });
+                //     await newVideo.save();
+                // }
                 res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }))
             });
 
