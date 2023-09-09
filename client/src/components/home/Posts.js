@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PostCard from "../other/PostCard";
 import LoadMoreBtn from "../other/LoadMoreBtn";
+import { getDataApi } from "../../utils/fetchData";
+import { POST_TYPES } from "../../redux/actions/postAction";
 
 const Posts = () => {
-    const { homePosts, theme } = useSelector(state => state);
+    const { homePosts, theme, auth } = useSelector(state => state);
     const [load, setLoad] = useState(false);
+    const dispatch = useDispatch();
 
-    const handleLoadMore = () => {
+    const handleLoadMore = async () => {
         setLoad(true);
+        const res = await getDataApi(`post?limit=${homePosts.page * 9}`, auth.token);
+        dispatch({ type: POST_TYPES.GET_POSTS, payload: { posts: res.data.results.posts, result: res.data.results.result } });
         setLoad(false);
     }
 
@@ -20,7 +25,7 @@ const Posts = () => {
                 ))
             }
             {
-                load && <div className="spinner-border text-primary" role="status">
+                load && <div className="spinner-border text-primary mx-auto d-block" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
             }
