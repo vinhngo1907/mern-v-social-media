@@ -2,9 +2,9 @@
 const Queue = require("../utils/queue");
 // const { responseDTO, validation } = require("../utils");
 const { modelSchema } = require("../db");
-const { userModel, postModel } = modelSchema;
+const { userModel, videoModel } = modelSchema;
 const moment = require("moment-timezone");
-// const { socketInfo } = require("../socket-app");
+const io = require("../app");
 const videoQueue = new Queue();
 
 let seniorSongs = [];
@@ -16,7 +16,7 @@ let currentVideoStartedTime = null;
 
 exports.getVideoById = async (id) => {
     try {
-        return await postModel.findById({ _id: id });
+        return await videoModel.findById(id);
     } catch (error) {
         throw error;
     }
@@ -55,7 +55,36 @@ exports.getOther = () => {
 }
 
 exports.initPlaylist = async () => {
+    const videos = await videoModel.find().populate('user', 'username');
+    const sortVideos = await videos.sort((a, b) => {
+        const firstElementInteractions = a.likes.length = a.dislikes.length;
+        const secondElementInteractions = b.likes.length - b.dislikes.length;
 
+        if (firstElementInteractions > secondElementInteractions) return -1;
+        if (firstElementInteractions < secondElementInteractions) return 1;
+        return 0;
+    });
+    seniorSongs = sortVideos.slice(0, 40);
+    io.emit('senior-tracks-update', seniorSongs);
+    juniorSongs = sortVideos.slice(40, 100);
+    io.emit('junior-tracks-update', juniorSongs);
+    otherSongs = sortVideos.slice(100);
+    io.emit('other-tracks-update', otherSongs);
+
+    songsForQueue = [];
+    if (juniorSongs.length > 0) {
+        const fiveRandomJuniorSongs = shuffleVideos(juniorSongs).slice(0, 10);
+        songsForQueue.push(...fiveRandomJuniorSongs);
+    }
+    songsForQueue.push(...seniorSongs);
+    songsForQueue = shuffleVideos(songsForQueue);
+
+    for(const video of songsForQueue){
+        videoQueue.enqueue(video);
+    }
+
+    io.emit('update-tracks', songsForQueue);
+    return songsForQueue;
 }
 
 function shuffleVideos(videos) {
