@@ -101,7 +101,7 @@ class StatisticController {
                 const { cacheTime, data } = jobsUtil.statCache;
                 const durationUntilNow = moment.duration(cacheTime.diff(moment())).asSeconds();
                 if (durationUntilNow < 30) {
-                    return res.json(responseDTO.success("Get data in insuccessfully", data));
+                    return res.json(responseDTO.success("Get data cached in successfully", data));
                 }
             }
 

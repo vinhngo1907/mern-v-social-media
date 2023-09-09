@@ -21,12 +21,22 @@ const socialReducer = (state = initalState, action) => {
         case SOCIAL_TYPES.UPDATE_GITHUB_STATS:
             return {
                 ...state,
-                data: state.data.map((social) => social.title === action.payload.title ? action.payload : social)
+                data: updateDataSocial(state, action)
+                // data: !state.data.some(d => d.title === action.payload.title)
+                //     ? state.data.map((social) => social.title === action.payload.title ? action.payload : social)
+                //     : [...state.data, action.payload]
             }
         case SOCIAL_TYPES.UPDATE_YT_STATS:
+            // state.data.map((social) => social.title === action.payload.title ? action.payload : social)
+            // return {
+            //     ...state,
+            //     data: !state.data.some(d => d.title === action.payload.title)
+            //         ? [...state.data, action.payload]
+            //         : state.data.map((social) => social.title === action.payload.title ? action.payload : social)
+            // }
             return {
                 ...state,
-                data: state.data.map((social) => social.title === action.payload.title ? action.payload : social)
+                data: updateDataSocial(state, action)
             }
         case SOCIAL_TYPES.UPDATE_SOCIAL_STATS:
             return {
@@ -36,6 +46,17 @@ const socialReducer = (state = initalState, action) => {
 
         default:
             return state;
+    }
+}
+
+
+function updateDataSocial(state, action){
+    if(!state.data.every(d => d.title === action.payload.title)){
+        state.data.push(action.payload);
+        return state.data;
+    }else{
+        state.data = state.data.map((social) => social.title === action.payload.title ? action.payload : social);
+        return state.data
     }
 }
 

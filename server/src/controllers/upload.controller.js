@@ -12,7 +12,6 @@ cloudinary.config({
 
 });
 
-
 // Transformation to generate a thumbnail
 const thumbnailTransformation = {
     width: 100, // Adjust the width as needed
