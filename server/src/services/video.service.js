@@ -4,7 +4,7 @@ const Queue = require("../utils/queue");
 const { modelSchema } = require("../db");
 const { userModel, postModel } = modelSchema;
 const moment = require("moment-timezone");
-const { socketInfo } = require("../socket-app");
+// const { socketInfo } = require("../socket-app");
 const videoQueue = new Queue();
 
 let seniorSongs = [];
@@ -13,19 +13,6 @@ let otherSongs = [];
 let songsForQueue = [];
 let playingVideo = null;
 let currentVideoStartedTime = null;
-
-exports.getTracksQueue = async () => {
-    return songsForQueue;
-}
-
-function shuffleVideos(videos) {
-    return videos.sort(() => Math.random() - 0.5);
-}
-
-exports.getPlayingVideo = async () => {
-    const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
-    return { playedTime, playedTime }
-}
 
 exports.getVideoById = async (id) => {
     try {
@@ -65,4 +52,21 @@ exports.getOther = () => {
     } catch (error) {
         throw error;
     }
+}
+
+exports.initPlaylist = async () => {
+
+}
+
+function shuffleVideos(videos) {
+    return videos.sort(() => Math.random() - 0.5);
+}
+
+exports.getPlayingVideo = async () => {
+    const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
+    return { playedTime, playedTime }
+}
+
+exports.getTracksInQueue = async () => {
+    return songsForQueue;
 }

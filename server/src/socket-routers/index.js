@@ -1,6 +1,6 @@
 const logger = require("node-color-log");
 const { videoService } = require("../services");
-const { getTracksQueue } = videoService;
+const { getTracksInQueue } = videoService;
 
 function editData(data, id, call) {
     const newData = data.map(item => item.id === id ? { ...item, call } : item);
@@ -326,7 +326,7 @@ function SocketRoute(io, socketInfo) {
             // console.log({users});
         });
 
-        const tracks = getTracksQueue();
+        const tracks = getTracksInQueue();
         // socketInfo.io = io;
         socketInfo.socket = socket;
         socketInfo.users = users;
