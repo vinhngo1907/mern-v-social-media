@@ -27,6 +27,7 @@ const Posts = ({ auth, id, dispatch, profile }) => {
         dispatch({ type: PROFILE_TYPES.UPDATE_POST, payload: newData })
         setLoad(false);
     }
+
     return (
         <div>
             <PostThumb posts={posts} result={result} />

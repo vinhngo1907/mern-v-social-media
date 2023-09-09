@@ -35,4 +35,4 @@ const Following = ({ users, setShowFollowing }) => {
     )
 }
 
-export default Following
+export default Following;

@@ -1,35 +1,11 @@
 import React from "react";
 import LeftSideBar from "../components/global/LeftSideBar";
-import {
-    // useDispatch, 
-    useSelector
-} from "react-redux";
-// import LoadMoreBtn from "../components/other/LoadMoreBtn";
-// import { GLOBALTYPES } from "../redux/actions/globalTypes";
-// import { DISCOVER_VIDEOS_TYPES } from "../redux/actions/discoverAction";
-// import { getDataApi } from "../utils/fetchData";
+import { useSelector } from "react-redux";
 import ItemGallery from "../components/explore/ItemGallery";
 
 const Videos = () => {
-    const { videos } = useSelector(state => state);
-    // const [load, setLoad] = useState(false);
-    // const dispatch = useDispatch();
+    const { videos, theme } = useSelector(state => state);
 
-    // useEffect(() => {
-    //     if (!videos.firstLoad) {
-    //     }
-    // }, [auth.token, videos.firstLoad, dispatch]);
-
-    // const handleLoadMore = async () => {
-    //     try {
-    //         setLoad(true);
-    //         // const res = await getDataApi()
-    //         dispatch({ type: DISCOVER_VIDEOS_TYPES.LOADING, payload: false });
-    //         setLoad(false);
-    //     } catch (error) {
-    //         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response.data.message || error } });
-    //     }
-    // }
     const changeMute = () => {
 
     }
@@ -72,7 +48,9 @@ const Videos = () => {
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no" >1</div>
                                         <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/ywbKigZxuD8/default.jpg" className="thumbnail" alt=""/>
+                                            <img src="https://i.ytimg.com/vi/ywbKigZxuD8/default.jpg" className="thumbnail" alt=""
+                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
+                                            />
                                             <div className="video-voting" id="queueTracks-6456514bc2b036a247ac62dd">
 
                                                 <i className="fas fa-arrow-up q-m"
@@ -98,10 +76,12 @@ const Videos = () => {
                                     </div>
                                 </div>
                                 <div className="videos-container__track-item">
-                                    <div className="row" style={{ margin: 0, paddingBottom: "1rem", with:"100%"}}>
+                                    <div className="row" style={{ margin: 0, paddingBottom: "1rem", with: "100%" }}>
                                         <div className="col-1 videos-container__track-no">2</div>
                                         <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/io2WOQ-3aVs/default.jpg" className="thumbnail" alt=""/>
+                                            <img src="https://i.ytimg.com/vi/io2WOQ-3aVs/default.jpg" className="thumbnail" alt=""
+                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
+                                            />
                                             <div className="video-voting" id="queueTracks-64842187edaec0a3ce68e4e5">
 
                                                 <i className="fas fa-arrow-up q-m"
@@ -131,7 +111,8 @@ const Videos = () => {
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no">2</div>
                                         <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/sRITtsPax9U/default.jpg" className="thumbnail" alt=""/>
+                                            <img src="https://i.ytimg.com/vi/sRITtsPax9U/default.jpg" className="thumbnail" alt=""
+                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
                                             <div className="video-voting" id="queueTracks-6469a7610099389a17f2e510">
 
                                                 <i className="fas fa-arrow-up q-m"

@@ -63,6 +63,7 @@ const ItemGallery = ({ items, result }) => {
                                     src={items[currentItemIndex].url}
                                     alt={`Alt ${currentItemIndex}`}
                                     className="img-fluid"
+                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} 
                                 />
                             </div>
                             <div className="modal-footer">
