@@ -4,30 +4,30 @@ const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
 
-async function StartServer() {
-    const app = express();
-    const server = require("http").createServer(app);
-    const io = require("socket.io")(server);
+// async function StartServer() {
+//     const app = express();
+//     const server = require("http").createServer(app);
+//     const io = require("socket.io")(server);
 
-    //----------------start config socket------------------//
-    socketApp(io, server);
+//     //----------------start config socket------------------//
+//     socketApp(io, server);
 
-    //----------------end config socket------------------//
+//     //----------------end config socket------------------//
 
-    //----------------config routes----------------------//
-    await expressApp(app);
+//     //----------------config routes----------------------//
+//     await expressApp(app);
 
-    //----------------connect to database------------------//
-    databaseConnection();
+//     //----------------connect to database------------------//
+//     databaseConnection();
 
-    //-------------starting and build the server-----------//
-    server.listen(PORT, () => {
-        console.log(`Server started on port ${PORT}`);
-    }).on('error', (err) => {
-        console.log(err);
-        process.exit();
-    })
-}
+//     //-------------starting and build the server-----------//
+//     server.listen(PORT, () => {
+//         console.log(`Server started on port ${PORT}`);
+//     }).on('error', (err) => {
+//         console.log(err);
+//         process.exit();
+//     })
+// }
 
 // StartServer();
 
