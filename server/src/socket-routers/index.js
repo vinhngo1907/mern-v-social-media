@@ -327,7 +327,7 @@ function SocketRoute(io, socketInfo) {
         });
 
         const tracks = getTracksQueue();
-        socketInfo.io = io;
+        // socketInfo.io = io;
         socketInfo.socket = socket;
         socketInfo.users = users;
     }

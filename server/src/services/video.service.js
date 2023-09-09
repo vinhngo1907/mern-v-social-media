@@ -4,7 +4,7 @@ const Queue = require("../utils/queue");
 const { modelSchema } = require("../db");
 const { userModel, postModel } = modelSchema;
 const moment = require("moment-timezone");
-
+const { socketInfo } = require("../socket-app");
 const videoQueue = new Queue();
 
 let seniorSongs = [];
@@ -18,8 +18,13 @@ exports.getTracksQueue = async () => {
     return songsForQueue;
 }
 
-exports.getPlayingVideo = async () => {
+function shuffleVideos(videos) {
+    return videos.sort(() => Math.random() - 0.5);
+}
 
+exports.getPlayingVideo = async () => {
+    const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
+    return { playedTime, playedTime }
 }
 
 exports.getVideoById = async (id) => {

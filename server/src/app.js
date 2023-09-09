@@ -3,7 +3,6 @@ const { PORT } = require("./configs");
 const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
-
 async function StartServer() {
     const app = express();
     const server = require("http").createServer(app);
