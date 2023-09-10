@@ -4,15 +4,43 @@ const Queue = require("../utils/queue");
 const { modelSchema } = require("../db");
 const { userModel, videoModel } = modelSchema;
 const moment = require("moment-timezone");
+const logger = require("node-color-log");
 const io = require("../app");
-const videoQueue = new Queue();
 
+const videoQueue = new Queue();
 let seniorSongs = [];
 let juniorSongs = [];
 let otherSongs = [];
 let songsForQueue = [];
 let playingVideo = null;
 let currentVideoStartedTime = null;
+
+// setInterval(() => {
+//     try {
+//         const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
+//         if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size()) {
+//             playingVideo = null;
+//         }
+
+//         if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
+//             logger.info('Dequeue video to playing video');
+//             playingVideo = videoQueue.dequeue();
+//             currentVideoStartedTime = moment();
+//             io.emit('playingVideo', {
+//                 playingVideo,
+//                 playedTime: 0
+//             });
+//         }
+
+//         if (videoQueue.size() === 0) {
+//             logger.info('Playlist is empty, init new')
+//             this.initPlaylist();
+//         }
+//     } catch (error) {
+//         console.log(error);
+//         logger.error(error.message);
+//     }
+// }, 2000);
 
 exports.getVideoById = async (id) => {
     try {

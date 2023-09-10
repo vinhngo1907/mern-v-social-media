@@ -1,12 +1,16 @@
 import React from "react";
 import LeftSideBar from "../components/global/LeftSideBar";
 import { useSelector } from "react-redux";
-import ItemGallery from "../components/explore/ItemGallery";
+import TrackList from "../components/video/TrackList";
 
 const Videos = () => {
     const { videos, theme } = useSelector(state => state);
 
     const changeMute = () => {
+
+    }
+
+    const deleteVideo = () => {
 
     }
     return (
@@ -44,7 +48,8 @@ const Videos = () => {
                                 </div>
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
-                                <div className="videos-container__track-item">
+                            <TrackList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
+                                {/* <div className="videos-container__track-item">
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no" >1</div>
                                         <div className="col-3 videos-container__track-image">
@@ -137,17 +142,17 @@ const Videos = () => {
                                             </div></div>
                                     </div>
 
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </main>
-                    {
+                    {/* {
                         videos.loading ? <div className='d-block mx-auto text-dark spinner-border' role='status'>
                             <span className="sr-only">Loading...</span>
                         </div>
                             :
                             <ItemGallery items={videos.data} result={videos.result} />
-                    }
+                    } */}
                     {/* {
                         load && <div className="spinner-border d-block mx-auto text-primary" role="status">
                             <span className="sr-only">Loading...</span>

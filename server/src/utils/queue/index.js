@@ -1,6 +1,6 @@
 'use strict';
 class Queue {
-    constructor() { this.q; }
+    constructor() { this.q = []; }
     items() { return this.q; }
     enqueue(item) { this.q.push(item) }
     dequeue() { this.q.shift(); }

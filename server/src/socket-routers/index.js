@@ -335,7 +335,7 @@ function SocketRoute(io, socketInfo) {
         io.emit('junior-tracks-update', getJunior());
         io.emit('other-tracks-update', getOther());
 
-        // socketInfo.io = io;
+        socketInfo.io = io;
         socketInfo.socket = socket;
         socketInfo.users = users;
     }

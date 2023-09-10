@@ -10,7 +10,6 @@ const socketInfo = {
 function SocketApp(io, server) {
     // Create peer server
     socketRoute(io, socketInfo);
-    socketInfo.io = io;
     ExpressPeerServer(server, { path: '/' });
 }
 
