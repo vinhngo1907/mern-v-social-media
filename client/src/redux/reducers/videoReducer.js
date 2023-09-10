@@ -7,7 +7,9 @@ const initialState = {
     data: [],
     firstLoad: false,
     currentVideo: null,
-    player: null
+    player: null,
+    videoId: '',
+    startSeconds: 0,
 }
 
 const videoReducer = (state = initialState, action) => {
@@ -43,6 +45,19 @@ const videoReducer = (state = initialState, action) => {
         case DISCOVER_VIDEOS_TYPES.DISLIKE_VIDEO:
             return {
                 ...state
+            }
+
+        case DISCOVER_VIDEOS_TYPES.LOAD_VIDEO:
+            return {
+                ...state,
+                videoId: action.payload.videoId,
+                startSeconds: payload.startSeconds,
+            }
+
+        case DISCOVER_VIDEOS_TYPES.SET_PLAYER:
+            return{
+                ...state,
+                player: payload
             }
         default:
             return state;
