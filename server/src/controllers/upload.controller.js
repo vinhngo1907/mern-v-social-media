@@ -59,7 +59,7 @@ class UploadController {
                     }
 
                     if (result.resource_type === "video") {
-                        // const { secure_url, public_id } = result;
+                        const { secure_url, public_id } = result;
                         // const newVideo = new videoModel({
                         //     videoId: public_id,
                         //     videoUrl: secure_url,
@@ -69,14 +69,15 @@ class UploadController {
                         //     thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
                         // });
                         // await newVideo.save();
-                        await createVideo({
+                        const videoData = {
                             videoId: public_id,
                             videoUrl: secure_url,
                             // user: req.user._id,
                             title: "sample",
                             duration: result?.duration || 0,
                             thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
-                        }, req.user);
+                        }
+                        await createVideo(videoData, req.user);
                     }
                     removeTmp(file.tempFilePath);
                     res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }));
