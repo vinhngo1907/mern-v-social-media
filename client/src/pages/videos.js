@@ -1,10 +1,10 @@
 import React from "react";
-import LeftSideBar from "../components/global/LeftSideBar";
 import { useSelector } from "react-redux";
-import TrackList from "../components/video/TrackList";
+import LeftSideBar from "../components/global/LeftSideBar";
+import VideoList from "../components/video/VideoList";
 
 const Videos = () => {
-    const { videos, theme } = useSelector(state => state);
+    const { videos } = useSelector(state => state);
 
     const changeMute = () => {
 
@@ -48,7 +48,7 @@ const Videos = () => {
                                 </div>
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
-                            <TrackList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
+                            <VideoList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
                                 {/* <div className="videos-container__track-item">
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no" >1</div>

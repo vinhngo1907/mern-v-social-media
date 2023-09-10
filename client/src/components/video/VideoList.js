@@ -1,11 +1,11 @@
 import React from 'react';
-import TrackItem from './TrackItem'; // Import your TrackItem component
+import VideoItem from './VideoItem'; // Import your TrackItem component
 
-function TrackList({ videos, eleId, deleteVideo }) {
+function VideoList({ videos, eleId, deleteVideo }) {
 	return (
 		<div id={eleId}>
 			{videos && videos.map((res, index) => (
-				<TrackItem
+				<VideoItem
 					key={res._id}
 					res={res}
 					counter={index + 1}
@@ -17,4 +17,4 @@ function TrackList({ videos, eleId, deleteVideo }) {
 	);
 }
 
-export default TrackList;
+export default VideoList;

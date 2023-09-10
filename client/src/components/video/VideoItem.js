@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TrackItem({ res, counter, eleId, deleteVideo }) {
+function VideoItem({ res, counter, eleId, deleteVideo }) {
 	return (
 		<div className="videos-container__track-item">
 			<div className="row" style={{ margin: 0, paddingBottom: '1rem' }}>
@@ -40,4 +40,4 @@ function TrackItem({ res, counter, eleId, deleteVideo }) {
 	);
 }
 
-export default TrackItem;
+export default VideoItem;
