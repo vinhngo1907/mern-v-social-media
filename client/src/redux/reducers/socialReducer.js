@@ -50,14 +50,26 @@ const socialReducer = (state = initalState, action) => {
 }
 
 
-function updateDataSocial(state, action){
-    if(!state.data.every(d => d.title === action.payload.title)){
-        state.data.push(action.payload);
+function updateDataSocial(state, action) {
+    const existingDataIndex = state.data.findIndex(
+        (d) => d.title === action.payload.title
+    );
+    if (existingDataIndex !== -1) {
+        const updatedData = [...state.data];
+        updatedData[existingDataIndex] = action.payload;
+        return updatedData;
+    } else {
+        state.data = [...state.data, action.payload];
         return state.data;
-    }else{
-        state.data = state.data.map((social) => social.title === action.payload.title ? action.payload : social);
-        return state.data
     }
+    
+    // if (!state.data.every(d => d.title === action.payload.title)) {
+    //     state.data.push(action.payload);
+    //     return state.data;
+    // } else {
+    //     state.data = state.data.map((social) => social.title === action.payload.title ? action.payload : social);
+    //     return state.data
+    // }
 }
 
 export default socialReducer;
