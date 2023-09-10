@@ -10,6 +10,7 @@ const messageRouter = require("./message.routing");
 const conversationRouter = require("./conversation.routing");
 const groupRouter = require("./group.routing");
 const videoRouter = require("./video.routing");
+const roleRouter = require("./role.routing");
 
 const { BASE_URL } = require("../configs");
 
@@ -25,6 +26,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/conversation", conversationRouter);
     app.use(BASE_URL + "/group", groupRouter);
     app.use(BASE_URL + "/video", videoRouter);
+    app.use(BASE_URL + "/role", roleRouter)
 }
 
 module.exports = WebRoute;
