@@ -3,6 +3,7 @@ const cloudinary = require('cloudinary');
 const { CLOUD_NAME, API_KEY, API_SECRET } = require("../configs");
 const { responseDTO } = require("../utils");
 const { modelSchema } = require("../db");
+const { createVideo } = require("../services/video.service");
 const { videoModel } = modelSchema;
 
 cloudinary.config({
@@ -58,16 +59,24 @@ class UploadController {
                     }
 
                     if (result.resource_type === "video") {
-                        const { secure_url, public_id } = result;
-                        const newVideo = new videoModel({
+                        // const { secure_url, public_id } = result;
+                        // const newVideo = new videoModel({
+                        //     videoId: public_id,
+                        //     videoUrl: secure_url,
+                        //     user: req.user._id,
+                        //     title: "sample",
+                        //     duration: result?.duration || 0,
+                        //     thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
+                        // });
+                        // await newVideo.save();
+                        await createVideo({
                             videoId: public_id,
                             videoUrl: secure_url,
-                            user: req.user._id,
+                            // user: req.user._id,
                             title: "sample",
                             duration: result?.duration || 0,
                             thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
-                        });
-                        await newVideo.save();
+                        }, req.user);
                     }
                     removeTmp(file.tempFilePath);
                     res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }));

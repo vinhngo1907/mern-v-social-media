@@ -1,6 +1,6 @@
 "use strict"
 const Queue = require("../utils/queue");
-// const { responseDTO, validation } = require("../utils");
+
 const { modelSchema } = require("../db");
 const { userModel, videoModel } = modelSchema;
 const moment = require("moment-timezone");
@@ -54,6 +54,36 @@ exports.getOther = () => {
     }
 }
 
+exports.createVideo = async (videoData, author) => {
+    try {
+        const newVideo = new videoModel({
+            ...videoData,
+            user: author._id,
+        });
+        await newVideo.save();
+        otherSongs.push({
+            ...newVideo._doc,
+            user: {
+                _id: user._id,
+                username: author.username
+            }
+        });
+        io.emit('other-tracks-update', otherSongs);
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.deleteVideo = async (id) => {
+    try {
+        videoQueue.deleteVideo(id);
+        io.emit('new-video-added', {});
+        return await videoModel.findByIdAndDelete(id);
+    } catch (error) {
+        throw error;
+    }
+}
+
 exports.initPlaylist = async () => {
     const videos = await videoModel.find().populate('user', 'username');
     const sortVideos = await videos.sort((a, b) => {
@@ -79,7 +109,7 @@ exports.initPlaylist = async () => {
     songsForQueue.push(...seniorSongs);
     songsForQueue = shuffleVideos(songsForQueue);
 
-    for(const video of songsForQueue){
+    for (const video of songsForQueue) {
         videoQueue.enqueue(video);
     }
 
