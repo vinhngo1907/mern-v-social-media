@@ -2,9 +2,7 @@ const fs = require("fs");
 const cloudinary = require('cloudinary');
 const { CLOUD_NAME, API_KEY, API_SECRET } = require("../configs");
 const { responseDTO } = require("../utils");
-const { modelSchema } = require("../db");
 const { createVideo } = require("../services/video.service");
-const { videoModel } = modelSchema;
 
 cloudinary.config({
     cloud_name: `${CLOUD_NAME}`,

@@ -9,6 +9,7 @@ const commentRouter = require("./comment.routing");
 const messageRouter = require("./message.routing");
 const conversationRouter = require("./conversation.routing");
 const groupRouter = require("./group.routing");
+const videoRouter = require("./video.routing");
 
 const { BASE_URL } = require("../configs");
 
@@ -23,6 +24,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/message", messageRouter);
     app.use(BASE_URL + "/conversation", conversationRouter);
     app.use(BASE_URL + "/group", groupRouter);
+    app.use(BASE_URL + "/video", videoRouter);
 }
 
 module.exports = WebRoute;
