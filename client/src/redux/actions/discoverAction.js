@@ -16,7 +16,9 @@ export const DISCOVER_IMAGES_TYPES = {
 export const DISCOVER_VIDEOS_TYPES = {
     LOADING: 'LOADING_VIDEOS',
     GET_VIDEOS: 'GET_DISCOVER_VIDEOS',
-    UPDATE_VIDEO: 'UPDATE_DISCOVER_VIDEO'
+    UPDATE_VIDEO: 'UPDATE_DISCOVER_VIDEO',
+    LIKE_VIDEO: 'LIKE_VIDEO',
+    DISLIKE_VIDEO: 'DISLIKE_VIDEO',
 }
 
 export const getDiscoverPosts = (token) => async (dispatch) => {

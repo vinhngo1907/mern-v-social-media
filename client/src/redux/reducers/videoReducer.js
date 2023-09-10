@@ -5,10 +5,11 @@ const initialState = {
     result: 9,
     loading: false,
     data: [],
-    firstLoad: false
+    firstLoad: false,
+    currentVideo: null,
 }
 
-const videoExploreReducer = (state = initialState, action) => {
+const videoReducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case DISCOVER_VIDEOS_TYPES.LOADING:
@@ -38,4 +39,4 @@ const videoExploreReducer = (state = initialState, action) => {
     }
 }
 
-export default videoExploreReducer;
+export default videoReducer;
