@@ -8,5 +8,6 @@ module.exports = {
     conversationModel: require("./conversation.model"),
     messageModel: require("./message.model"),
     groupModel: require("./group.model"),
-    videoModel: require("./video.model")
+    videoModel: require("./video.model"),
+    roleModel: require("./role.model")
 }
