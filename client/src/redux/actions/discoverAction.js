@@ -17,6 +17,7 @@ export const DISCOVER_VIDEOS_TYPES = {
     LOADING: 'LOADING_VIDEOS',
     GET_VIDEOS: 'GET_DISCOVER_VIDEOS',
     UPDATE_VIDEO: 'UPDATE_DISCOVER_VIDEO',
+    UPDATE_VIDEOS: 'UPDATE_DISCOVER_VIDEOS',
     LIKE_VIDEO: 'LIKE_VIDEO',
     DISLIKE_VIDEO: 'DISLIKE_VIDEO',
     SET_PLAYER: 'SET_PLAYER',
@@ -41,6 +42,14 @@ export const getDiscoverImages = (token) => async (dispatch) => {
         const res = await getDataApi('upload/get', token);
         dispatch({ type: DISCOVER_IMAGES_TYPES.GET_IMAGES, payload: res.data.results });
         dispatch({ type: DISCOVER_IMAGES_TYPES.LOADING, payload: false });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+    }
+}
+
+export const getVideos = (token) => async (dispatch) => {
+    try {
+        
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
     }

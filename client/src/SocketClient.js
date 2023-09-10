@@ -6,6 +6,7 @@ import { GLOBALTYPES } from './redux/actions/globalTypes';
 import { NOTIFY_TYPES } from './redux/actions/notifyAction';
 import { POST_TYPES } from './redux/actions/postAction';
 import { SOCIAL_TYPES } from './redux/actions/socialAction';
+import { DISCOVER_VIDEOS_TYPES } from './redux/actions/discoverAction';
 
 const spawnNotification = (body, icon, url, title) => {
     let options = {
@@ -130,7 +131,6 @@ const SocketClient = () => {
     // Notification
     useEffect(() => {
         socket.on('createNotifyToClient', (msg) => {
-            // console.log(">>>>>>>>>>> Create Notify To Client <<<<<<<<<<<");
             dispatch({ type: NOTIFY_TYPES.CREATE_NOTIFY, payload: msg });
 
             if (notify.sound) audioRef.current.play();
@@ -141,14 +141,15 @@ const SocketClient = () => {
                 'V-NETWORK'
             )
         });
+
         return () => socket.off('createNotifyToClient');
     }, [socket, dispatch, notify.sound]);
 
     useEffect(() => {
         socket.on('removeNotifyToClient', msg => {
-            // console.log(">>>>>>>>>>> Remove Notify To Client <<<<<<<<<<");
             dispatch(({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg }))
-        })
+        });
+
         return () => socket.off('removeNotifyToClient');
     }, [socket, dispatch]);
 
@@ -168,6 +169,7 @@ const SocketClient = () => {
 
         return () => socket.off('unLikeToClient');
     }, [socket, dispatch]);
+
     useEffect(() => {
         socket.on('createPostToClient', (post) => {
             console.log({ post });
@@ -196,15 +198,15 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on('createCommentToClient', post => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post });
-        })
+        });
 
         return () => socket.off('createCommentToClient');
-    }, [socket, dispatch])
+    }, [socket, dispatch]);
 
     useEffect(() => {
         socket.on('deleteCommentToClient', post => {
             dispatch({ type: POST_TYPES.UPDATE_POST, payload: post })
-        })
+        });
 
         return () => socket.off('deleteCommentToClient');
     }, [socket, dispatch]);
@@ -252,12 +254,39 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on("userBusy", (data) => {
-            console.log(">>>>>>BUSY<<<<", data);
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: `${call.username} is busy` } })
         });
         return () => socket.off("userBusy");
     }, [socket, dispatch, call]);
 
+
+    useEffect(() => {
+        // Listen for the "senior-tracks-update" event and update the state
+        socket.on("senior-tracks-update", (tracks) => {
+            // setVideos(tracks);
+            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+        });
+
+        // Listen for the "junior-tracks-update" event and update the state
+        socket.on("junior-tracks-update", (tracks) => {
+            // setVideos(tracks);
+            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+        });
+
+        // Listen for the "other-tracks-update" event and update the state
+        socket.on("other-tracks-update", (tracks) => {
+            // setVideos(tracks);
+            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+        });
+
+        // Clean up the event listeners when the component unmounts
+        return () => {
+            socket.off("senior-tracks-update");
+            socket.off("junior-tracks-update");
+            socket.off("other-tracks-update");
+        };
+    }, [socket, dispatch]);
+    
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>

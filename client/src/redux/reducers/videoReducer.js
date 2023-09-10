@@ -36,6 +36,14 @@ const videoReducer = (state = initialState, action) => {
                 result: payload.result,
                 page: state.page + 1
             }
+            
+        case DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS:
+            return {
+                ...state,
+                data: payload.videos,
+                result: payload.result,
+                page: state.page + 1
+            }
 
         case DISCOVER_VIDEOS_TYPES.LIKE_VIDEO:
             return {
