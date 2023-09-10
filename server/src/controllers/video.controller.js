@@ -1,7 +1,7 @@
 "use strict";
 
 const { videoService } = require("../services");
-const { responseDTO, validation } = require("../utils");
+const { responseDTO } = require("../utils");
 class VideoController {
     async getById(req, res, next) {
         try {
@@ -33,6 +33,23 @@ class VideoController {
         }
     }
 
+    async deleteVideo(req, res, next) {
+        try {
+            const { email } = req.user;
+            if (email !== 'vinhngotrung1999@outlook.com' && email !== 'admin@vdev.com') {
+                return res.status(401).json(responseDTO.unauthorization("You don't have permission!!!"));
+            }
+            const videoId = req.params.id;
+            const videoDeleted = await videoService.deleteVideo(videoId);
+            if (!videoDeleted) {
+                return res.status(400).json(responseDTO.badRequest("This video doesn't exist"));
+            }
+
+            return res.json(responseDTO.success("Deleted video in successfully", videoDeleted));
+        } catch (error) {
+
+        }
+    }
 }
 
 module.exports = VideoController;
