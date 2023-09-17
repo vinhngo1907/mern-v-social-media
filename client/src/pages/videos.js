@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import LeftSideBar from "../components/global/LeftSideBar";
 import VideoList from "../components/video/VideoList";
 
 const Videos = () => {
     const { videos } = useSelector(state => state);
-
-    const changeMute = () => {
-
-    }
+    const [volume, setVolume] = useState(100);
+    const [isMuted, setIsMuted] = useState(false);
 
     const deleteVideo = () => {
 
     }
+    const handleVolumeSliderChange = (e) => { }
     return (
         <div className="home row mx-0 ">
             <div className="left_sidebar col-md-3">
@@ -32,10 +31,13 @@ const Videos = () => {
                                             Currently playing
                                         </p>
                                         <div id="video-react" style={{ width: "100%" }}>
-                                            <button id="muted" onClick={changeMute}>
-                                                <i className="fas fa-volume-mute"></i>
+                                            <button id="muted" onClick={() => setIsMuted(!isMuted)} title="Mute">
+                                                <i className={`fas fa-volume-${isMuted ? 'mute' : 'up'}`} />
                                             </button>
-                                            <input id="volume-control" type="range" min="0" max="100" value="0" />
+                                            <input id="volume-control" type="range" min="0" max="100"
+                                                value={isMuted ? 0 : volume}
+                                                onChange={handleVolumeSliderChange}
+                                            />
                                         </div>
                                         <div id="videoPlaying"></div>
                                         <div id="video-content">
@@ -48,7 +50,7 @@ const Videos = () => {
                                 </div>
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
-                            <VideoList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
+                                <VideoList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
                                 {/* <div className="videos-container__track-item">
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no" >1</div>
@@ -146,22 +148,6 @@ const Videos = () => {
                             </div>
                         </div>
                     </main>
-                    {/* {
-                        videos.loading ? <div className='d-block mx-auto text-dark spinner-border' role='status'>
-                            <span className="sr-only">Loading...</span>
-                        </div>
-                            :
-                            <ItemGallery items={videos.data} result={videos.result} />
-                    } */}
-                    {/* {
-                        load && <div className="spinner-border d-block mx-auto text-primary" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </div>
-                    } */}
-                    {/* {
-                        !videos.loading
-                        && <LoadMoreBtn load={load} page={videos.page} result={videos.result} handleLoadMore={handleLoadMore} />
-                    } */}
                 </div>
             </div>
         </div>
