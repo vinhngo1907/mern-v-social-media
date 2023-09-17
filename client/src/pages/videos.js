@@ -32,7 +32,7 @@ const Videos = () => {
                                             Currently playing
                                         </p>
                                         <div id="video-react" style={{ width: "100%" }}>
-                                            <button id="muted" onChange={changeMute}>
+                                            <button id="muted" onClick={changeMute}>
                                                 <i className="fas fa-volume-mute"></i>
                                             </button>
                                             <input id="volume-control" type="range" min="0" max="100" value="0" />
