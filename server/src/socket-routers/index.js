@@ -330,7 +330,7 @@ function SocketRoute(io, socketInfo) {
         const tracks = getTracksInQueue();
         socket.emit('update-tracks', tracks);
         const { playingVideo, playedTime } = getPlayingVideo();
-        socket.emit('playingVideo', {playingVideo, playedTime});
+        socket.emit('playingVideo', { playingVideo, playedTime });
         io.emit('senior-tracks-update', getSenior());
         io.emit('junior-tracks-update', getJunior());
         io.emit('other-tracks-update', getOther());

@@ -21,8 +21,10 @@ function startVideoScheduler(io) {
             if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
                 playingVideo = null;
             }
-            if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
-                console.log('Dequeue video to playing video')
+            
+            if ((playingVideo === null || (playedTime > playingVideo?.duration)) && videoQueue.size() > 0) {
+                // console.log('Dequeue video to playing video');
+                logger.warn('Dequeue video to playing video');
                 playingVideo = videoQueue.dequeue();
                 currentVideoStartedTime = moment();
                 io.emit('playingVideo', {
@@ -30,12 +32,13 @@ function startVideoScheduler(io) {
                     playedTime: 0
                 });
             }
+            
             if (videoQueue.size() === 0) {
-                console.log('Playlist is empty, init new');
+                logger.info('Playlist is empty, init new');
                 await initPlaylist(io);
             }
         } catch (error) {
-            // console.log(error.message)
+            console.log(error);
             logger.error(error.message);
         }
 
@@ -99,6 +102,7 @@ exports.createVideo = async (videoData, author) => {
             }
         });
         io.emit('other-tracks-update', otherSongs);
+        return newVideo;
     } catch (error) {
         throw error;
     }
@@ -153,7 +157,7 @@ function shuffleVideos(videos) {
 
 exports.getPlayingVideo = async () => {
     const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
-    return { playedTime, playedTime }
+    return { playingVideo, playedTime }
 }
 
 exports.getTracksInQueue = async () => {

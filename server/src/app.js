@@ -40,8 +40,6 @@ const io = require("socket.io")(server);
 //----------------start config socket------------------//
 socketApp(io, server);
 
-//----------------end config socket------------------//
-
 //----------------config routes----------------------//
 expressApp(app);
 
