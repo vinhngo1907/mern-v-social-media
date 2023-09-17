@@ -3,6 +3,8 @@ const { PORT } = require("./configs");
 const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
+const { videoService } = require('./services');
+const { startVideoScheduler } = videoService;
 
 // async function StartServer() {
 //     const app = express();
@@ -53,5 +55,7 @@ server.listen(PORT, () => {
     console.log(err);
     process.exit();
 });
+
+startVideoScheduler(io);
 
 module.exports = io;

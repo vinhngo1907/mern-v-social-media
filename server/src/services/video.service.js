@@ -1,4 +1,4 @@
-const io = require("../app");
+// const io = require("../app");
 const Queue = require("../utils/queue");
 
 const { modelSchema } = require("../db");
@@ -14,30 +14,35 @@ let songsForQueue = [];
 let playingVideo = null;
 let currentVideoStartedTime = null;
 
-// setInterval(async () => {
-//     try {
-//         const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
-//         if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
-//             playingVideo = null;
-//         }
-//         if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
-//             console.log('Dequeue video to playing video')
-//             playingVideo = videoQueue.dequeue();
-//             currentVideoStartedTime = moment();
-//             io.emit('playingVideo', {
-//                 playingVideo,
-//                 playedTime: 0
-//             });
-//         }
-//         if (videoQueue.size() === 0) {
-//             console.log('Playlist is empty, init new')
-//             await this.initPlaylist();
-//         }
-//     } catch (error) {
-//         console.log(error.message)
-//     }
+function startVideoScheduler(io) {
+    setInterval(async () => {
+        try {
+            const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
+            if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
+                playingVideo = null;
+            }
+            if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
+                console.log('Dequeue video to playing video')
+                playingVideo = videoQueue.dequeue();
+                currentVideoStartedTime = moment();
+                io.emit('playingVideo', {
+                    playingVideo,
+                    playedTime: 0
+                });
+            }
+            if (videoQueue.size() === 0) {
+                console.log('Playlist is empty, init new');
+                await initPlaylist(io);
+            }
+        } catch (error) {
+            // console.log(error.message)
+            logger.error(error.message);
+        }
 
-// }, 2000);
+    }, 2000);
+}
+
+exports.startVideoScheduler = startVideoScheduler;
 
 exports.getVideoById = async (id) => {
     try {
@@ -109,7 +114,7 @@ exports.deleteVideo = async (id) => {
     }
 }
 
-exports.initPlaylist = async () => {
+const initPlaylist = async (io) => {
     const videos = await videoModel.find().populate('user', 'username');
     const sortVideos = await videos.sort((a, b) => {
         const firstElementInteractions = a.likes.length = a.dislikes.length;
