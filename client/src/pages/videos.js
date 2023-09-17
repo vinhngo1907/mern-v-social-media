@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import LeftSideBar from "../components/global/LeftSideBar";
 import VideoList from "../components/video/VideoList";
@@ -7,11 +7,19 @@ const Videos = () => {
     const { videos } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
-
+    // Create a ref for the audio element
+    const audioRef = useRef(null);
     const deleteVideo = () => {
 
     }
-    const handleVolumeSliderChange = (e) => { }
+    const handleVolumeSliderChange = (e) => {
+        const newVolume = e.target.value;
+        setVolume(newVolume)
+        if (audioRef.current) {
+            audioRef.current.volume = newVolume / 100;
+        }
+    }
+
     return (
         <div className="home row mx-0 ">
             <div className="left_sidebar col-md-3">
