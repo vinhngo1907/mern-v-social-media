@@ -14,30 +14,30 @@ let songsForQueue = [];
 let playingVideo = null;
 let currentVideoStartedTime = null;
 
-setInterval(async () => {
-    try {
-        const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
-        if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
-            playingVideo = null;
-        }
-        if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
-            console.log('Dequeue video to playing video')
-            playingVideo = videoQueue.dequeue();
-            currentVideoStartedTime = moment();
-            io.emit('playingVideo', {
-                playingVideo,
-                playedTime: 0
-            });
-        }
-        if (videoQueue.size() === 0) {
-            console.log('Playlist is empty, init new')
-            await this.initPlaylist();
-        }
-    } catch (error) {
-        console.log(error.message)
-    }
+// setInterval(async () => {
+//     try {
+//         const playedTime = moment().diff(currentVideoStartedTime, 'seconds');
+//         if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
+//             playingVideo = null;
+//         }
+//         if ((playingVideo === null || (playedTime > playingVideo.duration)) && videoQueue.size() > 0) {
+//             console.log('Dequeue video to playing video')
+//             playingVideo = videoQueue.dequeue();
+//             currentVideoStartedTime = moment();
+//             io.emit('playingVideo', {
+//                 playingVideo,
+//                 playedTime: 0
+//             });
+//         }
+//         if (videoQueue.size() === 0) {
+//             console.log('Playlist is empty, init new')
+//             await this.initPlaylist();
+//         }
+//     } catch (error) {
+//         console.log(error.message)
+//     }
 
-}, 2000);
+// }, 2000);
 
 exports.getVideoById = async (id) => {
     try {

@@ -13,7 +13,7 @@ function VideoItem({ res, counter, eleId, deleteVideo }) {
 					{counter}
 				</div>
 				<div className="col-3 videos-container__track-image">
-					<img src={res.thumbnailUrl} className="thumbnail" />
+					<img src={res.thumbnailUrl} className="thumbnail" alt=""/>
 					<div className="video-voting" id={`${eleId}-${res._id}`}>
 						{/* Insert your updateCount logic here */}
 					</div>

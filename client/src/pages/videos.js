@@ -31,8 +31,8 @@ const Videos = () => {
                                         <p className="videos-container__header" style={{ "marginLeft": "0.6667em", width: "100%" }}>
                                             Currently playing
                                         </p>
-                                        <div id="video-react" style={{ width: "100%;" }}>
-                                            <button id="muted" onclick={changeMute}>
+                                        <div id="video-react" style={{ width: "100%" }}>
+                                            <button id="muted" onChange={changeMute}>
                                                 <i className="fas fa-volume-mute"></i>
                                             </button>
                                             <input id="volume-control" type="range" min="0" max="100" value="0" />
