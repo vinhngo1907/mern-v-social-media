@@ -1,7 +1,7 @@
 .chat-box {
-    background: #fbfbfb none repeat scroll 0 0;
-    /* background: var(--main-bg-color) none repeat scroll 0 0 !important; */
-    border-radius: 3px;
+    background: #f8f9fa none repeat scroll 0 0;
+    box-shadow: 0 0 10px #ddd;
+    border-radius: 5px;
     bottom: -2px;
     position: absolute;
     right: 100%;
@@ -13,7 +13,6 @@
     transition: all 0.2s linear 0s;
     border: 1px solid #e1e8ed;
     text-align: left;
-    color: var(--main-color) !important;
 }
 
 .chat-box.show {
@@ -23,11 +22,20 @@
 }
 
 .chat-head {
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--main-color) !important;
     display: inline-block;
     padding: 10px 20px 10px 30px;
     position: relative;
     width: 100%;
+}
+
+.chat-head i {
+    color: var(--second-color);
+}
+
+.chat-head i:hover {
+    color: var(--danger-color);
 }
 
 .chat-list {
@@ -149,25 +157,25 @@ span.status-chat.f-online {
 
 ul li.me {
     display: flex;
-    /* direction: rtl; */
-    text-align: right;
+    justify-content: start;
+    justify-items: start;
 }
 
-ul>li.me p::before {
+.chat-list ul>li.me p::before {
     border-left: 11px solid transparent;
     border-right: initial;
     left: auto;
     right: -11px;
 }
 
-ul>li.me p::after {
+.chat-list ul>li.me p::after {
     border-left: 10px solid rgba(39, 170, 225, 0.1);
     border-right: initial;
     left: auto;
     right: -10px;
 }
 
-ul li.me p {
+.chat-list ul>li.me p {
     margin-left: 0;
     margin-right: 10px;
     text-align: left;
