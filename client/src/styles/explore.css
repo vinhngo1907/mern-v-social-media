@@ -106,7 +106,7 @@ main .row {
 .videos-container__tracks {
     border-radius: 7px;
     /* background-color: var(--background-secondary) !important; */
-    background-color: var(--background-secondary) !important;
+    background: var(--background-secondary) !important;
     height: 100%;
     overflow: auto;
     padding-top: 12px;
@@ -118,7 +118,7 @@ main .row {
     text-align: left;
     letter-spacing: 0.3333px;
     font-size: 0.7333em;
-    color: #f67146 !important;
+    color: #f67146;
 }
 
 .videos-container__track-no {
