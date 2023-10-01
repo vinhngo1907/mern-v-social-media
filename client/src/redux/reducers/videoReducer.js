@@ -10,6 +10,9 @@ const initialState = {
     player: null,
     videoId: '',
     startSeconds: 0,
+    user:{
+        email: ""
+    }
 }
 
 const videoReducer = (state = initialState, action) => {

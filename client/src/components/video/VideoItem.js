@@ -16,6 +16,7 @@ function VideoItem({ res, counter, eleId, deleteVideo }) {
 					<img src={res.thumbnailUrl} className="thumbnail" alt=""/>
 					<div className="video-voting" id={`${eleId}-${res._id}`}>
 						{/* Insert your updateCount logic here */}
+						<div id="playing-video-voting" className='playing-vote'></div>
 					</div>
 				</div>
 				<div className="col-8 videos-container__track-info">
@@ -25,7 +26,7 @@ function VideoItem({ res, counter, eleId, deleteVideo }) {
 					<div className="videos-container__track-info__suggested">
 						Suggested by <strong className="suggested-author">{res.user.nickname}</strong>
 					</div>
-					{window.email === 'admin@ongdev.com' && (
+					{window.email === 'admin@v-dev.com' && (
 						<button
 							type="button"
 							className="btn btn-danger btn-sm"
