@@ -7,6 +7,7 @@ import Visits from '../statistic/Visits';
 import Views from '../statistic/Views';
 import { getDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from '../../redux/actions/globalTypes'
+import ChatBox from '../chat/ChatBox';
 // import { getAllStatistics } from '../../redux/actions/statisticAction';
 
 const RightSideBar = () => {
@@ -42,6 +43,11 @@ const RightSideBar = () => {
             console.log(error);
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message || error } });
         }
+    }
+
+    const [selectedUser, setSelectedUser] = useState(null);
+    const handleUserClick = (user) => {
+        setSelectedUser(user);
     }
 
     return (
@@ -138,13 +144,24 @@ const RightSideBar = () => {
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                             : searchUsers.length >= 1
-                                                ? searchUsers.map((user, index) => (
-                                                    <UserCard key={user ? user._id : index} user={user} type="home" />
-                                                ))
+                                                ? <>
+                                                    {
+                                                        searchUsers.map((user, index) => (
+                                                            <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                        ))
+                                                    }
+
+                                                    {/* {selectedUser && <ChatBox selectedUser={selectedUser} />} */}
+                                                </>
                                                 :
-                                                users.map((user, index) => (
-                                                    <UserCard key={user ? user._id : index} user={user} type="home" />
-                                                ))
+                                                <>
+                                                    {
+                                                        users.map((user, index) => (
+                                                            <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                        ))
+                                                    }
+                                                    {/* {selectedUser && <ChatBox selectedUser={selectedUser} />} */}
+                                                </>
                                     }
                                 </div>
                         }
