@@ -71,7 +71,7 @@ const videoReducer = (state = initialState, action) => {
                 player: payload
             }
 
-        case SET_USER_EMAIL:
+        case DISCOVER_VIDEOS_TYPES.SET_USER_EMAIL:
             // Access the current user's email from auth state
             const userEmail = action.payload; // Or state.auth.email, depending on your authReducer structure
 

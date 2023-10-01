@@ -21,7 +21,8 @@ export const DISCOVER_VIDEOS_TYPES = {
     LIKE_VIDEO: 'LIKE_VIDEO',
     DISLIKE_VIDEO: 'DISLIKE_VIDEO',
     SET_PLAYER: 'SET_PLAYER',
-    LOAD_VIDEO: 'LOAD_VIDEO'
+    LOAD_VIDEO: 'LOAD_VIDEO',
+    SET_USER_EMAIL: "SET_USER_EMAIL"
 }
 
 export const getDiscoverPosts = (token) => async (dispatch) => {
