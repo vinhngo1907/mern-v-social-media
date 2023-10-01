@@ -67,7 +67,7 @@ module.exports = async (app) => {
 
     // request to handle undefined or all other routes
     app.get('*', (req, res) => {
-        // loggerDefault.info('GET undefined routes');
+        logger.info('GET undefined routes');
         res.send('App works!!!!!');
     });
 

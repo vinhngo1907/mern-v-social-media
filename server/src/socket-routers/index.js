@@ -1,6 +1,8 @@
 const logger = require("node-color-log");
 const { videoService } = require("../services");
 const { getTracksInQueue, getPlayingVideo, getJunior, getOther, getSenior } = videoService;
+const fs = require("fs");
+const moment = require("moment-timezone");
 
 function editData(data, id, call) {
     const newData = data.map(item => item.id === id ? { ...item, call } : item);
@@ -334,6 +336,11 @@ function SocketRoute(io, socketInfo) {
         io.emit('senior-tracks-update', getSenior());
         io.emit('junior-tracks-update', getJunior());
         io.emit('other-tracks-update', getOther());
+
+        var clientIpAddress = socket.request.headers['x-forwarded-for'] || client.request.connection.remoteAddress;
+        fs.appendFile('../logs/access/address.txt', `New connection from ${clientIpAddress} at ${moment().format()} \n`, function (err) {
+            if (err) logger.error(err.message);
+        });
 
         socketInfo.io = io;
         socketInfo.socket = socket;

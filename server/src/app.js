@@ -50,10 +50,10 @@ databaseConnection();
 server.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 }).on('error', (err) => {
-    console.log(err);
+    console.error(err);
     process.exit();
 });
 
 startVideoScheduler(io);
 
-module.exports = io;
+// module.exports = io;
