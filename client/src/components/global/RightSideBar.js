@@ -144,27 +144,16 @@ const RightSideBar = () => {
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                             : searchUsers.length >= 1
-                                                ? <>
-                                                    {
-                                                        searchUsers.map((user, index) => (
-                                                            <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
-                                                        ))
-                                                    }
-
-                                                    {selectedUser && <ChatBox selectedUser={selectedUser} messages={[]}/>}
-                                                </>
-                                                :
-                                                <>
-                                                    {
-                                                        users.map((user, index) => (
-                                                            <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
-                                                        ))
-                                                    }
-                                                    {selectedUser && <ChatBox selectedUser={selectedUser} messages={[]}/>}
-                                                </>
+                                                ? searchUsers.map((user, index) => (
+                                                    <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                ))
+                                                : users.map((user, index) => (
+                                                    <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                ))
                                     }
                                 </div>
                         }
+                        <ChatBox />
                     </ul>
                 }
 

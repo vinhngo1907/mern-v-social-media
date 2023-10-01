@@ -1,5 +1,6 @@
 .chat-box {
     background: #fbfbfb none repeat scroll 0 0;
+    /* background: var(--main-bg-color) none repeat scroll 0 0 !important; */
     border-radius: 3px;
     bottom: -2px;
     position: absolute;
@@ -12,6 +13,7 @@
     transition: all 0.2s linear 0s;
     border: 1px solid #e1e8ed;
     text-align: left;
+    color: var(--main-color) !important;
 }
 
 .chat-box.show {
@@ -26,6 +28,22 @@
     padding: 10px 20px 10px 30px;
     position: relative;
     width: 100%;
+}
+
+.chat-list {
+    display: inline-block;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+}
+
+.chat-list>ul {
+    margin: 0;
+    padding-left: 0;
+    max-height: 290px;
+    overflow: hidden;
+    position: relative;
+    padding-right: 8px;
 }
 
 .chat-list>ul>li {
@@ -65,4 +83,199 @@
 
 .chat-thumb>img {
     border-radius: 100%;
+}
+
+.ps-container>.ps-scrollbar-y-rail>.ps-scrollbar-y {
+    background-color: transparent !important;
+}
+
+.chat-message-item {
+    background: #f0f4f9 none repeat scroll 0 0;
+    border-radius: 7px;
+    display: inline-block;
+    font-size: 13px;
+    padding: 12px;
+}
+
+.notification-date {
+    color: #999;
+    display: inline-block;
+    font-size: 11px;
+    width: 100%;
+}
+
+.chat-list>ul li.you .chat-thumb {
+    float: right;
+}
+
+.chat-list>ul li.you .notification-event {
+    float: right;
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+.chat-list>ul li.you .chat-message-item {
+    background: rgba(202, 239, 142, 0.55) none repeat scroll 0 0;
+}
+
+.text-box {
+    position: relative;
+}
+
+.text-box>textarea {
+    font-size: 14px;
+    height: 50px;
+    line-height: 27px;
+    border-radius: 0;
+    background: #f0f0f0;
+}
+
+.text-box>button {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+span.status-chat {
+    bottom: 10px;
+    right: 5px;
+}
+
+span.status-chat.f-online {
+    background: #7FBA00;
+}
+
+ul li.me {
+    display: flex;
+    /* direction: rtl; */
+    text-align: right;
+}
+
+ul>li.me p::before {
+    border-left: 11px solid transparent;
+    border-right: initial;
+    left: auto;
+    right: -11px;
+}
+
+ul>li.me p::after {
+    border-left: 10px solid rgba(39, 170, 225, 0.1);
+    border-right: initial;
+    left: auto;
+    right: -10px;
+}
+
+ul li.me p {
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: left;
+    direction: ltr;
+}
+
+ul>li.you {
+    justify-items: end;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+ul>li.you p {
+    background: rgba(202, 239, 142, .65);
+}
+
+/**************** ***********/
+.add-smiles {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    line-height: 10px;
+}
+
+.add-smiles>span {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.smiles-bunch {
+    background: #eaeaea none repeat scroll 0 0;
+    border-radius: 5px;
+    top: -63px;
+    font-size: 13px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 150px;
+    display: none;
+}
+
+.smiles-bunch.active {
+    display: block;
+}
+
+.smiles-bunch>i {
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.smiles-bunch::before {
+    border-top: 7px solid #eaeaea;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    position: absolute;
+    right: 11px;
+    bottom: -7px;
+    width: auto;
+}
+
+.smiles-bunch>i:hover {
+    transform: scale(1.1);
+}
+
+.close-mesage i {
+    color: var(--second-color);
+}
+
+@media screen and (max-width: 1600px) and (min-width: 1400px) {
+    .chat-box {
+        right: 294px;
+    }
+}
+
+@media screen and (max-width: 1281px) and (min-width: 1024px) {
+    .chat-box {
+        right: 230px;
+    }
+}
+
+/*--- tablet landscape ---*/
+@media screen and (max-width: 1024px) {
+    .chat-box {
+        bottom: 0;
+        right: 0;
+        top: auto;
+    }
+}
+
+/*--- tablet view ---*/
+
+@media screen and (max-width: 980px) {
+    .chat-box {
+        bottom: 25px;
+        right: 30px;
+        top: auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .chat-box {
+        right: 0;
+        position: fixed;
+        bottom: 30px;
+    }
 }

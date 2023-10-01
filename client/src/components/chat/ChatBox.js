@@ -1,15 +1,16 @@
 import React from "react";
+import Avatar from "../other/Avatar";
 
 const ChatBox = () => {
     return (
         <div className="chat-box show">
             <div className="chat-head">
-                <span className="status f-online"></span>
+                <span className="status-chat f-online"></span>
                 <h6>Bucky Barnes</h6>
                 <div className="more">
-                    <span><i className="ti-more-alt" /></span>
+                    <span><i className="fas fa-more" /></span>
                     <span className="close-mesage">
-                        <i className="ti-close" />
+                        <i className="fas fa-times-circle" />
                     </span>
                 </div>
             </div>
@@ -17,7 +18,7 @@ const ChatBox = () => {
                 <ul className="ps-container ps-theme-default ps-active-y" id="948dd730-91eb-c0c1-7388-127bbe317177">
                     <li className="me">
                         <div className="chat-thumb">
-                            <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" alt="" />
+                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
                         </div>
                         <div className="notification-event">
                             <span className="chat-message-item">
@@ -30,7 +31,7 @@ const ChatBox = () => {
                     </li>
                     <li className="you">
                         <div className="chat-thumb">
-                            <img src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" alt="" />
+                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
                         </div>
                         <div className="notification-event">
                             <span className="chat-message-item">
@@ -74,7 +75,7 @@ const ChatBox = () => {
                         <i className="em em-worried"></i>
                         <i className="em em-kissing_heart"></i>
                         <i className="em em-rage"></i>
-                        <i className="em em-stuck_out_tongue"></i>
+                        <i className="fas fa-stuck_out_tongue"></i>
                     </div>
                     <button type="submit"></button>
                 </form>

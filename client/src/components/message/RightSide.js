@@ -291,7 +291,7 @@ const RightSide = () => {
 
                 <Icons setContent={setText} content={text} theme={theme} />
                 <div className="file_upload">
-                    <i className="fas fa-image text-danger" />
+                    <i className="fas fa-image text-danger mr-2"/>
                     <input type="file" name="file" id="file"
                         multiple accept="image/*,video/*" onChange={handleChangeMedia} />
                 </div>
