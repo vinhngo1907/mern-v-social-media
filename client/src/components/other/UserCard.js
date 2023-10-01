@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import Avatar from "../../components/other/Avatar";
 import { useSelector } from "react-redux";
 
-const UserCard = ({ children, user, border, handleClose, setShowFollowers, setShowFollowing, type, msg, handleUserClick }) => {
+const UserCard = ({ children, user, border, handleClose, setShowFollowers, setShowFollowing, type, msg, handleUserClick, selectedUser }) => {
     const { theme } = useSelector(state => state);
     const handleCloseAll = () => {
         if (handleClose) handleClose();
         if (setShowFollowers) setShowFollowers(false);
         if (setShowFollowing) setShowFollowing(false);
 
-        if (user && handleUserClick) handleUserClick(user)
+        // if (selectedUser && handleUserClick){
+            
+        // }
     }
 
     const showMessage = (user) => {

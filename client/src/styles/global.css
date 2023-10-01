@@ -201,3 +201,6 @@ ul{
 
 /* --------- Explore ------ */
 @import url("./explore.css");
+
+/* --------- Chat box ------ */
+@import url("./chat.css");

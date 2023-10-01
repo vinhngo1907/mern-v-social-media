@@ -151,7 +151,7 @@ const RightSideBar = () => {
                                                         ))
                                                     }
 
-                                                    {/* {selectedUser && <ChatBox selectedUser={selectedUser} />} */}
+                                                    {selectedUser && <ChatBox selectedUser={selectedUser} messages={[]}/>}
                                                 </>
                                                 :
                                                 <>
@@ -160,7 +160,7 @@ const RightSideBar = () => {
                                                             <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
                                                         ))
                                                     }
-                                                    {/* {selectedUser && <ChatBox selectedUser={selectedUser} />} */}
+                                                    {selectedUser && <ChatBox selectedUser={selectedUser} messages={[]}/>}
                                                 </>
                                     }
                                 </div>
