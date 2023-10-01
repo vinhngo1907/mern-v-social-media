@@ -338,7 +338,7 @@ function SocketRoute(io, socketInfo) {
         io.emit('other-tracks-update', getOther());
 
         var clientIpAddress = socket.request.headers['x-forwarded-for'] || client.request.connection.remoteAddress;
-        fs.appendFile('../logs/access/address.txt', `New connection from ${clientIpAddress} at ${moment().format()} \n`, function (err) {
+        fs.appendFile('./src/logs/address.txt', `New connection from ${clientIpAddress} at ${moment().format()} \n`, function (err) {
             if (err) logger.error(err.message);
         });
 
