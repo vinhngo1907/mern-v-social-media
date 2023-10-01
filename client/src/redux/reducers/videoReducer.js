@@ -10,7 +10,7 @@ const initialState = {
     player: null,
     videoId: '',
     startSeconds: 0,
-    user:{
+    user: {
         email: ""
     }
 }
@@ -39,7 +39,7 @@ const videoReducer = (state = initialState, action) => {
                 result: payload.result,
                 page: state.page + 1
             }
-            
+
         case DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS:
             return {
                 ...state,
@@ -66,10 +66,24 @@ const videoReducer = (state = initialState, action) => {
             }
 
         case DISCOVER_VIDEOS_TYPES.SET_PLAYER:
-            return{
+            return {
                 ...state,
                 player: payload
             }
+
+        case SET_USER_EMAIL:
+            // Access the current user's email from auth state
+            const userEmail = action.payload; // Or state.auth.email, depending on your authReducer structure
+
+            // Update user-related data in the state
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    email: userEmail,
+                },
+            };
+
         default:
             return state;
     }
