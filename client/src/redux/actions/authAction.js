@@ -1,5 +1,6 @@
 import { postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../actions/globalTypes";
+import { DISCOVER_VIDEOS_TYPES } from "./discoverAction";
 
 export const login = (data) => async (dispatch) => {
     try {
@@ -11,6 +12,12 @@ export const login = (data) => async (dispatch) => {
                 token: res.data.results.access_token
             }
         });
+        
+        dispatch({
+            type: DISCOVER_VIDEOS_TYPES.SET_USER_EMAIL, 
+            payload: res.data.results.user.email
+        });
+        
         localStorage.setItem('firstLogin', true);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
     } catch (err) {
@@ -31,7 +38,13 @@ export const refreshToken = () => async (dispatch) => {
                     token: res.data.results.access_token
                 }
             });
-            dispatch({ type: GLOBALTYPES.ALERT, payload: {} })
+
+            dispatch({
+                type: DISCOVER_VIDEOS_TYPES.SET_USER_EMAIL, 
+                payload: res.data.results.user.email
+            });
+            
+            dispatch({ type: GLOBALTYPES.ALERT, payload: {} });
         }
     } catch (err) {
         console.log(err.response);
