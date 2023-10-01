@@ -1,13 +1,17 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LeftSideBar from "../components/global/LeftSideBar";
 import VideoList from "../components/video/VideoList";
 import VideoCurrent from "../components/video/VideoCurrent";
+import LoadMoreBtn from "../components/other/LoadMoreBtn";
+import { GLOBALTYPES } from "../redux/actions/globalTypes";
 
 const Videos = () => {
     const { videos, theme } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
+    const [load, setLoad] = useState(false);
+    const dispatch = useDispatch();
 
     // Create a ref for the audio element
     const videoRef = useRef(null);
@@ -28,6 +32,17 @@ const Videos = () => {
             setIsMuted(videoRef.current.muted);
         }
     }
+
+    const handleLoadMore = () => {
+        try {
+            setLoad(false);
+            setLoad(true);
+        } catch (error) {
+            console.log(error);
+            dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
+        }
+    }
+
     return (
         <div className="home row mx-0">
             <div className="left_sidebar col-md-3">
@@ -62,6 +77,16 @@ const Videos = () => {
                                             deleteVideo={deleteVideo}
                                             theme={theme}
                                         />
+                                }
+
+                                {
+                                    load && <div className="spinner-border d-block mx-auto text-primary" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                }
+                                {
+                                    !videos.loading
+                                    && <LoadMoreBtn load={load} page={videos.page} result={videos.result} handleLoadMore={handleLoadMore} />
                                 }
 
                                 {/* <div className="videos-container__track-item">
