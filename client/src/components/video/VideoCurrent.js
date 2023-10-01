@@ -19,24 +19,35 @@ const VideoCurrent = (props) => {
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
-
-                <video
+                <video id="videoPlaying"
                     ref={videoRef}
-                    width="640" height="390"
+                    width="100%" height="345"
                     controls
                     muted={isMuted}
                     volume={volume}>
                     <source
+
                         src="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"
                         alt=""
                     />
                 </video>
-                <div id="videoPlaying"></div>
                 <div id="video-content">
-                    <div id="titlePlayingVideo"></div>
+                    <div id="titlePlayingVideo">July - My Soul</div>
                 </div>
                 <div className="video-voting">
-                    <div id="playing-video-voting" className=" playing-vote"></div>
+                    <div id="playing-video-voting" className=" playing-vote">
+                        <i className="fas fa-arrow-up q-m"
+                        // onclick="toggleLikeVideo('6469a87ad6ea489c49a5c2f2')"
+                        />
+                        <h5 className="vote-counter"
+                            style={{
+                                paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem"
+                            }}>4
+                        </h5>
+                        <i className="fas fa-arrow-down q-m"
+                        // onclick="toggleDislikeVideo('6469a87ad6ea489c49a5c2f2')"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
