@@ -29,7 +29,7 @@ const Videos = () => {
         }
     }
     return (
-        <div className="home row mx-0 ">
+        <div className="home row mx-0">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>
@@ -38,7 +38,7 @@ const Videos = () => {
                     <div className="editing-interest">
                         <h5 className="f-title">Explore Videos</h5>
                     </div>
-                    <main>
+                    <main className={`${theme ? 'dark' : 'light'}`}>
                         <div id="videos-container" className="row">
                             <div className="col-md-7 current-video">
                                 <VideoCurrent
