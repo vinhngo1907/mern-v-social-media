@@ -10,18 +10,24 @@ const Videos = () => {
     const [isMuted, setIsMuted] = useState(false);
 
     // Create a ref for the audio element
-    const audioRef = useRef(null);
+    const videoRef = useRef(null);
     const deleteVideo = () => {
 
     }
     const handleVolumeSliderChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume)
-        if (audioRef.current) {
-            audioRef.current.volume = newVolume / 100;
+        if (videoRef.current) {
+            videoRef.current.volume = newVolume / 100;
         }
     }
 
+    const handleToggleMute = () => {
+        if (videoRef.current) {
+            videoRef.current.muted = !videoRef.current.muted;
+            setIsMuted(videoRef.current.muted);
+        }
+    }
     return (
         <div className="home row mx-0 ">
             <div className="left_sidebar col-md-3">
@@ -36,10 +42,12 @@ const Videos = () => {
                         <div id="videos-container" className="row">
                             <div className="col-md-7 current-video">
                                 <VideoCurrent
+                                    videoRef={videoRef}
                                     isMuted={isMuted}
                                     volume={volume}
                                     setIsMuted={setIsMuted}
                                     handleVolumeSliderChange={handleVolumeSliderChange}
+                                    handleToggleMute={handleToggleMute}
                                 />
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
