@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange } = props;
+    const {theme} = useSelector(state => state);
     return (
         <div id="main-video">
             <div id="video">
@@ -19,12 +21,14 @@ const VideoCurrent = (props) => {
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
-                <video id="videoPlaying"
+                <video 
+                    // id="videoPlaying"
                     ref={videoRef}
                     width="100%" height="345"
                     muted={isMuted}
                     volume={volume}
                     controls
+                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} 
                 >
                     <source
 

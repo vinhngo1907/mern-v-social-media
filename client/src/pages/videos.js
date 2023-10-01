@@ -5,7 +5,7 @@ import VideoList from "../components/video/VideoList";
 import VideoCurrent from "../components/video/VideoCurrent";
 
 const Videos = () => {
-    const { videos } = useSelector(state => state);
+    const { videos, theme } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
 
@@ -55,6 +55,7 @@ const Videos = () => {
                                     videos={videos.data}
                                     eleId="senior-tracks"
                                     deleteVideo={deleteVideo}
+                                    theme={theme}
                                 />
                                 {/* <div className="videos-container__track-item">
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>

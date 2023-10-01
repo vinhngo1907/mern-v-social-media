@@ -1,6 +1,6 @@
 import React from 'react';
 
-function VideoItem({ res, counter, eleId, deleteVideo }) {
+function VideoItem({ res, counter, eleId, deleteVideo, theme }) {
 	return (
 		<div className="videos-container__track-item">
 			<div className="row" style={{ margin: 0, paddingBottom: '1rem' }}>
@@ -13,7 +13,11 @@ function VideoItem({ res, counter, eleId, deleteVideo }) {
 					{counter}
 				</div>
 				<div className="col-3 videos-container__track-image">
-					<img src={res.thumbnailUrl} className="thumbnail" alt="" />
+					<img
+						src={res.thumbnailUrl}
+						className="thumbnail" alt=""
+						style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
+					/>
 					<div className="video-voting" id={`${eleId}-${res._id}`}>
 						{/* Insert your updateCount logic here */}
 						<div id="playing-video-voting" className='playing-vote'></div>
