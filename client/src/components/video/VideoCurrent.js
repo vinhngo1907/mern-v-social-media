@@ -22,9 +22,10 @@ const VideoCurrent = (props) => {
                 <video id="videoPlaying"
                     ref={videoRef}
                     width="100%" height="345"
-                    controls
                     muted={isMuted}
-                    volume={volume}>
+                    volume={volume}
+                    controls
+                >
                     <source
 
                         src="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"

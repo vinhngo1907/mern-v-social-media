@@ -40,38 +40,6 @@
 
 /* --------------- videos ------------ */
 
-/* .light {
-    --hamburger-url: url("https://svgshare.com/i/aMx.svg");
-    --background-primary: #fdfcfb;
-    --background-secondary: rgba(255, 242, 240, 0.75);
-    --text-primary: #262626;
-    --text-secondary: #747373;
-    --button-bg-1: #181818;
-    --border-1: #202020cb;
-    --border-2: #cdd0d3;
-    --border-3: rgba(75, 75, 75, 0.3);
-    --track-info-name: #181818;
-    --track-no: #464646b3;
-    --modal: #f8f8f8;
-    --q-m: rgba(85, 85, 85, 0.5);
-}
-
-.dark {
-    --hamburger-url: url("https://svgshare.com/i/aJm.svg");
-    --background-primary: #080300;
-    --background-secondary: #181818;
-    --text-primary: #fff;
-    --text-secondary: #c4c4c4;
-    --button-bg-1: #fff;
-    --border-1: #ffffff8c;
-    --border-2: #212529;
-    --border-3: rgba(255, 255, 255, 0.1);
-    --track-info-name: #fff;
-    --track-no: #8d8d8db3;
-    --modal: #2c2c2c;
-    --q-m: rgb(255, 255, 255, 0.5);
-} */
-
 /* @media screen and (max-width: 1600px) {
     body {
         margin-left: 8rem;
@@ -437,11 +405,11 @@
 
 .modal-content {
     /* background-color: var(--modal); */
-    /* padding: 10px;
+    padding: 10px;
     height: 85vh;
-    width: 61.3333%;
+    /* width: 61.3333%; */
     margin: 0 auto;
-    overflow-y: auto; */
+    overflow-y: auto;
 }
 
 .modal-body img,
