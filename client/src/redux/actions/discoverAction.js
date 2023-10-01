@@ -52,7 +52,8 @@ export const getDiscoverVideos = (token) => async (dispatch) => {
     try {
         dispatch({ type: DISCOVER_VIDEOS_TYPES.LOADING, payload: true });
         const res = await getDataApi('video', token);
-        dispatch({ type: DISCOVER_VIDEOS_TYPES.GET_VIDEOS, payload: res.data.results });
+        const { data: { results: { videos, result } } } = res;
+        dispatch({ type: DISCOVER_VIDEOS_TYPES.GET_VIDEOS, payload: { videos, result } });
         dispatch({ type: DISCOVER_VIDEOS_TYPES.LOADING, payload: false });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });

@@ -18,7 +18,10 @@ class VideoController {
         try {
             const videos = await videoService.getAll();
             await videoService.getVideoById(req.params.id);
-            return res.json(responseDTO.success("Get videos in successfully", videos));
+            return res.json(responseDTO.success("Get videos in successfully", {
+                videos,
+                result: videos.length
+            }));
         } catch (error) {
             next(error);
         }
