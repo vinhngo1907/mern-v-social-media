@@ -153,7 +153,7 @@ const RightSideBar = () => {
                                     }
                                 </div>
                         }
-                        <ChatBox />
+                        {selectedUser && <ChatBox selectedUser={selectedUser} setSelectedUser={setSelectedUser}/>}
                     </ul>
                 }
 

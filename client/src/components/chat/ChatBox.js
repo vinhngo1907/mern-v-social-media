@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../other/Avatar";
 
-const ChatBox = () => {
+const ChatBox = ({ setSelectedUser }) => {
     return (
         <div className="chat-box show">
             <div className="chat-head">
@@ -10,13 +10,13 @@ const ChatBox = () => {
                 <div className="more">
                     <span><i className="fas fa-more" /></span>
                     <span className="close-mesage">
-                        <i className="fas fa-times-circle" />
+                        <i className="fas fa-times-circle" onClick={() => setSelectedUser(null)} />
                     </span>
                 </div>
             </div>
             <div className="chat-list">
-                <ul className="ps-container ps-theme-default ps-active-y" 
-                id="948dd730-91eb-c0c1-7388-127bbe317177">
+                <ul className="ps-container ps-theme-default ps-active-y"
+                    id="948dd730-91eb-c0c1-7388-127bbe317177">
                     <li className="me">
                         <div className="chat-thumb mr-2">
                             <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
@@ -26,7 +26,9 @@ const ChatBox = () => {
                                 Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
                             </span>
                             <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
+                                <time dateTime="2004-07-24T18:18"
+                                    className="entry-date updated">Yesterday at 8:10pm
+                                </time>
                             </span>
                         </div>
                     </li>
@@ -116,11 +118,11 @@ const ChatBox = () => {
                         </div>
                     </li>
                     <div className="ps-scrollbar-x-rail" style={{ left: "0px", bottom: "0px" }}>
-                        <div className="ps-scrollbar-x" tabindex="0" style={{ left: "0px", width: "0px" }}>
+                        <div className="ps-scrollbar-x" tabIndex="0" style={{ left: "0px", width: "0px" }}>
                         </div>
                     </div>
                     <div className="ps-scrollbar-y-rail" style={{ top: "0px", height: "290px", right: "0px" }}>
-                        <div className="ps-scrollbar-y" tabindex="0" style={{ top: "0px", height: "189px" }}>
+                        <div className="ps-scrollbar-y" tabIndex="0" style={{ top: "0px", height: "189px" }}>
                         </div>
                     </div>
                 </ul>
