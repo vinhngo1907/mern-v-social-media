@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Social = () => {
     const { social } = useSelector(state => state);
-    // const [socialData, setSocialData] = useState([]);
-    // useEffect(() => {
-    //     if(social.data.length > 0){
-    //         setSocialData(soc)
-    //     }
-    // },[social.data]);
+    
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        if (social.data && social.data.length > 0) {
+            setData(social.data)
+        }
+    }, [social.data]);
+    
     return (
         <div className="widget mt-3">
             <h4 className="widget-title">Socials</h4>
@@ -17,10 +19,10 @@ const Social = () => {
                 {
                     social.loading && <div className="spinner-border d-block mx-auto" role="status">
                         <span className="sr-only">Loading...</span>
-                    </div> 
+                    </div>
                 }
                 {
-                    social.data.length > 0 && social.data.map((s, index) => (
+                    data && data.length > 0 && data.map((s, index) => (
                         <li className={`${s.title}`} key={index}>
                             <Link title={s.title} to="/">
                                 <i className={`fa fa-${s.title}`} /> <span>{s.title}</span>
