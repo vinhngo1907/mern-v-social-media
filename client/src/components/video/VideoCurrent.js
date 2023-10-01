@@ -18,6 +18,17 @@ const VideoCurrent = ({ isMuted, volume, setIsMuted, handleVolumeSliderChange })
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
+                <iframe id="videoPlaying"
+                    frameBorder="0"
+                    allowFullScreen="1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    title="Nightcore - Just A Dream (Switching Vocals) - (Lyrics)"
+                    width="640"
+                    height="390"
+                    src="https://www.youtube.com/embed/ywbKigZxuD8?autoplay=1&amp;controls=0&amp;mute=1&amp;start=1&amp;enablejsapi=1&amp;origin=http%3A%2F%2Flocalhost%3A8080&amp;widgetid=1"
+                >
+
+                </iframe>
                 <div id="videoPlaying"></div>
                 <div id="video-content">
                     <div id="titlePlayingVideo"></div>

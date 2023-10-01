@@ -43,7 +43,11 @@ const Videos = () => {
                                 />
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
-                                <VideoList videos={videos.data} eleId="senior-tracks" deleteVideo={deleteVideo} />
+                                <VideoList
+                                    videos={videos.data}
+                                    eleId="senior-tracks"
+                                    deleteVideo={deleteVideo}
+                                />
                                 {/* <div className="videos-container__track-item">
                                     <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
                                         <div className="col-1 videos-container__track-no" >1</div>
