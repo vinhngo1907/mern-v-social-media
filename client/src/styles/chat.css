@@ -56,3 +56,13 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+.chat-thumb {
+    display: inline-block;
+    vertical-align: top;
+    width: 28px;
+}
+
+.chat-thumb>img {
+    border-radius: 100%;
+}
