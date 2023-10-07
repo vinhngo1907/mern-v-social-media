@@ -6,7 +6,7 @@ import { GLOBALTYPES } from './redux/actions/globalTypes';
 import { NOTIFY_TYPES } from './redux/actions/notifyAction';
 import { POST_TYPES } from './redux/actions/postAction';
 import { SOCIAL_TYPES } from './redux/actions/socialAction';
-import { VIDEOS_TYPES } from './redux/actions/videoAction';
+import { VIDEOS_TYPES, playingVideo, updateTracks } from './redux/actions/videoAction';
 
 const spawnNotification = (body, icon, url, title) => {
     let options = {
@@ -283,15 +283,27 @@ const SocketClient = () => {
             // updateCount(id, likes, dislikes, 'all')
         });
 
+        socket.on("update-tracks", (tracks) => {
+            dispatch(updateTracks(tracks));
+        });
+
+        socket.on("playingVideo", async (data) => {
+            // Your existing code...
+            dispatch(playingVideo(data));
+            // ...
+        });
+
         // Clean up the event listeners when the component unmounts
         return () => {
             socket.off("senior-tracks-update");
             socket.off("junior-tracks-update");
             socket.off("other-tracks-update");
             socket.off("video-queue-item-update");
+            socket.off("update-tracks");
+            socket.off("playingVideo");
         };
     }, [socket, dispatch]);
-    
+
     return (
         <>
             <audio controls ref={audioRef} style={{ display: 'none' }}>
