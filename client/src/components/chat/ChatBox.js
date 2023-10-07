@@ -1,7 +1,9 @@
 import React from "react";
 import Avatar from "../other/Avatar";
+import { useSelector } from "react-redux";
 
 const ChatBox = ({ setSelectedUser }) => {
+    const { auth } = useSelector(state => state);
     return (
         <div className="chat-box show">
             <div className="chat-head">
@@ -32,84 +34,11 @@ const ChatBox = ({ setSelectedUser }) => {
                             </span>
                         </div>
                     </li>
-                    <li className="me">
-                        <div className="chat-thumb mr-2">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
-                            </span>
-                        </div>
-                    </li>
-                    <li className="me">
-                        <div className="chat-thumb mr-2">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
-                            </span>
-                        </div>
-                    </li>
-                    <li className="me">
-                        <div className="chat-thumb mr-2">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
-                            </span>
-                        </div>
-                    </li>
-                    <li className="me">
-                        <div className="chat-thumb mr-2">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
-                            </span>
-                        </div>
-                    </li>
-                    <li className="me">
-                        <div className="chat-thumb mr-2">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date">
-                                <time dateTime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time>
-                            </span>
-                        </div>
-                    </li>
+                    
                     <li className="you">
                         <div className="chat-thumb">
-                            <Avatar size="medium-avatar" src="https://res.cloudinary.com/v-webdev/image/upload/v1693021031/v-media/photo2_fz8r83.jpg" />
-                        </div>
-                        <div className="notification-event">
-                            <span className="chat-message-item">
-                                Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
-                            </span>
-                            <span className="notification-date"><time datetime="2004-07-24T18:18" className="entry-date updated">Yesterday at 8:10pm</time></span>
-                        </div>
-                    </li>
-                    <li className="me">
-                        <div className="chat-thumb"><img src="images/resources/chatlist1.jpg" alt="" /></div>
+                            <Avatar src={auth.user.avatar} size="medium-avatar"/>
+                            </div>
                         <div className="notification-event">
                             <span className="chat-message-item">
                                 Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks
