@@ -5,9 +5,10 @@ import VideoList from "../components/video/VideoList";
 import VideoCurrent from "../components/video/VideoCurrent";
 import LoadMoreBtn from "../components/other/LoadMoreBtn";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
+import { deleteVideo } from "../redux/actions/videoAction";
 
 const Videos = () => {
-    const { videos, theme } = useSelector(state => state);
+    const { videos, theme, auth, socket } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const [load, setLoad] = useState(false);
@@ -15,9 +16,11 @@ const Videos = () => {
 
     // Create a ref for the audio element
     const videoRef = useRef(null);
-    const deleteVideo = () => {
-
+    
+    const handleDeleteVideo = () => {
+        dispatch(deleteVideo({ id: "asd", auth, socket }));
     }
+
     const handleVolumeSliderChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume)
@@ -74,7 +77,7 @@ const Videos = () => {
                                         : <VideoList
                                             videos={videos.data}
                                             eleId="senior-tracks"
-                                            deleteVideo={deleteVideo}
+                                            deleteVideo={handleDeleteVideo}
                                             theme={theme}
                                         />
                                 }

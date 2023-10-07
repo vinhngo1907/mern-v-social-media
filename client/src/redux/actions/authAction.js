@@ -1,6 +1,6 @@
 import { postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../actions/globalTypes";
-import { DISCOVER_VIDEOS_TYPES } from "./discoverAction";
+import { VIDEOS_TYPES } from "./videoAction";
 
 export const login = (data) => async (dispatch) => {
     try {
@@ -14,7 +14,7 @@ export const login = (data) => async (dispatch) => {
         });
         
         dispatch({
-            type: DISCOVER_VIDEOS_TYPES.SET_USER_EMAIL, 
+            type: VIDEOS_TYPES.SET_USER_EMAIL, 
             payload: res.data.results.user.email
         });
         
@@ -40,7 +40,7 @@ export const refreshToken = () => async (dispatch) => {
             });
 
             dispatch({
-                type: DISCOVER_VIDEOS_TYPES.SET_USER_EMAIL, 
+                type: VIDEOS_TYPES.SET_USER_EMAIL, 
                 payload: res.data.results.user.email
             });
             

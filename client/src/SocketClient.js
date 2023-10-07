@@ -6,7 +6,7 @@ import { GLOBALTYPES } from './redux/actions/globalTypes';
 import { NOTIFY_TYPES } from './redux/actions/notifyAction';
 import { POST_TYPES } from './redux/actions/postAction';
 import { SOCIAL_TYPES } from './redux/actions/socialAction';
-import { DISCOVER_VIDEOS_TYPES } from './redux/actions/discoverAction';
+import { VIDEOS_TYPES } from './redux/actions/videoAction';
 
 const spawnNotification = (body, icon, url, title) => {
     let options = {
@@ -264,19 +264,23 @@ const SocketClient = () => {
         // Listen for the "senior-tracks-update" event and update the state
         socket.on("senior-tracks-update", (tracks) => {
             // setVideos(tracks);
-            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
         });
 
         // Listen for the "junior-tracks-update" event and update the state
         socket.on("junior-tracks-update", (tracks) => {
             // setVideos(tracks);
-            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
         });
 
         // Listen for the "other-tracks-update" event and update the state
         socket.on("other-tracks-update", (tracks) => {
             // setVideos(tracks);
-            dispatch({ type: DISCOVER_VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+        });
+
+        socket.on("video-queue-item-update", ({ id, likes, dislikes }) => {
+            // updateCount(id, likes, dislikes, 'all')
         });
 
         // Clean up the event listeners when the component unmounts
@@ -284,6 +288,7 @@ const SocketClient = () => {
             socket.off("senior-tracks-update");
             socket.off("junior-tracks-update");
             socket.off("other-tracks-update");
+            socket.off("video-queue-item-update");
         };
     }, [socket, dispatch]);
     
