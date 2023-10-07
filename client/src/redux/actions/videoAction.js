@@ -10,7 +10,9 @@ export const VIDEOS_TYPES = {
     DISLIKE_VIDEO: 'DISLIKE_VIDEO',
     SET_PLAYER: 'SET_PLAYER',
     LOAD_VIDEO: 'LOAD_VIDEO',
-    SET_USER_EMAIL: "SET_USER_EMAIL"
+    SET_USER_EMAIL: "SET_USER_EMAIL",
+    UPDATE_TRACKS: "UPDATE_TRACKS",
+    PLAYING_VIDEO: "PLAYING_VIDEO",
 }
 
 export const getDiscoverVideos = (token) => async (dispatch) => {
@@ -57,10 +59,18 @@ export const deleteVideo = ({ id, auth, socket }) => (dispatch) => {
     }
 }
 
-export const playingVideo = () => (dispatch) => {
+export const playingVideo = (data) => (dispatch) => {
     try {
-        
-    } catch (error) {
-        
+        dispatch({ type: VIDEOS_TYPES.PLAYING_VIDEO, payload: data, })
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
     }
 }
+
+export const updateTracks = (tracks) => (dispatch) => {
+    try {
+        dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: tracks, })
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+    }
+};
