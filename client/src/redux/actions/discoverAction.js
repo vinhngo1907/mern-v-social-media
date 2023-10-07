@@ -59,3 +59,27 @@ export const getDiscoverVideos = (token) => async (dispatch) => {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
     }
 }
+
+export const getVideoById = ({ id, token }) => async (dispatch) => {
+    try {
+        await getDataApi(`video/${id}`, token);
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+    }
+}
+
+export const toggleLikeVideo = ({ id, token }) => (dispatch) => {
+    try {
+
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+    }
+}
+
+export const toggleDisLikeVideo = ({ id, token }) => (dispatch) => {
+    try {
+
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+    }
+}

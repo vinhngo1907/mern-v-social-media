@@ -72,10 +72,10 @@ class Job {
                     videoCount: +videoCount,
                 }
             });
-            // console.log(result.youtube);
             // console.log({ socketInfo });
             if (socketInfo && socketInfo.socket) {
                 logger.info("Fetch Youtube Stats");
+                console.log(">>>>>",result.youtube);
                 socketInfo.socket.emit("fetchYoutubeStats", result.youtube);
             }
             return result;
@@ -105,10 +105,10 @@ class Job {
                     followerCount: followers,
                 }
             });
-            // console.log(result.github);
             // console.log({ socketInfo });
-            if (socketInfo && socketInfo.socket) {
+            if (socketInfo && socketInfo.socket && result.github) {
                 logger.info("Fetch Github Stats");
+                console.log(result.github);
                 socketInfo.socket.emit("fetchGithubStats", result.github);
             }
 
