@@ -61,7 +61,7 @@ export const deleteVideo = ({ id, auth, socket }) => async (dispatch) => {
 
 export const playingVideo = (data) => async (dispatch) => {
     try {
-        dispatch({ type: VIDEOS_TYPES.PLAYING_VIDEO, payload: data, })
+        dispatch({ type: VIDEOS_TYPES.SET_PLAYER, payload: data, })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
     }
