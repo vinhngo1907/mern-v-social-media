@@ -283,25 +283,29 @@ const SocketClient = () => {
             // updateCount(id, likes, dislikes, 'all')
         });
 
-        socket.on("update-tracks", (tracks) => {
-            dispatch(updateTracks(tracks));
-        });
-
-        socket.on("playingVideo", async (data) => {
-            // Your existing code...
-            dispatch(playingVideo(data));
-            // ...
-        });
-
         // Clean up the event listeners when the component unmounts
         return () => {
             socket.off("senior-tracks-update");
             socket.off("junior-tracks-update");
             socket.off("other-tracks-update");
             socket.off("video-queue-item-update");
+        };
+    }, [socket, dispatch]);
+
+
+    useEffect(() => {
+        socket.on("update-tracks", (tracks) => {
+            dispatch(updateTracks(tracks));
+        });
+
+        socket.on("playingVideo", async (data) => {
+            dispatch(playingVideo(data));
+        });
+
+        return () => {
             socket.off("update-tracks");
             socket.off("playingVideo");
-        };
+        }
     }, [socket, dispatch]);
 
     return (

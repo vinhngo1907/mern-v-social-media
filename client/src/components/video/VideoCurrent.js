@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange } = props;
-    const {theme} = useSelector(state => state);
+    const { theme } = useSelector(state => state);
     return (
         <div id="main-video">
             <div id="video">
@@ -21,7 +22,7 @@ const VideoCurrent = (props) => {
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
-                <video 
+                {/* <video 
                     id="videoPlaying"
                     ref={videoRef}
                     width="100%" height="345"
@@ -31,11 +32,16 @@ const VideoCurrent = (props) => {
                     style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} 
                 >
                     <source
-
                         src="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"
                         alt=""
                     />
-                </video>
+                </video> */}
+                <VideoPlayer
+                    videoUrl="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"
+                    isMuted={isMuted}
+                    volume={volume}
+                    theme={theme}
+                />
                 <div id="video-content">
                     <div id="titlePlayingVideo">July - My Soul</div>
                 </div>

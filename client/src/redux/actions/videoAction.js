@@ -71,6 +71,6 @@ export const updateTracks = (tracks) => async (dispatch) => {
     try {
         dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: tracks })
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response.data.message || err } });
+        // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response.data.message || err } });
     }
 };
