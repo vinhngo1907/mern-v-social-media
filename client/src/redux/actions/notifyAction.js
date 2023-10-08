@@ -37,6 +37,7 @@ export const createNotify = ({ msg, auth, socket }) => async (dispatch) => {
 }
 
 export const removeNotify = ({ msg, auth, socket }) => async (dispatch) => {
+    dispatch({ type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg });
     try {
         await deleteDataApi(`notify/${msg.id}?url=${msg.url}`, auth.token);
         socket.emit('removeNotify', msg);
