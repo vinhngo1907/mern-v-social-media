@@ -161,5 +161,8 @@ exports.getPlayingVideo = async () => {
 }
 
 exports.getTracksInQueue = async () => {
-    return songsForQueue;
+    return {
+        tracks: songsForQueue,
+        result: songsForQueue.length
+    };
 }
