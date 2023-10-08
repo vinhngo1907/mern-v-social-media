@@ -35,7 +35,7 @@ export const getVideoById = ({ id, token }) => async (dispatch) => {
     }
 }
 
-export const toggleLikeVideo = ({ id, token }) => (dispatch) => {
+export const toggleLikeVideo = ({ id, auth, socket }) => async (dispatch) => {
     try {
 
     } catch (err) {
@@ -43,7 +43,7 @@ export const toggleLikeVideo = ({ id, token }) => (dispatch) => {
     }
 }
 
-export const toggleDisLikeVideo = ({ id, token }) => (dispatch) => {
+export const toggleDisLikeVideo = ({ id, auth, socket }) => async (dispatch) => {
     try {
 
     } catch (err) {
@@ -51,7 +51,7 @@ export const toggleDisLikeVideo = ({ id, token }) => (dispatch) => {
     }
 }
 
-export const deleteVideo = ({ id, auth, socket }) => (dispatch) => {
+export const deleteVideo = ({ id, auth, socket }) => async (dispatch) => {
     try {
 
     } catch (err) {
@@ -59,7 +59,7 @@ export const deleteVideo = ({ id, auth, socket }) => (dispatch) => {
     }
 }
 
-export const playingVideo = (data) => (dispatch) => {
+export const playingVideo = (data) => async (dispatch) => {
     try {
         dispatch({ type: VIDEOS_TYPES.PLAYING_VIDEO, payload: data, })
     } catch (err) {
@@ -67,10 +67,10 @@ export const playingVideo = (data) => (dispatch) => {
     }
 }
 
-export const updateTracks = (tracks) => (dispatch) => {
+export const updateTracks = (tracks) => async (dispatch) => {
     try {
-        dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: tracks, })
+        dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: tracks })
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response.data.message || err } });
     }
 };

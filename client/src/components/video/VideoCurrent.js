@@ -22,7 +22,7 @@ const VideoCurrent = (props) => {
                     />
                 </div>
                 <video 
-                    // id="videoPlaying"
+                    id="videoPlaying"
                     ref={videoRef}
                     width="100%" height="345"
                     muted={isMuted}

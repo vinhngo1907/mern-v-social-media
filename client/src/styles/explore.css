@@ -178,7 +178,7 @@ main .row {
 }
 
 #videoPlaying {
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 #main-video #video {
