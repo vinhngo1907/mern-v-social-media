@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LeftSideBar from "../components/global/LeftSideBar";
 import VideoList from "../components/video/VideoList";
@@ -8,11 +8,15 @@ import { GLOBALTYPES } from "../redux/actions/globalTypes";
 import { deleteVideo } from "../redux/actions/videoAction";
 
 const Videos = () => {
-    const { videos, theme, auth, socket } = useSelector(state => state);
+    const { videos, theme, auth, socket, player } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const [load, setLoad] = useState(false);
+    const [videoUrl, setVideoUrl] = useState("https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4");
+
     const dispatch = useDispatch();
+    
+    const [videoSource, setVideoSource] = useState(videoUrl);
 
     // Create a ref for the audio element
     const videoRef = useRef(null);
@@ -46,6 +50,14 @@ const Videos = () => {
         }
     }
 
+    useEffect(() => {
+        // When the video URL changes, update the video source
+        if (videoRef.current) {
+            videoRef.current.src = videoSource;
+            videoRef.current.load();
+        }
+    }, [videoSource]);
+
     return (
         <div className="home row mx-0">
             <div className="left_sidebar col-md-3">
@@ -66,6 +78,7 @@ const Videos = () => {
                                     setIsMuted={setIsMuted}
                                     handleVolumeSliderChange={handleVolumeSliderChange}
                                     handleToggleMute={handleToggleMute}
+                                    videoUrl={videoSource}
                                 />
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">

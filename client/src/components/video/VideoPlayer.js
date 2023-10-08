@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
-const VideoPlayer = ({ videoUrl, isMuted, volume, theme }) => {
-    const [videoSource, setVideoSource] = useState(videoUrl);
-    const videoRef = useRef(null);
+const VideoPlayer = ({ videoUrl, isMuted, volume, theme, videoRef }) => {
+    // const [videoSource, setVideoSource] = useState(videoUrl);
+    // const videoRef = useRef(null);
 
-    useEffect(() => {
-        // When the video URL changes, update the video source
-        if (videoRef.current) {
-            videoRef.current.src = videoSource;
-            videoRef.current.load();
-        }
-    }, [videoSource]);
+    // useEffect(() => {
+    //     // When the video URL changes, update the video source
+    //     if (videoRef.current) {
+    //         videoRef.current.src = videoSource;
+    //         videoRef.current.load();
+    //     }
+    // }, [videoSource]);
 
     return (
         <video
@@ -23,7 +23,7 @@ const VideoPlayer = ({ videoUrl, isMuted, volume, theme }) => {
             controls
             style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
         >
-            <source src={videoSource} alt="" />
+            <source src={videoUrl} alt="" />
         </video>
     );
 };

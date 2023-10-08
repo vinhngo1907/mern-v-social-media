@@ -292,13 +292,13 @@ const SocketClient = () => {
         };
     }, [socket, dispatch]);
 
-
     useEffect(() => {
         socket.on("update-tracks", (tracks) => {
             dispatch(updateTracks(tracks));
         });
 
         socket.on("playingVideo", async (data) => {
+            console.log(">>>>> [Playing Video] <<<<<", { data })
             dispatch(playingVideo(data));
         });
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
-    const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange } = props;
+    const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
     const { theme } = useSelector(state => state);
     return (
         <div id="main-video">
@@ -37,10 +37,11 @@ const VideoCurrent = (props) => {
                     />
                 </video> */}
                 <VideoPlayer
-                    videoUrl="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"
+                    videoUrl={videoUrl}
                     isMuted={isMuted}
                     volume={volume}
                     theme={theme}
+                    videoRef={videoRef}
                 />
                 <div id="video-content">
                     <div id="titlePlayingVideo">July - My Soul</div>
