@@ -2,6 +2,7 @@
 
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
+const { videoModel } = require("../db/models");
 const { postModel, userModel, commentModel } = modelSchema;
 
 class PostController {
@@ -47,6 +48,7 @@ class PostController {
             if (!deletedPost) return res.status(400).json(responseDTO.badRequest("This post or/and user does not exist!"));
             await commentModel.deleteMany({ _id: { $in: deletedPost.comments } });
 
+            await videoModel.deleteMany({ videoId: { $in: deletedPost.images.map(image => image.public_id) } })
             res.status(200).json(responseDTO.success("Deleted post in successfully", { ...deletedPost, user: req.user }))
         } catch (error) {
             console.log(error);

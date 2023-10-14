@@ -15,7 +15,10 @@ cloudinary.config({
 const thumbnailTransformation = {
     width: 100, // Adjust the width as needed
     height: 100, // Adjust the height as needed
-    crop: 'fill' // Crop method (fill, scale, etc.)
+    crop: 'fill', // Crop method (fill, scale, etc.)
+    gravity: 'auto',
+    format:'jpg',
+    secure: true
 };
 
 let allImages = [];
@@ -58,30 +61,23 @@ class UploadController {
 
                     if (result.resource_type === "video") {
                         const { secure_url, public_id } = result;
-                        // const newVideo = new videoModel({
-                        //     videoId: public_id,
-                        //     videoUrl: secure_url,
-                        //     user: req.user._id,
-                        //     title: "sample",
-                        //     duration: result?.duration || 0,
-                        //     thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
-                        // });
-                        // await newVideo.save();
                         const videoData = {
                             videoId: public_id,
                             videoUrl: secure_url,
                             // user: req.user._id,
                             title: "sample",
                             duration: result?.duration || 0,
-                            thumbnailUrl: cloudinary.v2.url(public_id, thumbnailTransformation)
+                            thumbnailUrl: cloudinary.v2
+                            .url(public_id, thumbnailTransformation)
                         }
+                        
                         await createVideo(videoData, req.user);
                     }
                     removeTmp(file.tempFilePath);
                     res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }));
                 } catch (error) {
                     console.error(error);
-                    res.status(500).json(responseDTO.serverError('Internal server error'));
+                    res.status(500).json(responseDTO.serverError(error.message));
                 }
             });
 
