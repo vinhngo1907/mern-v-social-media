@@ -6,7 +6,6 @@ const uploadCtrl = new UploadController();
 const rateLimit = require("express-rate-limit");
 const slowDown = require("express-slow-down");
 
-
 /**
  * @route POST api/upload/create
  * @desc Post upload file
@@ -36,7 +35,7 @@ const speedLimiter = slowDown({
     delayAfter: 1,
     delayMs: 500,
 });
-router.get('/get', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.get);
+router.get('/images', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.get);
 
 /**
  * @route GET api/upload/video
