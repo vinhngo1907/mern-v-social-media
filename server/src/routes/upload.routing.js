@@ -35,7 +35,7 @@ const speedLimiter = slowDown({
     delayAfter: 1,
     delayMs: 500,
 });
-router.get('/images', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.get);
+router.get('/images', uploadApiRateLimiter, speedLimiter, userAuth, uploadCtrl.getImages);
 
 /**
  * @route GET api/upload/video

@@ -68,7 +68,12 @@ class UploadController {
                             title: "sample",
                             duration: result?.duration || 0,
                             thumbnailUrl: cloudinary.v2
-                            .url(public_id, thumbnailTransformation)
+                            .url(public_id, {
+                                width: 100, 
+                                height: 100,
+                                crop: 'fill',
+                                format:'jpg'
+                            })
                         }
                         
                         await createVideo(videoData, req.user);
@@ -93,8 +98,9 @@ class UploadController {
             if (!public_id) return res.status(400).json(responseDTO.badRequest('No images Selected'));
 
             cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
-                if (err) return res.status(400).json(responseDTO.badRequest('No images Selected'));
-                res.json(responseDTO.success("Deleted Image in successfully"));
+                if (err) return res.status(400).json(responseDTO.badRequest(err.message));
+                console.log({result})
+                res.json(responseDTO.success("Deleted Image in successfully", result));
             })
         } catch (error) {
             console.log(error);
@@ -102,7 +108,7 @@ class UploadController {
         }
     }
 
-    get(req, res) {
+    getImages(req, res) {
         try {
             const num = Number(req.query.num) || 9;
             let nextPageCursor = req.query.next_cursor || null;
