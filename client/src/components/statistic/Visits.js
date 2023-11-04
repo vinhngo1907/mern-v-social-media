@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Avatar from "../other/Avatar";
 import { useSelector } from "react-redux";
 
-const Likes = () => {
+const Visits = () => {
     const { statistic } = useSelector(state => state);
     const [data, setData] = useState([]);
     const [visitCount, setVisitCount] = useState(0);
@@ -53,4 +53,4 @@ const Likes = () => {
     )
 }
 
-export default Likes
+export default Visits
