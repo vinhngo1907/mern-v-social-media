@@ -8,6 +8,7 @@ const { statisticModel, socialModel } = modelSchema;
 class StatisticController {
     async GetViewAndVisitStats(req, res) {
         const { type, id } = req.query;
+        console.log(req.query);
         try {
             const now = moment(new Date());
             const today = now.toDate();
@@ -48,9 +49,9 @@ class StatisticController {
 
                 await stats.save();
                 await stats.populate("user clients folowers following", "username fullname avatar following followers");
-                
+
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
-                
+
                 return res.json(responseDTO.success("submit duration success", {
                     ...stats._doc, user: req.user
                 }));
