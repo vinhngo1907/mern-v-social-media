@@ -8,12 +8,9 @@ const { statisticModel, socialModel } = modelSchema;
 class StatisticController {
     async GetViewAndVisitStats(req, res) {
         const { type, id } = req.query;
-        console.log(req.query);
         try {
             const now = moment(new Date());
             const today = now.toDate();
-            // const startOfDate = moment(now).startOf("date").toDate();
-            // const endOfDate = moment(now).endOf("date").toDate();
             const recordExist = await statisticModel.findOne({ user: id })
                 .populate("user clients folowers following", "username fullname avatar following followers");
 
