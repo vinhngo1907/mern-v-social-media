@@ -1,14 +1,14 @@
 import { DeleteData, EditData } from '../actions/globalTypes';
 import { POST_TYPES } from '../actions/postAction';
 
-const initialSatate = {
+const initialState = {
 	loading: false,
 	posts: [],
 	page: 2,
 	result: 0
 }
 
-const postReducer = (state = initialSatate, action) => {
+const postReducer = (state = initialState, action) => {
 	const { type, payload } = action
 	switch (type) {
 		case POST_TYPES.GET_POSTS:

@@ -28,7 +28,8 @@ class StatisticController {
                 await recordExist.save();
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
                 return res.json(responseDTO.success("submit duration success", {
-                    ...recordExist._doc, user: req.user
+                    // ...recordExist._doc, 
+                    user: req.user
                 }));
             }
             else {
@@ -50,7 +51,8 @@ class StatisticController {
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
 
                 return res.json(responseDTO.success("submit duration success", {
-                    ...stats._doc, user: req.user
+                    // ...stats._doc, 
+                    user: req.user
                 }));
             }
 

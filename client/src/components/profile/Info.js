@@ -33,25 +33,6 @@ const Info = ({ auth, profile, dispatch, id, socket }) => {
         }
     }, [showFollowers, showFollowing, onEdit, dispatch]);
 
-    useEffect(() => {
-        const handleFetchStats = async () => {
-            if (userData && userData.length >= 1) {
-                const firstStats = sessionStorage.getItem("visit");
-                if (firstStats == null) {
-                    const res = await getDataApi(`statistic/fetch?type=visit-pageview&id=${userData[0]._id}`, auth.token);
-                    console.log(res.data.results)
-                    dispatch({ type: STATISTIC_TYPES.GET_STATS, payload: res.data.results });
-                } else {
-                    const res = await getDataApi(`statistic/fetch?id=${userData[0]._id}`, auth.token);
-                    console.log(res.data.results);
-                    dispatch({ type: STATISTIC_TYPES.UPDATE_STATS, payload: res.data.results });
-                }
-                sessionStorage.setItem("visit", "x");
-            }
-        }
-        return () => handleFetchStats();
-    }, [dispatch, id, auth, userData]);
-
     return (
         <div className="info">
             {

@@ -4,7 +4,7 @@ const initialState = {
     visitCount: 0,
     viewCount: 0,
     clients: [],
-    loading: false
+    loading: false,
 }
 
 const statisticReducer = (state = initialState, action) => {
