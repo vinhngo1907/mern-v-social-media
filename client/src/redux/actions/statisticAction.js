@@ -9,7 +9,7 @@ export const STATISTIC_TYPES = {
     GET_CLIENT: 'GET_STAT_CLIENT',
 }
 
-export const fetchStatistics = ({ id, type, auth }) => async (dispatch) => {
+export const fetchStatistics = ({ id, type, auth, socket }) => async (dispatch) => {
     try {
         // const res = 
         await getDataApi(`statistic/fetch?type=${type}&id=${id}`, auth.token);
@@ -21,7 +21,7 @@ export const fetchStatistics = ({ id, type, auth }) => async (dispatch) => {
 }
 
 export const getTotalStatistics = (token, user) => async (dispatch) => {
-    console.log({ token, user });
+    // console.log({ token, user });
     dispatch({ type: STATISTIC_TYPES.GET_ID, payload: user._id });
     try {
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: true });
@@ -32,7 +32,7 @@ export const getTotalStatistics = (token, user) => async (dispatch) => {
         dispatch({ type: STATISTIC_TYPES.GET_STATS, payload: res.data.results });
         dispatch({ type: STATISTIC_TYPES.LOADING, payload: false });
     } catch (err) {
-        console.log(err || err?.response.data.message)
+        console.log(err || err?.response.data.message);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
     }
 }

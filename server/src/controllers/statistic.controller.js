@@ -72,35 +72,19 @@ class StatisticController {
             let recordStats = await statisticModel.findOne({
                 user: req.user._id,
                 loggedAt: {
-                    // $gte: timeQuery
-                    $gte: timeQuery.startOf('day').toDate(),
-                    $lte: now.endOf('day').toDate(),
+                    $gte: timeQuery
                 }
-                // $or: [
-                //     {
-                //         loggedAt: {
-                //             $gte: timeQuery
-                //         }
-                //     },
-                //     {
-                //         loggedAt: {
-                //             $gte: moment(now).startOf("day").toDate(),
-                //             $lte: moment(now).endOf("day").toDate()
-                //         }
-                //     }
-                // ]
             }).populate("user clients folowers following", "username fullname avatar following followers");
 
-            // if (!recordStats) {
-            //     console.log("sdadasd")
-            //     recordStats = await statisticModel.findOne({
-            //         user: req.user._id,
-            //         loggedAt: {
-            //             $gte: moment(now).startOf("date").toDate(),
-            //             $lte: moment(now).endOf("date").toDate()
-            //         }
-            //     }).populate("user clients", "username fullname avatar following followers");
-            // }
+            if (!recordStats) {
+                recordStats = await statisticModel.findOne({
+                    user: req.user._id,
+                    // loggedAt: {
+                    //     $gte: moment(now).startOf("date").toDate(),
+                    //     $lte: moment(now).endOf("date").toDate()
+                    // }
+                }).populate("user clients", "username fullname avatar following followers");
+            }
             // console.log({recordStats});
             let stats = {};
 
@@ -111,7 +95,7 @@ class StatisticController {
                     user: { _id: req.user._id, username: req.user.username, avatar: req.user.avatar }
                 }
             }
-console.log({recordStats})
+            
             res.status(200).json(responseDTO.success("Get statistic in successfully", stats));
         } catch (error) {
             console.log(error);

@@ -26,7 +26,7 @@ const Profile = () => {
         if (!fromSS) {
             const timer = setTimeout(() => {
                 console.log("make api request to log visit");
-                dispatch(fetchStatistics({ id, type: 'visit-pageview', auth }))
+                dispatch(fetchStatistics({ id, type: 'visit-pageview', auth, socket }))
                 sessionStorage.setItem("visit", 'x');
             }, 10000); // 10 sec
 
@@ -34,7 +34,7 @@ const Profile = () => {
         }else{
             const timer = setTimeout(() => {
                 console.log("make api request to log count");
-                dispatch(fetchStatistics({ id, type: '', auth }));
+                dispatch(fetchStatistics({ id, type: '', auth, socket }));
                 
             }, 10000);
             return () => clearTimeout(timer);

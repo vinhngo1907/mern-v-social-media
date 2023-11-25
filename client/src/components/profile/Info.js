@@ -8,7 +8,7 @@ import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 // import { STATISTIC_TYPES } from "../../redux/actions/statisticAction";
 // import { getDataApi } from "../../utils/fetchData";
 
-const Info = ({ auth, profile, dispatch, id, socket, statistic }) => {
+const Info = ({ auth, profile, dispatch, id }) => {
     const [userData, setUserData] = useState([]);
     // const [statisticData, setStatisticData] = useState([]);
     const [onEdit, setOnEdit] = useState(false)
