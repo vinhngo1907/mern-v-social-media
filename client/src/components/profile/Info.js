@@ -5,11 +5,12 @@ import Followers from "./Followers";
 import Following from "./Following";
 import EditProfile from "./EditProfile";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import { STATISTIC_TYPES } from "../../redux/actions/statisticAction";
-import { getDataApi } from "../../utils/fetchData";
+// import { STATISTIC_TYPES } from "../../redux/actions/statisticAction";
+// import { getDataApi } from "../../utils/fetchData";
 
-const Info = ({ auth, profile, dispatch, id, socket }) => {
+const Info = ({ auth, profile, dispatch, id, socket, statistic }) => {
     const [userData, setUserData] = useState([]);
+    // const [statisticData, setStatisticData] = useState([]);
     const [onEdit, setOnEdit] = useState(false)
 
     const [showFollowers, setShowFollowers] = useState(false);
@@ -24,6 +25,12 @@ const Info = ({ auth, profile, dispatch, id, socket }) => {
         }
     }, [auth.user, id, profile.users, dispatch]);
 
+    // useEffect(() => {
+    //     if (auth.user._id === id) {
+    //         const user = statistic.clients.filter(u => u._id === id);
+    //         setStatisticData(user);
+    //     }
+    // }, [auth.user, id, statistic]);
 
     useEffect(() => {
         if (showFollowers || showFollowing || onEdit) {
@@ -50,8 +57,6 @@ const Info = ({ auth, profile, dispatch, id, socket }) => {
                                         </button>
                                         : <FollowBtn user={user} />
                                 }
-
-
                             </div>
 
                             <div className="follow_btn">

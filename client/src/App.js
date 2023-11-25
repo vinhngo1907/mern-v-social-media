@@ -44,12 +44,18 @@ function App() {
 			dispatch(getAllPosts(auth.token));
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
-			dispatch(getTotalStatistics(auth.token));
+			// dispatch(getTotalStatistics(auth.token));
 			dispatch(getSocialStatistics(auth.token));
 			dispatch(getDiscoverImages(auth.token));
 			dispatch(getDiscoverVideos(auth.token));
 		}
 	}, [dispatch, auth.token]);
+
+	useEffect(() => {
+		if (auth.token && auth.user) {
+			dispatch(getTotalStatistics(auth.token, auth.user));
+		}
+	}, [auth.token, dispatch, auth.user]);
 
 	window.addEventListener('scroll', () => {
 		if (window.location.pathname === '/') {

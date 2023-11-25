@@ -15,7 +15,7 @@ export const PROFILE_TYPES = {
 }
 
 export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
-    dispatch({ type: PROFILE_TYPES.GET_ID, payload: id })
+    dispatch({ type: PROFILE_TYPES.GET_ID, payload: id });
     try {
         dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
         const res = await getDataApi(`user/${id}`, auth.token);
@@ -28,7 +28,7 @@ export const getProfileUsers = ({ id, auth }) => async (dispatch) => {
 
         dispatch({ type: PROFILE_TYPES.GET_USER, payload: { user: users.results } });
         dispatch({ type: PROFILE_TYPES.GET_POSTS, payload: { ...postsData.results, _id: id, page: 2 } });
-        dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
+        dispatch({ type: PROFILE_TYPES.LOADING, payload: false });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }

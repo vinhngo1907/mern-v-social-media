@@ -66,28 +66,53 @@ class StatisticController {
     async GetAllTotalStats(req, res) {
         try {
             const now = moment(new Date());
-            // const dayStart = moment(now).startOf("date").toDate();
-            // const dayEnd = moment(now).endOf("date").toDate();
-            const timeQuery = moment(now).subtract(7, "d").toDate();
+            // const timeQuery = moment(now).subtract(7, "d").toDate();
+            const timeQuery = moment(now).subtract(7, 'days');
 
-            const recordStats = await statisticModel
-                .findOne({
-                    user: req.user._id,
-                    loggedAt: {
-                        $gte: timeQuery
-                    }
-                })
-                .populate("user clients folowers following", "username fullname avatar following followers");
+            let recordStats = await statisticModel.findOne({
+                user: req.user._id,
+                loggedAt: {
+                    // $gte: timeQuery
+                    $gte: timeQuery.startOf('day').toDate(),
+                    $lte: now.endOf('day').toDate(),
+                }
+                // $or: [
+                //     {
+                //         loggedAt: {
+                //             $gte: timeQuery
+                //         }
+                //     },
+                //     {
+                //         loggedAt: {
+                //             $gte: moment(now).startOf("day").toDate(),
+                //             $lte: moment(now).endOf("day").toDate()
+                //         }
+                //     }
+                // ]
+            }).populate("user clients folowers following", "username fullname avatar following followers");
 
+            // if (!recordStats) {
+            //     console.log("sdadasd")
+            //     recordStats = await statisticModel.findOne({
+            //         user: req.user._id,
+            //         loggedAt: {
+            //             $gte: moment(now).startOf("date").toDate(),
+            //             $lte: moment(now).endOf("date").toDate()
+            //         }
+            //     }).populate("user clients", "username fullname avatar following followers");
+            // }
+            // console.log({recordStats});
             let stats = {};
+
             if (recordStats) {
                 const { viewCount, visitCount, user, clients } = recordStats;
                 stats = {
-                    viewCount, visitCount, user, clients
+                    viewCount, visitCount, user, clients,
+                    user: { _id: req.user._id, username: req.user.username, avatar: req.user.avatar }
                 }
             }
-
-            res.status(200).json(responseDTO.success("Get data in successfully", stats));
+console.log({recordStats})
+            res.status(200).json(responseDTO.success("Get statistic in successfully", stats));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

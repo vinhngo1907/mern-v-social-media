@@ -5,6 +5,7 @@ const initialState = {
     viewCount: 0,
     clients: [],
     loading: false,
+    ids: []
 }
 
 const statisticReducer = (state = initialState, action) => {
@@ -23,15 +24,26 @@ const statisticReducer = (state = initialState, action) => {
                 loading: false,
                 clients: action.payload.clients
             };
+
+        case STATISTIC_TYPES.GET_ID:
+            return {
+                ...state,
+                ids: [...state.ids, action.payload]
+            };
             
-            case STATISTIC_TYPES.UPDATE_STATS:
-                const { payload: { viewCount, visitCount } } = action;
-                return {
-                    ...state,
-                    visitCount,
-                    viewCount,
-                    loading: false,
-                    clients: action.payload.clients
+        case STATISTIC_TYPES.GET_CLIENT:
+            return {
+                ...state,
+                clients: [...state.clients, action.payload.client]
+            }
+        case STATISTIC_TYPES.UPDATE_STATS:
+            const { payload: { viewCount, visitCount } } = action;
+            return {
+                ...state,
+                visitCount,
+                viewCount,
+                loading: false,
+                clients: action.payload.clients
             }
 
         default:

@@ -9,7 +9,7 @@ import LeftSideBar from "../../components/global/LeftSideBar";
 import { fetchStatistics } from "../../redux/actions/statisticAction";
 
 const Profile = () => {
-    const { auth, profile, socket } = useSelector(state => state);
+    const { auth, profile, socket, statistic } = useSelector(state => state);
 
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -17,7 +17,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (profile.ids.every(i => i !== id)) {
-            dispatch(getProfileUsers({ id, auth }))
+            dispatch(getProfileUsers({ id, auth }));
         }
     }, [id, profile.ids, dispatch, auth]);
 
@@ -47,7 +47,7 @@ const Profile = () => {
                 <LeftSideBar type="profile" />
             </div>
             <div className="main_sidebar col-md-9">
-                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} />
+                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} statistic={statistic}/>
                 {
                     auth.user._id === id &&
                     <div className="profile_tab">
