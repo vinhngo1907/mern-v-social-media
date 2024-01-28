@@ -73,7 +73,7 @@ class Job {
                 }
             });
             // console.log({ socketInfo });
-            if (socketInfo && socketInfo.socket) {
+            if (socketInfo && socketInfo.socket && result) {
                 logger.info("Fetch Youtube Stats");
                 console.log(">>>>>",result.youtube);
                 socketInfo.socket.emit("fetchYoutubeStats", result.youtube);
@@ -106,7 +106,7 @@ class Job {
                 }
             });
             // console.log({ socketInfo });
-            if (socketInfo && socketInfo.socket && result.github) {
+            if (socketInfo && socketInfo.socket && result) {
                 logger.info("Fetch Github Stats");
                 console.log(result.github);
                 socketInfo.socket.emit("fetchGithubStats", result.github);
