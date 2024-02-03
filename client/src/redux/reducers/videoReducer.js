@@ -85,7 +85,8 @@ const videoReducer = (state = initialState, action) => {
             };
 
         case VIDEOS_TYPES.UPDATE_TRACKS:
-            const updatedTracks = [...state.data, ...action.payload.tracks];
+            console.log(">>>><<<<", action.payload)
+            const updatedTracks = [...state.data, ...action.payload];
             return {
                 ...state,
                 data: updatedTracks,

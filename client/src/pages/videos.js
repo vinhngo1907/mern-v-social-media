@@ -66,7 +66,7 @@ const Videos = () => {
             // updateCount(data.playingVideo._id, data.playingVideo.likes, data.playingVideo.dislikes);
             // renderTracks(window.videoList, 'queueTracks');
             setVideoUrl(videos.player.videoUrl);
-            setVideoSource(videos.player)
+            setVideoSource(videos.player.videoUrl)
         }
     }, [videos.player]);
 

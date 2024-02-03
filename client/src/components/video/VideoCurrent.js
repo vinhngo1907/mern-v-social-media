@@ -4,6 +4,7 @@ import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
+    console.log({props})
     const { theme } = useSelector(state => state);
     
     return (

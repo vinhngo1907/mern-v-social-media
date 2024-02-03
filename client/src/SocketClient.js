@@ -308,9 +308,7 @@ const SocketClient = () => {
         socket.on("playingVideo", async (data) => {
             console.log(">>>>> [Playing Video] <<<<<", { data })
             if (player === null || player === undefined) {
-                // dispatch(playingVideo(data));
-            }else{
-                
+                dispatch(playingVideo(data));
             }
         });
 
