@@ -138,7 +138,7 @@ const initPlaylist = async (io) => {
     // console.log({sortedVideos})
 
     seniorSongs = sortedVideos.slice(0, 40);
-    console.log({seniorSongs});
+    // console.log({seniorSongs});
     io.emit('senior-tracks-update', seniorSongs);
     juniorSongs = sortedVideos.slice(40, 100);
     io.emit('junior-tracks-update', juniorSongs);

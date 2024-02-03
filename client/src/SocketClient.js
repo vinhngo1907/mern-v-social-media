@@ -316,7 +316,7 @@ const SocketClient = () => {
             socket.off("update-tracks");
             socket.off("playingVideo");
         }
-    }, [socket, dispatch]);
+    }, [socket, dispatch, player]);
 
     return (
         <>
