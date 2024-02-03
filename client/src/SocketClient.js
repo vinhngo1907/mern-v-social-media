@@ -301,7 +301,7 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on("update-tracks", (tracks) => {
-            console.log(">>>>>>", { tracks }, "<<<<<");
+            console.log(">>>>> [Update Tracks] <<<<<", { tracks })
             dispatch(updateTracks(tracks));
         });
 
