@@ -28,7 +28,7 @@ function startVideoScheduler(io) {
                 
                 playingVideo = videoQueue.dequeue();
                 currentVideoStartedTime = moment();
-                
+                // console.log({playingVideo});
                 io.emit('playingVideo', {
                     playingVideo,
                     playedTime: 0
