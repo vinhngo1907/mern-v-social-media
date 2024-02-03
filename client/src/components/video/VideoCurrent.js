@@ -6,9 +6,6 @@ const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
     const { theme } = useSelector(state => state);
     
-
-  
-
     return (
         <div id="main-video">
             <div id="video">
