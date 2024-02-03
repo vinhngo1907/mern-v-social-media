@@ -23,20 +23,7 @@ const VideoCurrent = (props) => {
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
-                {/* <video 
-                    id="videoPlaying"
-                    ref={videoRef}
-                    width="100%" height="345"
-                    muted={isMuted}
-                    volume={volume}
-                    controls
-                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} 
-                >
-                    <source
-                        src="https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4"
-                        alt=""
-                    />
-                </video> */}
+                
                 <VideoPlayer
                     videoUrl={videoUrl}
                     isMuted={isMuted}

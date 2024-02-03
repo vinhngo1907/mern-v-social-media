@@ -50,23 +50,6 @@ const Videos = () => {
         }
     }
 
-    // const handleToggleLikeVideo = async ({id, auth }) => {
-    //     try{
-
-    //     }catch(error){
-    //         console.log(error);
-    //           dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
-    //     }
-    // }
-
-    // const handleToggleDislikeVideo = async({id, auth}) => {
-            // try{
-
-            // }catch(error){
-            //     dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
-            // }
-    // }
-
     useEffect(() => {
         // When the video URL changes, update the video source
         if (videoRef.current) {
