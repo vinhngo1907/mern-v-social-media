@@ -298,22 +298,24 @@ const SocketClient = () => {
             socket.off("video-queue-item-update");
         };
     }, [socket, dispatch]);
+    useEffect(() => {
+        socket.on("update-tracks", (data) => {
+            console.log(">>>>> [Update Tracks] <<<<<", { data })
+            dispatch(updateTracks(data));
+        });
+        
+        socket.off("update-tracks");
+    }, [socket, dispatch]);
 
     useEffect(() => {
-        socket.on("update-tracks", (tracks) => {
-            console.log(">>>>> [Update Tracks] <<<<<", { tracks })
-            dispatch(updateTracks(tracks));
-        });
-
         socket.on("playingVideo", async (data) => {
             console.log(">>>>> [Playing Video] <<<<<", { data })
             if (player === null || player === undefined) {
-                dispatch(playingVideo(data));
+                dispatch(playingVideo(data.playingVideo));
             }
         });
 
         return () => {
-            socket.off("update-tracks");
             socket.off("playingVideo");
         }
     }, [socket, dispatch, player]);

@@ -6,12 +6,11 @@ const initialState = {
     loading: false,
     data: [],
     firstLoad: false,
-    currentVideo: null,
     player: null,
     videoId: '',
     startSeconds: 0,
     user: {
-        email: ""
+        email: "", username: ""
     }
 }
 
@@ -85,12 +84,12 @@ const videoReducer = (state = initialState, action) => {
             };
 
         case VIDEOS_TYPES.UPDATE_TRACKS:
-            const updatedTracks = [...state.data, ...action.payload];
+            const updatedTracks = [...state.data, ...action.payload.tracks];
             return {
                 ...state,
                 data: updatedTracks,
                 page: state.page + 1,
-                // result: action.payload.results
+                result: action.payload.result
             };
         default:
             return state;

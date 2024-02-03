@@ -67,9 +67,9 @@ export const playingVideo = (data) => async (dispatch) => {
     }
 }
 
-export const updateTracks = (tracks) => async (dispatch) => {
+export const updateTracks = (data) => async (dispatch) => {
     try {
-        dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: tracks })
+        dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: data })
     } catch (err) {
         // dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response.data.message || err } });
     }

@@ -59,7 +59,10 @@ exports.getVideoById = async (id) => {
 
 exports.getAll = async () => {
     try {
-        return songsForQueue;
+        return {
+            tracks: songsForQueue,
+            result: songsForQueue.length
+        };
     } catch (error) {
         throw error;
     }
@@ -157,7 +160,7 @@ const initPlaylist = async (io) => {
         videoQueue.enqueue(video)
     }
 
-    io.emit('update-tracks', songsForQueue);
+    io.emit('update-tracks', {tracks: songsForQueue, result: songsForQueue.length});
     return songsForQueue;
 }
 

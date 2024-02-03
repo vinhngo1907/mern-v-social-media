@@ -13,14 +13,13 @@ const Videos = () => {
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const [load, setLoad] = useState(false);
-    const [videoUrl, setVideoUrl] = useState("");
-    const [videoSource, setVideoSource] = useState(videoUrl);
+    const [videoSource, setVideoSource] = useState("");
     const [videoId, setVideoId] = useState(null)
     const dispatch = useDispatch();
 
     // Create a ref for the audio element
     const videoRef = useRef(null);
-    
+
     const handleDeleteVideo = () => {
         dispatch(deleteVideo({ id: "asd", auth, socket }));
     }
@@ -44,7 +43,7 @@ const Videos = () => {
         try {
             setLoad(true);
             const res = await getDataApi(`video`, auth.token);
-			dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: res.data.results.videos })
+            dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: res.data.results.videos })
             setLoad(false);
         } catch (error) {
             console.log(error);
@@ -60,27 +59,37 @@ const Videos = () => {
         }
     }, [videoSource]);
 
-    
+
+    // useEffect(() => {
+    //     if (videos.player) {
+    //         setVideoUrl(videos.player.videoUrl);
+    //         setVideoSource(videos.player.videoUrl);
+    //         setVideoId(videos.player._id);
+    //     }
+    // }, [videos.player]);
+
+    // useEffect(() => {
+    //     // When the video URL changes, update the video source
+    //     if (videoRef.current) {
+    //         videoRef.current.src = videoUrl;
+    //         videoRef.current.load();
+    //     }
+    // }, [videoUrl]);
+
     useEffect(() => {
         if (videos.player) {
-            console.log(">>>>", videos.player)
-            // window.playingVideo = player.playingVideo;
-            // document.getElementById('titlePlayingVideo').innerHTML = `${data.playingVideo.title}`;
-            // updateCount(data.playingVideo._id, data.playingVideo.likes, data.playingVideo.dislikes);
-            // renderTracks(window.videoList, 'queueTracks');
-            setVideoUrl(videos.player.videoUrl);
             setVideoSource(videos.player.videoUrl);
             setVideoId(videos.player._id);
         }
     }, [videos.player]);
-
+    
     useEffect(() => {
         // When the video URL changes, update the video source
         if (videoRef.current) {
-          videoRef.current.src = videoUrl;
-          videoRef.current.load();
+            videoRef.current.src = videoSource;
+            videoRef.current.load();
         }
-      }, [videoUrl]);
+    }, [videoSource]);
 
     return (
         <div className="home row mx-0">
@@ -95,16 +104,21 @@ const Videos = () => {
                     <main className={`${theme ? 'dark' : 'light'}`}>
                         <div id="videos-container" className="row">
                             <div className="col-md-7 current-video">
-                                <VideoCurrent
-                                    videoRef={videoRef}
-                                    isMuted={isMuted}
-                                    volume={volume}
-                                    setIsMuted={setIsMuted}
-                                    handleVolumeSliderChange={handleVolumeSliderChange}
-                                    handleToggleMute={handleToggleMute}
-                                    videoUrl={videoSource}
-                                    videoId={videoId}
-                                />
+                                {
+                                    videos.player ? (<VideoCurrent
+                                        videoRef={videoRef}
+                                        isMuted={isMuted}
+                                        volume={volume}
+                                        setIsMuted={setIsMuted}
+                                        handleVolumeSliderChange={handleVolumeSliderChange}
+                                        handleToggleMute={handleToggleMute}
+                                        videoUrl={videoSource}
+                                        videoId={videoId}
+                                    />) :
+                                        <div className='spinner-border d-block mx-auto text-dark' role='status'>
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                }
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
                                 {
@@ -113,7 +127,7 @@ const Videos = () => {
                                             <span className="sr-only">Loading...</span>
                                         </div>
                                         : <VideoList
-                                            videos={videos.data}
+                                            videos={videos.data.tracks}
                                             eleId="senior-tracks"
                                             deleteVideo={handleDeleteVideo}
                                             theme={theme}
@@ -129,101 +143,6 @@ const Videos = () => {
                                     !videos.loading
                                     && <LoadMoreBtn load={load} page={videos.page} result={videos.result} handleLoadMore={handleLoadMore} />
                                 }
-
-                                {/* <div className="videos-container__track-item">
-                                    <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
-                                        <div className="col-1 videos-container__track-no" >1</div>
-                                        <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/ywbKigZxuD8/default.jpg" className="thumbnail" alt=""
-                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
-                                            />
-                                            <div className="video-voting" id="queueTracks-6456514bc2b036a247ac62dd">
-
-                                                <i className="fas fa-arrow-up q-m"
-                                                // onclick="toggleLikeVideo('6456514bc2b036a247ac62dd')"
-                                                ></i>
-                                                <h5 className="vote-counter" style={{
-                                                    paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem"
-                                                }}>2</h5>
-                                                <i className="fas fa-arrow-down q-m"
-                                                // onclick="toggleDislikeVideo('6456514bc2b036a247ac62dd')"
-                                                ></i>
-
-                                            </div>
-                                        </div>
-                                        <div className="col-8 videos-container__track-info">
-                                            <div className="videos-container__track-info__video-name">
-                                                🎶 Nightcore ▶ 😿 UNDERWATER 😿 (Lyrics) | Nikki Flores
-                                            </div>
-                                            <div className="videos-container__track-info__suggested">
-                                                Suggested by <strong classname="sugested-author">vinhtrungngo1907</strong>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="videos-container__track-item">
-                                    <div className="row" style={{ margin: 0, paddingBottom: "1rem", with: "100%" }}>
-                                        <div className="col-1 videos-container__track-no">2</div>
-                                        <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/io2WOQ-3aVs/default.jpg" className="thumbnail" alt=""
-                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
-                                            />
-                                            <div className="video-voting" id="queueTracks-64842187edaec0a3ce68e4e5">
-
-                                                <i className="fas fa-arrow-up q-m"
-                                                // onclick="toggleLikeVideo('64842187edaec0a3ce68e4e5')"
-                                                ></i>
-                                                <h5 className="vote-counter"
-                                                    style={{ paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem" }}
-                                                >0
-                                                </h5>
-                                                <i className="fas fa-arrow-down q-m"
-                                                // onclick="toggleDislikeVideo('64842187edaec0a3ce68e4e5')"
-                                                ></i>
-
-                                            </div>
-                                        </div>
-                                        <div className="col-8 videos-container__track-info">
-                                            <div className="videos-container__track-info__video-name">
-                                                Wake (Hillsong Young and Free) lyric video
-                                            </div>
-                                            <div className="videos-container__track-info__suggested">
-                                                Suggested by <strong classname="sugested-author">vinhtrungngo1907</strong>
-                                            </div></div>
-                                    </div>
-
-                                </div>
-                                <div className="videos-container__track-item">
-                                    <div className="row" style={{ margin: 0, paddingBottom: "1rem" }}>
-                                        <div className="col-1 videos-container__track-no">2</div>
-                                        <div className="col-3 videos-container__track-image">
-                                            <img src="https://i.ytimg.com/vi/sRITtsPax9U/default.jpg" className="thumbnail" alt=""
-                                                style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-                                            <div className="video-voting" id="queueTracks-6469a7610099389a17f2e510">
-
-                                                <i className="fas fa-arrow-up q-m"
-                                                // onclick="toggleLikeVideo('64842187edaec0a3ce68e4e5')"
-                                                ></i>
-                                                <h5 className="vote-counter"
-                                                    style={{ paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem" }}
-                                                >0
-                                                </h5>
-                                                <i className="fas fa-arrow-down q-m"
-                                                // onclick="toggleDislikeVideo('64842187edaec0a3ce68e4e5')"
-                                                ></i>
-
-                                            </div>
-                                        </div>
-                                        <div className="col-8 videos-container__track-info">
-                                            <div className="videos-container__track-info__video-name">
-                                                Wake (Hillsong Young and Free) lyric video
-                                            </div>
-                                            <div className="videos-container__track-info__suggested">
-                                                Suggested by <strong classname="sugested-author">vinhtrungngo1907</strong>
-                                            </div></div>
-                                    </div>
-
-                                </div> */}
                             </div>
                         </div>
                     </main>
