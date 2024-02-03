@@ -55,12 +55,16 @@ const Videos = () => {
 
     //     }catch(error){
     //         console.log(error);
-    //         dispatch()
+    //           dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
     //     }
     // }
 
     // const handleToggleDislikeVideo = async({id, auth}) => {
+            // try{
 
+            // }catch(error){
+            //     dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
+            // }
     // }
 
     useEffect(() => {
@@ -82,6 +86,14 @@ const Videos = () => {
             setVideoSource(videos.player)
         }
     }, [videos.player]);
+
+    useEffect(() => {
+        // When the video URL changes, update the video source
+        if (videoRef.current) {
+          videoRef.current.src = videoUrl;
+          videoRef.current.load();
+        }
+      }, [videoUrl]);
 
     return (
         <div className="home row mx-0">
