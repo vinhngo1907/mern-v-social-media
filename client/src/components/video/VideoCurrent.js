@@ -1,10 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
-    const { theme } = useSelector(state => state);
+    const { theme, auth } = useSelector(state => state);
+    const dispatch = useDispatch();
+
+    const toggleLikeVideo = async ({id, auth }) => {
+        try{
+
+        }catch(error){
+            console.log(error);
+            dispatch()
+        }
+    }
+
+    const toggleDislikeVideo = async({id, auth}) => {
+
+    }
+
     return (
         <div id="main-video">
             <div id="video">
@@ -49,7 +64,7 @@ const VideoCurrent = (props) => {
                 <div className="video-voting">
                     <div id="playing-video-voting" className=" playing-vote">
                         <i className="fas fa-arrow-up q-m"
-                        // onclick="toggleLikeVideo('6469a87ad6ea489c49a5c2f2')"
+                        // onclick={() => toggleLikeVideo({id: })}
                         />
                         <h5 className="vote-counter"
                             style={{

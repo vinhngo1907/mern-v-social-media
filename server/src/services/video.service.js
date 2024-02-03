@@ -22,18 +22,19 @@ function startVideoScheduler(io) {
             if (playingVideo && (playedTime > playingVideo.duration) && videoQueue.size() === 0) {
                 playingVideo = null;
             }
-            
+
             if ((playingVideo === null || (playedTime > playingVideo?.duration)) && videoQueue.size() > 0) {
-                // console.log('Dequeue video to playing video');
                 logger.warn('Dequeue video to playing video');
+                
                 playingVideo = videoQueue.dequeue();
                 currentVideoStartedTime = moment();
+                
                 io.emit('playingVideo', {
                     playingVideo,
                     playedTime: 0
                 });
             }
-            
+
             if (videoQueue.size() === 0) {
                 logger.info('Playlist is empty, init new');
                 await initPlaylist(io);
@@ -124,19 +125,24 @@ exports.deleteVideo = async (id) => {
 
 const initPlaylist = async (io) => {
     const videos = await videoModel.find().populate('user', 'username');
-    const sortVideos = await videos.sort((a, b) => {
-        const firstElementInteractions = a.likes.length = a.dislikes.length;
+    // console.log({videos})
+    const sortedVideos = await videos.sort((a, b) => {
+        const firstElementInteractions = a.likes.length - a.dislikes.length;
         const secondElementInteractions = b.likes.length - b.dislikes.length;
 
         if (firstElementInteractions > secondElementInteractions) return -1;
         if (firstElementInteractions < secondElementInteractions) return 1;
         return 0;
     });
-    seniorSongs = sortVideos.slice(0, 40);
+
+    // console.log({sortedVideos})
+
+    seniorSongs = sortedVideos.slice(0, 40);
+    console.log({seniorSongs});
     io.emit('senior-tracks-update', seniorSongs);
-    juniorSongs = sortVideos.slice(40, 100);
+    juniorSongs = sortedVideos.slice(40, 100);
     io.emit('junior-tracks-update', juniorSongs);
-    otherSongs = sortVideos.slice(100);
+    otherSongs = sortedVideos.slice(100);
     io.emit('other-tracks-update', otherSongs);
 
     songsForQueue = [];
@@ -148,7 +154,7 @@ const initPlaylist = async (io) => {
     songsForQueue = shuffleVideos(songsForQueue);
 
     for (const video of songsForQueue) {
-        videoQueue.enqueue(video);
+        videoQueue.enqueue(video)
     }
 
     io.emit('update-tracks', songsForQueue);

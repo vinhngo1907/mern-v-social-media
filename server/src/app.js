@@ -4,7 +4,7 @@ const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
 const { videoService } = require('./services');
-const { startVideoScheduler } = videoService;
+const { startVideoScheduler} = videoService;
 
 // async function StartServer() {
 //     const app = express();

@@ -79,6 +79,7 @@ const Videos = () => {
                                     handleVolumeSliderChange={handleVolumeSliderChange}
                                     handleToggleMute={handleToggleMute}
                                     videoUrl={videoSource}
+                                    // videoId={vid}
                                 />
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">

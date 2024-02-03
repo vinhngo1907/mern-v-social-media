@@ -267,18 +267,21 @@ const SocketClient = () => {
     useEffect(() => {
         // Listen for the "senior-tracks-update" event and update the state
         socket.on("senior-tracks-update", (tracks) => {
+            // console.log({tracks});
             // setVideos(tracks);
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
         });
 
         // Listen for the "junior-tracks-update" event and update the state
         socket.on("junior-tracks-update", (tracks) => {
+            // console.log({tracks});
             // setVideos(tracks);
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
         });
 
         // Listen for the "other-tracks-update" event and update the state
         socket.on("other-tracks-update", (tracks) => {
+            // console.log({tracks});
             // setVideos(tracks);
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
         });
