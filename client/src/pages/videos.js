@@ -50,6 +50,19 @@ const Videos = () => {
         }
     }
 
+    // const handleToggleLikeVideo = async ({id, auth }) => {
+    //     try{
+
+    //     }catch(error){
+    //         console.log(error);
+    //         dispatch()
+    //     }
+    // }
+
+    // const handleToggleDislikeVideo = async({id, auth}) => {
+
+    // }
+
     useEffect(() => {
         // When the video URL changes, update the video source
         if (videoRef.current) {
@@ -57,6 +70,18 @@ const Videos = () => {
             videoRef.current.load();
         }
     }, [videoSource]);
+
+    
+    useEffect(() => {
+        if (videos.player) {
+            // window.playingVideo = player.playingVideo;
+            // document.getElementById('titlePlayingVideo').innerHTML = `${data.playingVideo.title}`;
+            // updateCount(data.playingVideo._id, data.playingVideo.likes, data.playingVideo.dislikes);
+            // renderTracks(window.videoList, 'queueTracks');
+            setVideoUrl(videos.player.videoUrl);
+            setVideoSource(videos.player)
+        }
+    }, [videos.player]);
 
     return (
         <div className="home row mx-0">

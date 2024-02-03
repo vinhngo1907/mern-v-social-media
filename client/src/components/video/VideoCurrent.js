@@ -1,34 +1,13 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
     const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
-    const { theme, auth, videos: {player} } = useSelector(state => state);
-    const dispatch = useDispatch();
+    const { theme } = useSelector(state => state);
     
-    useEffect(() => {
-        // Sử dụng player từ trạng thái Redux
-        if (player) {
-            window.playingVideo = player.playingVideo;
-            // document.getElementById('titlePlayingVideo').innerHTML = `${data.playingVideo.title}`;
-            // updateCount(data.playingVideo._id, data.playingVideo.likes, data.playingVideo.dislikes);
-            // renderTracks(window.videoList, 'queueTracks');
-        }
-    }, [player]);
 
-    const toggleLikeVideo = async ({id, auth }) => {
-        try{
-
-        }catch(error){
-            console.log(error);
-            dispatch()
-        }
-    }
-
-    const toggleDislikeVideo = async({id, auth}) => {
-
-    }
+  
 
     return (
         <div id="main-video">

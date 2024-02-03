@@ -39,7 +39,7 @@ const Profile = () => {
             }, 10000);
             return () => clearTimeout(timer);
         }
-    }, [dispatch, auth, id]);
+    }, [dispatch, auth, id, socket]);
 
     return (
         <div className="profile row mx-0">
