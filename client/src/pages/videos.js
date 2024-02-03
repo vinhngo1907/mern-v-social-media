@@ -5,18 +5,18 @@ import VideoList from "../components/video/VideoList";
 import VideoCurrent from "../components/video/VideoCurrent";
 import LoadMoreBtn from "../components/other/LoadMoreBtn";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
-import { deleteVideo } from "../redux/actions/videoAction";
+import { VIDEOS_TYPES, deleteVideo } from "../redux/actions/videoAction";
+import { getDataApi } from "../utils/fetchData";
 
 const Videos = () => {
     const { videos, theme, auth, socket } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const [load, setLoad] = useState(false);
-    const [videoUrl, setVideoUrl] = useState("https://res.cloudinary.com/v-webdev/video/upload/v1694190767/v-media/v7yl2q5ywhwojdgimiil.mp4");
-
-    const dispatch = useDispatch();
-    
+    const [videoUrl, setVideoUrl] = useState("");
     const [videoSource, setVideoSource] = useState(videoUrl);
+    const [videoId, setVideoId] = useState(null)
+    const dispatch = useDispatch();
 
     // Create a ref for the audio element
     const videoRef = useRef(null);
@@ -40,13 +40,15 @@ const Videos = () => {
         }
     }
 
-    const handleLoadMore = () => {
+    const handleLoadMore = async () => {
         try {
-            setLoad(false);
             setLoad(true);
+            const res = await getDataApi(`video`, auth.token);
+			dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: res.data.results.videos })
+            setLoad(false);
         } catch (error) {
             console.log(error);
-            dispatch({ types: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
+            dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data.message || error } });
         }
     }
 
@@ -61,12 +63,14 @@ const Videos = () => {
     
     useEffect(() => {
         if (videos.player) {
+            console.log(">>>>", videos.player)
             // window.playingVideo = player.playingVideo;
             // document.getElementById('titlePlayingVideo').innerHTML = `${data.playingVideo.title}`;
             // updateCount(data.playingVideo._id, data.playingVideo.likes, data.playingVideo.dislikes);
             // renderTracks(window.videoList, 'queueTracks');
             setVideoUrl(videos.player.videoUrl);
-            setVideoSource(videos.player.videoUrl)
+            setVideoSource(videos.player.videoUrl);
+            setVideoId(videos.player._id);
         }
     }, [videos.player]);
 
@@ -99,7 +103,7 @@ const Videos = () => {
                                     handleVolumeSliderChange={handleVolumeSliderChange}
                                     handleToggleMute={handleToggleMute}
                                     videoUrl={videoSource}
-                                    // videoId={vid}
+                                    videoId={videoId}
                                 />
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
