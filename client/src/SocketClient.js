@@ -21,7 +21,7 @@ const spawnNotification = (body, icon, url, title) => {
 }
 
 const SocketClient = () => {
-    const { auth, socket, online, notify, call } = useSelector(state => state);
+    const { auth, socket, online, notify, call, videos: { player } } = useSelector(state => state);
     const dispatch = useDispatch();
     const audioRef = useRef();
 
@@ -69,7 +69,7 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on("fetchYoutubeStats", (data) => {
             console.log({ data });
-            if(data){
+            if (data) {
                 dispatch({ type: SOCIAL_TYPES.UPDATE_GITHUB_STATS, payload: data });
             }
         });
@@ -79,7 +79,7 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on("fetchGithubStats", (data) => {
             console.log({ data });
-            if(data){
+            if (data) {
                 dispatch({ type: SOCIAL_TYPES.UPDATE_YT_STATS, payload: data });
             }
         });
@@ -301,12 +301,15 @@ const SocketClient = () => {
 
     useEffect(() => {
         socket.on("update-tracks", (tracks) => {
+            console.log(">>>>>>", { tracks }, "<<<<<");
             dispatch(updateTracks(tracks));
         });
 
         socket.on("playingVideo", async (data) => {
             console.log(">>>>> [Playing Video] <<<<<", { data })
-            dispatch(playingVideo(data));
+            if (player === null || player === undefined) {
+                dispatch(playingVideo(data));
+            }
         });
 
         return () => {

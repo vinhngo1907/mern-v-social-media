@@ -8,7 +8,7 @@ import { GLOBALTYPES } from "../redux/actions/globalTypes";
 import { deleteVideo } from "../redux/actions/videoAction";
 
 const Videos = () => {
-    const { videos, theme, auth, socket, player } = useSelector(state => state);
+    const { videos, theme, auth, socket } = useSelector(state => state);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const [load, setLoad] = useState(false);
