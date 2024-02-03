@@ -18,7 +18,7 @@ import { getTotalStatistics } from "./redux/actions/statisticAction";
 import io from "socket.io-client";
 import { GLOBALTYPES } from "./redux/actions/globalTypes";
 import SocketClient from "./SocketClient";
-// import { getSocialStatistics } from "./redux/actions/socialAction";
+import { getSocialStatistics } from "./redux/actions/socialAction";
 import Peer from "peerjs";
 import CallModal from "./components/message/CallModal";
 import ForgotPassord from "./pages/forgot_password";
@@ -45,7 +45,7 @@ function App() {
 			dispatch(getSuggestion(auth.token));
 			dispatch(getAllNotifies(auth.token));
 			// dispatch(getTotalStatistics(auth.token));
-			// dispatch(getSocialStatistics(auth.token));
+			dispatch(getSocialStatistics(auth.token));
 			dispatch(getDiscoverImages(auth.token));
 			dispatch(getDiscoverVideos(auth.token));
 		}
