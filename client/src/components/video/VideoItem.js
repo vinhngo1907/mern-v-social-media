@@ -20,7 +20,19 @@ function VideoItem({ res, counter, eleId, deleteVideo, theme }) {
 					/>
 					<div className="video-voting" id={`${eleId}-${res._id}`}>
 						{/* Insert your updateCount logic here */}
-						<div id="playing-video-voting" className='playing-vote'></div>
+						<div id="playing-video-voting" className='playing-vote'>
+							<i className="fas fa-arrow-up q-m"
+							// onclick="toggleLikeVideo('6469a87ad6ea489c49a5c2f2')"
+							/>
+							<h5 className="vote-counter"
+								style={{
+									paddingRight: "0.4333em", paddingTop: "10px", fontWeight: 300, fontSize: "1.1333rem"
+								}}>4
+							</h5>
+							<i className="fas fa-arrow-down q-m"
+							// onclick="toggleDislikeVideo('6469a87ad6ea489c49a5c2f2')"
+							/>
+						</div>
 					</div>
 				</div>
 				<div className="col-8 videos-container__track-info">

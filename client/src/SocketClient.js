@@ -65,11 +65,13 @@ const SocketClient = () => {
         return () => socket.off("deleteMessageToClient");
     }, [socket, dispatch]);
 
-    // Statistics
+    // Social
     useEffect(() => {
         socket.on("fetchYoutubeStats", (data) => {
             console.log({ data });
-            dispatch({ type: SOCIAL_TYPES.UPDATE_GITHUB_STATS, payload: data });
+            if(data){
+                dispatch({ type: SOCIAL_TYPES.UPDATE_GITHUB_STATS, payload: data });
+            }
         });
         return () => socket.off("fetchYoutubeStats");
     }, [socket, dispatch]);
@@ -77,7 +79,9 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on("fetchGithubStats", (data) => {
             console.log({ data });
-            dispatch({ type: SOCIAL_TYPES.UPDATE_YT_STATS, payload: data });
+            if(data){
+                dispatch({ type: SOCIAL_TYPES.UPDATE_YT_STATS, payload: data });
+            }
         });
         return () => socket.off("fetchGithubStats");
     }, [socket, dispatch]);
