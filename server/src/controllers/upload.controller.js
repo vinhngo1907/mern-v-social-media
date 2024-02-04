@@ -49,7 +49,7 @@ class UploadController {
             } else if (file.mimetype.startsWith('video/')) {
                 resource_type = 'video';
             }
-
+            console.log(">>>>>????", req.body);
             cloudinary.v2.uploader.upload(file.tempFilePath, {
                 folder: "v-media", resource_type: resource_type, allowed_formats: ['jpeg', 'jpg', 'png', 'mp4'],
             }, async (err, result) => {
@@ -65,15 +65,16 @@ class UploadController {
                             videoId: public_id,
                             videoUrl: secure_url,
                             // user: req.user._id,
-                            title: "sample",
+                            title: req.body.title || "sample",
                             duration: result?.duration || 0,
-                            thumbnailUrl: cloudinary.v2
-                            .url(public_id, {
-                                width: 100, 
-                                height: 100,
-                                crop: 'fill',
-                                format:'jpg'
-                            })
+                            thumbnailUrl: secure_url.replace(/\.mp4$/, '.jpg')
+                            //  cloudinary.v2
+                            // .url(public_id, {
+                            //     width: 100, 
+                            //     height: 100,
+                            //     crop: 'fill',
+                            //     format:'jpg'
+                            // })
                         }
                         
                         await createVideo(videoData, req.user);

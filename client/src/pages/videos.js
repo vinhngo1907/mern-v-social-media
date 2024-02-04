@@ -82,7 +82,7 @@ const Videos = () => {
             setVideoId(videos.player._id);
         }
     }, [videos.player]);
-    
+
     useEffect(() => {
         // When the video URL changes, update the video source
         if (videoRef.current) {
@@ -121,28 +121,37 @@ const Videos = () => {
                                 }
                             </div>
                             <div className="col-md-5 videos-container__tracks" id="queueTracks">
-                                {
-                                    videos.loading
-                                        ? <div className='spinner-border d-block mx-auto text-dark' role='status'>
-                                            <span className="sr-only">Loading...</span>
-                                        </div>
-                                        : <VideoList
+                                {videos.loading && (
+                                    <div className='spinner-border d-block mx-auto text-dark' role='status'>
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                )}
+
+                                {!videos.loading && (
+                                    <>
+                                        <VideoList
                                             videos={videos.data.tracks}
                                             eleId="senior-tracks"
                                             deleteVideo={handleDeleteVideo}
                                             theme={theme}
                                         />
-                                }
 
-                                {
-                                    load && <div className="spinner-border d-block mx-auto text-primary" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
-                                }
-                                {
-                                    !videos.loading
-                                    && <LoadMoreBtn load={load} page={videos.page} result={videos.result} handleLoadMore={handleLoadMore} />
-                                }
+                                        {load && (
+                                            <div className="spinner-border d-block mx-auto text-primary" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </div>
+                                        )}
+
+                                        {!load && (
+                                            <LoadMoreBtn
+                                                load={load}
+                                                page={videos.page}
+                                                result={videos.result}
+                                                handleLoadMore={handleLoadMore}
+                                            />
+                                        )}
+                                    </>
+                                )}
                             </div>
                         </div>
                     </main>

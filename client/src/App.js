@@ -47,7 +47,7 @@ function App() {
 			// dispatch(getTotalStatistics(auth.token));
 			dispatch(getSocialStatistics(auth.token));
 			dispatch(getDiscoverImages(auth.token));
-			// dispatch(getDiscoverVideos(auth.token));
+			dispatch(getDiscoverVideos(auth.token));
 		}
 	}, [dispatch, auth.token]);
 

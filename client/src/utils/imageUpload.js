@@ -14,30 +14,66 @@ export const checkImage = (file) => {
     return err;
 }
 
-export const imageUpload = async (images, token) => {
-    let imgArr = [];
-    for (const item of images) {
-        const formData = new FormData();
-        if (item.camera) {
-            formData.append("file", item.camera)
-        } else {
-            formData.append("file", item)
-        }
+// export const imageUpload = async (images, token) => {
+//     let imgArr = [];
+//     for (const item of images) {
+//         const formData = new FormData();
+//         if (item.camera) {
+//             formData.append("file", item.camera)
+//         } else {
+//             formData.append("file", item)
+//         }
 
-        // const res = await postDataApi('upload/create', formData, token);
-        const res = await axios.post('/api/upload/create', formData, {
-            withCredentials: true,
-            headers: {
-                'content-type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`,
-            }
-        });
-        // console.log(res.data.results)
-        const data = res.data.results
-        imgArr.push({ public_id: data.public_id, url: data.url });
+//         // const res = await postDataApi('upload/create', formData, token);
+//         const res = await axios.post('/api/upload/create', formData, {
+//             withCredentials: true,
+//             headers: {
+//                 'content-type': 'multipart/form-data',
+//                 'Authorization': `Bearer ${token}`,
+//             }
+//         });
+//         // console.log(res.data.results)
+//         const data = res.data.results
+//         imgArr.push({ public_id: data.public_id, url: data.url });
+//     }
+//     return imgArr;
+// }
+
+export const uploadSingleImage = async (image, token, postData) => {
+    const formData = new FormData();
+    
+    if (image.camera) {
+        formData.append("file", image.camera);
+    } else {
+        formData.append("file", image);
     }
+
+     // Add additional data for video (title)
+     if (postData) {
+        console.log({postData});
+        for (const key in postData) {
+            formData.append(key, postData[key]);
+        }
+    }
+
+    const res = await axios.post('/api/upload/create', formData, {
+        withCredentials: true,
+        headers: {
+            'content-type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+        }
+    });
+
+    const data = res.data.results;
+    return { public_id: data.public_id, url: data.url };
+};
+
+export const imageUpload = async (images, token, post = null) => {
+    const uploadPromises = images.map((item) => uploadSingleImage(item, token, post));
+    const imgArr = await Promise.all(uploadPromises);
+    
     return imgArr;
-}
+};
 
 export const imageDestroy = async (img, token) => {
     const res = await postDataApi('upload/destroy', { public_id: img.public_id }, token);
