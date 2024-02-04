@@ -48,7 +48,7 @@ class UploadController {
                 resource_type = 'image';
             } else if (file.mimetype.startsWith('video/')) {
                 resource_type = 'video';
-            }
+            }console.log(">>>>>???<<<<<", req.files)
             console.log(">>>>>????", req.body);
             cloudinary.v2.uploader.upload(file.tempFilePath, {
                 folder: "v-media", resource_type: resource_type, allowed_formats: ['jpeg', 'jpg', 'png', 'mp4'],

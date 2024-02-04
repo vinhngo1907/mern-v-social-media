@@ -29,7 +29,7 @@ export const createPost = ({ images, content, auth, socket }) => async (dispatch
     let media;
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
-        if (images.length > 0) media = await imageUpload(images, auth.token);
+        if (images.length > 0) media = await imageUpload(images, auth.token, {title: content});
 
         const res = await postDataApi('post', { content, images: media }, auth.token);
 

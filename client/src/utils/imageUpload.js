@@ -48,9 +48,9 @@ export const uploadSingleImage = async (image, token, postData) => {
         formData.append("file", image);
     }
 
+    console.log({postData});
      // Add additional data for video (title)
      if (postData) {
-        console.log({postData});
         for (const key in postData) {
             formData.append(key, postData[key]);
         }
@@ -69,6 +69,7 @@ export const uploadSingleImage = async (image, token, postData) => {
 };
 
 export const imageUpload = async (images, token, post = null) => {
+    console.log({post});
     const uploadPromises = images.map((item) => uploadSingleImage(item, token, post));
     const imgArr = await Promise.all(uploadPromises);
     
