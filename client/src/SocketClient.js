@@ -298,6 +298,7 @@ const SocketClient = () => {
             socket.off("video-queue-item-update");
         };
     }, [socket, dispatch]);
+    
     useEffect(() => {
         socket.on("update-tracks", (data) => {
             console.log(">>>>> [Update Tracks] <<<<<", { data })

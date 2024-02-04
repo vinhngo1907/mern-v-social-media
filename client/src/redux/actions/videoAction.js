@@ -17,9 +17,11 @@ export const VIDEOS_TYPES = {
 export const getDiscoverVideos = (token) => async (dispatch) => {
     try {
         dispatch({ type: VIDEOS_TYPES.LOADING, payload: true });
+
         const res = await getDataApi('video', token);
-        const { data: { results: { videos, result } } } = res;
-        dispatch({ type: VIDEOS_TYPES.GET_VIDEOS, payload: { videos, result } });
+        const { data: { results: { tracks, result } } } = res;
+
+        dispatch({ type: VIDEOS_TYPES.GET_VIDEOS, payload: { videos: tracks, result } });
         dispatch({ type: VIDEOS_TYPES.LOADING, payload: false });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });

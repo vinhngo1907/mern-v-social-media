@@ -17,10 +17,7 @@ class VideoController {
     async getAll(req, res, next) {
         try {
             const videos = await videoService.getAll();
-            return res.json(responseDTO.success("Get videos in successfully", {
-                videos,
-                result: videos.length
-            }));
+            return res.json(responseDTO.success("Get videos in successfully", videos));
         } catch (error) {
             next(error);
         }
