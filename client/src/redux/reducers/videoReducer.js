@@ -31,14 +31,6 @@ const videoReducer = (state = initialState, action) => {
                 firsLoad: true,
             }
 
-        case VIDEOS_TYPES.UPDATE_VIDEO:
-            return {
-                ...state,
-                data: payload.videos,
-                result: payload.result,
-                page: state.page + 1
-            }
-
         case VIDEOS_TYPES.UPDATE_VIDEOS:
             return {
                 ...state,
@@ -46,7 +38,15 @@ const videoReducer = (state = initialState, action) => {
                 result: payload.result,
                 page: state.page + 1
             }
-
+            
+        case VIDEOS_TYPES.UPDATE_TRACKS:
+            const updatedTracks = [...state.data, ...payload.tracks];
+            return {
+                ...state,
+                data: updatedTracks,
+                page: state.page + 1,
+                result: payload.result
+            };
         case VIDEOS_TYPES.LIKE_VIDEO:
             return {
                 ...state,
@@ -81,15 +81,6 @@ const videoReducer = (state = initialState, action) => {
                     ...state.user,
                     email: userEmail,
                 },
-            };
-
-        case VIDEOS_TYPES.UPDATE_TRACKS:
-            const updatedTracks = [...state.data, ...action.payload.tracks];
-            return {
-                ...state,
-                data: updatedTracks,
-                page: state.page + 1,
-                result: action.payload.result
             };
         default:
             return state;

@@ -157,7 +157,7 @@ const initPlaylist = async (io) => {
     songsForQueue = shuffleVideos(songsForQueue);
 
     for (const video of songsForQueue) {
-        videoQueue.enqueue(video)
+        videoQueue.enqueue(video);
     }
 
     io.emit('update-tracks', {tracks: songsForQueue, result: songsForQueue.length});

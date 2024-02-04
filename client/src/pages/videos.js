@@ -78,7 +78,7 @@ const Videos = () => {
                     </div>
                     <main className={`${theme ? 'dark' : 'light'}`}>
                         <div id="videos-container" className="row">
-                            <div className="col-md-7 current-video">
+                            <div className="col-md-7 current-video my-auto px-0">
                                 {
                                     videos.player ? (<VideoCurrent
                                         videoRef={videoRef}

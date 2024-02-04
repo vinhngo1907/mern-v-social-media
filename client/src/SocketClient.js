@@ -304,7 +304,9 @@ const SocketClient = () => {
             dispatch(updateTracks(data));
         });
         
-        socket.off("update-tracks");
+        return () => {
+            socket.off("update-tracks");
+        }
     }, [socket, dispatch]);
 
     useEffect(() => {
