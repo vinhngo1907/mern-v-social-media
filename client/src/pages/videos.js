@@ -52,14 +52,6 @@ const Videos = () => {
     }
 
     useEffect(() => {
-        // When the video URL changes, update the video source
-        if (videoRef.current) {
-            videoRef.current.src = videoSource;
-            videoRef.current.load();
-        }
-    }, [videoSource]);
-
-    useEffect(() => {
         if (videos.player) {
             setVideoSource(videos.player.videoUrl);
             setVideoId(videos.player._id);
