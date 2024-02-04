@@ -59,23 +59,6 @@ const Videos = () => {
         }
     }, [videoSource]);
 
-
-    // useEffect(() => {
-    //     if (videos.player) {
-    //         setVideoUrl(videos.player.videoUrl);
-    //         setVideoSource(videos.player.videoUrl);
-    //         setVideoId(videos.player._id);
-    //     }
-    // }, [videos.player]);
-
-    // useEffect(() => {
-    //     // When the video URL changes, update the video source
-    //     if (videoRef.current) {
-    //         videoRef.current.src = videoUrl;
-    //         videoRef.current.load();
-    //     }
-    // }, [videoUrl]);
-
     useEffect(() => {
         if (videos.player) {
             setVideoSource(videos.player.videoUrl);
