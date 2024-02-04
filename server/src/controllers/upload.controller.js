@@ -17,7 +17,7 @@ const thumbnailTransformation = {
     height: 100, // Adjust the height as needed
     crop: 'fill', // Crop method (fill, scale, etc.)
     gravity: 'auto',
-    format:'jpg',
+    format: 'jpg',
     secure: true
 };
 
@@ -43,13 +43,14 @@ class UploadController {
                 removeTmp(file.tempFilePath)
                 return res.status(400).json(responseDTO.badRequest('The file format is incorrect.'))
             }
+
             let resource_type = 'auto';
             if (file.mimetype.startsWith('image/')) {
                 resource_type = 'image';
             } else if (file.mimetype.startsWith('video/')) {
                 resource_type = 'video';
-            }console.log(">>>>>???<<<<<", req.files)
-            console.log(">>>>>????", req.body);
+            }
+
             cloudinary.v2.uploader.upload(file.tempFilePath, {
                 folder: "v-media", resource_type: resource_type, allowed_formats: ['jpeg', 'jpg', 'png', 'mp4'],
             }, async (err, result) => {
@@ -65,7 +66,7 @@ class UploadController {
                             videoId: public_id,
                             videoUrl: secure_url,
                             // user: req.user._id,
-                            title: req.body.title || "sample",
+                            title: req.body.title || file.name.split(".")[0] || "sample",
                             duration: result?.duration || 0,
                             thumbnailUrl: secure_url.replace(/\.mp4$/, '.jpg')
                             //  cloudinary.v2
@@ -76,7 +77,7 @@ class UploadController {
                             //     format:'jpg'
                             // })
                         }
-                        
+
                         await createVideo(videoData, req.user);
                     }
                     removeTmp(file.tempFilePath);
@@ -100,7 +101,7 @@ class UploadController {
 
             cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
                 if (err) return res.status(400).json(responseDTO.badRequest(err.message));
-                console.log({result})
+                console.log({ result })
                 res.json(responseDTO.success("Deleted Image in successfully", result));
             })
         } catch (error) {
