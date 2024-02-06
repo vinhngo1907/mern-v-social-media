@@ -80,19 +80,19 @@ const videoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 eleId: "senior-tracks",
-                data: payload.videos
+                data: payload.tracks
             };
         case VIDEOS_TYPES.JUNIOR_TRACKS:
             return {
                 ...state,
                 eleId: "juior-tracks",
-                data: payload.videos
+                data: payload.tracks
             };
         case VIDEOS_TYPES.OTHER_TRACKS:
             return {
                 ...state,
                 eleId: "other-tracks",
-                data: payload.videos
+                data: payload.tracks
             };
         default:
             return state;

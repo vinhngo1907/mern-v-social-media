@@ -56,4 +56,4 @@ server.listen(PORT, () => {
 
 startVideoScheduler(io);
 
-// module.exports = io;
+module.exports = io;

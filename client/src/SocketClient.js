@@ -266,24 +266,24 @@ const SocketClient = () => {
 
     useEffect(() => {
         // Listen for the "senior-tracks-update" event and update the state
-        socket.on("senior-tracks-update", (tracks) => {
+        socket.on("senior-tracks-update", (data) => {
             // console.log({tracks});
             // setVideos(tracks);
-            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
 
         // Listen for the "junior-tracks-update" event and update the state
-        socket.on("junior-tracks-update", (tracks) => {
+        socket.on("junior-tracks-update", (data) => {
             // console.log({tracks});
             // setVideos(tracks);
-            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
 
         // Listen for the "other-tracks-update" event and update the state
-        socket.on("other-tracks-update", (tracks) => {
+        socket.on("other-tracks-update", (data) => {
             // console.log({tracks});
             // setVideos(tracks);
-            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: { videos: tracks } });
+            dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
 
         socket.on("video-queue-item-update", ({ id, likes, dislikes }) => {
@@ -313,9 +313,9 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on("playingVideo", async (data) => {
             console.log(">>>>> [Playing Video] <<<<<", { data })
-            if (player === null || player === undefined) {
-                dispatch(playingVideo(data.playingVideo));
-            }
+            // if (player === null || player === undefined) {
+            // }
+            dispatch(playingVideo(data.playingVideo));
         });
 
         return () => {

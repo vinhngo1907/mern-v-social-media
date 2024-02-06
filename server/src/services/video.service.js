@@ -5,6 +5,7 @@ const { modelSchema } = require("../db");
 const { videoModel } = modelSchema;
 const moment = require("moment-timezone");
 const logger = require("node-color-log");
+const io = require("../app");
 // const { socketInfo } = require("../socket-app");
 
 const videoQueue = new Queue();
@@ -25,7 +26,7 @@ function startVideoScheduler(io) {
 
             if ((playingVideo === null || (playedTime > playingVideo?.duration)) && videoQueue.size() > 0) {
                 logger.warn('Dequeue video to playing video');
-                
+
                 playingVideo = videoQueue.dequeue();
                 currentVideoStartedTime = moment();
                 // console.log({playingVideo});
@@ -70,7 +71,10 @@ exports.getAll = async () => {
 
 exports.getSenior = () => {
     try {
-        return seniorSongs;
+        return {
+            tracks: seniorSongs,
+            result: seniorSongs.length
+        };
     } catch (error) {
         throw error;
     }
@@ -78,7 +82,10 @@ exports.getSenior = () => {
 
 exports.getJunior = () => {
     try {
-        return juniorSongs;
+        return {
+            tracks: juniorSongs,
+            result: juniorSongs.length
+        }
     } catch (error) {
         throw error;
     }
@@ -86,7 +93,10 @@ exports.getJunior = () => {
 
 exports.getOther = () => {
     try {
-        return otherSongs;
+        return {
+            tracks: otherSongs,
+            result: otherSongs.length
+        };
     } catch (error) {
         throw error;
     }
@@ -98,7 +108,9 @@ exports.createVideo = async (videoData, author) => {
             ...videoData,
             user: author._id,
         });
+
         await newVideo.save();
+
         otherSongs.push({
             ...newVideo._doc,
             user: {
@@ -106,9 +118,17 @@ exports.createVideo = async (videoData, author) => {
                 username: author.username
             }
         });
-        // io.emit('other-tracks-update', otherSongs);
-        // if(socketInfo && socketInfo.io){
-        //     socketInfo.io.emit('other-tracks-update', otherSongs)
+
+        io.emit('other-tracks-update', {
+            tracks: otherSongs,
+            result: otherSongs.length
+        });
+
+        // if (socketInfo && socketInfo.io) {
+        //     socketInfo.io.emit('other-tracks-update', {
+        //         tracks: otherSongs,
+        //         result: otherSongs.length
+        //     })
         // }
         return newVideo;
     } catch (error) {
@@ -160,7 +180,7 @@ const initPlaylist = async (io) => {
         videoQueue.enqueue(video);
     }
 
-    io.emit('update-tracks', {tracks: songsForQueue, result: songsForQueue.length});
+    io.emit('update-tracks', { tracks: songsForQueue, result: songsForQueue.length });
     return songsForQueue;
 }
 
