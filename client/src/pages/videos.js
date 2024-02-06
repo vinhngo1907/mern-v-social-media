@@ -41,7 +41,7 @@ const Videos = () => {
 
     const handleLoadMore = async () => {
         try {
-            console.log({videos})
+            console.log({ videos })
             setLoad(true);
             const res = await getDataApi(`video`, auth.token);
             dispatch({ type: VIDEOS_TYPES.UPDATE_TRACKS, payload: res.data.results.videos })
@@ -107,7 +107,7 @@ const Videos = () => {
                                     <>
                                         <VideoList
                                             videos={videos.data}
-                                            eleId="senior-tracks"
+                                            eleId={videos.eleId}
                                             deleteVideo={handleDeleteVideo}
                                             theme={theme}
                                         />

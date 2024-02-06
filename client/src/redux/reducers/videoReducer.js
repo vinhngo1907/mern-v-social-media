@@ -11,7 +11,8 @@ const initialState = {
     startSeconds: 0,
     user: {
         email: "", username: ""
-    }
+    },
+    eleId: "queueTracks"
 }
 
 const videoReducer = (state = initialState, action) => {
@@ -57,13 +58,6 @@ const videoReducer = (state = initialState, action) => {
                 ...state
             }
 
-        case VIDEOS_TYPES.LOAD_VIDEO:
-            return {
-                ...state,
-                videoId: action.payload.videoId,
-                startSeconds: payload.startSeconds,
-            }
-
         case VIDEOS_TYPES.SET_PLAYER:
             return {
                 ...state,
@@ -81,6 +75,24 @@ const videoReducer = (state = initialState, action) => {
                     ...state.user,
                     email: userEmail,
                 },
+            };
+        case VIDEOS_TYPES.SENIOR_TRACKS:
+            return {
+                ...state,
+                eleId: "senior-tracks",
+                data: payload.videos
+            };
+        case VIDEOS_TYPES.JUNIOR_TRACKS:
+            return {
+                ...state,
+                eleId: "juior-tracks",
+                data: payload.videos
+            };
+        case VIDEOS_TYPES.OTHER_TRACKS:
+            return {
+                ...state,
+                eleId: "other-tracks",
+                data: payload.videos
             };
         default:
             return state;
