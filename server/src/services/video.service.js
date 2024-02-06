@@ -6,7 +6,6 @@ const { videoModel } = modelSchema;
 const moment = require("moment-timezone");
 const logger = require("node-color-log");
 const io = require("../app");
-// const { socketInfo } = require("../socket-app");
 
 const videoQueue = new Queue();
 let seniorSongs = [];
@@ -118,7 +117,9 @@ exports.createVideo = async (videoData, author) => {
                 username: author.username
             }
         });
-
+        
+        logger.info('Other tracks update');
+        
         io.emit('other-tracks-update', {
             tracks: otherSongs,
             result: otherSongs.length
@@ -132,6 +133,7 @@ exports.createVideo = async (videoData, author) => {
         // }
         return newVideo;
     } catch (error) {
+        logger.error(error.message);
         throw error;
     }
 }
@@ -142,6 +144,7 @@ exports.deleteVideo = async (id) => {
         io.emit('new-video-added', {});
         return await videoModel.findByIdAndDelete(id);
     } catch (error) {
+        logger.error(error.message);
         throw error;
     }
 }
