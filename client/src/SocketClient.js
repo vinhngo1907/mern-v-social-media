@@ -291,6 +291,7 @@ const SocketClient = () => {
         socket.on("other-tracks-update", (data) => {
             // console.log({tracks});
             // setVideos(tracks);
+            console.log(">>>>> [Update Other Tracks] <<<<<", { data })
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
         return () => {

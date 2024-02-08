@@ -5,7 +5,6 @@ const { modelSchema } = require("../db");
 const { videoModel } = modelSchema;
 const moment = require("moment-timezone");
 const logger = require("node-color-log");
-const io = require("../app");
 
 const videoQueue = new Queue();
 let seniorSongs = [];
@@ -120,10 +119,10 @@ exports.createVideo = async (videoData, author) => {
         
         logger.info('Other tracks update');
         
-        io.emit('other-tracks-update', {
-            tracks: otherSongs,
-            result: otherSongs.length
-        });
+        // ioInfo.emit('other-tracks-update', {
+        //     tracks: otherSongs,
+        //     result: otherSongs.length
+        // });
 
         // if (socketInfo && socketInfo.io) {
         //     socketInfo.io.emit('other-tracks-update', {
