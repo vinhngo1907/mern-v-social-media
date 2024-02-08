@@ -11,7 +11,7 @@ const slowDown = require("express-slow-down");
  * @desc Post upload file
  * @access Private
  */
-router.post('/create', userAuth, authSocket, uploadCtrl.post);
+router.post('/create', userAuth, uploadCtrl.post);
 
 /**
  * @route POST api/upload/destroy
