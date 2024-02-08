@@ -166,8 +166,10 @@ const initPlaylist = async (io) => {
     seniorSongs = sortedVideos.slice(0, 40);
     // console.log({seniorSongs});
     io.emit('senior-tracks-update', seniorSongs);
+    
     juniorSongs = sortedVideos.slice(40, 100);
     io.emit('junior-tracks-update', juniorSongs);
+    
     otherSongs = sortedVideos.slice(100);
     io.emit('other-tracks-update', otherSongs);
 
@@ -176,6 +178,7 @@ const initPlaylist = async (io) => {
         const fiveRandomJuniorSongs = shuffleVideos(juniorSongs).slice(0, 10);
         songsForQueue.push(...fiveRandomJuniorSongs);
     }
+    
     songsForQueue.push(...seniorSongs);
     songsForQueue = shuffleVideos(songsForQueue);
 
