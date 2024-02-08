@@ -93,7 +93,9 @@ function SocketRoute(io, socketInfo) {
         socket.on("likePost", (post) => {
             logger.info("Like post");
             try {
-                const ids = [...post.user.followers, post.user._id];
+                // const ids = [...post.user.followers, post.user._id]
+                const ids = [...post.user.followers.map(follower => follower._id), post.user._id];
+
                 const clients = users.filter(user => ids.includes(user.id));
                 if (clients.length > 0) {
                     clients.forEach(client => {

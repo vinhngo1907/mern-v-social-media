@@ -10,22 +10,22 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-// Use middleware to attach io to req
+//---------------- Start config socket------------------//
+socketApp(io, server);
+
+//---------------- Use middleware to attach io ------------------//
 // app.use((req, res, next) => {
 //     req.io = io;
 //     next();
 // });
 
-//----------------start config socket------------------//
-socketApp(io, server);
-
-//----------------config routes----------------------//
+//----------------Config routes----------------------//
 expressApp(app);
 
-//----------------connect to database------------------//
+//----------------Connect to database------------------//
 databaseConnection();
 
-//-------------starting and build the server-----------//
+//-------------Starting and build the server-----------//
 server.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 }).on('error', (err) => {
