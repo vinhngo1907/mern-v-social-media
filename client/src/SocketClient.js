@@ -279,32 +279,40 @@ const SocketClient = () => {
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
 
+        // Clean up the event listeners when the component unmounts
+        return () => {
+            socket.off("senior-tracks-update");
+            socket.off("junior-tracks-update");
+        };
+    }, [socket, dispatch]);
+
+    useEffect(() => {
         // Listen for the "other-tracks-update" event and update the state
         socket.on("other-tracks-update", (data) => {
             // console.log({tracks});
             // setVideos(tracks);
             dispatch({ type: VIDEOS_TYPES.UPDATE_VIDEOS, payload: data });
         });
+        return () => {
+            socket.off("other-tracks-update");
+        }
+    }, [socket, dispatch]);
 
+    useEffect(() => {
         socket.on("video-queue-item-update", ({ id, likes, dislikes }) => {
             // updateCount(id, likes, dislikes, 'all')
         });
-
-        // Clean up the event listeners when the component unmounts
         return () => {
-            socket.off("senior-tracks-update");
-            socket.off("junior-tracks-update");
-            socket.off("other-tracks-update");
-            socket.off("video-queue-item-update");
-        };
+            socket.off("video-queue-item-upload");
+        }
     }, [socket, dispatch]);
-    
+
     useEffect(() => {
         socket.on("update-tracks", (data) => {
             console.log(">>>>> [Update Tracks] <<<<<", { data })
             dispatch(updateTracks(data));
         });
-        
+
         return () => {
             socket.off("update-tracks");
         }
