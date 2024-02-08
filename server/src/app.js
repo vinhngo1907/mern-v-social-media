@@ -10,6 +10,12 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
+// Use middleware to attach io to req
+// app.use((req, res, next) => {
+//     req.io = io;
+//     next();
+// });
+
 //----------------start config socket------------------//
 socketApp(io, server);
 

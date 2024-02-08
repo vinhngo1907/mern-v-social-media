@@ -77,8 +77,8 @@ class UploadController {
                             //     format:'jpg'
                             // })
                         }
-                        // console.log(">>>>>", req.io);
-                        await createVideo(videoData, req.user);
+                        console.log(">>>>>", req.io);
+                        await createVideo(videoData, req.user, req);
                     }
                     removeTmp(file.tempFilePath);
                     res.json(responseDTO.success("Added image in successfully", { public_id: result.public_id, url: result.secure_url }));

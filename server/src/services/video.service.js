@@ -100,7 +100,7 @@ exports.getOther = () => {
     }
 }
 
-exports.createVideo = async (videoData, author) => {
+exports.createVideo = async (videoData, author, req) => {
     try {
         const newVideo = new videoModel({
             ...videoData,
@@ -119,17 +119,11 @@ exports.createVideo = async (videoData, author) => {
         
         logger.info('Other tracks update');
         
-        // io.emit('other-tracks-update', {
+        // req.io.emit('other-tracks-update', {
         //     tracks: otherSongs,
         //     result: otherSongs.length
         // });
 
-        // if (socketInfo && socketInfo.io) {
-        //     socketInfo.io.emit('other-tracks-update', {
-        //         tracks: otherSongs,
-        //         result: otherSongs.length
-        //     })
-        // }
         return newVideo;
     } catch (error) {
         logger.error(error.message);
