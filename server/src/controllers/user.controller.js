@@ -150,11 +150,14 @@ class UserController {
             const rf_token = await signature.GenerateRefreshToken({ userId: user._id }, res);
 
             const updatedUser = await userModel.findOneAndUpdate(
-                { _id: req.user._id }, {
-                password: hashedPassword,
-                salt: salt,
-                rf_token: rf_token
-            }, { new: true, runValidators: true }).select("-rf_token -password -salt");
+                { _id: req.user._id },
+                {
+                    password: hashedPassword,
+                    salt: salt,
+                    rf_token: rf_token
+                }, {
+                new: true, runValidators: true
+            }).select("-rf_token -password -salt");
 
             const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
