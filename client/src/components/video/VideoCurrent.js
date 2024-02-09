@@ -3,15 +3,21 @@ import { useSelector } from "react-redux";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoCurrent = (props) => {
-    const { videoRef, isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl } = props;
+    const {
+        videoRef,
+        isMuted, volume, setIsMuted, handleVolumeSliderChange, videoUrl,
+        title
+    } = props;
     const { theme } = useSelector(state => state);
-    
+
     return (
         <div id="main-video">
             <div id="video">
-                <p className="videos-container__header" style={{
-                    "marginLeft": "0.6667em", width: "100%"
-                }}>
+                <p
+                    className="videos-container__header"
+                    style={{
+                        marginLeft: "1rem", width: "100%"
+                    }}>
                     Currently playing
                 </p>
                 <div id="video-react" style={{ width: "100%" }}>
@@ -23,7 +29,7 @@ const VideoCurrent = (props) => {
                         onChange={handleVolumeSliderChange}
                     />
                 </div>
-                
+
                 <VideoPlayer
                     videoUrl={videoUrl}
                     isMuted={isMuted}
@@ -32,10 +38,10 @@ const VideoCurrent = (props) => {
                     videoRef={videoRef}
                 />
                 <div id="video-content">
-                    <div id="titlePlayingVideo">July - My Soul</div>
+                    <div id="titlePlayingVideo">{title}</div>
                 </div>
                 <div className="video-voting">
-                    <div id="playing-video-voting" className=" playing-vote">
+                    <div id="playing-video-voting" className="playing-vote">
                         <i className="fas fa-arrow-up q-m"
                         // onclick={() => toggleLikeVideo({id: })}
                         />

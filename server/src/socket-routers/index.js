@@ -110,7 +110,7 @@ function SocketRoute(io, socketInfo) {
         socket.on("unLikePost", (post) => {
             logger.info("Unlike post");
             try {
-                const ids = [...post.user.followers, post.user._id]
+                const ids = [...post.user.followers, post.user._id];
                 const clients = users.filter(user => ids.includes(user.id))
 
                 if (clients.length > 0) {

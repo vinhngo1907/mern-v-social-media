@@ -68,7 +68,7 @@ const Videos = () => {
     }, [videoSource]);
 
     return (
-        <div className="home row mx-0">
+        <div className="home row mx-0" id="home-videos">
             <div className="left_sidebar col-md-3">
                 <LeftSideBar />
             </div>
@@ -90,6 +90,7 @@ const Videos = () => {
                                         handleToggleMute={handleToggleMute}
                                         videoUrl={videoSource}
                                         videoId={videoId}
+                                        title={videos?.player?.title}
                                     />) :
                                         <div className='spinner-border d-block mx-auto text-dark' role='status'>
                                             <span className="sr-only">Loading...</span>

@@ -14,10 +14,10 @@ const io = require("socket.io")(server);
 socketApp(io, server);
 
 //---------------- Use middleware to attach io ------------------//
-// app.use((req, res, next) => {
-//     req.io = io;
-//     next();
-// });
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
 
 //----------------Config routes----------------------//
 expressApp(app);

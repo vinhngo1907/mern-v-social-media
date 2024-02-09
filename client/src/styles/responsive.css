@@ -115,14 +115,23 @@
         width: 70%;
     }
 
-    .photos > li {
+    .photos>li {
         border: 2px solid #fff;
         float: left;
         margin: 0;
         min-width: 50%;
         width: 50%;
     }
-    .photos > li a {
+
+    .photos>li a {
         overflow: unset;
+    }
+
+    /* .main_sidebar.py-3.col-md-9>.central-meta {
+        background: none !important;
+    } */
+    
+    #home-videos{
+        height: 165vh;
     }
 }
