@@ -10,7 +10,7 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
         if (setShowFollowers) setShowFollowers(false);
         if (setShowFollowing) setShowFollowing(false);
 
-        if (user && handleUserClick){
+        if (user && handleUserClick) {
             handleUserClick(user);
         }
     }
@@ -43,8 +43,10 @@ const UserCard = ({ children, user, border, handleClose, setShowFollowers, setSh
         <div className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}>
             <div>
                 {/* <Link to={`/profile/${user._id}`} onClick={handleCloseAll} */}
-                <Link to="#" onClick={handleCloseAll}
-                    className={`d-flex align-items-center ${type === 'home' ? '' : 'user_card'}`}>
+                <Link
+                    to={type === 'home' ? `/profile/${user._id}` : "#"} onClick={handleCloseAll}
+                    className={`d-flex align-items-center ${type === 'home' ? '' : 'user_card'}`}
+                >
                     <Avatar src={user.avatar} size={type === "home" ? 'large-avatar' : 'big-avatar'} />
                     <div className="ml-3" style={{ transform: 'translateY(-2px)' }}>
                         <span className="d-block" style={{ color: "#545454" }}>{user.username}</span>

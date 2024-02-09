@@ -54,7 +54,7 @@ const Search = () => {
                 <div className="users">
                     {
                         search && users.map((u, i) => (
-                            <UserCard key={u._id || i} user={u} />
+                            <UserCard key={u._id || i} user={u} type="home"/>
                         ))
                     }
                 </div>

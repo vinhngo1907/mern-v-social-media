@@ -145,10 +145,10 @@ const RightSideBar = () => {
                                             </div>
                                             : searchUsers.length >= 1
                                                 ? searchUsers.map((user, index) => (
-                                                    <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                    <UserCard key={user ? user._id : index} user={user} type="user_card" handleUserClick={handleUserClick} />
                                                 ))
                                                 : users.map((user, index) => (
-                                                    <UserCard key={user ? user._id : index} user={user} type="home" handleUserClick={handleUserClick} />
+                                                    <UserCard key={user ? user._id : index} user={user} type="user_card" handleUserClick={handleUserClick} />
                                                 ))
                                     }
                                 </div>
