@@ -77,7 +77,7 @@ class UploadController {
                             //     format:'jpg'
                             // })
                         }
-                        console.log(">>>>>", req.io);
+                        // console.log(">>>>>", req.io);
                         await createVideo(videoData, req.user, req);
                     }
                     removeTmp(file.tempFilePath);

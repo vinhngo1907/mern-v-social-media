@@ -119,10 +119,12 @@ exports.createVideo = async (videoData, author, req) => {
         
         logger.info('Other tracks update');
         
-        // req.io.emit('other-tracks-update', {
-        //     tracks: otherSongs,
-        //     result: otherSongs.length
-        // });
+        if(req?.io) {
+            req.io.emit('other-tracks-update', {
+                tracks: otherSongs,
+                result: otherSongs.length
+            });
+        }
 
         return newVideo;
     } catch (error) {
