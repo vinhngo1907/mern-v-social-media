@@ -204,3 +204,6 @@ ul{
 
 /* --------- Chat box ------ */
 @import url("./chat.css");
+
+/* --------- Change password ------ */
+@import url("./change_pass.css");

@@ -127,11 +127,15 @@
         overflow: unset;
     }
 
+    .mtr-btn {
+        padding: 5px 20px;
+    }
+
     /* .main_sidebar.py-3.col-md-9>.central-meta {
         background: none !important;
     } */
-    
-    #home-videos{
+
+    #home-videos {
         height: 165vh;
     }
 }

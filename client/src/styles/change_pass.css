@@ -1,0 +1,149 @@
+/*--- edit basic info page ---*/
+
+.editing-info form {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+
+.editing-info form .form-control:focus {
+    border-bottom: 1px solid #088dcd;
+}
+
+.editing-info form .control-label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 10px;
+    pointer-events: none;
+    transition: 0.3s ease all;
+}
+
+.editing-info form .form-group.half {
+    float: left;
+    margin-right: 20px;
+    width: 46%;
+}
+
+.editing-info form .form-group.half {
+    float: left;
+    margin-right: 10px;
+    width: 48.2%;
+}
+
+.editing-info form .form-group.half:nth-child(2) {
+    margin-right: 0;
+}
+
+.chosen-container-single .chosen-single {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-color: -moz-use-text-color -moz-use-text-color #e1e8ed;
+    border-radius: 0;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    box-shadow: none;
+    color: #b7b7b7 !important;
+    font-size: 16px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.editing-info form .dob .form-group {
+    display: inline-block;
+    margin-right: 20px;
+    width: 30.6%;
+}
+
+.chosen-container {
+    width: 100% !important;
+}
+
+.editing-info form .dob .form-group:last-child {
+    margin-right: 0;
+}
+
+a.forgot-pwd {
+    float: right;
+    font-size: 14px;
+}
+
+.editing-interest>form {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.editing-interest form input {
+    border: 1px solid #eee;
+    font-size: 14px;
+    padding: 10px 20px;
+    width: 84%;
+}
+
+.editing-interest form ol {
+    margin-top: 35px;
+    padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.editing-interest form ol>li {
+    display: inline-block;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.editing-interest form ol>li a {
+    background: #ebebeb none repeat scroll 0 0;
+    display: inline-block;
+    font-size: 14px;
+    padding: 4px 15px;
+    text-transform: capitalize;
+    border-radius: 3px;
+}
+
+.editing-interest form ol>li span.remove {
+    left: -24px;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+}
+
+.editing-interest form button {
+    padding: 11px 30px;
+}
+
+.onoff-options>form {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.onoff-options .setting-row>p {
+    color: #6b6b6b;
+    float: left;
+    font-size: 13px;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.onoff-options .setting-row>span {
+    font-size: 14px;
+    width: 100%;
+    font-weight: bold;
+    color: #3c3c3c;
+}
+
+.onoff-options .setting-row>label {
+    float: right;
+    margin-right: 0;
+}
+
+.editing-info .submit-btns {
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%;
+}
