@@ -6,6 +6,7 @@ const { userModel } = modelSchema;
 const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET, PHONE_SECRET } = require("../configs");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
+const { ValidateEmail, ValidateMobile } = require("../utils/validations");
 
 class AuthController {
     async Login(req, res) {
@@ -35,8 +36,6 @@ class AuthController {
             // const { fullname, username, email, mobile, password } = req.body;
             const { fullname, username, account, password } = req.body;
 
-           
-
             if (validation.ValidateEmail(account)) {
                 const checkUser = validation.ValidaiteRegister(req.body);
 
@@ -44,6 +43,7 @@ class AuthController {
                 if (checkUser) {
                     return res.status(400).json(responseDTO.badRequest(checkUser))
                 }
+
                 const salt = await passwordUtil.GenerateSalt();
                 const newPassword = await passwordUtil.GeneratePassword(password, salt);
 
@@ -144,6 +144,7 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
     async GoogleLogin(req, res) {
         try {
             // console.log(req.body)
@@ -181,7 +182,7 @@ class AuthController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
+
     async FacebookLogin(req, res) {
         try {
             const { accessToken, userID } = req.body;
@@ -265,11 +266,31 @@ class AuthController {
             if (!account) {
                 return res.status(400).json(responseDTO.badRequest("This account does not exist!!!"));
             }
-            const resetToken = await signature.GenerateActiveToken({});
-            const url = `${CLIENT_URL}/reset/${resetToken}`;
-            const mailer = new Mailer(email, url, "Reset your account");
-            mailer.sendMail();
-            res.status(200).json(responseDTO.success('Successfully, please check your email!'));
+
+            const user = await userModel.findOne({ account });
+            if (!user) {
+                return res.status(400).json(responseDTO.badRequest("This account does not exist."));
+            }
+
+            if (user.type !== "register") {
+                return res.status(400).json(responseDTO.badRequest(`Quick login account with ${user.type} can't use this function.`));
+            }
+            
+            const resetToken = await signature.GenerateAccessToken({ userId: user._id });
+            const url = `${CLIENT_URL}/reset-password/${resetToken}`;
+
+            if (ValidateEmail(account)) {
+                const mailer = new Mailer(email, url, "Forgot password?");
+                mailer.sendMail();
+                return res.json(responseDTO.success('Successfully, please check your email!'));
+            }
+
+            if (ValidateMobile(account)) {
+                const mobiler = new Mobile(account, url,  "Forgot password?");
+                await mobiler.SendSMS();
+                return res.json(responseDTO.success("Success! Please check your phone."));
+            }
+
 
         } catch (error) {
             console.log(error);

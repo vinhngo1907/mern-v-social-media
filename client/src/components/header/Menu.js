@@ -85,7 +85,10 @@ const Menu = () => {
                             }
                             {theme ? 'Light mode' : 'Dark mode'}
                         </label>
-
+                        <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>
+                            < i className="fas fa-key mr-2" />
+                            Change password
+                        </Link>
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to="/"
                             onClick={() => dispatch(logout(auth.token))}
