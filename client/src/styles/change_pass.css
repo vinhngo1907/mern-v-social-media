@@ -2,36 +2,81 @@
 
 .editing-info form {
     margin-top: 25px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    display: inline-block;
-    width: 100%;
+}
+
+.editing-info form .form-group {
     position: relative;
 }
 
-.editing-info form .form-control:focus {
+.editing-info form input {
+    height: 2rem;
+    display: block;
+    background: 0 0;
+    padding: .125rem .125rem .0625rem;
+    font-size: 1rem;
+    border-width: 0;
+    border-color: transparent;
+    line-height: 1.9;
+    width: 100%;
+    color: transparent;
+    -webkit-transition: all .28s ease;
+    transition: all .28s ease;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.editing-info form input:focus {
+    border: none !important;
     border-bottom: 1px solid #088dcd;
 }
 
-.editing-info form .control-label{
+.editing-info form .control-label {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 10px;
+    top: .25rem;
     pointer-events: none;
-    transition: 0.3s ease all;
+    padding-left: .125rem;
+    z-index: 1;
+    color: var(--main-color);
+    font-size: 1rem;
+    font-weight: 400;
+    -webkit-transition: all .28s ease;
+    transition: all .28s ease
+}
+
+.editing-info form .form-group .mtrl-select {
+    position: relative;
+    border-bottom: .0625rem solid #e1e8ed;
+    display: block
+}
+
+.editing-info form .form-group .mtrl-select::before {
+    content: '';
+    height: .125rem;
+    width: 0;
+    left: 50%;
+    bottom: -.0625rem;
+    position: absolute;
+    background: #088dcd;
+    -webkit-transition: left .28s ease, width .28s ease;
+    transition: left .28s ease, width .28s ease;
+    z-index: 2
+}
+
+.editing-info form .form-group input[type=file]~.mtrl-select {
+    display: none
+}
+
+.editing-info form .form-group input:focus~.mtrl-select::before,
+.editing-info form .form-group select:focus~.mtrl-select::before,
+.editing-info form .form-group textarea:focus~.mtrl-select::before {
+    width: 100%;
+    left: 0
 }
 
 .editing-info form .form-group.half {
     float: left;
     margin-right: 20px;
     width: 46%;
-}
-
-.editing-info form .form-group.half {
-    float: left;
-    margin-right: 10px;
-    width: 48.2%;
 }
 
 .editing-info form .form-group.half:nth-child(2) {
@@ -146,4 +191,133 @@ a.forgot-pwd {
     display: inline-block;
     margin-top: 20px;
     width: 100%;
+}
+
+.has-error .mtrl-select::before {
+    background: #d9534f;
+    left: 0;
+    width: 100%
+}
+
+.mtr-btn {
+    position: relative;
+    background: currentColor;
+    border: 1px solid currentColor;
+    font-size: 16px;
+    color: #4f93ce;
+    margin-top: 10px;
+    padding: 7px 30px;
+    cursor: pointer;
+    -webkit-transition: background-color .28s ease, color .28s ease, -webkit-box-shadow .28s ease;
+    transition: background-color .28s ease, color .28s ease, -webkit-box-shadow .28s ease;
+    transition: background-color .28s ease, color .28s ease, box-shadow .28s ease;
+    transition: background-color .28s ease, color .28s ease, box-shadow .28s ease, -webkit-box-shadow .28s ease;
+    overflow: hidden;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+
+.mtr-btn span {
+    color: #fff;
+    position: relative;
+    z-index: 1
+}
+
+.mtr-btn::before {
+    content: '';
+    position: absolute;
+    background: #071017;
+    border: 50vh solid #1d4567;
+    width: 30vh;
+    height: 30vh;
+    border-radius: 50%;
+    display: block;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%) scale(0)
+}
+
+.mtr-btn:hover {
+    color: #088dcd;
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2)
+}
+
+.mtr-btn:active::before,
+.mtr-btn:focus::before {
+    -webkit-transition: opacity .28s ease 364ms, -webkit-transform 1.12s ease;
+    transition: opacity .28s ease 364ms, -webkit-transform 1.12s ease;
+    transition: transform 1.12s ease, opacity .28s ease 364ms;
+    transition: transform 1.12s ease, opacity .28s ease 364ms, -webkit-transform 1.12s ease;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0
+}
+
+.mtr-btn:focus {
+    outline: 0
+}
+
+.editing-info form .form-group input.form-file~.control-label,
+.editing-info form .form-group input.has-value~.control-label,
+.editing-info form .form-group input:focus~.control-label,
+.editing-info form .form-group input:valid~.control-label,
+.editing-info form .form-group select~.control-label,
+.editing-info form .form-group textarea.form-file~.control-label,
+.editing-info form .form-group textarea.has-value~.control-label,
+.editing-info form .form-group textarea:focus~.control-label,
+.editing-info form .form-group textarea:valid~.control-label {
+    color: #088dcd;
+}
+
+.editing-info form .form-group input:focus~.control-label,
+.editing-info form .form-group input:valid~.control-label,
+.editing-info form .form-group select~.control-label {
+    font-size: .8rem;
+    color: gray;
+    top: -1rem;
+    left: 0
+}
+
+.editing-info form .form-group input:focus~.control-label,
+.editing-info form .form-group select:focus~.control-label,
+.editing-info form .form-group textarea:focus~.control-label {
+    color: #088dcd
+}
+
+.f-title {
+    font-size: 17.5px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #000;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.f-title::before {
+    bottom: 8px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.f-title.ext-margin {
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.f-title i {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.f-title i, .f-title::before{
+    color: #088dcd;	
 }
