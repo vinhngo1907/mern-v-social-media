@@ -28,7 +28,7 @@ class Mobile {
     }
 
     async SendOTP(channel) {
-        console.log({channel})
+        // console.log({channel})
         try {
             const data = await client
                 .verify
