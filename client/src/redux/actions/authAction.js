@@ -136,7 +136,7 @@ export const verifySMS = (phone) => async (dispatch) => {
 
         const { data: { results: { user, access_token } } } = res;
 
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
        
         dispatch({
             type: GLOBALTYPES.AUTH,
