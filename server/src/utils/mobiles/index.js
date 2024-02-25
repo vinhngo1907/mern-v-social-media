@@ -28,19 +28,23 @@ class Mobile {
     }
 
     async SendOTP(channel) {
+        console.log({ ACCOUNT_SID, AUTH_TOKEN });
+
         try {
+            const auth_token_promotion = await client.accounts.v1.authTokenPromotion().update();
+            console.log(auth_token_promotion.dateCreated);
             const data = await client
                 .verify
                 .services(SERVICE_ID)
                 .verifications
                 .create({
                     to: this.to,
-                    channel
+                    channel: channel === 'call' ? 'call' : 'sms'
                 });
 
             return data;
         } catch (error) {
-            console.log(error.message);
+            // console.log(error);
             return error;
         }
     }
