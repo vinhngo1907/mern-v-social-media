@@ -75,7 +75,7 @@ export const validatePassword = (password, cf_password) => {
 export const validateLoginSMS = (phone) => {
     let error = {}
     if (!validatePhone(phone)) {
-        error.mobile = "Mobile format is incorrect";
+        error = "Mobile format is incorrect";
     }
     
     return {

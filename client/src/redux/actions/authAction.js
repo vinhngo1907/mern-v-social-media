@@ -117,7 +117,7 @@ export const loginSMS = (phone) => async (dispatch) => {
         console.log({ res });
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
-        verifySMS(phone, dispatch)
+        verifySMS(phone, dispatch);
 
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
