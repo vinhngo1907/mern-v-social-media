@@ -12,12 +12,12 @@ export const login = (data) => async (dispatch) => {
                 token: res.data.results.access_token
             }
         });
-        
+
         dispatch({
-            type: VIDEOS_TYPES.SET_USER_EMAIL, 
+            type: VIDEOS_TYPES.SET_USER_EMAIL,
             payload: res.data.results.user.email
         });
-        
+
         localStorage.setItem('firstLogin', true);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
     } catch (err) {
@@ -40,10 +40,10 @@ export const refreshToken = () => async (dispatch) => {
             });
 
             dispatch({
-                type: VIDEOS_TYPES.SET_USER_EMAIL, 
+                type: VIDEOS_TYPES.SET_USER_EMAIL,
                 payload: res.data.results.user.email
             });
-            
+
             dispatch({ type: GLOBALTYPES.ALERT, payload: {} });
         }
     } catch (err) {
@@ -102,7 +102,22 @@ export const facebookLogin = (data) => async (dispatch) => {
 
 export const loginSMS = (data) => async (dispatch) => {
     try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        const res = await postDataApi('auth/sms-login', { phone: data });
 
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
+
+        localStorage.setItem('firsLogin', true);
+
+        const { data: { results: { user, access_token } } } = res;
+        
+        dispatch({
+            type: GLOBALTYPES.AUTH,
+            payload: {
+                user: user,
+                token: access_token
+            }
+        });
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }

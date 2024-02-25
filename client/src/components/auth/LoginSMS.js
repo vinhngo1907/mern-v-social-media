@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginSMS } from "../../redux/actions/authAction";
 
 const LoginSMS = () => {
     const [phone, setPhone] = useState('');
+    const dispatch = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(loginSMS(phone));
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
@@ -23,4 +29,4 @@ const LoginSMS = () => {
     )
 }
 
-export default LoginSMS
+export default LoginSMS;

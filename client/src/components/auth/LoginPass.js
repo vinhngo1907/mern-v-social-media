@@ -9,9 +9,11 @@ const LoginPass = () => {
 		account: '',
 		password: ''
 	});
+	
 	const handleChangeInput = (e) => {
 		setUserData({ ...userData, [e.target.name]: e.target.value })
 	}
+
 	const { account, password } = userData;
 
 	const handleSubmit = (e) => {
