@@ -221,7 +221,7 @@ class AuthController {
             const mobile = new Mobile(phone, "", "");
             const data = await mobile.SendOTP('sms');
 
-            res.json(responseDTO.success("Login SMS successfully", data));
+            res.json(responseDTO.success("Successfully, please check your phone!", data));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

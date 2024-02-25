@@ -107,17 +107,17 @@ export const loginSMS = (data) => async (dispatch) => {
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
 
-        localStorage.setItem('firsLogin', true);
+        // localStorage.setItem('firsLogin', true);
 
-        const { data: { results: { user, access_token } } } = res;
+        // const { data: { results: { user, access_token } } } = res;
         
-        dispatch({
-            type: GLOBALTYPES.AUTH,
-            payload: {
-                user: user,
-                token: access_token
-            }
-        });
+        // dispatch({
+        //     type: GLOBALTYPES.AUTH,
+        //     payload: {
+        //         user: user,
+        //         token: access_token
+        //     }
+        // });
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }
