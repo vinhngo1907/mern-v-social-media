@@ -1,6 +1,7 @@
 import { postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../actions/globalTypes";
 import { VIDEOS_TYPES } from "./videoAction";
+import { validateLoginSMS } from "../../utils/valid"
 
 export const login = (data) => async (dispatch) => {
     try {
@@ -66,9 +67,13 @@ export const logout = (token) => async (dispatch) => {
 export const googleLogin = ({ idToken }) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+
         const res = await postDataApi('auth/google-login', { idToken });
+
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.message } });
+
         localStorage.setItem('firstLogin', true);
+
         dispatch({
             type: GLOBALTYPES.AUTH, payload: {
                 user: res.data.results.user,
@@ -100,24 +105,47 @@ export const facebookLogin = (data) => async (dispatch) => {
     }
 }
 
-export const loginSMS = (data) => async (dispatch) => {
+export const loginSMS = (phone) => async (dispatch) => {
+    const error = validateLoginSMS(phone);
+    if (error.errLength > 0) {
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.errMsg } })
+    }
+
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
-        const res = await postDataApi('auth/sms-login', { phone: data });
+        const res = await postDataApi('auth/sms-login', { phone });
+        console.log({ res });
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
+        verifySMS(phone, dispatch)
 
-        // localStorage.setItem('firsLogin', true);
+    } catch (error) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
 
-        // const { data: { results: { user, access_token } } } = res;
-        
-        // dispatch({
-        //     type: GLOBALTYPES.AUTH,
-        //     payload: {
-        //         user: user,
-        //         token: access_token
-        //     }
-        // });
+export const verifySMS = (phone) => async (dispatch) => {
+    const code = prompt('Enter your code');
+    if (!code) return;
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+
+        const res = await postDataApi('sms-verify', { phone, code });
+
+        localStorage.setItem('firsLogin', true);
+
+        const { data: { results: { user, access_token } } } = res;
+
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
+       
+        dispatch({
+            type: GLOBALTYPES.AUTH,
+            payload: {
+                user: user,
+                token: access_token
+            }
+        });
+
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
     }

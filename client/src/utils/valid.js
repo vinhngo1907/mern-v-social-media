@@ -72,13 +72,25 @@ export const validatePassword = (password, cf_password) => {
     return error;
 }
 
+export const validateLoginSMS = (phone) => {
+    let error = {}
+    if (!validatePhone(phone)) {
+        error.mobile = "Mobile format is incorrect";
+    }
+    
+    return {
+        errMsg: error,
+        errLength: Object.keys(error).length
+    }
+}
+
 function validateEmail(email) {
     // eslint-disable-next-line
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 
-// function validatePhone(phone) {
-//     const re = /^[+]/g
-//     return re.test(phone)
-// }
+function validatePhone(phone) {
+    const re = /^[+]/g
+    return re.test(phone);
+}
