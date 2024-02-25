@@ -130,7 +130,7 @@ export const verifySMS = (phone) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
 
-        const res = await postDataApi('sms-verify', { phone, code });
+        const res = await postDataApi('auth/sms-verify', { phone, code });
 
         localStorage.setItem('firsLogin', true);
 
