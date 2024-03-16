@@ -7,7 +7,10 @@ const groupSchema = new Schema({
     members: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     posts: [{ type: Schema.Types.ObjectId, ref: 'post' },],
     coverImage: String,
-    additionalInfo: { type: String, required: true }
+    additionalInfo: { type: String, required: true },
+    inviteLink: { type: String, },
+    publicLink: { type: String, required: false },
+    description: { type: String, }
 }, {
     timestamps: true, versionKey: false
 });
