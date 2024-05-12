@@ -6,21 +6,21 @@
 
 # Install everything
 install:
-	@cd server && yarn install
-	@cd client && yarn install
+	@cd packages/server && yarn install
+	@cd packages/client && yarn install
 	@docker pull mongo
 
 # Server
 server-run:
-	@cd server && yarn server
+	@cd packages/server && yarn server
 server-clean:
-	@rm server/yarn.lock server/node_modules -rf
+	@rm packages/server/yarn.lock server/node_modules -rf
 
 # Client
 client-run:
-	@cd client && yarn start
+	@cd packages/client && yarn start
 client-clean:
-	@rm client/yarn.lock client/node_modules -rf
+	@rm packages/client/yarn.lock client/node_modules -rf
 
 # Database
 db-run:
