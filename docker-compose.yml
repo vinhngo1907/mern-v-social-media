@@ -1,0 +1,11 @@
+version: '3.2'
+
+networks:
+  mongo:
+    driver: bridge
+  cms:
+    driver: bridge
+  client:
+    driver: bridge
+  server:
+    driver: bridge
