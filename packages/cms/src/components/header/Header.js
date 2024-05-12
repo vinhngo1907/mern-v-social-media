@@ -69,7 +69,7 @@ function Header() {
                 {
                     isLogged && <li>
                         <Link to="/profile" className='avatar'>
-                            <img src={user.avatar} alt="" /> {user.name}
+                            <img src={user.avatar} alt="" /> {user.username}
                         </Link>
                     </li>
                 }

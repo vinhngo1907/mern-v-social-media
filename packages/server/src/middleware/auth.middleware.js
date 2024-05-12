@@ -20,11 +20,11 @@ const verifyToken = async (req, res, next) => {
 		const user = await userModel.findById(decoded.userId)
 		.select("-password -__v -createdAt -updatedAt -salt")
 		// .populate("followers following", "-password -__v -createdAt -updatedAt -salt");
-		
+
 		if (!user) return res.status(400).json(responseDTO.badRequest("User does not exist."));
 
 		req.user = user;
-		next()
+		next();
 	} catch (error) {
 		console.log(error)
 		return res.status(500).json(responseDTO.serverError(error.message))

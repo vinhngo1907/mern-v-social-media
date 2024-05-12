@@ -21,7 +21,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "set PORT=5002 && react-scripts start",
+    "start": "set PORT=5003 && react-scripts start",
     "build": "GENERATE_SOURCEMAP=false env-cmd .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

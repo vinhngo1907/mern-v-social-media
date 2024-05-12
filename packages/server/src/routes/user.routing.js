@@ -30,7 +30,7 @@ router.patch('/reset-password', userAuth, userCtrl.ResetPassword);
  *  @desc Get users
  *  @access Private
 */
-router.get('/', userAuth, userCtrl.GetAllUser)
+router.get('/', userAuth, userCtrl.GetAllUser);
 
 /** 
  *  @route GET api/user/suggestion
@@ -47,18 +47,18 @@ router.get('/suggestion', userAuth, userCtrl.Suggestion);
 router.get('/search', userAuth, userCtrl.SearchUser);
 
 /** 
- *  @route GET api/user/:id
- *  @desc Get user profile
- *  @access Private
-*/
-router.get('/:id', userAuth, userCtrl.GetUser);
-
-/** 
  *  @route GET api/user/me
  *  @desc Get user profile
  *  @access Private
 */
 router.get('/me', userAuth, userCtrl.GetMe);
+
+/** 
+ *  @route GET api/user/:id
+ *  @desc Get user profile
+ *  @access Private
+*/
+router.get('/:id', userAuth, userCtrl.GetUser);
 
 /** 
  *  @route PATCH api/user/:id/follow

@@ -27,7 +27,7 @@ function LoginPass() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const res = await axios.post('/api/auth/login', {account, password});
+            const res = await axios.post('/api/auth/login', { account, password });
             setUserData({ ...userData, err: '', success: res.data.message });
             localStorage.setItem('firstLogin', true);
 
