@@ -128,3 +128,6 @@ button {
 
 /* ---------- Profile Page------------ */
 @import url("./profile.css");
+
+/* ---------- Home Page------------ */
+@import url("./home.css");
