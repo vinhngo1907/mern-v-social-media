@@ -1,0 +1,109 @@
+@serverUrl = http://localhost:5001/api
+###
+GET {{serverUrl}}
+
+###
+POST {{serverUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "poseidongod2k",
+  "fullname": "Quyền Lực",
+  "password": "123456",
+  "account":"vinhngotrung1999@gmail.com"
+}
+
+###
+
+POST {{serverUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "account": "poseidongod2k",
+  "password": "123456"
+}
+
+###
+
+POST {{serverUrl}}/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+{
+  "title": "React",
+  "description": "React",
+  "url": "react.com",
+  "status": "TO LEARN"
+}
+
+###
+
+GET {{serverUrl}}/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+
+PUT {{serverUrl}}/posts/6061c25ac2533d41dcae2b19
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+
+{
+  "title": "Vue",
+  "description": "VUEEEEE",
+  "url": "https://vuejs.org",
+  "status": "LEARNING"
+}
+
+###
+
+DELETE {{serverUrl}}/posts/6061c25ac2533d41dcae2b19
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+
+GET {{serverUrl}}/statistic/socials
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2ODg2NDY0NzcsImV4cCI6MTY4ODczMjg3N30.9mZ6PWWUMvM7-AlwF2FBrMVvpwbZer2C2lZCK6RrEzk
+###
+
+POST {{serverUrl}}/auth/active
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IlF1eeG7gW4gTOG7sWMiLCJ1c2VybmFtZSI6InBvc2VpZG9uZ29kMmsiLCJlbWFpbCI6InZpbmhuZ290cnVuZzE5OTlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkNXRqZGV2OEtuekxMekVZWHJ2VGllT1NCV2RkU0lWR0Q4R0N4R2ZiOWt5V3RKQ1FyaTdPNnkiLCJzYWx0IjoiJDJiJDEwJDV0amRldjhLbnpMTHpFWVhydlRpZU8iLCJpYXQiOjE2OTI0NTA2ODMsImV4cCI6MTY5MjQ1MTU4M30.YCSbtt7wHnh3KvHFOLlhAhevIrkPFnX7b53XZPSpIsg"
+}
+###
+
+POST {{serverUrl}}/auth/sms-login
+Content-Type: application/json
+
+{
+  "phone": "+84389536641"
+}
+###
+# L425AJ91U6TA9GQTNG8SAMAM
+
+POST {{serverUrl}}/auth/sms-verify
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+
+{
+  "phone": "+84389536641",
+  "code":"20003"
+}
+
+###
+GET {{serverUrl}}/upload/get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+
+GET {{serverUrl}}/video
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+
+GET {{serverUrl}}/videos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+###
+
+
