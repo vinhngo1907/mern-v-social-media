@@ -41,6 +41,20 @@ class UserController {
         }
     }
 
+    async GetMe(req, res) {
+        try {
+            const me = req.user;
+            if (!me) {
+                return res.status(401).json(responseDTO.unauthorization("User not found"));
+            }
+            
+            res.json(responseDTO.success("Get me successfully", req.user));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
     async UpdateProfile(req, res) {
         try {
             const { fullname, avatar, gender, } = req.body;

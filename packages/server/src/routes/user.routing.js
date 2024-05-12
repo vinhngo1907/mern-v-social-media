@@ -54,6 +54,13 @@ router.get('/search', userAuth, userCtrl.SearchUser);
 router.get('/:id', userAuth, userCtrl.GetUser);
 
 /** 
+ *  @route GET api/user/me
+ *  @desc Get user profile
+ *  @access Private
+*/
+router.get('/me', userAuth, userCtrl.GetMe);
+
+/** 
  *  @route PATCH api/user/:id/follow
  *  @desc Follow user
  *  @access Private
