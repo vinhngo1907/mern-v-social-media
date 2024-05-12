@@ -20,7 +20,7 @@ function App() {
 			}
 			getToken()
 		}
-	}, [auth.isLogged, dispatch])
+	}, [auth.isLogged, dispatch]);
 
 	useEffect(() => {
 		if (token) {
@@ -31,9 +31,10 @@ function App() {
 					dispatch(dispatchGetUser(res))
 				})
 			}
-			getUser()
+			getUser();
 		}
-	}, [token, dispatch])
+	}, [token, dispatch]);
+
 	return (
 		<Router>
 			<div className="app">
