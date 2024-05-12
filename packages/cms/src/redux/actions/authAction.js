@@ -1,6 +1,5 @@
 import ACTIONS from "./index";
-import axios from "axios";
-import { postDataAPI } from "../../components/utils/apis/FetchData";
+import { getDataAPI, postDataAPI } from "../../components/utils/apis/FetchData";
 
 export const dispatchLogin =  () => {
 	return {
@@ -9,10 +8,12 @@ export const dispatchLogin =  () => {
 }
 
 export const fetchUser = async (token) => {
-	const res = await axios.get('/api/user/me', {
-		withCredentials: true,
-		headers: { Authorization: `Bearer ${token}` }
-	});
+	// const res = await axios.get('/api/user/me', {
+	// 	withCredentials: true,
+	// 	headers: { Authorization: `Bearer ${token}` }
+	// });
+	const res = await getDataAPI('/user/me', token);
+	
 	return res;
 }
 
