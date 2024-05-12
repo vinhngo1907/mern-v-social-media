@@ -2,22 +2,22 @@
     "folders": [
         {
             "name": "client",
-            "path": "client"
+            "path": "packages/client"
         },
         {
             "name": "server",
-            "path": "server"
+            "path": "packages/server"
         },
         {
-            "name": "docs",
-            "path": "docs"
+            "name": "cms",
+            "path": "packages/cms"
         },
     ],
     "settings": {
         "eslint.workingDirectories": [
             "client",
             "server",
-            "docs"
+            "cms"
         ],
         "search.exclude": {
             "**/node_modules": true,
