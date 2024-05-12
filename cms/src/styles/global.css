@@ -1,0 +1,178 @@
+header {
+  width: 100%;
+  min-height: 100px;
+  /* background: #282c34; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 30px;
+  /* overflow: hidden; */
+}
+
+header a {
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+header ul li {
+  display: inline-block;
+  padding: 0px 20px;
+  opacity: 0.7;
+}
+
+header ul li:hover {
+  opacity: 1;
+}
+
+header ul li img {
+  width: 30px;
+  height: 30px;
+  transform: translateY(10px);
+  border-radius: 50%;
+}
+
+/* --------- Dropdown ---------- */
+.drop-nav {
+  position: relative;
+  padding: 10px 0;
+}
+
+.drop-nav a {
+  text-transform: capitalize;
+  overflow: hidden;
+}
+
+.drop-nav .dropdown {
+  position: absolute;
+  background: #282c34;
+  width: 100%;
+  width: calc(100% + 30px);
+  top: 50px;
+  display: none;
+}
+
+.drop-nav .dropdown li {
+  display: block;
+}
+
+.drop-nav:hover .dropdown {
+  display: block;
+}
+
+.menu {
+  display: none;
+}
+
+.cart-icon {
+  position: relative;
+  margin-right: 20px;
+}
+
+.cart-icon span {
+  background: crimson;
+  border-radius: 20px;
+  color: white;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 7px;
+  font-size: 10px;
+}
+
+/* --------- Auth ---------- */
+.auth_page {
+  width: 100%;
+  padding: 2.5rem 0;
+  background: #fdfdfd;
+  display: flex;
+  justify-content: center;
+}
+
+.auth_page .auth_box {
+  background: #fff;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 2.7rem 1.7rem;
+}
+
+.auth_page .pass {
+  position: relative;
+}
+
+.auth_page .pass small {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.auth_page input::placeholder {
+  opacity: 0.5;
+  font-size: 80%;
+}
+
+.auth_page a {
+  text-decoration: none;
+}
+
+.auth_page a:hover {
+  text-decoration: underline;
+}
+
+/* --------- Notify ---------- */
+.errMsg {
+  background: rgb(214, 10, 10);
+  color: #fff9;
+  text-align: center;
+  padding: 10px 0;
+  letter-spacing: 1.3px;
+}
+
+.successMsg {
+  background: rgb(9, 158, 54);
+  color: #fff9;
+  text-align: center;
+  padding: 10px 0;
+  letter-spacing: 1.3px;
+}
+
+/* --------- Home ----------- */
+.home_page {
+  min-height: calc(100vh - 100px);
+  padding: 20px;
+  background: rgb(255, 249, 215);
+  color: #333;
+}
+
+.home_page h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: teal;
+}
+
+.home_page p {
+  color: #777;
+  line-height: 1.5;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+.home_page a {
+  color: white;
+  background: crimson;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 3px;
+  margin: 10px 0;
+  letter-spacing: 1.2px;
+}
+
+.home_page h3 {
+  color: chocolate;
+  margin-top: 30px;
+}
