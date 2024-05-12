@@ -15,7 +15,7 @@ const Profile = () => {
     const [avatar, setAvatar] = useState(false);
     const [loading, setLoading] = useState(false);
     const [callback, setCallback] = useState(false);
-    const { user, isAdmin } = auth;
+    const { isAdmin = true } = auth;
     const [data, setData] = useState(initialState);
 
     const handleChange = (e) => {
@@ -28,7 +28,7 @@ const Profile = () => {
         try {
 
         } catch (error) {
-            setData({ ...data, err: "", success: "" });
+            setData({ ...data, err: error.response.data.message, success: "" });
         }
     }
 
@@ -43,7 +43,7 @@ const Profile = () => {
                 <div className="col-left">
                     <h2>{isAdmin ? "Admin Profile" : "User Profile"}</h2>
                     <div className="avatar">
-                        {/* <img src={avatar ? avatar : user.avatar} alt="" /> */}
+                        <img src={avatar ? avatar : auth.user.avatar} alt="" />
                         <span>
                             <i className="fas fa-camera"></i>
                             <p>Change</p>
