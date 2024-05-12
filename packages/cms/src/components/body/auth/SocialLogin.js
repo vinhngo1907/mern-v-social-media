@@ -19,6 +19,7 @@ function SocialLogin() {
 
         gapi.load('client:auth2', start);
     }, []);
+    
     const initialState = {
         // account: '',
         // password: '',

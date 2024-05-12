@@ -47,7 +47,7 @@ class UserController {
             if (!me) {
                 return res.status(401).json(responseDTO.unauthorization("User not found"));
             }
-            
+
             res.json(responseDTO.success("Get me successfully", req.user));
         } catch (error) {
             console.log(error);
