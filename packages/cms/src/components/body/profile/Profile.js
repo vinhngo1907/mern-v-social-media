@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showSuccessMsg, showErrMsg } from '../../utils/notifications/Notification';
-import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/usersAction';
+import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/userAction';
 
 const initialState = {
     name: "",
@@ -13,11 +13,13 @@ const initialState = {
 
 const Profile = () => {
     const { auth, token, users } = useSelector(state => state);
+    const { user, isAdmin, isLogged } = auth;
     const [avatar, setAvatar] = useState(false);
     const [loading, setLoading] = useState(false);
     const [callback, setCallback] = useState(false);
-    const { isAdmin = 1 } = auth;
     const [data, setData] = useState(initialState);
+
+    const { password, cf_password, err, success } = data;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -57,7 +59,7 @@ const Profile = () => {
                         <span>
                             <i className="fas fa-camera"></i>
                             <p>Change</p>
-                            <input type="file" name="file" id="file_up" onChange={changeAvatar} />
+                            <input type="file" name="file" id="file_up" onChange={handleChangeAvatar} />
                         </span>
                     </div>
 

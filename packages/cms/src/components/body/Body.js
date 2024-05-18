@@ -5,10 +5,16 @@ import Login from "./auth/Login"
 import Register from "./auth/Register"
 import Home from "./home/Home"
 import NotFound from "../utils/notound/NotFound";
+import ActivationEmail from './auth/ActivationEmail';
+import ResetPass from '../body/auth/ResetPassword';
+
+import Profile from '../body/profile/Profile';
+import EditUser from '../body/profile/EditUser';
 
 function Body() {
-    const auth = useSelector(state => state.auth);
-    const { isLogged } = auth;
+    const { auth } = useSelector(state => state);
+    const { isLogged, isAdmin } = auth;
+    
     return (
         <section>
             <Switch>
@@ -16,6 +22,12 @@ function Body() {
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
                 <Route path="/forgot-password" component={isLogged ? NotFound : ForgotPassword} exact />
+                <Route path="/user/reset/:token" component={isLogged ? NotFound : ResetPass} exact />
+
+                <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
+
+                <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
+                <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
             </Switch>
         </section>
     )
