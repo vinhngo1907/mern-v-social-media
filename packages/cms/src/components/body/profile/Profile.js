@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showSuccessMsg, showErrMsg } from '../../utils/notifications/Notification'
+import { showSuccessMsg, showErrMsg } from '../../utils/notifications/Notification';
+import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/usersAction';
 
 const initialState = {
     name: "",
@@ -15,7 +16,7 @@ const Profile = () => {
     const [avatar, setAvatar] = useState(false);
     const [loading, setLoading] = useState(false);
     const [callback, setCallback] = useState(false);
-    const { isAdmin = true } = auth;
+    const { isAdmin = 1 } = auth;
     const [data, setData] = useState(initialState);
 
     const handleChange = (e) => {
@@ -31,6 +32,15 @@ const Profile = () => {
             setData({ ...data, err: error.response.data.message, success: "" });
         }
     }
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (isAdmin) {
+            fetchAllUsers(token).then(res => {
+                dispatch(dispatchGetAllUsers(res));
+            });
+        }
+    }, [token, isAdmin, dispatch, callback]);
 
     return (
         <>
@@ -51,6 +61,29 @@ const Profile = () => {
                         </span>
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input type="text" name="name" id="name" defaultValue={user.name}
+                            placeholder="Your name" onChange={handleChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" name="email" id="email" defaultValue={user.email}
+                            placeholder="Your email address" disabled />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">New Password</label>
+                        <input type="password" name="password" id="password"
+                            placeholder="Your password" value={password} onChange={handleChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="cf_password">Confirm New Password</label>
+                        <input type="password" name="cf_password" id="cf_password"
+                            placeholder="Confirm password" value={cf_password} onChange={handleChange} />
+                    </div>
                 </div>
                 <div className="col-right">
                     <h2>{isAdmin ? "Users" : "Admin"}</h2>

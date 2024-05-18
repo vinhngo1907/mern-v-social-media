@@ -25,11 +25,11 @@ function App() {
 	useEffect(() => {
 		if (token) {
 			const getUser = () => {
-				dispatch(dispatchLogin())
+				dispatch(dispatchLogin());
 
 				return fetchUser(token).then(res => {
-					dispatch(dispatchGetUser(res))
-				})
+					dispatch(dispatchGetUser(res));
+				});
 			}
 			getUser();
 		}
