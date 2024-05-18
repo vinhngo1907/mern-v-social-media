@@ -1,5 +1,5 @@
 import ACTIONS from "./index";
-import { getDataAPI, postDataAPI } from "../../components/utils/apis/FetchData";
+import { getDataAPI } from "../../components/utils/apis/FetchData";
 
 
 export const fetchAllUsers = async (token) => {
