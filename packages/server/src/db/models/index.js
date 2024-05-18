@@ -9,5 +9,6 @@ module.exports = {
     messageModel: require("./message.model"),
     groupModel: require("./group.model"),
     videoModel: require("./video.model"),
-    roleModel: require("./role.model")
+    roleModel: require("./role.model"),
+    capacityModel: require("./capacity.model")
 }
