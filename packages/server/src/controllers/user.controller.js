@@ -43,12 +43,15 @@ class UserController {
 
     async GetMe(req, res) {
         try {
-            const me = req.user;
+            let me = req.user.toObject ? req.user.toObject() : { ...req.user };
+
             if (!me) {
                 return res.status(401).json(responseDTO.unauthorization("User not found"));
             }
 
-            res.json(responseDTO.success("Get me successfully", req.user));
+            delete me.rf_token;
+
+            res.json(responseDTO.success("Get me successfully", me));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
