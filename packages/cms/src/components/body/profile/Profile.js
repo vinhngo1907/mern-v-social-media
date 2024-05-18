@@ -84,6 +84,13 @@ const Profile = () => {
                         <input type="password" name="cf_password" id="cf_password"
                             placeholder="Confirm password" value={cf_password} onChange={handleChange} />
                     </div>
+
+                    <div>
+                        <em style={{ color: "crimson" }}>
+                            * If you update your password here, you will not be able
+                            to login quickly using google and facebook.
+                        </em>
+                    </div>
                 </div>
                 <div className="col-right">
                     <h2>{isAdmin ? "Users" : "Admin"}</h2>
