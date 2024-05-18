@@ -1,14 +1,14 @@
 
-import ACTIONS from '../actions'
+import ACTIONS from '../actions';
 
-const users =[]
+const users = [];
 
 const usersReducer = (state = users, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ACTIONS.GET_ALL_USERS:
-            return action.payload
+            return action.payload;
         default:
-            return state
+            return state;
     }
 }
 

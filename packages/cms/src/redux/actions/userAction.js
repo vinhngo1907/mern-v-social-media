@@ -1,10 +1,9 @@
 import ACTIONS from "./index";
-import axios from "axios";
+import { getDataAPI, postDataAPI } from "../../components/utils/apis/FetchData";
+
 
 export const fetAllUsers = async (token) => {
-	const res = await axios.get('/user/get-all', {
-		headers: { Authorization: `Bearer ${token}` }
-	});
+	const res = await getDataAPI('/user', token);
 	return res;
 }
 
