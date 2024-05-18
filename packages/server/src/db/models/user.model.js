@@ -36,7 +36,8 @@ const UserSchema = new Schema({
 	salt: { type: String },
 	type: { type: String, default: "register" },
 	rf_token: { type: String },
-	roles: [{ type: Schema.Types.ObjectId, ref: "role" }]
+	roles: [{ type: Schema.Types.ObjectId, ref: "role" }],
+	root: { type: String }
 }, {
 	timestamps: true,
 	versionKey: false
