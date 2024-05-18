@@ -8,7 +8,7 @@ import Menu from '../../assets/menu.svg';
 function Header() {
     const auth = useSelector(state => state.auth)
 
-    const { user, isLogged, isAdmin } = auth;
+    const { user, isLogged = true, isAdmin=1 } = auth;
     const token = useSelector(state => state.token)
     const [menu, setMenu] = useState(false);
     const adminRouter = () => {
@@ -49,9 +49,11 @@ function Header() {
             window.location.href = "/";
         }
     }
+    
     // const transform = {
     //     transform: isLogged ? "translateY(-5px)" : 0
     // }
+    
     const styleMenu = {
         left: menu ? 0 : "-100%"
     }
@@ -65,7 +67,6 @@ function Header() {
                 <h1><Link to="/">{isAdmin ? 'Dashboard' : 'Dev-VN✮Auth'}</Link></h1>
             </div>
             <ul style={styleMenu}>
-
                 {
                     isLogged && <li>
                         <Link to="/profile" className='avatar'>
@@ -83,14 +84,14 @@ function Header() {
                     <img src={Close} alt="" width="30" className="menu" />
                 </li>
             </ul>
-            {/* {
+            {
                 !isAdmin
                 && <div className="cart-icon">
                     <Link to="/">
                         <i className="fas fa-shopping-cart"></i> Cart
                     </Link>
                 </div>
-            } */}
+            }
 
         </header>
     )
