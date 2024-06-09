@@ -10,3 +10,5 @@ const capacityCtrl = new CapacityController();
  * @access Private
  */
 router.post('/', capacityCtrl.Create);
+
+module.exports = router;

@@ -7,7 +7,26 @@ const { postModel, capacitiesModel } = require("../db/models");
 class CapacityController {
     async Create(req, res) {
         try {
+            if (validation.ValidateEmail(account)) {
+                const checkCapacity = validation.ValidaiteRegister(req.body);
+                // Simple validate
+                if (checkCapacity) {
+                    return res.status(400).json(responseDTO.badRequest(checkCapacity))
+                }
+            }
+
             const { slug, name } = req.body;
+            const existedCapacity = await capacitiesModel.findOne({
+                $or: [
+                    { name },
+                    { slug }
+                ]
+            });
+
+            if(existedCapacity){
+                return res.status(400).json(responseDTO.badRequest("Capacity có người dùng rồi bạn êi!"));
+            }
+
             const newCapacity = await new capacitiesModel({
                 slug,
                 name

@@ -18,6 +18,34 @@ class Validation {
         }
         return error;
     }
+    ValidateCreateCapacity(capacity) {
+        let error = "";
+        const { name, slug } = capacity;
+
+        // Check if name and slug are provided
+        if (!name || !slug) {
+            error = "Missing name or/and slug";
+            return error;
+        }
+
+        // Check if name is not empty
+        if (name.trim() === "" || slug.trim() === "") {
+            error = "Điền cái NAME/SLUG gì kì vậy pa!";
+            return error;
+        }
+
+        // Convert name to slug
+        const expectedSlug = name.toLowerCase().replace(/\s+/g, '_');
+
+        // Check if slug matches the expected slug
+        if (slug !== expectedSlug) {
+            error = "Slug does not match the expected format (lowercase with underscores)";
+            return error;
+        }
+
+        // If no errors, return an empty string
+        return error;
+    }
 }
 
 module.exports = new Validation();
