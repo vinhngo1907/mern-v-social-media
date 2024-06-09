@@ -6,7 +6,7 @@ const authCtrl = new AuthController();
 
 /**  
  * @route POST api/auth/login
- * @desc Check if user is logged in
+ * @desc  Login user
  * @access Public
 */
 router.post('/login', authCtrl.Login);
@@ -19,8 +19,8 @@ router.post('/login', authCtrl.Login);
 router.post('/register', authCtrl.Register)
 
 /** 
- * @route POST api/auth/login
- * @desc Login user
+ * @route POST api/auth/active
+ * @desc Activate user after register
  * @access Public
 */
 router.post('/active', authCtrl.ActiveAccount);
