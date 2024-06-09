@@ -1,4 +1,3 @@
-const { ACCESS_SECRET } = require("../configs");
 const { modelSchema } = require("../db");
 const { userModel, roleModel } = modelSchema;
 const { responseDTO } = require("../utils");

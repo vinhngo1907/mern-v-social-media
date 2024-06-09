@@ -10,5 +10,6 @@ module.exports = {
     ConversationController: require("./conversation.controller"),
     GroupController: require("./group.controller"),
     VideoController: require("./video.controller"),
-    RoleController: require("./role.controller")
+    RoleController: require("./role.controller"),
+    CapacityController: require("./capacities.controller"),
 }

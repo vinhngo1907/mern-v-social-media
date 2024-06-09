@@ -43,5 +43,7 @@ module.exports = {
     AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
     PHONE_NUMB: process.env.TWILIO_PHONE_NUMBER,
     SERVICE_ID: process.env.TWILIO_SERVICE_ID,
-    PHONE_SECRET: process.env.PHONE_SECRET
+    PHONE_SECRET: process.env.PHONE_SECRET,
+
+    SUPER_ADMIN_SECRET_KEY: process.env.SUPER_ADMIN_SECRET_KEY
 };
