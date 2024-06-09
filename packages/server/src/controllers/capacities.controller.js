@@ -3,10 +3,16 @@
 const { responseDTO, APIFeatures, validation } = require("../utils");
 const { modelSchema } = require("../db");
 const { postModel, capacitiesModel } = require("../db/models");
+const { checkRoot } = require("../middleware");
 
 class CapacityController {
     async Create(req, res) {
         try {
+            const validRoot = await checkRoot(req.user);
+            if(!validRoot){
+                return res.status(403).json(responseDTO.forbiden("You can't not create new capacity"))
+            }
+
             const checkCapacity = validation.ValidateCreateCapacity(req.body);
             // Simple validate
             if (checkCapacity) {
