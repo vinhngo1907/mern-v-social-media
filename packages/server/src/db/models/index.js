@@ -10,5 +10,5 @@ module.exports = {
     groupModel: require("./group.model"),
     videoModel: require("./video.model"),
     roleModel: require("./role.model"),
-    capacityModel: require("./capacity.model")
+    capacitiesModel: require("./capacity.model")
 }
