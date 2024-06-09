@@ -1,18 +1,16 @@
 'use strict';
 
-const { responseDTO, APIFeatures } = require("../utils");
+const { responseDTO, APIFeatures, validation } = require("../utils");
 const { modelSchema } = require("../db");
 const { postModel, capacitiesModel } = require("../db/models");
 
 class CapacityController {
     async Create(req, res) {
         try {
-            if (validation.ValidateEmail(account)) {
-                const checkCapacity = validation.ValidaiteRegister(req.body);
-                // Simple validate
-                if (checkCapacity) {
-                    return res.status(400).json(responseDTO.badRequest(checkCapacity))
-                }
+            const checkCapacity = validation.ValidateCreateCapacity(req.body);
+            // Simple validate
+            if (checkCapacity) {
+                return res.status(400).json(responseDTO.badRequest(checkCapacity))
             }
 
             const { slug, name } = req.body;
@@ -23,7 +21,7 @@ class CapacityController {
                 ]
             });
 
-            if(existedCapacity){
+            if (existedCapacity) {
                 return res.status(400).json(responseDTO.badRequest("Capacity có người dùng rồi bạn êi!"));
             }
 
@@ -36,7 +34,7 @@ class CapacityController {
                 ...newCapacity._doc,
                 user: req.user
             }));
-                    } catch (error) {
+        } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
