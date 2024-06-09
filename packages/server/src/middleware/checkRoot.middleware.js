@@ -1,5 +1,5 @@
+const { SUPER_ADMIN_SECRET_KEY } = require("../configs");
 const { passwordUtil } = require("../utils");
-
 
 const checkAccountRoot = async (user) => {
     try {
@@ -8,7 +8,7 @@ const checkAccountRoot = async (user) => {
         //   user.root || ""
         // );
         // const hashed = await passwordUtil.ToHash(process.env.SUPER_ADMIN_SECRET_KEY);
-        const validRoot = await passwordUtil.Compare(user.root || "", process.env.SUPER_ADMIN_SECRET_KEY);
+        const validRoot = await passwordUtil.Compare(user.root || "", SUPER_ADMIN_SECRET_KEY);
         return validRoot;
     } catch (error) {
         return error;
