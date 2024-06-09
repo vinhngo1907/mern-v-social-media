@@ -110,10 +110,10 @@ POST {{serverUrl}}/capacity
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
 
-# {
-#   "slug": "create_user",
-#   "name": "Create user"
-# }
+{
+  "slug": "update_user",
+  "name": "Update user"
+}
 
 ###
 
