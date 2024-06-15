@@ -1,7 +1,7 @@
-const { checkRoot } = require(".");
 const { modelSchema } = require("../db");
 const { userModel, roleModel } = modelSchema;
-const { responseDTO } = require("../utils");
+const { responseDTO, checkUtil } = require("../utils");
+const {checkRoot} = checkUtil;
 
 const authAdmin = async (req, res, next) => {
     try {
