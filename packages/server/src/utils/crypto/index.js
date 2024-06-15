@@ -35,13 +35,13 @@ const decryptData = (encryptedData, secretKey) => {
     return JSON.parse(decryptedData);
 };
 
-const test = encrypted({
-    userId: '641ea4ca750b8626c03a10c6',
-    iat: 1718444960,
-    exp: 1718531360
-  }, "U2VjcmV0S2V5VG9Ub3BUb2tlbg==");
+// const test = encrypted({
+//     userId: '641ea4ca750b8626c03a10c6',
+//     iat: 1718444960,
+//     exp: 1718531360
+//   }, "U2VjcmV0S2V5VG9Ub3BUb2tlbg==");
 
 
-console.log({test})
+// console.log({test})
 
-// module.exports = { decrypted, encrypted, encryptData, decryptData };
+module.exports = { decrypted, encrypted, encryptData, decryptData };
