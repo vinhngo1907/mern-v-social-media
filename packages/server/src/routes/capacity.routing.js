@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { userAuth } = require('../middleware');
+const { userAuth, authAdmin } = require('../middleware');
 const { CapacityController } = require("../controllers");
 const capacityCtrl = new CapacityController();
 
@@ -9,6 +9,6 @@ const capacityCtrl = new CapacityController();
  * @desc Create new capcity
  * @access Private
  */
-router.post('/', capacityCtrl.Create);
+router.post('/', [userAuth, authAdmin], capacityCtrl.Create);
 
 module.exports = router;

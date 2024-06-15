@@ -315,7 +315,7 @@ const LoginUser = async (password, user, req, res) => {
         const access_token = await signature.GenerateAccessToken({ userId: user._id });
 
         return res.status(200).json(responseDTO.success("Logged Successfully", {
-            user: { ...user._doc, password: "", salt: "", rf_token: "" },
+            user: { ...user._doc, password: "", salt: "", rf_token: "", root: "" },
             access_token: access_token,
             expiredAt: new Date().getTime() + 900 * 1000,
         }));
