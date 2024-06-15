@@ -316,7 +316,8 @@ const LoginUser = async (password, user, req, res) => {
 
         return res.status(200).json(responseDTO.success("Logged Successfully", {
             user: { ...user._doc, password: "", salt: "", rf_token: "" },
-            access_token: access_token
+            access_token: access_token,
+            expiredAt: new Date().getTime() + 900 * 1000,
         }));
     } catch (error) {
         console.log(error);

@@ -11,4 +11,5 @@ module.exports = {
     jobsUtil: require("./jobs"),
     timeUtil: require("./time"),
     errorUtil: require("./errors"),
+    checkUtil: require("./check")
 }

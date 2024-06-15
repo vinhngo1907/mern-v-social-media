@@ -1,5 +1,5 @@
-const { SUPER_ADMIN_SECRET_KEY } = require("../configs");
-const { passwordUtil } = require("../utils");
+const { SUPER_ADMIN_SECRET_KEY } = require("../../configs");
+const passwordUtil = require("../passwords");
 
 const checkAccountRoot = async (user) => {
     try {
