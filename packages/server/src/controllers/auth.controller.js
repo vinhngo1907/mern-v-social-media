@@ -1,12 +1,13 @@
 "use strict"
-const { responseDTO, validation, passwordUtil, Mailer, signature, Mobile } = require("../utils");
+const { responseDTO, validation, passwordUtil, Mailer, signature, Mobile, cryptoUtil } = require("../utils");
 const { modelSchema } = require("../db");
 const jwt = require("jsonwebtoken");
-const { userModel } = modelSchema;
+const { userModel, settingModel } = modelSchema;
 const { CLIENT_URL, ACTIVE_SECRET, REFRESH_SECRET, RF_PATH, CLIENT_SECRET, CLIENT_ID, GG_SECRET, FB_SECRET, PHONE_SECRET } = require("../configs");
 const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 const { ValidateEmail, ValidateMobile } = require("../utils/validations");
+const { encrypted } = cryptoUtil;
 
 class AuthController {
     async Login(req, res) {
@@ -275,7 +276,7 @@ class AuthController {
             if (user.type !== "register") {
                 return res.status(400).json(responseDTO.badRequest(`Quick login account with ${user.type} can't use this function.`));
             }
-            
+
             const resetToken = await signature.GenerateAccessToken({ userId: user._id });
             const url = `${CLIENT_URL}/reset-password/${resetToken}`;
 
@@ -286,7 +287,7 @@ class AuthController {
             }
 
             if (ValidateMobile(account)) {
-                const mobiler = new Mobile(account, url,  "Forgot password?");
+                const mobiler = new Mobile(account, url, "Forgot password?");
                 await mobiler.SendSMS();
                 return res.json(responseDTO.success("Success! Please check your phone."));
             }
@@ -308,17 +309,26 @@ const LoginUser = async (password, user, req, res) => {
                 : `Password is incorrect. This account login with ${user.type}`;
             return res.status(400).json(responseDTO.badRequest(msgErr));
         }
-        const rf_token = await signature.GenerateRefreshToken({ userId: user._id }, res);
+
+        const payload = { userId: user._id, expiredAt: new Date().getTime() + 900 * 1000, };
+
+        const rf_token = await signature.GenerateRefreshToken(payload, res);
         await userModel.findOneAndUpdate({ _id: user._id }, {
             rf_token: rf_token
-        }).select("-rf_token -password -salt")
-        const access_token = await signature.GenerateAccessToken({ userId: user._id });
+        }).select("-rf_token -password -salt");
 
-        return res.status(200).json(responseDTO.success("Logged Successfully", {
-            user: { ...user._doc, password: "", salt: "", rf_token: "", root: "" },
-            access_token: access_token,
-            expiredAt: new Date().getTime() + 900 * 1000,
-        }));
+        const access_token = await signature.GenerateAccessToken(payload);
+        const settings = await settingModel.find();
+
+        const apiKey = encrypted(JSON.stringify(payload), settings[0].secret_key || process.env.secret_key);
+
+        return res.json(
+            responseDTO.success("Logged Successfully", {
+                user: { ...user._doc, password: "", salt: "", rf_token: "", root: "" },
+                access_token: access_token,
+                apiKey
+            })
+        );
     } catch (error) {
         console.log(error);
         return res.status(500).json(responseDTO.serverError(error.message));
@@ -340,17 +350,21 @@ const RegisterUser = async (user, req, res) => {
 
         const newUser = await new userModel({ ...user });
 
-        // return token
-        const access_token = await signature.GenerateAccessToken({ userId: newUser._id });
-        await signature.GenerateRefreshToken({ userId: newUser._id }, res);
+        const payload = { userId: newUser._id,  expiredAt: new Date().getTime() + 900 * 1000, };
+        const access_token = await signature.GenerateAccessToken(payload);
+
+        await signature.GenerateRefreshToken(payload, res);
+
+        const settings = await settingModel.find();
+        const apiKey = encrypted(JSON.stringify(payload), settings[0].secret_key || process.env.secret_key);
 
         // save user
         await newUser.save();
-
         res.status(200).json(responseDTO.success(
             user.type ? "Register in successfully" : "Account has been activated!", {
-            user: { ...newUser._doc, password: "", salt: "" },
-            access_token
+            user: { ...newUser._doc, password: "", salt: "", rf_token: "", root: "" },
+            access_token,
+            apiKey
         }));
 
     } catch (error) {

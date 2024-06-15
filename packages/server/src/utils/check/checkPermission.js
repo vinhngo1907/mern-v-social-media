@@ -55,7 +55,7 @@ async function checkPermission(req, res, capacity, passphrase = null) {
             });
             return false;
         }
-        console.log({ roles })
+        // console.log({ roles })
         const allow = roles[0].capacities.some((item) => item.slug == capacity);
         if (allow) {
             return allow;
