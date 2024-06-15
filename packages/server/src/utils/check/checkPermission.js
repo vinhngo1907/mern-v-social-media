@@ -20,7 +20,8 @@ async function checkPermission(req, res, strapi, capacity, passphrase) {
                     status: 403,
                     message: "You don't have enough rights"
                 });
-            const setting = await strapi.query("api::setting.setting").findOne();
+            // const setting = await strapi.query("api::setting.setting").findOne();
+            const setting = process.env.SUPER_ADMIN_SECRET_KEY;
             const keyDecrypted = setting.secret_key;
             const buffer = Buffer.from(apiKey, "hex");
             const decrypt = decrypted(buffer.toString("base64"), keyDecrypted);
