@@ -8,8 +8,8 @@ const checkUser = async (req, res, authHeader, userModel) => {
     }
 
     const decoded = jwt.verify(token, ACCESS_SECRET); //data is what you sent in.
-    const userId = decoded._id;
-
+    const userId = decoded.userId;
+    
     const user = await userModel.findOne({
         _id: userId
     }).populate("roles");

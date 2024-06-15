@@ -3,14 +3,15 @@
 const { responseDTO, APIFeatures, validation, checkUtil } = require("../utils");
 const { modelSchema } = require("../db");
 const { postModel, capacitiesModel } = require("../db/models");
-const { checkRoot } = checkUtil;
+const { checkRoot, checkPermission } = checkUtil;
 
 
 class CapacityController {
     async Create(req, res) {
         try {
-            const validRoot = await checkRoot(req.user);
-            if(!validRoot){
+            // const validRoot = await checkRoot(req.user);
+            const validRoot = await checkPermission(req, res, process.env.CAPACITY_CREATE_ROLE)
+            if (!validRoot) {
                 return res.status(403).json(responseDTO.forbiden("You can't not create new capacity"))
             }
 

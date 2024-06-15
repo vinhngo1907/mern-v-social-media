@@ -1,3 +1,5 @@
+const settingModel = require("./setting.model");
+
 module.exports = {
     userModel: require("./user.model"),
     postModel: require("./post.model"),
@@ -10,5 +12,6 @@ module.exports = {
     groupModel: require("./group.model"),
     videoModel: require("./video.model"),
     roleModel: require("./role.model"),
-    capacitiesModel: require("./capacity.model")
+    capacitiesModel: require("./capacity.model"),
+    settingModel: require("./setting.model")
 }

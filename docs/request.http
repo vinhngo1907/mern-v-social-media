@@ -19,15 +19,19 @@ POST {{serverUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "account": "poseidongod2k",
+  "account": "jennifer",
   "password": "123456"
 }
 
 ###
+# {
+#   "account": "poseidongod2k",
+#   "password": "123456"
+# }
 
 POST {{serverUrl}}/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 {
   "title": "React",
@@ -39,12 +43,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlY
 ###
 
 GET {{serverUrl}}/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 
 PUT {{serverUrl}}/posts/6061c25ac2533d41dcae2b19
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 
 {
   "title": "Vue",
@@ -57,7 +61,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlY
 
 DELETE {{serverUrl}}/posts/6061c25ac2533d41dcae2b19
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 
 GET {{serverUrl}}/statistic/socials
@@ -83,7 +87,7 @@ Content-Type: application/json
 
 POST {{serverUrl}}/auth/sms-verify
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 
 {
   "phone": "+84389536641",
@@ -93,26 +97,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlY
 ###
 GET {{serverUrl}}/upload/get
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 
 GET {{serverUrl}}/video
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 
 GET {{serverUrl}}/videos
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
 ###
 
 POST {{serverUrl}}/capacity
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE2OTcyODc1NjksImV4cCI6MTY5NzM3Mzk2OX0.eqyEb4eze77nuMag_vLz5znSR0ITBg7yH6K4fHgX_Y4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDFlYTRjYTc1MGI4NjI2YzAzYTEwYzYiLCJpYXQiOjE3MTg0NDQ5NjAsImV4cCI6MTcxODUzMTM2MH0.BNpDH9osB_MSnOR3XK_t7r1wfvqsCtY-hy4pmbxYPY8
+X-Api-Key: "a1b2c3d4e5f67890"
 
 {
-  "slug": "update_user",
-  "name": "Update user"
+  "slug": "delete_user",
+  "name": "Delete user"
 }
 
 ###
