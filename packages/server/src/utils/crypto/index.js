@@ -10,9 +10,17 @@ function decrypted(secretKeyTotp, passphrase = null) {
 }
 
 function encrypted(data, key) {
-    const encrypted = AES.encrypt(data, key);
-    const buffer = Buffer.from(encrypted.toString(), "base64");
-    return buffer.toString("hex");
+    // Convert the data object to a JSON string
+    const dataStr = JSON.stringify(data);
+
+    // Perform the encryption
+    const encrypted = AES.encrypt(dataStr, key).toString();
+    
+    // Convert the encrypted string to a Buffer using base64 encoding
+    const buffer = Buffer.from(encrypted, 'base64');
+    
+    // Convert the buffer to a hex string
+    return buffer.toString('hex');
 }
 
 const encryptData = (data, secretKey) => {
@@ -27,4 +35,13 @@ const decryptData = (encryptedData, secretKey) => {
     return JSON.parse(decryptedData);
 };
 
-module.exports = { decrypted, encrypted, encryptData, decryptData };
+const test = encrypted({
+    userId: '641ea4ca750b8626c03a10c6',
+    iat: 1718444960,
+    exp: 1718531360
+  }, "U2VjcmV0S2V5VG9Ub3BUb2tlbg==");
+
+
+console.log({test})
+
+// module.exports = { decrypted, encrypted, encryptData, decryptData };

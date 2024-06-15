@@ -7,21 +7,25 @@ const getToken = (req) => {
     return req.headers.authorization;
 };
 
-async function checkPermission(req, res, model, capacity, passphrase) {
+async function checkPermission(req, res, capacity, passphrase = null) {
+    const apiKey = req.header('X-Api-Key');
     try {
         const user = await checkUser(req, res, getToken(req), userModel);
+        console.log({user})
         //Check super admin
         const validRoot = await checkAccountRoot(user);
+        console.log({validRoot})
         if (validRoot) {
-            const apiKey = req.headers["x-api-key"];
             if (
-                // !apiKey && 
-                !passphrase)
+                !apiKey 
+                // && !passphrase
+            )
                 return res.status(403).json({
                     status: 403,
                     message: "You don't have enough rights"
                 });
             const setting = await settingModel.find()[0];
+            // console.log({setting})
             const keyDecrypted = setting.secret_key;
             const buffer = Buffer.from(apiKey, "hex");
             const decrypt = decrypted(buffer.toString("base64"), keyDecrypted);
@@ -37,7 +41,7 @@ async function checkPermission(req, res, model, capacity, passphrase) {
             }
             return true;
         }
-        //
+        
         const roles = await roleModel.find(
             {
                 name: user.roles?.name,
