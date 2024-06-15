@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { userAuth, checkRoot } = require('../middleware');
+const { userAuth } = require('../middleware');
 const { CapacityController } = require("../controllers");
 const capacityCtrl = new CapacityController();
 

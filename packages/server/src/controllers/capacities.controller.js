@@ -1,9 +1,10 @@
 'use strict';
 
-const { responseDTO, APIFeatures, validation } = require("../utils");
+const { responseDTO, APIFeatures, validation, checkUtil } = require("../utils");
 const { modelSchema } = require("../db");
 const { postModel, capacitiesModel } = require("../db/models");
-const { checkRoot } = require("../middleware");
+const { checkRoot } = checkUtil;
+
 
 class CapacityController {
     async Create(req, res) {
