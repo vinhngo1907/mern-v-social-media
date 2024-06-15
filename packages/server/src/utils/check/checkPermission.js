@@ -1,14 +1,16 @@
 const jwt = require("jsonwebtoken");
 const { modelSchema } = require("../../db");
+const { userModel, roleModel } = modelSchema;
 const checkAccountRoot = require("./checkRoot");
-const { userModel } = modelSchema;
+const checkUser = require("./checkUser");
 
 const getToken = (req) => {
     return req.headers.authorization;
 };
+
 async function checkPermission(req, res, strapi, capacity, passphrase) {
     try {
-        const user = await jwt(getToken(req), strapi);
+        const user = await checkUser(req, res, getToken(req), userModel);
         //Check super admin
         const validRoot = await checkAccountRoot(user);
         if (validRoot) {
@@ -33,34 +35,29 @@ async function checkPermission(req, res, strapi, capacity, passphrase) {
             return true;
         }
         //
-        const role = await strapi.entityService.findMany(
-            "api::role-support.role-support",
+        const roles = await roleModel.find(
             {
-                fields: ["name", "slug"],
-                filters: {
-                    name: user.role_support?.name,
-                },
-                populate: {
-                    capacities: {
-                        fields: ["name", "slug"],
-                    },
-                },
+                name: user.roles?.name,
             }
-        );
+        ).select("name slug").populate("capacities", ["name", "slug"]);
 
-        if (role.length == 0) {
-            ctx.send({ error: "You not allow edit location" }, 401);
+        if (roles.length == 0) {
+            res.status(401).json({
+                status: 401,
+                message: "You not allow edit location"
+            });
             return false;
         }
-        const allow = role[0].capacities.some((item) => item.slug == capacity);
+        console.log({roles})
+        const allow = roles[0].capacities.some((item) => item.slug == capacity);
         if (allow) {
             return allow;
         } else {
-            ctx.send({ error: "You not allow edit location" }, 401);
+            res.status(401).json({ status: 401, message: "You not allow edit location" });
             return allow;
         }
     } catch (error) {
-        return ctx.send({ error: "You don't have enough rights" }, 401);
+        return res.send({ status: 401, message: "You don't have enough rights" });
     }
 };
 
