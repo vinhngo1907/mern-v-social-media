@@ -17,10 +17,11 @@ const authReducer = (state = initialState, action) => {
 				isLogged: true
 			}
 		case ACTIONS.GET_USER:
+			console.log({action})
 			return{
 				...state,
 				user: action.payload.user,
-				isAdmin: action.payload.isAdmin
+				isAdmin: action.payload.user.isAdmin
 			}
 		default:
 			return state
