@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { userAuth } = require('../middleware')
+const { userAuth, authAdmin } = require('../middleware')
 const { UserController } = require('../controllers')
 const userCtrl = new UserController();
 
@@ -53,6 +53,7 @@ router.get('/search', userAuth, userCtrl.SearchUser);
 */
 router.get('/me', userAuth, userCtrl.GetMe);
 
+router.get('/list', userAuth, authAdmin, userCtrl.ListUser);
 /** 
  *  @route GET api/user/:id
  *  @desc Get user profile
@@ -73,5 +74,7 @@ router.patch('/:id/follow', userAuth, userCtrl.Follow);
  *  @access Private
 */
 router.patch('/:id/unfollow', userAuth, userCtrl.UnFollow);
+
+router.patch('/:id/update_role', userAuth, authAdmin, userCtrl.UpdateUserRoles);
 
 module.exports = router;

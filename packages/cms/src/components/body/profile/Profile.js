@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showSuccessMsg, showErrMsg } from '../../utils/notifications/Notification';
 import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/userAction';
+import axios from "axios";
 
 const initialState = {
     name: "",
@@ -13,7 +14,7 @@ const initialState = {
 
 const Profile = () => {
     const { auth, token, users } = useSelector(state => state);
-    const { user, isAdmin, isLogged } = auth;
+    const { user, isAdmin } = auth;
     const [avatar, setAvatar] = useState(false);
     const [loading, setLoading] = useState(false);
     const [callback, setCallback] = useState(false);
@@ -29,7 +30,7 @@ const Profile = () => {
     const handleChangeAvatar = async (e) => {
         e.preventDefault();
         try {
-
+            const res = await axios.patch(`api/users/${auth.user._id}`)
         } catch (error) {
             setData({ ...data, err: error.response.data.message, success: "" });
         }
@@ -107,7 +108,24 @@ const Profile = () => {
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                {
+                                    users.map(user => (
+                                        <tr key={user._id}>
+                                            <td>{user._id}</td>
+                                            <td>{user.fullname}</td>
+                                            <td>{user.email}</td>
+                                            <td>
+                                            {
+                                                user.role === 1
+                                                ? <i className="fas fa-check" title="Admin"></i>
+                                                : <i className="fas fa-times" title="User"></i>
+                                            }
+                                        </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
                         </table>
                     </div>
                 </div>

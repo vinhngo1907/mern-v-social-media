@@ -2,6 +2,7 @@
 
 const { responseDTO, APIFeatures, passwordUtil, signature } = require("../utils");
 const { modelSchema } = require("../db");
+const { roleModel } = require("../db/models");
 const { userModel } = modelSchema;
 
 class UserController {
@@ -17,6 +18,9 @@ class UserController {
             const filterObj = filterArr.length >= 1 ? { "$or": filterArr } : {}
             const features = new APIFeatures(userModel.find({
                 ...filterObj
+            }).populate({
+                path: "roles",
+                select: "name slug capacities"
             }).select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
 
             const users = await features.query;
@@ -34,7 +38,13 @@ class UserController {
                 .populate("following followers", "-password -rf_token -salt");
             if (!user) return res.status(400).json(responseDTO.badRequest("This user does not exist"));
 
-            res.json(responseDTO.success("Get user successfully", user));
+            const roles = await roleModel.find({ _id: { $in: user.roles } }).select("-users");
+            const role = roles.filter(r => r.name === "ADMIN");
+
+            res.json(responseDTO.success("Get user successfully", {
+                ...user,
+                isAdmin: role ? true : false
+            }));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -51,7 +61,13 @@ class UserController {
 
             delete me.rf_token;
 
-            res.json(responseDTO.success("Get me successfully", me));
+            const roles = await roleModel.find({ _id: { $in: me.roles } }).select("-users");
+            const role = roles.filter(r => r.name === "ADMIN");
+
+            res.json(responseDTO.success(
+                "Get me successfully",
+                { ...me, isAdmin: role ? true : false },
+            ));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
@@ -227,6 +243,42 @@ class UserController {
 
             const users = await userModel.find({ $or: filterArr }).limit(10).select("username fullname avatar");
             res.status(200).json(responseDTO.success("Get data in successfully", users));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async ListUser(req, res) {
+        try {
+            const { name } = req.query;
+            let filterArr = [];
+            if (name) {
+                filterArr.push({ username: { $regex: name, $options: "i" } })
+                filterArr.push({ fullname: { $regex: name, $options: "i" } })
+            }
+
+            const filterObj = filterArr.length >= 1 ? { "$or": filterArr } : {}
+            const features = new APIFeatures(userModel.find({
+                ...filterObj
+            }).select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
+
+            const users = await features.query;
+            res.status(200).json(responseDTO.success("Get data successfully", users));
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async UpdateUserRoles(req, res) {
+        try {
+            const { role } = req.body;
+            await userModel.findOneAndUpdate({
+                _id: req.params.id
+            }, {
+                roles: [role]
+            })
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
