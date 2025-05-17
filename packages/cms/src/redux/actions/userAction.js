@@ -1,9 +1,9 @@
 import ACTIONS from "./index";
 import { getDataAPI } from "../../components/utils/apis/FetchData";
 
-
 export const fetchAllUsers = async (token) => {
 	const res = await getDataAPI('/user', token);
+	console.log({res})
 	return res;
 }
 

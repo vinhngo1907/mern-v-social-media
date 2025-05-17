@@ -40,3 +40,11 @@ export const refreshToken = () => async (dispatch) => {
         }
     }
 }
+
+export const editUserProfile = (data) => async(dispatch) => {
+	try {
+		
+	} catch (error) {
+		console.log(error.response.data.message);
+	}
+}
