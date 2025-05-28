@@ -4,7 +4,7 @@ const { databaseConnection } = require('./db/index');
 const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
 const { videoService } = require('./services');
-const { startVideoScheduler} = videoService;
+const { startVideoScheduler } = videoService;
 
 const app = express();
 const server = require("http").createServer(app);
@@ -33,6 +33,6 @@ server.listen(PORT, () => {
     process.exit();
 });
 
-startVideoScheduler(io);
+// startVideoScheduler(io);
 
 // module.exports = io;

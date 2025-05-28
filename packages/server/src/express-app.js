@@ -20,7 +20,7 @@ module.exports = async (app) => {
         await jobsUtil.FetchAllStats();
     });
 
-    job.start();
+    // job.start();
 
     app.enable('trust proxy');
 
