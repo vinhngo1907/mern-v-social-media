@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const { scrypt, randomBytes } = require('crypto');
+const { promisify } = require("util");
+const scryptAsync = promisify(scrypt);
 
 class Password {
     async GenerateSalt() {
@@ -30,21 +32,17 @@ class Password {
     }
 
     async Compare(storedPassword, suppliedPassword) {
-        const [hashedPassword, salt] = storedPassword.split('.');
-        const buf = await scryptAsync(suppliedPassword, salt, 64);
-
         try {
-            const [hashedPassword, salt] = storedPassword.split('.');
-            const buf = await new Promise((resolve, reject) => {
-                scrypt(suppliedPassword, salt, 64, (err, derivedKey) => {
-                    if (err) return reject(err);
-                    resolve(derivedKey);
-                });
-            });
+            const [hashedPassword, salt] = storedPassword.split(".");
+            const buf = await scryptAsync(suppliedPassword, salt, 64);
 
-            return buf.toString('hex') === hashedPassword;
+            // console.log("hashedPassword:", hashedPassword);
+            // console.log("buf:", buf.toString("hex"));
+            // console.log("Equal:", buf.toString("hex") === hashedPassword);
+            const isEqual = buf.toString("hex") === hashedPassword;
+            return isEqual;
         } catch (err) {
-            console.error('Compare error:', err);
+            console.error("Compare error:", err);
             return false;
         }
     }

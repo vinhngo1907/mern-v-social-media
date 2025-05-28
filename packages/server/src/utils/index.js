@@ -12,5 +12,6 @@ module.exports = {
     timeUtil: require("./time"),
     errorUtil: require("./errors"),
     checkUtil: require("./check"),
-    cryptoUtil: require("./crypto")
+    cryptoUtil: require("./crypto"),
+    helpersUtil: require("./helpers")
 }
