@@ -386,7 +386,6 @@ const RegisterUser = async (user, req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json(responseDTO.serverError(error.message));
-        // return responseDTO.serverError(error.message);
     }
 }
 

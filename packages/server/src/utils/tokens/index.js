@@ -3,8 +3,8 @@ const { ACCESS_SECRET, REFRESH_SECRET, ACTIVE_SECRET, RF_PATH } = require("../..
 const jwtConfig = require("./jwt.token");
 
 class Signature {
-    constructor(){
-        
+    constructor() {
+
     }
     async GenerateSignature(payload, secret, expires) {
         return jwt.sign(payload, secret, { expiresIn: expires });
@@ -26,6 +26,10 @@ class Signature {
             path: RF_PATH
         });
         return rf_token;
+    }
+    
+    GetToken(req) {
+        return req.headers.authorization;
     }
 }
 

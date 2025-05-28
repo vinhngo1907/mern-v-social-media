@@ -8,24 +8,25 @@ const getToken = (req) => {
     return req.headers.authorization;
 };
 
-async function checkPermission(req, res, capacity, passphrase = null) {
-    const apiKey = req.header('X-Api-Key');
+async function checkPermission(apiKey, capacity, user, passphrase = null) {
+    // const apiKey = req.header('X-Api-Key');
     try {
-        const user = await checkUser(req, res, getToken(req), userModel);
+        // const user = await checkUser(req, res, getToken(req), userModel);
         const validRoot = await checkAccountRoot(user);
 
         if (validRoot) {
             if (!apiKey) {
                 return false;
             }
+
             const setting = await settingModel.find();
-            const keyDecrypted = setting[0].secret_key;
+            const keyDecrypted = setting[0]?.secret_key;
             const buffer = Buffer.from(apiKey, "hex");
             const decrypt = decrypted(buffer.toString("base64"), keyDecrypted);
             // console.log({decrypt})
-            const payload = JSON.parse(decrypt);
-            // console.log({payload})
-            if (payload._id !== user._id) {
+            const payload = JSON.parse(JSON.parse(decrypt));
+            // console.log({payload});
+            if (payload?.userId !== (typeof(user._id) !== 'string' && user._id.toString())) {
                 return false;
             }
 
@@ -36,6 +37,8 @@ async function checkPermission(req, res, capacity, passphrase = null) {
             name: user.roles?.name,
         }).select("name slug").populate("capacities", ["name", "slug"]);
 
+        // console.log({roles});
+        
         if (roles.length === 0) {
             return false;
         }
