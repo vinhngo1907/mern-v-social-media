@@ -9,6 +9,6 @@ const capacityCtrl = new CapacityController();
  * @desc Create new capcity
  * @access Private
  */
-router.post('/', [userAuth, authAdmin], capacityCtrl.Create);
+router.post('/', userAuth, capacityCtrl.Create);
 
 module.exports = router;

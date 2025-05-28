@@ -8,7 +8,7 @@ const { OAuth2Client } = require("google-auth-library");
 const fetch = require("node-fetch");
 const { ValidateEmail, ValidateMobile } = require("../utils/validations");
 const { roleModel } = require("../db/models");
-const { encrypted } = cryptoUtil;
+const { encrypted, hashPassword } = cryptoUtil;
 
 class AuthController {
     async Login(req, res) {
@@ -331,7 +331,7 @@ const LoginUser = async (password, user, req, res) => {
                 user: { ...user._doc, password: "", salt: "", rf_token: "", root: "" },
                 access_token: access_token,
                 apiKey,
-                isAdmin: role[0].name === "ADMIN" ? true : false
+                // isAdmin: role[0]?.name === "ADMIN" ? true : false
             })
         );
     } catch (error) {
@@ -362,7 +362,6 @@ const RegisterUser = async (user, req, res) => {
 
         const settings = await settingModel.find();
         const apiKey = encrypted(JSON.stringify(payload), settings[0].secret_key || process.env.secret_key);
-
         // save user
         await newUser.save();
         res.status(200).json(responseDTO.success(
