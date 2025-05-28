@@ -4,7 +4,7 @@ dump.rdb
 npm-debug.log
 .env
 .env.dev
-# package-*.json
+/packages/**/package-*.json
 /.vscode
 .DS_Store
 tmp
