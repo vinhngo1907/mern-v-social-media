@@ -5,7 +5,15 @@ const RoleSchema = new Schema({
     name: { type: String, required: [true, 'Please add name of role'], maxLenth: 200, },
     users: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     slug: { type: String, required: [true, 'Please add slug name'], unique: true },
-    capacities: [{ type: Schema.Types.ObjectId, ref: 'capacity' }]
+    capacities: [{ type: Schema.Types.ObjectId, ref: 'capacity' }],
+    createdBy: {
+        type: String,
+        default: "system",
+    },
+    updatedBy: {
+        type: String,
+        default: "system"
+    }
 }, {
     timestamps: true,
     versionKey: false

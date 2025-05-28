@@ -20,31 +20,50 @@ class Validation {
     }
     ValidateCreateCapacity(capacity) {
         let error = "";
-        const { name, slug } = capacity;
+        const { name } = capacity;
 
         // Check if name and slug are provided
-        if (!name || !slug) {
-            error = "Missing name or/and slug";
+        if (!name) {
+            error = "Missing name";
             return error;
         }
 
         // Check if name is not empty
-        if (name.trim() === "" || slug.trim() === "") {
-            error = "Điền cái NAME/SLUG gì kì vậy pa!";
+        if (name.trim() === "") {
+            error = "Điền cái NAME gì kì vậy pa!";
             return error;
         }
 
         // Convert name to slug
-        const expectedSlug = name.toLowerCase().replace(/\s+/g, '_');
+        // const expectedSlug = name.toLowerCase().replace(/\s+/g, '_');
 
-        // Check if slug matches the expected slug
-        if (slug !== expectedSlug) {
-            error = "Slug does not match the expected format (lowercase with underscores)";
+        // // Check if slug matches the expected slug
+        // if (slug !== expectedSlug) {
+        //     error = "Slug does not match the expected format (lowercase with underscores)";
+        //     return error;
+        // }
+
+        // If no errors, return an empty string
+        return null;
+    }
+
+    ValidateCreateRole(role) {
+        let error = "";
+        const { name } = role;
+
+        // Check if name and slug are provided
+        if (!name) {
+            error = "Missing name";
             return error;
         }
 
-        // If no errors, return an empty string
-        return error;
+        // Check if name is not empty
+        if (name.trim() === "") {
+            error = "Điền cái NAME gì kì vậy pa!";
+            return error;
+        }
+
+        return null;
     }
 }
 
