@@ -311,10 +311,10 @@ const LoginUser = async (password, user, req, res) => {
             return res.status(400).json(responseDTO.badRequest(msgErr));
         }
 
-        const payload = { userId: user._id, expiredAt: new Date().getTime() + 900 * 1000, };
-        const roles = await roleModel.find(
-            { _id: { $in: user.roles } }).select("-users");
-        const role = roles.filter(r => r.name === "ADMIN");
+        const payload = { userId: user._id, expiredAt: new Date().getTime()  + 24 * 60 * 60 * 1000, };
+        // const roles = await roleModel.find(
+        //     { _id: { $in: user.roles } }).select("-users");
+        // const role = roles.filter(r => r.name === "ADMIN");
         
         const rf_token = await signature.GenerateRefreshToken(payload, res);
         await userModel.findOneAndUpdate({ _id: user._id }, {
@@ -355,7 +355,7 @@ const RegisterUser = async (user, req, res) => {
 
         const newUser = await new userModel({ ...user });
 
-        const payload = { userId: newUser._id, expiredAt: new Date().getTime() + 900 * 1000, };
+        const payload = { userId: newUser._id, expiredAt: new Date().getTime()  + 24 * 60 * 60 * 1000, };
         const access_token = await signature.GenerateAccessToken(payload);
 
         await signature.GenerateRefreshToken(payload, res);
