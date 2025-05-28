@@ -53,7 +53,7 @@ router.get('/search', userAuth, userCtrl.SearchUser);
 */
 router.get('/me', userAuth, userCtrl.GetMe);
 
-router.get('/list', userAuth, authAdmin, userCtrl.ListUser);
+router.get('/list', userAuth, userCtrl.ListUser);
 /** 
  *  @route GET api/user/:id
  *  @desc Get user profile

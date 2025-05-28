@@ -31,15 +31,38 @@ class Password {
 
     async Compare(storedPassword, suppliedPassword) {
         const [hashedPassword, salt] = storedPassword.split('.');
-        const buf = await new Promise((resolve, reject) => {
-            scrypt(suppliedPassword, salt, 64, (err, derivedKey) => {
-                if (err) reject(err);
-                else resolve(derivedKey);
-            });
-        });
+        const buf = await scryptAsync(suppliedPassword, salt, 64);
 
-        return buf.toString('hex') === hashedPassword;
+        try {
+            const [hashedPassword, salt] = storedPassword.split('.');
+            const buf = await new Promise((resolve, reject) => {
+                scrypt(suppliedPassword, salt, 64, (err, derivedKey) => {
+                    if (err) return reject(err);
+                    resolve(derivedKey);
+                });
+            });
+
+            return buf.toString('hex') === hashedPassword;
+        } catch (err) {
+            console.error('Compare error:', err);
+            return false;
+        }
     }
 }
 
 module.exports = new Password();
+
+// async function ToHash(password) {
+//     const salt = randomBytes(8).toString('hex');
+//     const buf = await new Promise((resolve, reject) => {
+//         scrypt(password, salt, 64, (err, derivedKey) => {
+//             if (err) reject(err);
+//             else resolve(derivedKey);
+//         });
+//     });
+
+//     return `${buf.toString('hex')}.${salt}`;
+// }
+
+// const pass =  ToHash("do-may-biet")
+// console.log(pass.then(result=>console.log({result})));

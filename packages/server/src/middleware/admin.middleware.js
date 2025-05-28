@@ -1,6 +1,7 @@
 const { modelSchema } = require("../db");
 const { userModel, roleModel } = modelSchema;
 const { responseDTO, checkUtil } = require("../utils");
+const checkAccountRoot = require("../utils/check/checkRoot");
 const { checkRoot } = checkUtil;
 
 const authAdmin = async (req, res, next) => {

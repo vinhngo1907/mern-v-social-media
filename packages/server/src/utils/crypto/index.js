@@ -2,10 +2,7 @@ const { AES, enc } = require("crypto-js");
 const CryptoJS = require("crypto-js");
 
 function decrypted(secretKeyTotp, passphrase = null) {
-    const decrypted = AES.decrypt(
-        secretKeyTotp,
-        passphrase ?? process.env.SECRET_PASSPHRARE
-    );
+    const decrypted = AES.decrypt(secretKeyTotp, passphrase || process.env.SECRET_PASSPHRARE);
     return decrypted.toString(enc.Utf8);
 }
 
@@ -42,6 +39,20 @@ const decryptData = (encryptedData, secretKey) => {
 //   }, "U2VjcmV0S2V5VG9Ub3BUb2tlbg==");
 
 
+// const test = encrypted({
+//     userId: '64e0bfa94bb5943b506ec9af',
+//     iat: 1718444960,
+//     exp: 1718531360
+//   }, "U2VjcmV0S2V5VG9Ub3BUb2tlbg==");
+
+
 // console.log({test})
 
-module.exports = { decrypted, encrypted, encryptData, decryptData };
+async function hashPassword(password) {
+    const salt = crypto.randomBytes(8).toString('hex'); 
+    const buf = await scryptAsync(password, salt, 64);
+
+    return `${buf.toString('hex')}.${salt}`;
+}
+
+module.exports = { decrypted, encrypted, encryptData, decryptData, hashPassword };
