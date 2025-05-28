@@ -1,9 +1,9 @@
 'use strict';
 
-const { responseDTO, APIFeatures, checkUtil, helpersUtil } = require("../utils");
+const { responseDTO, APIFeatures, checkUtil, helpersUtil, validation } = require("../utils");
 const { modelSchema } = require("../db");
 const { changeSlug } = helpersUtil;
-const { checkPermissionAdmin, checkRoot } = checkUtil;
+const { checkPermissionAdmin, checkRoot, checkPermission } = checkUtil;
 const { roleModel, userModel } = modelSchema;
 
 class RoleController {
@@ -60,9 +60,15 @@ class RoleController {
                 }
             }
 
+            const checkCapacity = validation.ValidateCreateRole(req.body);
+            if (checkCapacity) {
+                return res.status(400).json(responseDTO.badRequest(checkCapacity));
+            }
+            
             const data = req.body;
             const newRole = await new roleModel({
                 ...data,
+                slug: changeSlug(data.name),
                 createdBy: user.username,
                 updatedBy: user.username
             });
@@ -129,7 +135,7 @@ class RoleController {
             if (Array.isArray(userIdsToAdd) && userIdsToAdd.length > 0) {
                 updatedRole = await roleModel.findByIdAndUpdate(
                     roleId,
-                    { $addToSet: { users: { $each: userIdsToAdd } } }, 
+                    { $addToSet: { users: { $each: userIdsToAdd } } },
                     { new: true }
                 );
 
@@ -186,7 +192,35 @@ class RoleController {
             res.status(200).json(responseDTO.success("Updated role in successfully!!!", {
                 ...updatedRole._doc
             }));
-            
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async DeleteRoleSupport(req, res) {
+        try {
+            const user = req.user;
+            if (!user) {
+                return res.status(401).json(responseDTO.unauthorization("User not found or/and authorized"));
+            }
+
+            const allow = await checkPermission(
+                req.headers['x-api-key'] ?? null,
+                process.env.CAPACITY_DELETE_ROLE,
+                user
+            );
+
+            if (!allow) {
+                return res.status(400).json(responseDTO.badRequest("You now allow to delete role"))
+            }
+
+            const roleId = req.params.id;
+            const deletedRole = await roleModel.findOneAndDelete({ _id: roleId });
+            if (!deletedRole) return res.status(400).json(responseDTO.badRequest("This role does not exist"));
+
+            res.status(200).json(responseDTO.success("Deleted message in successfully"));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

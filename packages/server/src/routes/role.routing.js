@@ -7,5 +7,6 @@ const roleCtrl = new RoleController();
 router.get("/", userAuth, roleCtrl.GetAll);
 router.post("/", userAuth, roleCtrl.CreateRoleSupport);
 router.put("/:id", userAuth, roleCtrl.UpdateRoleSupport);
+router.delete("/:id", userAuth, roleCtrl.DeleteRoleSupport);
 
 module.exports = router;
