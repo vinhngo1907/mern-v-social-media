@@ -308,14 +308,15 @@ const LoginUser = async (password, user, req, res) => {
             msgErr = user.type === "register"
                 ? "Password is incorrect"
                 : `Password is incorrect. This account login with ${user.type}`;
+
             return res.status(400).json(responseDTO.badRequest(msgErr));
         }
 
-        const payload = { userId: user._id, expiredAt: new Date().getTime()  + 24 * 60 * 60 * 1000, };
+        const payload = { userId: user._id, expiredAt: new Date().getTime() + 24 * 60 * 60 * 1000, };
         // const roles = await roleModel.find(
         //     { _id: { $in: user.roles } }).select("-users");
         // const role = roles.filter(r => r.name === "ADMIN");
-        
+
         const rf_token = await signature.GenerateRefreshToken(payload, res);
         await userModel.findOneAndUpdate({ _id: user._id }, {
             rf_token: rf_token
@@ -353,9 +354,14 @@ const RegisterUser = async (user, req, res) => {
         if (isUserExist)
             return res.status(400).json(responseDTO.badRequest("This user is already taken"));
 
-        const newUser = await new userModel({ ...user });
+        const userRole = await roleModel.findOne({ slug: "user" });
+        if (!userRole) {
+            return res.status(400).json(responseDTO.serverError("Default role 'user' not found in database"));
+        }
 
-        const payload = { userId: newUser._id, expiredAt: new Date().getTime()  + 24 * 60 * 60 * 1000, };
+        const newUser = await new userModel({ ...user, roles: [userRole._id] });
+
+        const payload = { userId: newUser._id, expiredAt: new Date().getTime() + 24 * 60 * 60 * 1000, };
         const access_token = await signature.GenerateAccessToken(payload);
 
         await signature.GenerateRefreshToken(payload, res);
@@ -364,6 +370,12 @@ const RegisterUser = async (user, req, res) => {
         const apiKey = encrypted(JSON.stringify(payload), settings[0].secret_key || process.env.secret_key);
         // save user
         await newUser.save();
+
+        await roleModel.updateOne(
+            { _id: userRole._id },
+            { $addToSet: { users: newUser._id } }
+        );
+
         res.status(200).json(responseDTO.success(
             user.type ? "Register in successfully" : "Account has been activated!", {
             user: { ...newUser._doc, password: "", salt: "", rf_token: "", root: "" },
