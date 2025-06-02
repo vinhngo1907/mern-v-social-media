@@ -9,7 +9,7 @@ networks:
     driver: bridge
   server:
     driver: bridge
-  
+
 services:
   api:
     build:
@@ -26,6 +26,10 @@ services:
       - PGDATABASE=postgres
       - PGPASSWORD=postgres_password
       - PGPORT=5432
+    networks:
+      - server
+      - mongo
+
   client:
     build:
       dockerfile: Dockerfile.dev
@@ -33,6 +37,9 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    networks:
+      - client
+
   minio:
     image: minio/minio
     container_name: minio
@@ -45,3 +52,15 @@ services:
       - MINIO_ROOT_USER=henrydepchai
       - MINIO_ROOT_PASSWORD=vodichtoanvutru
     command: server --console-address ":9001" /data
+    networks:
+      - server
+
+  mongo:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb-data:/data/db
+    networks:
+      - mongo
