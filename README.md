@@ -16,25 +16,29 @@
 ## Installation
 ### Prerequisites
 - Docker & Docker Compose
-- Node.js (v16 or newer), npm and yarn
+- [Node.js](http://nodejs.org) (v16 or newer), npm and yarn
+- [MongoDB](https://docs.mongodb.org/manual/installation).  Any version above 6.0 works fine
 
 ### To run the app with Node.js and MongoDB
-Install and start [MongoDB](https://docs.mongodb.org/manual/installation).
+1. Clone the project to local machine and go to the folder:
+```bash
+    git clone https://github.com/vinhngo1907/mern-v-social-media.git
+    cd mern-v-social-media
+```
 
-Install [Node.js](http://nodejs.org). Any version above 6.0 works fine
+2. Open `packages/server/.env` and adjust the `MONGODB_URI` to your MongoDB server name (localhost normally works if you're running locally).
+  * You can refernce in file ```packages/server/.env.default```
 
-Open `.env` and adjust the `MONGODB_URI` to your MongoDB server name (localhost normally works if you're running locally).
-
-1. Run `npm install`.
-
-2. CD client && Run `npm run start` to start the frontend client
+3. CD `packages/client` && Run `npm run start` to start the frontend client
   * [x] Wait for the build process to complete
-
   * [x] Navigate to http://localhost:5002 in your browser to explore the app
 
-3. CD Server && Run `npm run server` to start the api server
+4. CD `packages/server` && Run `npm run server` to start the api server
+  ☞ Go to http://localhost:5001 in your browser to explore the server
 
-☞ Go to http://localhost:5001 in your browser to explore the server
+5. CD `packages/cms` && Run `npm run server` to start the frontend cms
+  * [x] Wait for the build process to complete
+  * [x] Navigate to http://localhost:5003 in your browser to explore the app
 
 ## Build the app
 **1. Build server (API)**
@@ -44,7 +48,7 @@ Open `.env` and adjust the `MONGODB_URI` to your MongoDB server name (localhost 
   npm run server
 ```
 
-**2. Build Client (B2C - )**
+**2. Build Client (B2C)**
 ```
   cd packages/client
   npm install
@@ -76,23 +80,22 @@ The build folder is created at: packages/cms/build
 3. Configuration:
   - Build Command: ```npm install```
   - Start Command: ```npm start``` or ```npm run server```
-  - Environment Variables: enter environment variables (MONGODB_URI, PORT, etc.). You can refernce in file ```packages/server/.env.default```
+  - Environment Variables: enter environment variables (MONGODB_URI, PORT, etc.).
 
 4. Render will automatically build and deploy when there is an update from GitHub.
 
 **2. Deploy Client & CMS lên [Netlify](https://netlify.com/)**
   1. Go to Netlify and select "Import from GitHub".
   2. Select the repo, configure:
-    - Build command: ```npm run build```
+    - Build command: `npm run build`
     - Publish directory:
-      * ```client/build``` (for user app)
-      * ```cms/build``` (for CMS admin)
+      * `client/build` (for user app)
+      * `cms/build` (for CMS admin)
   3. Netlify will automatically build and deploy.
 
 ## Contributors
 - [❤️] [Koo Kuu](https://github.com/vinhngo1907)
 - [🚀] [Henry Ngo](https://github.com/vinhngo001)
-
 
 # What can be improved
 1. More unit tests for back-end(server).
