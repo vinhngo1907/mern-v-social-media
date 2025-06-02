@@ -15,7 +15,7 @@
 
 ## Installation
 ### Prerequisites
-- Docker & Docker Compose
+- [Docker](https://www.docker.com/) & Docker Compose
 - [Node.js](http://nodejs.org) (v16 or newer), npm and yarn
 - [MongoDB](https://docs.mongodb.org/manual/installation).  Any version above 6.0 works fine
 
@@ -27,14 +27,14 @@
 ```
 
 2. Open `packages/server/.env` and adjust the `MONGODB_URI` to your MongoDB server name (localhost normally works if you're running locally).
-  * You can refernce in file ```packages/server/.env.default```
+  * [x] You can refernce in file ```packages/server/.env.default```
 
 3. CD `packages/client` && Run `npm run start` to start the frontend client
   * [x] Wait for the build process to complete
   * [x] Navigate to http://localhost:5002 in your browser to explore the app
 
 4. CD `packages/server` && Run `npm run server` to start the api server
-  ☞ Go to http://localhost:5001 in your browser to explore the server
+☞ Go to http://localhost:5001 in your browser to explore the server
 
 5. CD `packages/cms` && Run `npm run server` to start the frontend cms
   * [x] Wait for the build process to complete
