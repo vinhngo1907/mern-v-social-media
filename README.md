@@ -87,8 +87,8 @@ The build folder is created at: packages/cms/build
 **2. Deploy Client & CMS lên [Netlify](https://netlify.com/)**
   1. Go to Netlify and select "Import from GitHub".
   2. Select the repo, configure:
-    - Build command: `npm run build`
-    - Publish directory:
+  - Build command: `npm run build`
+  - Publish directory:
       * `client/build` (for user app)
       * `cms/build` (for CMS admin)
   3. Netlify will automatically build and deploy.
