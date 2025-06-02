@@ -35,12 +35,58 @@ Open .env and adjust the `MONGODB_URI` to your MongoDB server name (localhost no
 
 ## Build the app
 * Build manually
+1. Build server (API)
 ```
- $ npm start
+  cd packages/server
+  npm install
+  npm run server
 ```
 
-After building the app, frontend and backend servers will be merged into a single server and be available at http://localhost:5002
+2. Build Client (B2C - )
+```
+  cd packages/client
+  npm install
+  npm run build
+```
+The build folder is created at: packages/client/build
 
+3. Build CMS (B2B)
+```
+  cd packages/client
+  npm install
+  npm run build
+```
+The build folder is created at: packages/cms/build
+
+## Deployment Guideline
+### Prerequisites
+- Render
+- Netlify
+- Permission to access resources in [mern-v-social-media](https://github.com/vinhngo1907/mern-v-social-media) project
+- Credentials of __*****__ Statging MongoDB
+
+### Deployment Steps
+**1.Deploy Server in [Render](https://render.com/)**
+1. Create an account and connect GitHub repo.
+
+2. Create Web Service on Render.
+
+3. Configuration:
+  - Build Command: ```npm install```
+  - Start Command: ```npm start``` or ```npm run server```
+  - Environment Variables: enter environment variables (MONGODB_URI, PORT, etc.). You can refernce in file ```packages/server/.env.default```
+
+4. Render will automatically build and deploy when there is an update from GitHub.
+
+**2.Deploy Client & CMS lên [Netlify](https://netlify.com/)**
+  1. Go to Netlify and select "Import from GitHub".
+  2. Select the repo, configure:
+    - Build command: ```npm run build```
+    - Publish directory:
+      * ```client/build``` (for user app)
+      * ```cms/build``` (for CMS admin)
+  3. Netlify will automatically build and deploy.
+  
 ## Contributors
 - [❤️] [Koo Kuu](https://github.com/vinhngo1907)
 - [🚀] [Henry Ngo](https://github.com/vinhngo001)
