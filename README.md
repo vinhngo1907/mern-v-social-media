@@ -48,7 +48,7 @@
   npm run server
 ```
 
-**2. Build Client (B2C)**
+**2. Build Client (B2C - V Social Community)**
 ```
   cd packages/client
   npm install
@@ -56,7 +56,7 @@
 ```
 The build folder is created at: packages/client/build
 
-**3. Build CMS (B2B)**
+**3. Build CMS (B2B - V Social Business)**
 ```
   cd packages/client
   npm install
@@ -69,7 +69,7 @@ The build folder is created at: packages/cms/build
 - Render
 - Netlify
 - Permission to access resources in [mern-v-social-media](https://github.com/vinhngo1907/mern-v-social-media) project
-- Credentials of __*****__ Statging MongoDB - __The staging environment uses MongoDB Atlas (MongoDB Cloud) to simplify database management and scaling via a hosted cluster__.
+- Credentials of __*****__ Statging MongoDB - ***The staging environment uses MongoDB Atlas (MongoDB Cloud) to simplify database management and scaling via a hosted cluster***.
 
 ### Deployment Steps
 **1. Deploy Server in [Render](https://render.com/)**
@@ -85,13 +85,13 @@ The build folder is created at: packages/cms/build
 4. Render will automatically build and deploy when there is an update from GitHub.
 
 **2. Deploy Client & CMS lên [Netlify](https://netlify.com/)**
-  1. Go to Netlify and select "Import from GitHub".
-  2. Select the repo, configure:
-    - Build command: `npm run build`
-    - Publish directory:
+1. Go to Netlify and select "Import from GitHub".
+2. Select the repo, configure:
+  - Build command: `npm run build`
+  - Publish directory:
       * `client/build` (for user app)
       * `cms/build` (for CMS admin)
-  3. Netlify will automatically build and deploy.
+3. Netlify will automatically build and deploy.
 
 ## Contributors
 - [❤️] [Koo Kuu](https://github.com/vinhngo1907)
