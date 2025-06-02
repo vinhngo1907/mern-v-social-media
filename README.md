@@ -63,7 +63,7 @@ The build folder is created at: packages/cms/build
 - Render
 - Netlify
 - Permission to access resources in [mern-v-social-media](https://github.com/vinhngo1907/mern-v-social-media) project
-- Credentials of __*****__ Statging MongoDB
+- Credentials of __*****__ Statging MongoDB - __The staging environment uses MongoDB Atlas (MongoDB Cloud) to simplify database management and scaling via a hosted cluster__.
 
 ### Deployment Steps
 **1.Deploy Server in [Render](https://render.com/)**
@@ -86,7 +86,7 @@ The build folder is created at: packages/cms/build
       * ```client/build``` (for user app)
       * ```cms/build``` (for CMS admin)
   3. Netlify will automatically build and deploy.
-  
+
 ## Contributors
 - [❤️] [Koo Kuu](https://github.com/vinhngo1907)
 - [🚀] [Henry Ngo](https://github.com/vinhngo001)
