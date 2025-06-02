@@ -13,13 +13,13 @@
 * [x] group chat,
 * [x] other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
 
-## Installation
+## Installation - Local Development Guideline
 ### Prerequisites
 - [Docker](https://www.docker.com/) & Docker Compose
 - [Node.js](http://nodejs.org) (v16 or newer), npm and yarn
 - [MongoDB](https://docs.mongodb.org/manual/installation).  Any version above 6.0 works fine
 
-### To run the app with Node.js and MongoDB
+### Setup Local Development Environment
 1. Clone the project to local machine and go to the folder:
 ```bash
     git clone https://github.com/vinhngo1907/mern-v-social-media.git
