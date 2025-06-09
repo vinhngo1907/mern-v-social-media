@@ -58,15 +58,11 @@
 Goal: Launch quickly with core features to allow basic user activity and onboarding.
 
 ✔️ Features:
- User Authentication (Sign up / Sign in with HTTP Basic & OAuth2)
-
- Create, view, like, comment on posts
-
- User search (by username, full name)
-
- Basic CMS for admin control
-
- Backend, Client, CMS setup (Docker + .env configs)
+- [x] User Authentication (Sign up / Sign in with HTTP Basic & OAuth2)
+- [x] Create, view, like, comment on posts
+- [x] User search (by username, full name)
+- [x] Basic CMS for admin control
+- [x] Backend, Client, CMS setup (Docker + .env configs)
 
 ⏱ Time Estimate:
 Backend: ~2.5 days
@@ -79,47 +75,35 @@ Total: ~2.5 – 3 working days
 Goal: Enhance social experience with interactive and real-time features.
 
 ✔️ Features:
- Like & reply to comments
-
- Follow / Unfollow users
-
- Real-time chat (via socket.io)
-
- Real-time notifications (likes, comments, follows)
-
- Group chat
-
- Audio & video calls
+- [x] Like & reply to comments
+- [x] Follow / Unfollow users
+- [x] Real-time chat (via socket.io)
+- [x] Real-time notifications (likes, comments, follows)
+- [ ] Group chat
+- [x] Audio & video calls
 
 ⏱ Time Estimate:
-Backend: ~4–5 days
+- Backend: ~4–5 days
 
-Frontend: ~3–4 days
+- Frontend: ~3–4 days
 
-Total: ~5–6 working days
+__=>Total:__ ~5–6 working days
 
 ### ✨ Phase 3: Stories, Explore & Business Tools
 Goal: Expand social media capabilities and introduce engagement/monetization features.
 
 ✔️ Features:
- 24-hour stories (similar to Instagram)
-
- People nearby (geo-based user suggestions)
-
- Explore page (trending content, discovery)
-
- Boost Post / Advertisements
-
- Advanced CMS (stats, reports, content moderation)
-
- Payment integration (Stripe or Momo if needed)
+- [ ] 24-hour stories (similar to Instagram)
+- [ ]  People nearby (geo-based user suggestions)
+- [x]  Explore page (trending content, discovery)
+- [ ] Boost Post / Advertisements
+- [ ] Advanced CMS (stats, reports, content moderation)
+- [ ] Payment integration (Stripe or Momo if needed)
 
 ⏱ Time Estimate:
-Backend: ~5 days
-
-Frontend: ~4–5 days
-
-Total: ~6–7 working days
+- Backend: ~5 days
+- Frontend: ~4–5 days
+__=>Total:__ ~6–7 working days
 
 ## 🛠 Suggested Add-ons (Phase 4+)
 
