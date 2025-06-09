@@ -2,32 +2,35 @@
 
 ## 🛠 Backend Tasks (1 BE Engineer)
 
-| Task                   | Description                          | Est. Time |
-| ---------------------- | ------------------------------------ | --------- |
-| Auth & User Management | Basic auth, OAuth2, profile update   | 2–3 days  |
-| Posts CRUD             | Create, update, delete, get, explore | 2–3 days  |
-| Comments & Reactions   | Like, comment, reply                 | 2 days    |
-| Real-time Chat         | Socket.io: chat, call, video call    | 3–5 days  |
-| Notifications          | Like, follow, comment, etc. events   | 1–2 days  |
-| Nearby & Explore       | Geo queries, trending posts          | 1–2 days  |
-| Stories (24h)          | Upload + auto-expire                 | 1–2 days  |
-| Ads Management         | Boost posts                          | 2 days    |
-| API for CMS            | Admin CRUD, moderation               | 2 days    |
-| Integration            | Stripe, Twilio, file upload, etc.    | 2–3 days  |
-| **Total**              | **~17–22 days**                      | —         |
+| Task                   | Description                          | Assigned To | Est. Time |
+| ---------------------- | ------------------------------------ | ----------- | --------- |
+| Auth & User Management | Basic auth, OAuth2, profile update   | 1 BE        | 2-3 days  |
+| Posts CRUD             | Create, update, delete, get, explore | 1 BE        | 2-3 days  |
+| Comments & Reactions   | Like, comment, reply                 | 1 BE        | 2 days    |
+| Real-time Chat         | Socket.io: chat, call, video call    | 1 BE        | 3-5 days  |
+| Notifications          | Events: like, follow, comment, etc.  | 1 BE        | 1-2 days  |
+| Nearby & Explore       | Geo queries, trending posts          | 1 BE        | 1-2 days  |
+| Stories (24h)          | Upload + time expiration             | 1 BE        | 1-2 days  |
+| Ads Management         | Boost posts                          | 1 BE        | 2 days    |
+| API for CMS            | Admin CRUD, moderation APIs          | 1 BE        | 2 days    |
+| Integration            | Stripe, Twilio, file upload, etc.    | 1 BE        | 2-3 days  |
+| **Total**              | **~17–22 days**                      | —           | —         |
 
 ---
 
 ## 💻 Frontend Tasks (Client App – `packages/client`)
 
-| Task            | Description         | Est. Time |
-| --------------- | ------------------- | --------- |
-| Admin Dashboard | User/posts overview | 1 day     |
-| Manage Posts    | Approve/delete      | 1 day     |
-| Manage Users    | Ban, view details   | 1 day     |
-| Ads & Analytics | Boost stats, CTR    | 1 day     |
-| Reports         | Feedbacks, issues   | 0.5–1 day |
-| **Total**       | **~4–5 days**       | —         |
+| Task              | Description                  | Assigned To | Est. Time |
+| ----------------- | ---------------------------- | ----------- | --------- |
+| Auth UI           | Login/signup, OAuth2, SMS    | 1 FE        | 1-2 days  |
+| Post Feed         | Create, display, interaction | 1 FE        | 2-3 days  |
+| Comments & Likes  | Interaction in posts         | 1 FE        | 2 days    |
+| Real-time Chat UI | Messages, call buttons       | 1 FE        | 2-3 days  |
+| Notification Bell | Real-time updates UI         | 1 FE        | 1 day     |
+| Stories UI        | Show/hide in 24h             | 1 FE        | 1-2 days  |
+| User Profile      | View/edit profile            | 1 FE        | 1 day     |
+| Explore + Nearby  | Trending, geo location       | 1 FE        | 1-2 days  |
+| **Total**         | **~4–5 days**                | —           | —         |
 
 ---
 
@@ -61,7 +64,7 @@
 ## 👥 Team & Time Estimation
 
 | Role                  | Headcount    | Time Estimate                                  |
-| --------------------- | ------------ | --------------------------------------------- |
+| --------------------- | ------------ | ---------------------------------------------  |
 | Backend Engineer      | 1            | ~2.5 working weeks                             |
 | Frontend Engineers    | 2 (parallel) | ~1.5 working weeks (shared workload)           |
 | **Total (Phase 1)**   | —            | **~2.5 – 3 working weeks**                     |
