@@ -14,7 +14,7 @@
 | Ads Management         | Boost posts                          | 2 days    |
 | API for CMS            | Admin CRUD, moderation               | 2 days    |
 | Integration            | Stripe, Twilio, file upload, etc.    | 2–3 days  |
-| **Total**              | **~17–22 days**                      |           |
+| **Total**              | **~17–22 days**                      | —         |
 
 ---
 
@@ -27,7 +27,7 @@
 | Manage Users    | Ban, view details   | 1 day     |
 | Ads & Analytics | Boost stats, CTR    | 1 day     |
 | Reports         | Feedbacks, issues   | 0.5–1 day |
-| **Total**       | **~4–5 days**       |           |
+| **Total**       | **~4–5 days**       | —         |
 
 ---
 
@@ -42,7 +42,7 @@
 | Manage Users    | Ban, view details   | 1 day     |
 | Ads & Analytics | Boost stats, CTR    | 1 day     |
 | Reports         | Feedbacks, issues   | 0.5–1 day |
-| **Total**       | **~4–5 days**       |           |
+| **Total**       | **~4–5 days**       | —         |
 
 ---
 
@@ -54,7 +54,7 @@
 | Render        | Deploy API server     | Render.com     | 0.5 day   |
 | Netlify       | Deploy Client + CMS   | Netlify        | 0.5 day   |
 | CI/CD         | GitHub Actions config | GitHub Actions | 1 day     |
-| **Total**     | **~2.5 days**         |                |           |
+| **Total**     | **~2.5 days**         | —              | —         |
 
 ---
 
