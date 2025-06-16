@@ -10,7 +10,7 @@
 * [x] realtime chat, phone call, video call, comment, likes, follow
 * [x] notifications for likes, comment, follow...
 * [x] people nearby, posts explore
-* [x] group chat,
+* [ ] group chat,
 * [x] other: 24 hour stories, audio files, events, Advertisement (boost post), emoji comments,...
 
 ## Installation - Local Development Guideline
@@ -100,6 +100,6 @@ The build folder is created at: packages/cms/build
 # What can be improved
 1. More unit tests for back-end(server).
 2. Write some end-to-end tests.
-3. Real-time sync for Chart Service using socket.io combine with message queue(RabbitMQ or Kafka).
+3. Real-time sync for Chat Service using socket.io combine with message queue(RabbitMQ or Kafka).
 4. The front-end(client - cms) can be built & deployed to Google Storage for faster performance.
 5. We can create 1 more branch called releases. The CI should support deploying the app when code is merged to this branch.
