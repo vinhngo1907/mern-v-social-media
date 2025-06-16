@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../redux/actions/authAction";
 
 const RegisterForm = () => {
+	const { alert } = useSelector(state => state);
+	const dispatch = useDispatch();
 	const [typePass, setTypePass] = useState(false);
 	const [typeCfPass, setTypeCfPass] = useState(false);
 	const [data, setData] = useState({
@@ -13,6 +17,7 @@ const RegisterForm = () => {
 	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(register(data));
 	}
 
 	return (
@@ -23,6 +28,9 @@ const RegisterForm = () => {
 				<input type="text" className="form-control" id="fullname"
 					name="fullname" value={fullname} onChange={handleChangeInput}
 					placeholder="Your name is up to 25 chars." />
+				<small className="form-text text-danger">
+					{alert.email ? alert.email : ''}
+				</small>
 			</div>
 			<div className="form-group mb-3">
 				<label htmlFor="username" className="form-label">username</label>
@@ -30,11 +38,17 @@ const RegisterForm = () => {
 				<input type="text" className="form-control" id="username"
 					name="username" value={username} onChange={handleChangeInput}
 					placeholder="Your name is up to 20 chars." />
+				<small className="form-text text-danger">
+					{alert.username ? alert.username : ''}
+				</small>
 			</div>
 			<div className="form-group mb-3">
 				<label htmlFor="email">Email address</label>
 				<input type="email" className="form-control" id="email" name="email"
 					aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={handleChangeInput} />
+				<small className="form-text text-danger">
+					{alert.email ? alert.email : ''}
+				</small>
 			</div>
 			<div className="form-group mb-3">
 				<label htmlFor="password" className="form-label">Password</label>
@@ -53,6 +67,9 @@ const RegisterForm = () => {
 						{typePass ? 'Hide' : 'Show'}
 					</small>
 				</div>
+				<small className="form-text text-danger">
+					{alert.password ? alert.password : ''}
+				</small>
 			</div>
 			<div className="form-group mb-3">
 				<label htmlFor="cf_password" className="form-label">
@@ -73,6 +90,9 @@ const RegisterForm = () => {
 						{typeCfPass ? 'Hide' : 'Show'}
 					</small>
 				</div>
+				<small className="form-text text-danger">
+					{alert.cf_pass ? alert.cf_pass : ''}
+				</small>
 			</div>
 			<div className="row justify-content-between mx-0 mb-1">
 				<label htmlFor="male">
