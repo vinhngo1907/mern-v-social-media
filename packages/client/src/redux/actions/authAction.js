@@ -1,7 +1,7 @@
 import { postDataApi } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../actions/globalTypes";
 import { VIDEOS_TYPES } from "./videoAction";
-import { validateLoginSMS } from "../../utils/valid"
+import { validateLoginSMS, validateRegister } from "../../utils/valid"
 
 export const login = (data) => async (dispatch) => {
     try {
@@ -137,7 +137,7 @@ export const verifySMS = (phone) => async (dispatch) => {
         const { data: { results: { user, access_token } } } = res;
 
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } });
-       
+
         dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {
@@ -148,5 +148,31 @@ export const verifySMS = (phone) => async (dispatch) => {
 
     } catch (error) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+    }
+}
+
+export const register = (userRegister) => async (dispatch) => {
+    const { errMsg, errLength } = validateRegister(userRegister);
+    if (errLength !== 0) {
+        return dispatch({ type: GLOBALTYPES.ALERT, payload: errMsg })
+    }
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+        const res = await postDataApi("auth/register", userRegister, null);
+        
+        localStorage.setItem('firstLogin', true);
+        
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.msg } });
+
+
+        dispatch({
+            type: GLOBALTYPES.AUTH, payload: {
+                user: res.data.results.user,
+                token: res.data.results.access_token
+            }
+        })
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response?.data?.message } });
     }
 }
