@@ -103,3 +103,7 @@ The build folder is created at: packages/cms/build
 3. Real-time sync for Chat Service using socket.io combine with message queue(RabbitMQ or Kafka).
 4. The front-end(client - cms) can be built & deployed to Google Storage for faster performance.
 5. We can create 1 more branch called releases. The CI should support deploying the app when code is merged to this branch.
+
+# 📋 TODO
+
+You can track progress in [`TASKS.md`](./docs/tasks.md).
