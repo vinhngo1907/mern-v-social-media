@@ -2,23 +2,40 @@
 
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
+const { generateSlug } = require("../utils/helpers");
+const { CLIENT_URL } = require("../configs");
 const { groupModel } = modelSchema;
+const crypto = require("crypto");
 
 class GroupController {
     async CreateGroup(req, res) {
         try {
-            const { name, additionalInfo } = req.body;
+            const { name, additionalInfo, description } = req.body;
+            if (!name || !description) {
+                return res.status(400).json(responseDTO.badRequest("Name and description are required"));
+            }
+
+            const slug = generateSlug(name.trim());
+            const inviteToken = crypto.randomUUID();
+            const inviteLink = `${CLIENT_URL}/invite/group/${inviteToken}`;
             const newGroup = new groupModel({
-                name, additionalInfo, members: [req.user._id]
+                name, 
+                additionalInfo: additionalInfo.trim(),
+                slug,
+                members: [req.user._id],
+                inviteLink,
+                user: req.user._id
             });
             await newGroup.save();
-            res.json(responseDTO.success("Created group in sucessfully", { ...newGroup._doc }));
+            res.json(responseDTO.success("Created group in sucessfully", {
+                 ...newGroup._doc
+            }));
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-    
+
     async GetUserGroups(req, res) {
         try {
             const features = new APIFeatures(groupModel.find({
