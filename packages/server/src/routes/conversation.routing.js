@@ -18,4 +18,11 @@ router.get("/", userAuth, conversationCtrl.GetConversation);
  */
 router.delete("/:id", userAuth, conversationCtrl.DeleteConversation);
 
+/** 
+ * @route POST api/conversation/:id
+ * @desc Create group chat by id group
+ * @access Private
+*/
+router.post("/:id", userAuth, conversationCtrl.CreateGroup);
+
 module.exports = router;
