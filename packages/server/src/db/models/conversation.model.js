@@ -6,8 +6,9 @@ const ConversationSchema = new Schema({
     text: String,
     media: Array,
     call: Object,
-    // isGroupChat: { type: Boolean, default: false },
-    // groupAdmin: { type: Schema.Types.ObjectId, ref: "user" }
+    isGroupChat: { type: Boolean, default: false },
+    groupAdmin: { type: Schema.Types.ObjectId, ref: "user" },
+    group: { type: Schema.Types.ObjectId, ref: "group" }
 }, {
     timestamps: true,
     versionKey: false
