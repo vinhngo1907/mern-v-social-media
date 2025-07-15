@@ -2,7 +2,7 @@ import ACTIONS from "./index";
 import { getDataAPI } from "../../components/utils/apis/FetchData";
 
 export const fetchAllUsers = async (token) => {
-	const res = await getDataAPI('/user', token);
+	const res = await getDataAPI('/admin/user/list', token);
 	console.log({res})
 	return res;
 }

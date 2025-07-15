@@ -12,4 +12,5 @@ module.exports = {
     VideoController: require("./video.controller"),
     RoleController: require("./role.controller"),
     CapacityController: require("./capacities.controller"),
+    AdminController: require("./admin.controller")
 }

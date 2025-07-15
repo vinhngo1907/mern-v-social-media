@@ -10,6 +10,7 @@ import ResetPass from '../body/auth/ResetPassword';
 
 import Profile from '../body/profile/Profile';
 import EditUser from '../body/profile/EditUser';
+import List from "./role/List"
 
 function Body() {
     const { auth } = useSelector(state => state);
@@ -28,6 +29,7 @@ function Body() {
 
                 <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
                 <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
+                <Route path="/roles" component={isAdmin ? List : NotFound} exact />
             </Switch>
         </section>
     )

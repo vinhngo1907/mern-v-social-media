@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showSuccessMsg, showErrMsg } from '../../utils/notifications/Notification';
 import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/userAction';
 import axios from "axios";
+import moment from "moment"
+import { postDataAPI } from "../../utils/apis/FetchData";
+import pencilIcon from "../../../assets/pencil.svg";
+import trashIcon from "../../../assets/trash.svg";
+// import editIcon from "../../../assets/edit.svg";
 
 const initialState = {
     name: "",
@@ -30,12 +36,35 @@ const Profile = () => {
     const handleChangeAvatar = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.patch(`api/users/${auth.user._id}`)
+
+            const file = e.target.files[0];
+            if (!file) return setData({ ...data, err: "No files were upload.", success: "" });
+            const { type, size } = file
+            if (size > 1024 * 1024) return setData({ ...data, err: "File is too large.", success: "" });
+            if (type !== "image/jpeg" || type !== "image/png")
+                return setData({ ...data, success: "", err: "File format is not correct" });
+
+            let formData = new FormData();
+            formData.append('file', file);
+            setLoading(true);
+
+            const res = await axios.patch(`api/users/${auth.user._id}`, {
+                Headers: {
+                    'content-type': "multipart/form-data", Authorization: auth?.user?.token
+                }
+            })
+
+            setLoading(false);
+
+            setAvatar(res.data.url)
+            setData({ ...res.data.user, success: res.data?.message });
         } catch (error) {
-            setData({ ...data, err: error.response.data.message, success: "" });
+            setData({
+                ...data, success: "",
+                err: error?.response?.data?.message || "Something wrong when change avatar!!!"
+            })
         }
     }
-
     const dispatch = useDispatch();
     useEffect(() => {
         if (isAdmin) {
@@ -45,6 +74,21 @@ const Profile = () => {
         }
     }, [token, isAdmin, dispatch, callback]);
 
+    const handleDelete = async (id) => {
+        try {
+            if (window.confirm("Are your sure?")) {
+                setLoading(true);
+                await postDataAPI(`admin/user/${id}`, null, auth?.user?.token)
+                setLoading(false);
+                setCallback(!callback);
+            }
+        } catch (error) {
+            setData({
+                ...data, success: "",
+                err: error?.response?.data?.message || "Something wrong when delete user!!!"
+            });
+        }
+    }
     return (
         <>
             <div>
@@ -103,9 +147,11 @@ const Profile = () => {
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Admin</th>
-                                    <th>Action</th>
+                                    <th>Login</th>
+                                    <th>Role</th>
+                                    <th>Due date</th>
+                                    <th className="text-center">Status</th>
+                                    <th className="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,14 +160,42 @@ const Profile = () => {
                                         <tr key={user._id}>
                                             <td>{user._id}</td>
                                             <td>{user.fullname}</td>
-                                            <td>{user.email}</td>
-                                            <td>
-                                            {
-                                                user.role === 1
-                                                ? <i className="fas fa-check" title="Admin"></i>
-                                                : <i className="fas fa-times" title="User"></i>
+                                            <td>{user.type === "email"
+                                                ? user.email
+                                                : user.type === "sms"
+                                                    ? user.mobile
+                                                    : user.type === "google"
+                                                        ? user.email
+                                                        : user.type === "facebook"
+                                                            ? user.email : user.mobile
                                             }
-                                        </td>
+                                            </td>
+                                            <td>
+                                               {
+                                                        user.roles && user.roles.length > 0
+                                                            ? user.roles.map(role => role.name).join(', ')
+                                                            : 'No Role'
+                                                    }
+                                            </td>
+                                            <td>{moment(user?.createdAt).fromNow()}</td>
+                                            <td className="text-center"
+                                            >{
+                                                user.isActive
+                                                    ? (<i className="fas fa-check-circle text-success" title="Active"/>)
+                                                    : (<i className="fas fa-times-circle text-danger" title="Blocked" />)
+                                            }</td>
+                                            <td className="text-center">
+                                                <Link to={`/edit_user/${user._id}`}>
+                                                    <img src={`${pencilIcon}`} alt="pencil" />
+                                                </Link>
+
+                                                <button type="button" className="my-2"
+                                                    onClick={() => handleDelete(user._id)}
+                                                >
+                                                    <img src={`${trashIcon}`} alt="trash" />
+                                                </button>
+
+                                            </td>
                                         </tr>
                                     ))
                                 }
