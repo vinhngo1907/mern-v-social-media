@@ -12,6 +12,7 @@ const groupRouter = require("./group.routing");
 const videoRouter = require("./video.routing");
 const roleRouter = require("./role.routing");
 const capacityRouter = require("./capacity.routing");
+const adminRouter = require("./admin.routing");
 
 const { BASE_URL } = require("../configs");
 
@@ -29,6 +30,7 @@ function WebRoute(app) {
     app.use(BASE_URL + "/video", videoRouter);
     app.use(BASE_URL + "/role", roleRouter),
     app.use(BASE_URL +"/capacity", capacityRouter);
+    app.use(BASE_URL +"/admin", adminRouter);
 }
 
 module.exports = WebRoute;

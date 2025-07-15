@@ -37,7 +37,8 @@ const UserSchema = new Schema({
 	type: { type: String, default: "register" },
 	rf_token: { type: String },
 	roles: [{ type: Schema.Types.ObjectId, ref: "role" }],
-	root: { type: String }
+	root: { type: String },
+	isActive: {type: Boolean, default: true}
 }, {
 	timestamps: true,
 	versionKey: false

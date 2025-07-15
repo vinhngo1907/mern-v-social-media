@@ -1,4 +1,3 @@
-import React from 'react'
 import LeftSide from '../../components/message/LeftSide'
 import RightSide from '../../components/message/RightSide'
 

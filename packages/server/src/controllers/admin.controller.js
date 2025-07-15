@@ -6,7 +6,7 @@ const { roleModel } = require("../db/models");
 const { userModel } = modelSchema;
 const logger = require('node-color-log');
 
-class UserController {
+class AdminController {
     async GetAllUser(req, res) {
         try {
             const { name } = req.query;
@@ -238,23 +238,13 @@ class UserController {
         }
     }
 
-    async SearchUser(req, res) {
-        try {
-            const { name } = req.query;
-            const filterArr = [];
-            filterArr.push({ username: { $regex: name, $options: "i" } })
-            filterArr.push({ fullname: { $regex: name, $options: "i" } })
-
-            const users = await userModel.find({ $or: filterArr }).limit(10).select("username fullname avatar");
-            res.status(200).json(responseDTO.success("Get data in successfully", users));
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
     async ListUser(req, res) {
         try {
+            const user = req.user;
+            if(!user) {
+                return res.status(401).json({message: "You not found or not authorized!"});
+            }
+            
             const { name } = req.query;
             let filterArr = [];
             if (name) {
@@ -266,7 +256,12 @@ class UserController {
             const features = new APIFeatures(userModel.find({
                 ...filterObj
             })
-            .select("avatar username fullname mobile roles type createdAt"), req.query).paginating().sorting();
+            .populate({
+                path: "roles",
+                select: "name slug capacities"
+            })
+            .select("avatar username fullname mobile type createdAt isActive"), req.query)
+            .paginating().sorting();
            
             // .select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
 
@@ -293,4 +288,4 @@ class UserController {
     }
 }
 
-module.exports = UserController
+module.exports = AdminController
