@@ -53,7 +53,13 @@ router.get('/search', userAuth, userCtrl.SearchUser);
 */
 router.get('/me', userAuth, userCtrl.GetMe);
 
+/** 
+ *  @route GET api/user/list
+ *  @desc Get user list for Admin, Manager, Super Admin
+ *  @access Private
+*/
 router.get('/list', userAuth, userCtrl.ListUser);
+
 /** 
  *  @route GET api/user/:id
  *  @desc Get user profile
@@ -76,5 +82,8 @@ router.patch('/:id/follow', userAuth, userCtrl.Follow);
 router.patch('/:id/unfollow', userAuth, userCtrl.UnFollow);
 
 router.patch('/:id/update_role', userAuth, authAdmin, userCtrl.UpdateUserRoles);
+
+
+// router.get('/list', userAuth, userCtrl.getUserByAdmin);
 
 module.exports = router;
