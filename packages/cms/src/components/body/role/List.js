@@ -22,7 +22,7 @@ const List = () => {
         }
     }, [token, isAdmin, dispatch, callback]);
 
-    const editRole = async () => {
+    const editRole = async (id) => {
 
     }
     const deleteRole = async () => {
