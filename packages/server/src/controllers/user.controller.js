@@ -46,7 +46,7 @@ class UserController {
             }
 
             res.json(responseDTO.success("Get user successfully", {
-                ...user,
+                ...user._doc,
                 isAdmin: role ? true : false
             }));
         } catch (error) {
