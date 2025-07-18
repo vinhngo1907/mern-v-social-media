@@ -171,9 +171,11 @@ class AuthController {
                 LoginUser(password, user, req, res)
             } else {
                 const newUser = {
-                    email, username: name,
+                    email, 
+                    username: name,
                     fullname: `${family_name} ${given_name}`,
-                    avatar: picture, type: 'google',
+                    avatar: picture, 
+                    type: 'google',
                     password: hashedPassword,
                     salt
                 }

@@ -45,5 +45,7 @@ module.exports = {
     SERVICE_ID: process.env.TWILIO_SERVICE_ID,
     PHONE_SECRET: process.env.PHONE_SECRET,
 
-    SUPER_ADMIN_SECRET_KEY: process.env.SUPER_ADMIN_SECRET_KEY
+    SUPER_ADMIN_SECRET_KEY: process.env.SUPER_ADMIN_SECRET_KEY,
+
+    REDIS_URL: process.env.REDIS_URL
 };
