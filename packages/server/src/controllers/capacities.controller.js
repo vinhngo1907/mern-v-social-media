@@ -48,12 +48,41 @@ class CapacityController {
 
             await newCapacity.save();
 
-            return res.json(responseDTO.success("Created new capacity successfully!", {
-                ...newCapacity._doc,
-                // user: req.user
-            }));
+            return res.json(
+                responseDTO.success(
+                    "Created new capacity successfully!",
+                    {
+                        ...newCapacity._doc,
+                        // user: req.user
+                    }));
         } catch (error) {
             console.error(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+    async Get(req, res) {
+        try {
+            const validRoot = await checkRoot(req.user);
+            if (!validRoot) {
+                const allow = await checkPermission(
+                    req.headers['x-api-key'] ?? null,
+                    process.env.CAPACITY_CREATE_ROLE ?? null,
+                    req.user
+                );
+
+                if (!allow) {
+                    return res.status(403).json(responseDTO.forbiden("You don't have permission to create a new capacity"));
+                }
+            }
+
+            const capacities = await capacitiesModel.find({})
+            res.json(
+                responseDTO.success(
+                    "Get capacities successfully!",
+                    capacities)
+                );
+        } catch (error) {
+            console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }

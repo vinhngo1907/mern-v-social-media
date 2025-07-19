@@ -1,10 +1,12 @@
 'use strict';
 
-const { responseDTO, APIFeatures, passwordUtil, signature } = require("../utils");
+const { responseDTO, APIFeatures, passwordUtil, signature, checkUtil, helpersUtil } = require("../utils");
 const { modelSchema } = require("../db");
-const { roleModel } = require("../db/models");
-const { userModel } = modelSchema;
-const logger = require('node-color-log');
+const { userModel, roleModel, settingModel  } = modelSchema;
+// const { changeSlug } = helpersUtil;
+const { checkRoot, checkPermission } = checkUtil;
+// const logger = require('node-color-log');
+const { encrypted } = require("../utils/crypto");
 
 class AdminController {
     async GetAllUser(req, res) {
@@ -97,68 +99,6 @@ class AdminController {
         }
     }
 
-    async Follow(req, res) {
-        try {
-            const { id } = req.params;
-            // const users = await userModel.find({ _id: req.user._id, followers: id })
-            const users = await userModel.find({ _id: id, followers: req.user._id });
-            if (users.length > 0) return res.status(400).json(responseDTO.badRequest("You have been followed this user"));
-
-            const following = await userModel.findOneAndUpdate({ _id: req.user._id }, {
-                $push: { following: id }
-            }, { new: true })
-                .select("-password -rf_token -salt")
-                .populate("following followers", "-password -rf_token -salt -__v");
-
-            if (!following) return res.status(400).json(responseDTO.badRequest(`This user ${req.user._id} does not exist`));
-
-            const newUser = await userModel.findOneAndUpdate({ _id: id }, { $push: { followers: req.user._id } }, { new: true })
-                .select("-password -rf_token -salt")
-                .populate("followers following", "-salt -rf_token -password -__v");
-
-            res.status(200).json(responseDTO.success("Followed successfully", newUser));
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
-    async UnFollow(req, res) {
-        try {
-            const { id } = req.params;
-            const unFollowedUser = await userModel.findOneAndUpdate({ _id: id }, {
-                $pull: { followers: req.user._id }
-            }, { new: true })
-                .select("-password -rf_token -salt")
-                .populate("following followers", "-password -rf_token -salt");
-            if (!unFollowedUser) return res.status(400).json(responseDTO.badRequest("This user not found or/and not authorized"));
-
-            await userModel.findOneAndUpdate({ _id: req.user._id }, { $pull: { following: id } }, { new: true });
-            res.status(200).json(responseDTO.success("UnFollowed successfully", unFollowedUser));
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
-    async Suggestion(req, res) {
-        try {
-            const newArr = [...req.user.following, req.user._id];
-            const num = req.query.num || 10;
-
-            const users = await userModel.aggregate([
-                { $match: { _id: { $nin: newArr } } },
-                { $sample: { size: Number(num) } },
-                { $lookup: { from: 'users', localField: 'followers', foreignField: '_id', as: 'followers' } },
-                { $lookup: { from: 'users', localField: 'following', foreignField: '_id', as: 'following' } }
-            ]);
-            res.status(200).json(responseDTO.success("Get data successfully", { users, result: users.length }))
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
-
     async ChangePassword(req, res) {
         if (!req.user) return res.status(400).json(responseDTO.badRequest("User not found or/and not authorized"));
 
@@ -241,10 +181,10 @@ class AdminController {
     async ListUser(req, res) {
         try {
             const user = req.user;
-            if(!user) {
-                return res.status(401).json({message: "You not found or not authorized!"});
+            if (!user) {
+                return res.status(401).json({ message: "You not found or not authorized!" });
             }
-            
+
             const { name } = req.query;
             let filterArr = [];
             if (name) {
@@ -256,13 +196,13 @@ class AdminController {
             const features = new APIFeatures(userModel.find({
                 ...filterObj
             })
-            .populate({
-                path: "roles",
-                select: "name slug capacities"
-            })
-            .select("avatar username fullname mobile type createdAt isActive"), req.query)
-            .paginating().sorting();
-           
+                .populate({
+                    path: "roles",
+                    select: "name slug capacities"
+                })
+                .select("avatar username fullname mobile type createdAt isActive"), req.query)
+                .paginating().sorting();
+
             // .select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
 
             const users = await features.query;
@@ -286,6 +226,87 @@ class AdminController {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
+
+    async Login(req, res) {
+        try {
+            const { account, password } = req.body;
+            const user = await userModel.findOne({
+                $or: [
+                    { email: account },
+                    { username: account },
+                    { mobile: account }
+                ]
+            });
+
+            if (!user) {
+                return res.status(400).json(responseDTO.badRequest("This user does not exist"));
+            }
+
+            const validRoot = await checkRoot(user);
+            if (!validRoot) {
+                const allow = await checkPermission(
+                    req.headers['x-api-key'] ?? null,
+                    process.env.CAPACITY_CREATE_ROLE ?? null,
+                    req.user
+                );
+
+                if (!allow) {
+                    return res.status(403).json(responseDTO.forbiden("You don't have permission to login this page"));
+                }
+            }
+
+            return LoginUser(password, user, req, res);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
+
+
+const LoginUser = async (password, user, req, res) => {
+    
+    try {
+        const validPassword = await passwordUtil.ValidatePassword(password, user.password, user.salt);
+        if (!validPassword) {
+            let msgErr = "";
+            msgErr = user.type === "register"
+                ? "Password is incorrect"
+                : `Password is incorrect. This account login with ${user.type}`;
+
+            return res.status(400).json(responseDTO.badRequest(msgErr));
+        }
+
+        const payload = {
+            userId: user._id,
+            expiredAt: new Date().getTime() + 24 * 60 * 60 * 1000,
+        };
+
+        const rf_token = await signature.GenerateRefreshToken(payload, res);
+        await userModel.findOneAndUpdate({ _id: user._id }, {
+            rf_token: rf_token
+        }).select("-rf_token -password -salt");
+
+        const access_token = await signature.GenerateAccessToken(payload);
+        const settings = await settingModel.find();
+
+        const apiKey = encrypted(JSON.stringify(payload), settings[0].secret_key || process.env.secret_key);
+
+        return res.json(
+            responseDTO.success("Logged Successfully", {
+                user: {
+                    ...user._doc, password: "",
+                    salt: "", rf_token: "", root: ""
+                },
+                access_token: access_token,
+                apiKey,
+            })
+        );
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(responseDTO.serverError(error.message));
+    }
+}
+
 
 module.exports = AdminController

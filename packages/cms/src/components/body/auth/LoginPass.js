@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { dispatchLogin } from '../../../redux/actions/authAction';
 import { showErrMsg, showSuccessMsg } from '../../utils/notifications/Notification';
+import { postDataAPI } from '../../utils/apis/FetchData';
 
 function LoginPass() {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function LoginPass() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const res = await axios.post('/api/auth/login', { account, password });
+            const res = await postDataAPI('admin/auth/login', { account, password });
             setUserData({ ...userData, err: '', success: res.data.message });
             localStorage.setItem('firstLogin', true);
 
