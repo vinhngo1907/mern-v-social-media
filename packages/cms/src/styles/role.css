@@ -1,37 +1,44 @@
-.roles{
+.roles {
     max-width: 700px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 30px auto;
 }
-.roles form{
+
+.roles form {
     width: 290px;
     margin-bottom: 20px;
 }
-.roles label{
+
+.roles label {
     display: block;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 10px;
 }
-.roles input, button{
+
+.roles input,
+button {
     height: 35px;
     border: none;
     outline: none;
     border-bottom: 1px solid #555;
 }
-.roles input{
+
+.roles input {
     width: 210px;
 }
-.roles button{
+
+.roles button {
     width: 70px;
     background: #555;
     color: white;
     margin-left: 10px;
 }
-.roles .row{
+
+.roles .row {
     min-width: 290px;
     display: flex;
     justify-content: space-between;
@@ -39,4 +46,22 @@
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
 }

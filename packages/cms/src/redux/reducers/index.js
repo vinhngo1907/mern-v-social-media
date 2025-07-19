@@ -3,10 +3,12 @@ import auth from './authReducer';
 import token from './tokenReducer';
 import users from './userReducer';
 import roles from "./roleReducer";
+import capacities from "./capacitiesReducer"
 
 export default combineReducers({
     auth,
     token,
     users,
-    roles
+    roles,
+    capacities
 });
