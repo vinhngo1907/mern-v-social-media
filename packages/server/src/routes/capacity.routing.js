@@ -4,6 +4,8 @@ const { userAuth, authAdmin } = require('../middleware');
 const { CapacityController } = require("../controllers");
 const capacityCtrl = new CapacityController();
 
+router.get('/', userAuth, capacityCtrl.Get);
+
 /**
  * @route POST api/capacity/
  * @desc Create new capcity

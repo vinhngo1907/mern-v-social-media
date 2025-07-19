@@ -33,6 +33,6 @@ server.listen(PORT, () => {
     process.exit();
 });
 
-startVideoScheduler(io);
+// startVideoScheduler(io);
 
 // module.exports = io;

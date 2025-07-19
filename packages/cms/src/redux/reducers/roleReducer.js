@@ -1,15 +1,21 @@
-
 import ACTIONS from '../actions';
 
-const roles = [];
+const initialState = {
+    roles: [],
+    total: 0
+};
 
-const rolesReducer = (state = roles, action) => {
+const rolesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS.GET_ALL_ROLES:
-            return action.payload.results;
+            return {
+                ...state,
+                roles: action.payload.results.roles,
+                total: action.payload.results.result
+            };
         default:
             return state;
     }
-}
+};
 
-export default rolesReducer
+export default rolesReducer;
