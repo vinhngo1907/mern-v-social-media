@@ -47,21 +47,11 @@ router.get('/user/list', userAuth, adminCtrl.ListUser);
 router.get('/:id', userAuth, adminCtrl.GetUser);
 
 /** 
- *  @route PATCH api/user/:id/follow
- *  @desc Follow user
- *  @access Private
-*/
-router.patch('/:id/follow', userAuth, adminCtrl.Follow);
-
-/** 
- *  @route PATCH api/user/:id/unfollow
+ *  @route POST api/admin/auth/login
  *  @desc UnFollow user
  *  @access Private
 */
 
-
-
-
-// router.get('/list', userAuth, adminCtrl.getUserByAdmin);
+router.post('/auth/login', adminCtrl.Login);
 
 module.exports = router;
