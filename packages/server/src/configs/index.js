@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "prod") {
     const configFile = `./.env.${process.env.NODE_ENV}`;
     dotEnv.config({ path: configFile });
 } else {
-    dotEnv.config();
+    dotEnv.config({path:"./.env"});
 }
 
 module.exports = {
