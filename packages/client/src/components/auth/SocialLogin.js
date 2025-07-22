@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { GoogleLogin } from 'react-google-login';
-// import { FacebookLogin } from 'react-facebook-login-lite';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 import { gapi } from "gapi-script"
 import { useDispatch } from "react-redux";
-import { facebookLogin, googleLogin } from "../../redux/actions/authAction";
+import { googleLogin,
+    // facebookLogin,  
+} from "../../redux/actions/authAction";
 
 const SocialLogin = () => {
     const dispatch = useDispatch();
@@ -27,11 +28,11 @@ const SocialLogin = () => {
     const onFailure = (err) => {
         console.log(err);
     }
-    const onFBSuccess = async (response) => {
-        // console.log(response);
-        const { accessToken, userID } = response;
-        dispatch(facebookLogin({ accessToken, userID }));
-    }
+    // const onFBSuccess = async (response) => {
+    //     // console.log(response);
+    //     const { accessToken, userID } = response;
+    //     dispatch(facebookLogin({ accessToken, userID }));
+    // }
     return (
         <>
             <GoogleLogin
@@ -42,12 +43,12 @@ const SocialLogin = () => {
                 buttonText="Sign in with Google"
                 cookiePolicy={'single_host_origin'}
             />
-            <FacebookLogin
+            {/* <FacebookLogin
                 appId="242238128660237"
                 // onSuccess={onFBSuccess}
                 callback={onFBSuccess}
                 // onFailure={onFailure}
-            />
+            /> */}
         </>
     )
 }
