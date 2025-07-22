@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "prod") {
     const configFile = `./.env.${process.env.NODE_ENV}`;
     dotEnv.config({ path: configFile });
 } else {
-    dotEnv.config({path:"./.env"});
+    dotEnv.config({ path: "./.env" });
 }
 
 module.exports = {
@@ -20,7 +20,9 @@ module.exports = {
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
     RF_PATH: process.env.RF_PATH,
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
-    CLIENT_URL: process.env.CLIENT_URL,
+    CLIENT_URL: process.env.NODE_ENV !== "production"
+        ? process.env.CLIENT_URL
+        : "v-social-media.netlify.app",
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
