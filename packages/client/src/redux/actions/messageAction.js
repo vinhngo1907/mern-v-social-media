@@ -12,6 +12,9 @@ export const MESSAGE_TYPES = {
     DELETE_MESSAGE: "DELETE_MESSAGE",
     EDIT_MESSAGE: "EDIT_MESSAGE",
     DELETE_CV: "DELETE_CV",
+    UPDATE_MESSAGE_ID: "UPDATE_MESSAGE_ID",
+    DELETE_TEMP_MESSAGE: "DELETE_TEMP_MESSAGE",
+    MARK_TEMP_MESSAGE_DELETED: "MARK_TEMP_MESSAGE_DELETED"
 }
 
 export const getConversations = ({ page = 1, auth }) => async (dispatch) => {
@@ -81,7 +84,7 @@ export const deleteConversation = ({ auth, id, socket }) => async (dispatch) => 
     dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
     try {
         const res = await deleteDataApi(`conversation/${id}`, auth.token);
-        socket.emit("deleteConversation", {...res.data.results, user: auth.user});
+        socket.emit("deleteConversation", { ...res.data.results, user: auth.user });
 
         // Notify
         // const msg = {

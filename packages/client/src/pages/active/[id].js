@@ -35,7 +35,8 @@ const Active = () => {
                     dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
                 );
         }
-    }, [id, dispatch])
+    }, [id, dispatch]);
+
     return (
         <>
             {/* <div>
