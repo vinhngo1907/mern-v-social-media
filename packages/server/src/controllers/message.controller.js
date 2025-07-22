@@ -81,6 +81,42 @@ class MessageController {
             res.status(500).json(responseDTO.serverError(err.message));
         }
     }
+
+    async UpdateMessage(req, res) {
+        try {
+            const user = req.user;
+            const { sender, recipient, media, text, call } = req.body;
+            if (req.body.sender !== user._id.toString()) {
+                return res.status(400).json(responseDTO.badRequest("You don't have joined this conversation"));
+            }
+
+            const conversation = await conversationModel.findOne({
+                $or: [
+                    { recipients: [sender, recipient] },
+                    { recipients: [recipient, sender] }
+                ]
+            });
+            if (!conversation) {
+                return res.status(400).json(responseDTO.badRequest("This conversation not found"));
+            }
+
+            const updatedMess = await messageModel.findOneAndUpdate({
+                _id: req.params.id,
+                sender: req.user._id,
+                conversation: conversation._id
+            }, {
+                sender, recipient, media, text, call
+            });
+
+            if (!updatedMess) {
+                return res.status(400).json(responseDTO.badRequest("This message not found"));
+            }
+
+            res.json(responseDTO.success({ message: "Updated message successfully", message: updatedMess }));
+        } catch (error) {
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
 }
 
 module.exports = MessageController;
