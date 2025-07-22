@@ -3,6 +3,8 @@
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
 const { conversationModel, messageModel } = modelSchema;
+const redisClient = require('../configs/redis.config');
+const logger = require("node-color-log");
 
 class MessageController {
     async CreateMessage(req, res) {
@@ -57,6 +59,26 @@ class MessageController {
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async DeleteTempMessage(req, res) {
+        const { tempId } = req.body;
+
+        if (!tempId) {
+            return res.status(400).json(responseDTO.badRequest('Missing tempId'));
+        }
+
+        try {
+            await redisClient.set(`deleted-temp:${tempId}`, 'true', {
+                EX: 60 * 5, // TTL 5 phút
+            });
+
+            res.json(responseDTO.success('Marked as deleted'));
+        } catch (err) {
+            // console.error();
+            logger.error(`'Redis error:', ${err}`)
+            res.status(500).json(responseDTO.serverError(err.message));
         }
     }
 }

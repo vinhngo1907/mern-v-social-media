@@ -25,4 +25,8 @@ router.post("/", userAuth, messageCtrl.CreateMessage);
  */
 router.delete("/:id", userAuth, messageCtrl.DeleteMessage);
 
+// --- Mark temp deleted (public?) ---
+router.post('/mark-temp-deleted', messageCtrl.DeleteTempMessage);
+
+
 module.exports = router;
