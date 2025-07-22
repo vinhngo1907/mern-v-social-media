@@ -24,6 +24,7 @@ import CallModal from "./components/message/CallModal";
 import ForgotPassord from "./pages/forgot_password";
 import { getDiscoverImages } from "./redux/actions/discoverAction";
 import { getDiscoverVideos } from "./redux/actions/videoAction";
+import { socketUrl } from "./utils/constants";
 
 let scroll = 0;
 function App() {
@@ -33,7 +34,7 @@ function App() {
 
 	useEffect(() => {
 		dispatch(refreshToken());
-		const socket = io();
+		const socket = io(`${socketUrl}`);
 		dispatch({ type: GLOBALTYPES.SOCKET, payload: socket });
 		return () => socket.close();
 

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { apiUrl } from "./constants";
 
 export const getDataApi = (url, token) => {
-    return axios.get(`/api/${url}`, {
+    return axios.get(`${apiUrl}/api/${url}`, {
         withCredentials: true,
         headers: {
             Authorization: `Bearer ${token}`
@@ -10,7 +11,7 @@ export const getDataApi = (url, token) => {
 }
 
 export const postDataApi = (url, post, token) => {
-    return axios.post(`/api/${url}`, post, {
+    return axios.post(`${apiUrl}/api/${url}`, post, {
         withCredentials: true,
         headers: {
             Authorization: `Bearer ${token}`
@@ -19,7 +20,7 @@ export const postDataApi = (url, post, token) => {
 }
 
 export const patchDataApi = (url, post, token) => {
-    return axios.patch(`/api/${url}`, post, {
+    return axios.patch(`${apiUrl}/api/${url}`, post, {
         withCredentials: true,
         headers: {
             Authorization: `Bearer ${token}`
@@ -28,7 +29,7 @@ export const patchDataApi = (url, post, token) => {
 }
 
 export const putDataApi = (url, post, token) => {
-    return axios.put(`/api/${url}`, post, {
+    return axios.put(`${apiUrl}/api/${url}`, post, {
         withCredentials: true,
         headers: {
             Authorization: `Bearer ${token}`
@@ -37,7 +38,7 @@ export const putDataApi = (url, post, token) => {
 }
 
 export const deleteDataApi = (url, token) => {
-    return axios.delete(`/api/${url}`, {
+    return axios.delete(`${apiUrl}/api/${url}`, {
         withCredentials: true,
         headers: {
             Authorization: `Bearer ${token}`
