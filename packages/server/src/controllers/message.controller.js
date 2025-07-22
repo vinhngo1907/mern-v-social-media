@@ -3,6 +3,8 @@
 const { responseDTO, APIFeatures } = require("../utils");
 const { modelSchema } = require("../db");
 const { conversationModel, messageModel } = modelSchema;
+const redisClient = require('../configs/redis.config');
+const logger = require("node-color-log");
 
 class MessageController {
     async CreateMessage(req, res) {
@@ -56,6 +58,62 @@ class MessageController {
             res.status(200).json(responseDTO.success("Deleted message in successfully"));
         } catch (error) {
             console.log(error);
+            return res.status(500).json(responseDTO.serverError(error.message));
+        }
+    }
+
+    async DeleteTempMessage(req, res) {
+        const { tempId } = req.body;
+
+        if (!tempId) {
+            return res.status(400).json(responseDTO.badRequest('Missing tempId'));
+        }
+
+        try {
+            await redisClient.set(`deleted-temp:${tempId}`, 'true', {
+                EX: 60 * 5, // TTL 5 phút
+            });
+
+            res.json(responseDTO.success('Marked as deleted'));
+        } catch (err) {
+            // console.error();
+            logger.error(`'Redis error:', ${err}`)
+            res.status(500).json(responseDTO.serverError(err.message));
+        }
+    }
+
+    async UpdateMessage(req, res) {
+        try {
+            const user = req.user;
+            const { sender, recipient, media, text, call } = req.body;
+            if (req.body.sender !== user._id.toString()) {
+                return res.status(400).json(responseDTO.badRequest("You don't have joined this conversation"));
+            }
+
+            const conversation = await conversationModel.findOne({
+                $or: [
+                    { recipients: [sender, recipient] },
+                    { recipients: [recipient, sender] }
+                ]
+            });
+            if (!conversation) {
+                return res.status(400).json(responseDTO.badRequest("This conversation not found"));
+            }
+
+            const updatedMess = await messageModel.findOneAndUpdate({
+                _id: req.params.id,
+                sender: req.user._id,
+                conversation: conversation._id
+            }, {
+                sender, recipient, media, text, call
+            });
+
+            if (!updatedMess) {
+                return res.status(400).json(responseDTO.badRequest("This message not found"));
+            }
+
+            res.json(responseDTO.success({ message: "Updated message successfully", message: updatedMess }));
+        } catch (error) {
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }

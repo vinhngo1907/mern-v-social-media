@@ -65,6 +65,19 @@ const SocketClient = () => {
         return () => socket.off("deleteMessageToClient");
     }, [socket, dispatch]);
 
+    useEffect(() => {
+        socket.on("editMessageToClient", (data) => {
+            dispatch({
+                type: MESSAGE_TYPES.EDIT_MESSAGE,
+                payload: {
+                    newData: data.listMessages,
+                    _id: data.msg.sender
+                }
+            });
+        })
+        return () => socket.off("editMessageToClient");
+    }, [socket, dispatch])
+
     // Social
     useEffect(() => {
         socket.on("fetchYoutubeStats", (data) => {

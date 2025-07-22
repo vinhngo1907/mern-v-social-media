@@ -1,6 +1,6 @@
-import { deleteDataApi, getDataApi, postDataApi } from "../../utils/fetchData";
+import { deleteDataApi, getDataApi, postDataApi, putDataApi } from "../../utils/fetchData";
 import { imageDestroy } from "../../utils/imageUpload";
-import { DeleteData, GLOBALTYPES } from "./globalTypes";
+import { DeleteData, EditData, GLOBALTYPES } from "./globalTypes";
 // import { createNotify, removeNotify } from "./notifyAction";
 
 export const MESSAGE_TYPES = {
@@ -12,6 +12,9 @@ export const MESSAGE_TYPES = {
     DELETE_MESSAGE: "DELETE_MESSAGE",
     EDIT_MESSAGE: "EDIT_MESSAGE",
     DELETE_CV: "DELETE_CV",
+    UPDATE_MESSAGE_ID: "UPDATE_MESSAGE_ID",
+    DELETE_TEMP_MESSAGE: "DELETE_TEMP_MESSAGE",
+    MARK_TEMP_MESSAGE_DELETED: "MARK_TEMP_MESSAGE_DELETED"
 }
 
 export const getConversations = ({ page = 1, auth }) => async (dispatch) => {
@@ -81,7 +84,7 @@ export const deleteConversation = ({ auth, id, socket }) => async (dispatch) => 
     dispatch({ type: MESSAGE_TYPES.DELETE_CV, payload: id });
     try {
         const res = await deleteDataApi(`conversation/${id}`, auth.token);
-        socket.emit("deleteConversation", {...res.data.results, user: auth.user});
+        socket.emit("deleteConversation", { ...res.data.results, user: auth.user });
 
         // Notify
         // const msg = {
@@ -128,11 +131,26 @@ export const deleteMessage = ({ msg, data, auth, socket }) => async (dispatch) =
     }
 }
 
-export const editMessage = ({ msg, data, auth }) => async (dispatch) => {
+export const editMessage = ({ id, msg, auth, data, socket }) => async (dispatch) => {
+    const newData = EditData(data, msg, msg._id);
+    dispatch({
+        type: MESSAGE_TYPES.EDIT_MESSAGE,
+        payload: {
+            _id: msg.recipient,
+            newData
+        }
+    });
+    socket.emit('editMessage', { listMessages: newData, msg });
     try {
-
-    } catch (error) {
-        console.log(error);
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error?.response?.data?.message } });
+        await putDataApi(`message/${msg._id}`, msg, auth.token);
+    } catch (err) {
+        console.log(err);
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: {
+                error: err?.response?.data?.message ||
+                    "Something wrong when edit mess!!!"
+            }
+        });
     }
 }

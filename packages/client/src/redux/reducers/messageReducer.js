@@ -80,10 +80,61 @@ const messageReducer = (state = initialState, action) => {
                 ...state,
                 data: state.data.map(
                     (mess) => mess._id === action.payload._id
-                    ? {...mess, messages: action.payload.newData}
-                    : mess
+                        ? { ...mess, messages: action.payload.newData }
+                        : mess
                 )
             }
+
+        case MESSAGE_TYPES.EDIT_MESSAGE:
+            console.log("action payload", action.payload)
+            const new_data = state.data.map(item =>
+                item._id === action.payload._id
+                    ? { ...item, messages: action.payload.newData }
+                    : item);
+
+            // console.log({
+            //     ...state,
+            //     data: newData,
+            //     newData
+            // })
+            return {
+                ...state,
+                data: new_data
+            }
+        case MESSAGE_TYPES.DELETE_TEMP_MESSAGE:
+            return {
+                ...state,
+                // messages: state.data.messages.filter(msg => msg._id !== action.payload.tempId)
+                data: state.data.map(item => ({
+                    ...item,
+                    messages: item.messages.filter(msg => msg._id !== action.payload.tempId)
+                }))
+
+            };
+
+        case MESSAGE_TYPES.UPDATE_MESSAGE_ID:
+            const { tempId, savedMsg } = action.payload;
+            const wasDeleted = state.deletedTempIds?.includes(tempId); // optional chaining
+
+            return {
+                ...state,
+                data: wasDeleted
+                    ? state.data
+                    : state.data.map(conversation => ({
+                        ...conversation,
+                        messages: conversation.messages.map(msg =>
+                            msg._id === tempId ? { ...savedMsg, user: msg.user } : msg
+                        )
+                    })),
+                deletedTempIds: state.deletedTempIds?.filter(id => id !== tempId)
+            };
+
+        case MESSAGE_TYPES.MARK_TEMP_MESSAGE_DELETED:
+            return {
+                ...state,
+                deletedTempIds: [...(state.deletedTempIds || []), action.payload.tempId]
+            };
+
 
         default:
             return state;
