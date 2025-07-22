@@ -24,7 +24,7 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
         // dispatch(editMessage({ id, msg, auth, data, socket }))
         setIsEditing(true);
     }
-    
+
     const handleSaveEdit = () => {
         if (editText.trim() && editText !== msg.text) {
             dispatch(editMessage({
@@ -37,6 +37,11 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
         }
         setIsEditing(false);
     }
+
+    const handleCancelEdit = () => {
+        setEditText(msg.text);
+        setIsEditing(false);
+    };
 
     return (
         <>
