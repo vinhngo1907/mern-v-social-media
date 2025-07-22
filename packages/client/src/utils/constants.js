@@ -8,7 +8,7 @@ export const socketUrl =
 		? "http://localhost:5001"
 		: "https://mern-v-chat-app.onrender.com"
 
-export const clientUrl = process.env.NODE_ENV !== "production"
+export const BASE_URL = process.env.NODE_ENV !== "production"
 	? "http://localhost:5002"
 	: "https://mern-v-social-media.netlify.app";
 
