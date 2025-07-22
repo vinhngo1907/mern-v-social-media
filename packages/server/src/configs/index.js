@@ -22,7 +22,7 @@ module.exports = {
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
     CLIENT_URL: process.env.NODE_ENV !== "production"
         ? process.env.CLIENT_URL
-        : "v-social-media.netlify.app",
+        : "https://v-social-media.netlify.app",
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
