@@ -89,6 +89,14 @@ function SocketRoute(io, socketInfo) {
             }
         });
 
+        socket.on("editMessage", (data) => {
+            console.log({data});
+            const user = users.find(u => u.id === data.msg.recipient);
+            if (user) {
+                socket.to(`${user.socketId}`).emit('editMessageToClient', data);
+            }
+        })
+
         // Post
         socket.on("likePost", (post) => {
             logger.info("Like post");
@@ -336,7 +344,7 @@ function SocketRoute(io, socketInfo) {
 
         const { playingVideo, playedTime } = getPlayingVideo();
         socket.emit('playingVideo', { playingVideo, playedTime });
-        
+
         io.emit('senior-tracks-update', getSenior());
         io.emit('junior-tracks-update', getJunior());
         io.emit('other-tracks-update', getOther());

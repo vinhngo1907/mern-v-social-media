@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { deleteMessage, editMessage } from "../../redux/actions/messageAction";
@@ -8,15 +8,34 @@ import Times from "./Times";
 
 const MsgDisplay = ({ user, msg, theme, data }) => {
     const { auth, socket } = useSelector(state => state);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editText, setEditText] = useState(msg.text);
+
     const dispatch = useDispatch();
+
     const handleDeleteMessage = () => {
         if (window.confirm("Do you want to continue delete message?")) {
             dispatch(deleteMessage({ msg, auth, data, socket }))
         }
     }
+
     const { id } = useParams();
     const handleEditMessage = () => {
-        dispatch(editMessage({ id, msg, auth, data, socket }))
+        // dispatch(editMessage({ id, msg, auth, data, socket }))
+        setIsEditing(true);
+    }
+    
+    const handleSaveEdit = () => {
+        if (editText.trim() && editText !== msg.text) {
+            dispatch(editMessage({
+                id,
+                msg: {
+                    ...msg,
+                    text: editText
+                }, auth, data, socket
+            }))
+        }
+        setIsEditing(false);
     }
 
     return (
@@ -33,7 +52,7 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                         <i className="fas fa-edit text-primary" onClick={handleEditMessage} />
                     </div>
                 }
-                <div className="chat_details">
+                {/* <div className="chat_details">
                     {
                         msg.text && <p className="chat_text" style={{ filter: theme ? "invert(1)" : "invert(0)" }}>{msg.text}</p>
                     }
@@ -48,6 +67,47 @@ const MsgDisplay = ({ user, msg, theme, data }) => {
                             </div>
                         ))
                     }
+                </div> */}
+                <div className="chat_details">
+                    {isEditing ? (
+                        <div className="mb-2">
+                            <textarea
+                                className="form-control mb-2"
+                                rows="2"
+                                value={editText}
+                                onChange={(e) => setEditText(e.target.value)}
+                            />
+                            <button
+                                className="btn btn-success btn-sm mr-2"
+                                onClick={handleSaveEdit}
+                            >
+                                Save
+                            </button>
+                            <button
+                                className="btn btn-secondary btn-sm"
+                                onClick={handleCancelEdit}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    ) : (
+                        msg.text && (
+                            <p
+                                className="chat_text"
+                                style={{ filter: theme ? "invert(1)" : "invert(0)" }}
+                            >
+                                {msg.text}
+                            </p>
+                        )
+                    )}
+
+                    {msg.media.map((item, index) => (
+                        <div key={index}>
+                            {item.url.match(/video/i)
+                                ? videoShow(item.url, theme)
+                                : imageShow(item.url, theme)}
+                        </div>
+                    ))}
                 </div>
                 {
                     msg.call &&

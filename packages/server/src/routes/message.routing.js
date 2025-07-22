@@ -25,4 +25,14 @@ router.post("/", userAuth, messageCtrl.CreateMessage);
  */
 router.delete("/:id", userAuth, messageCtrl.DeleteMessage);
 
+// --- Mark temp deleted (public?) ---
+router.post('/mark-temp-deleted', messageCtrl.DeleteTempMessage);
+
+/**
+ * @route DELETE api/message
+ * @desc Delete message by id
+ * @access Private
+ */
+router.put('/edit/:id', userAuth, messageCtrl.UpdateMessage);
+
 module.exports = router;
