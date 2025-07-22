@@ -12,7 +12,7 @@ const ErrorHandler = require('./utils/errors');
 const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefault } = require('./utils/logger');
 const { jobsUtil } = require("./utils");
 
-module.exports = async (app) => {
+module.exports = async (app, corsOptions) => {
     // cron job fetch stats
     const { CronJob } = cron;
     const job = new CronJob('*/30 * * * *', async () => {
@@ -31,10 +31,13 @@ module.exports = async (app) => {
     app.use(express.json());
 
     // enabling CORS for all requests
-    app.use(cors({
-        origin: "*",
-        credentials: true
-    }));
+    // app.use(cors({
+    //     origin: "*",
+    //     credentials: true
+    // }));
+    app.use(cors(corsOptions));
+
+    app.options('*', cors(corsOptions));
 
     app.use(cookieParser());
     app.use(express.static(__dirname + '/public'));

@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 // import { showErrMsg, showSuccessMsg } from "../../components/alert/Message";
 // import { activeAccount } from "../../redux/actions/authAction";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
-import { postDataAPI } from "../../utils/fetchData";
-import { clientUrl } from "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
+import { postDataApi } from "../../utils/fetchData";
 
 const Active = () => {
     const { id } = useParams();
@@ -16,7 +16,7 @@ const Active = () => {
 
     useEffect(() => {
         if (id) {
-            postDataAPI("auth/active", { active_token: id })
+            postDataApi("auth/active", { active_token: id })
                 .then(res => {
                     // setSuccess(res.data.msg)
 
@@ -46,7 +46,7 @@ const Active = () => {
             </div> */}
             <div className="text-center bg-light py-4">
                 <h6>Welcome V-Social-Media App</h6>
-                <a href={clientUrl}
+                <a href={BASE_URL}
                     target="_blank" rel="noreferrer"
                     className="mb-2 d-block">
                     V-Chat App
