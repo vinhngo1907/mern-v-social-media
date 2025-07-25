@@ -34,7 +34,10 @@ function App() {
 
 	useEffect(() => {
 		dispatch(refreshToken());
-		const socket = io(`${socketUrl}`);
+		const socket = io(`${socketUrl}`, {
+			withCredentials: true,
+			transports: ['websocket']
+		});
 		dispatch({ type: GLOBALTYPES.SOCKET, payload: socket });
 		return () => socket.close();
 
