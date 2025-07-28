@@ -1,12 +1,12 @@
 export const apiUrl =
 	process.env.NODE_ENV !== 'production'
 		? 'http://localhost:5001'
-		: 'https://mern-v-chat-app.onrender.com'
+		: 'https://mern-v-social-media.onrender.com'
 
 export const socketUrl =
 	process.env.NODE_ENV !== "production"
 		? "http://localhost:5001"
-		: "https://mern-v-chat-app.onrender.com"
+		: "https://mern-v-social-media.onrender.com"
 
 export const BASE_URL = process.env.NODE_ENV !== "production"
 	? "http://localhost:5002"
