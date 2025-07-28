@@ -12,7 +12,7 @@ console.log('✅ Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // console.log('🌐 Incoming Origin:', origin);
+        console.log('🌐 Incoming Origin:', origin);
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
