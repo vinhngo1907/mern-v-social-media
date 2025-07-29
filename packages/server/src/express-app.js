@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require('node-color-log');
 const WebRoute = require('./routes');
-const ErrorHandler = require('./utils/errors');
+// const ErrorHandler = require('./utils/errors');
 // const { loggerUtil } = require('./utils');
 const { errorLogStream, accessLogStream, getCustomErrorMorganFormat, loggerDefault } = require('./utils/logger');
 const { jobsUtil } = require("./utils");
@@ -75,5 +75,5 @@ module.exports = async (app, corsOptions) => {
     });
 
     // Error handlers & middlewares
-    app.use(ErrorHandler);
+    // app.use(ErrorHandler);
 }
