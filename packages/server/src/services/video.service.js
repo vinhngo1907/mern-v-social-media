@@ -23,7 +23,7 @@ function startVideoScheduler(io) {
             }
 
             if ((playingVideo === null || (playedTime > playingVideo?.duration)) && videoQueue.size() > 0) {
-                logger.warn('Dequeue video to playing video');
+                // logger.warn('Dequeue video to playing video');
 
                 playingVideo = videoQueue.dequeue();
                 currentVideoStartedTime = moment();
