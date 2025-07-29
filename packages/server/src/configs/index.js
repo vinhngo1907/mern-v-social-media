@@ -7,6 +7,10 @@ if (process.env.NODE_ENV !== "prod") {
     dotEnv.config({ path: "./.env" });
 }
 
+const clientUrl = process.env.NODE_ENV !== "production"
+    ? process.env.CLIENT_URL
+    : "https://v-social-media.netlify.app";
+
 module.exports = {
     BASE_URL: "/api",
     PORT: process.env.PORT,
@@ -20,9 +24,7 @@ module.exports = {
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
     RF_PATH: process.env.RF_PATH,
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
-    CLIENT_URL: process.env.NODE_ENV !== "production"
-        ? process.env.CLIENT_URL
-        : "https://v-social-media.netlify.app",
+    CLIENT_URL: clientUrl,
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
