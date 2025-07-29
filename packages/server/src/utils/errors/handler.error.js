@@ -1,14 +1,23 @@
+const fs = require('fs');
+const path = require('path');
 const { createLogger, transports } = require('winston');
 const { AppError } = require('./app.error');
 // const { responseDTO } = require('..');
 
+// console.log(__dirname + '../../../logs')
+const logDir = './src/logs/';
+
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+}
+
 const LogErrors = createLogger({
     transports: [
         new transports.Console(),
-        new transports.File({ filename: './src/logs/app_error.log' })
+        // new transports.File({ filename: './src/logs/app_error.log' })
+        new transports.File({ filename: path.join(logDir, "app_error.log") })
     ]
 });
-
 
 class ErrorLogger {
     constructor() { }
