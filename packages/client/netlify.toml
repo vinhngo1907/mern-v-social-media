@@ -1,0 +1,5 @@
+        [[redirects]]
+        from = "/api/*"
+        to = "https://mern-v-social-media.onrender.com/:splat"
+        status = 200
+        force = true
