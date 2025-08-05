@@ -8,7 +8,7 @@ function getEnv(key) {
 exports.getEnv = getEnv;
 
 function getMongoUrl() {
-    const MONGO_DB_URL = getEnv('MONGO_DB_URL');
+    const MONGO_DB_URL = getEnv('MONGODB_URI');
     if (!MONGO_DB_URL) {
         throw new Error(`Mongo db url is undefined.`);
     }
@@ -30,21 +30,22 @@ exports.GITHUB_API_URL = getGithubUrl();
 function getYoutubeConfig() {
     const API_KEY = getEnv('YOUTUBE_API_KEY');
     const YOUTUBE_CHANNEL_ID = getEnv('YOUTUBE_CHANNEL_ID')
-    const MESSAGE_API_URL = getEnv('MESSAGE_API_URL')
+    // const MESSAGE_API_URL = getEnv('MESSAGE_API_URL')
     const YOUTUBE_API_URL = getEnv('YOUTUBE_API_URL')
 
-    if(!API_KEY || !YOUTUBE_CHANNEL_ID || !MESSAGE_API_URL || !YOUTUBE_API_URL) {
+    if (!API_KEY || !YOUTUBE_CHANNEL_ID 
+        // || !MESSAGE_API_URL 
+        || !YOUTUBE_API_URL) {
         throw new Error(`Some of youtube env var are missing, please check \n
         ApiKey: ${API_KEY}\n
         ChannelId: ${YOUTUBE_CHANNEL_ID}\n
-        MessageApiUrl: ${MESSAGE_API_URL}\n
         YoutubeApiUrl: ${YOUTUBE_API_URL}`);
     }
 
     return {
         API_KEY,
         YOUTUBE_CHANNEL_ID,
-        MESSAGE_API_URL,
+        // MESSAGE_API_URL,
         SEARCH_API_URL: `${YOUTUBE_API_URL}/search`,
         VIDEO_API_URL: `${YOUTUBE_API_URL}/videos`,
         CHANNEL_API_URL: `${YOUTUBE_API_URL}/channels`
@@ -52,3 +53,18 @@ function getYoutubeConfig() {
 }
 
 exports.YoutubeConfig = getYoutubeConfig();
+
+function isProduction() {
+    const IS_PRODUCTION = getEnv("NODE_ENV") === "production";
+    return IS_PRODUCTION;
+}
+
+exports.IsProduction = isProduction();
+
+function getClientUrl() {
+    const isProd = isProduction();
+    return isProd === false ? getEnv("CLIENT_URL")
+        : "https://v-social-media.netlify.app";
+}
+
+exports.GetClientUrl = getClientUrl();

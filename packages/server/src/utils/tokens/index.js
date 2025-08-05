@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { ACCESS_SECRET, REFRESH_SECRET, ACTIVE_SECRET, RF_PATH } = require("../../configs");
+const { ACCESS_SECRET, REFRESH_SECRET, ACTIVE_SECRET, RF_PATH, IS_PRODUCTION } = require("../../configs");
 const jwtConfig = require("./jwt.token");
 
 class Signature {
@@ -23,11 +23,13 @@ class Signature {
         res.cookie("rf_v_media", rf_token, {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
+            secure: IS_PRODUCTION,
+            sameSite: IS_PRODUCTION ? "None" : "Lax",
             path: RF_PATH
         });
         return rf_token;
     }
-    
+
     GetToken(req) {
         return req.headers.authorization;
     }

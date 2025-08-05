@@ -1,4 +1,5 @@
 const dotEnv = require("dotenv");
+const { GetClientUrl, IsProduction } = require("./env.config");
 
 if (process.env.NODE_ENV !== "prod") {
     const configFile = `./.env.${process.env.NODE_ENV}`;
@@ -7,9 +8,9 @@ if (process.env.NODE_ENV !== "prod") {
     dotEnv.config({ path: "./.env" });
 }
 
-const clientUrl = process.env.NODE_ENV !== "production"
-    ? process.env.CLIENT_URL
-    : "https://v-social-media.netlify.app";
+// const clientUrl = process.env.NODE_ENV !== "production"
+//     ? process.env.CLIENT_URL
+//     : "https://v-social-media.netlify.app";
 
 module.exports = {
     BASE_URL: "/api",
@@ -24,7 +25,8 @@ module.exports = {
     SENDER_MAIL: process.env.SENDER_EMAIL_ADDRESS,
     RF_PATH: process.env.RF_PATH,
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
-    CLIENT_URL: clientUrl,
+    // CLIENT_URL: clientUrl,
+    CLIENT_URL: GetClientUrl,
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
@@ -51,5 +53,7 @@ module.exports = {
 
     SUPER_ADMIN_SECRET_KEY: process.env.SUPER_ADMIN_SECRET_KEY,
 
-    REDIS_URL: process.env.REDIS_URL
+    REDIS_URL: process.env.REDIS_URL,
+
+    IS_PRODUCTION: IsProduction
 };
