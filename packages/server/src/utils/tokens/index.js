@@ -20,11 +20,12 @@ class Signature {
 
     async GenerateRefreshToken(payload, res) {
         const rf_token = await this.GenerateSignature(payload, REFRESH_SECRET, "7d");
+        console.log({IS_PRODUCTION});
         res.cookie("rf_v_media", rf_token, {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
-            secure: IS_PRODUCTION,
-            sameSite: IS_PRODUCTION ? "None" : "Lax",
+            secure: true,
+            sameSite: "None",
             path: RF_PATH
         });
         return rf_token;
