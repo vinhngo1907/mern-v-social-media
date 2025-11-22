@@ -10,7 +10,7 @@ import { refreshToken } from './redux/authSlice';
 import Upload from './components/Upload';
 import Alert from './components/alert/Alert'
 import PrivateRouter from './customRouter/PrivateRouter';
-import Header from './components/Header';
+import Header from './components/header/Header';
 import Transactions from './components/Transactions';
 import Register from './components/Register';
 
