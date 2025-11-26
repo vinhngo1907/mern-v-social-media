@@ -1,0 +1,93 @@
+# # cSpell:ignore dockerhub buildx DOCKERHUB
+# name: Build and publish Docker image
+# description: Build and publish Docker image to GitHub Container Registry
+
+# inputs:
+#   IMAGE_NAME:
+#     description: 'Docker image name to deploy'
+#     required: true
+#   IMAGE_TAG:
+#     description: 'Docker image tag to deploy'
+#     required: true
+#   GHCR_TOKEN:
+#     description: 'GHCR token for authentication'
+#     required: true
+#   GHCR_USERNAME:
+#     description: 'GHCR username for authentication'
+#     required: true
+#   REGISTRY:
+#     description: 'Container registry URL'
+#     required: false
+#     default: 'ghcr.io'
+#   REPOSITORY_OWNER:
+#     description: 'Repository owner (organization or user)'
+#     required: true
+
+# runs:
+#   using: 'composite'
+#   steps:
+#     - name: Checkout
+#       uses: actions/checkout@v4
+
+#     - name: Set up Docker Buildx
+#       uses: docker/setup-buildx-action@v3
+#       with:
+#         driver-opts: |
+#           image=moby/buildkit:latest
+
+#     - name: Extract metadata
+#       id: meta
+#       uses: docker/metadata-action@v5
+#       with:
+#         images: ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY_OWNER }}/${{ inputs.IMAGE_NAME }}
+#         tags: |
+#           type=raw,value=${{ inputs.IMAGE_TAG }}
+#           type=sha,prefix=,format=long
+
+#     - name: Login to GitHub Container Registry
+#       uses: docker/login-action@v3
+#       with:
+#         registry: ${{ inputs.REGISTRY }}
+#         username: ${{ inputs.GHCR_USERNAME }}
+#         password: ${{ inputs.GHCR_TOKEN }}
+
+#     - name: Build and push
+#       id: build
+#       shell: bash
+#       run: |
+#         echo "================================================"
+#         echo "Building Docker image for GHCR"
+#         echo "Using public.ecr.aws for base images (no auth required)"
+#         echo "================================================"
+
+#         # Convert multi-line tags to array
+#         IFS=$'\n' read -r -d '' -a TAGS <<< "${{ steps.meta.outputs.tags }}" || true
+
+#         # Build tag arguments
+#         TAG_ARGS=""
+#         for tag in "${TAGS[@]}"; do
+#           if [ -n "$tag" ]; then
+#             TAG_ARGS="$TAG_ARGS --tag $tag"
+#             echo "Will tag as: $tag"
+#           fi
+#         done
+
+#         echo ""
+#         echo "Building and pushing to GHCR..."
+#         echo "------------------------------------------------"
+
+#         docker buildx build \
+#           --platform linux/amd64 \
+#           --push \
+#           --build-arg BASE_REGISTRY="public.ecr.aws/docker/library" \
+#           --build-arg NODE_VERSION=22.11-alpine \
+#           --cache-from type=gha \
+#           --cache-to type=gha,mode=max \
+#           --provenance=false \
+#           $TAG_ARGS \
+#           .
+
+#         echo ""
+#         echo "================================================"
+#         echo "✓ Build and push completed successfully"
+#         echo "================================================"
