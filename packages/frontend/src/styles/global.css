@@ -1,0 +1,204 @@
+
+@import "./auth.css";
+
+@import "./avatar.css";
+
+@import "./loading.css";
+
+@import "./home.css";
+
+@import "./header.css";
+
+@import "./user_card.css";
+
+/* ---------- Sidebar------------ */
+/* @import url("./sidebar.css"); */
+
+/* ---------- Status Modal------------ */
+/* @import url("./status_modal.css"); */
+
+/* ---------- Widget------------ */
+/* @import url("./widget.css"); */
+
+/* ---------- Comment------------ */
+/* @import url("./comment.css"); */
+
+/* ---------- Profile------------ */
+/* @import url("./profile.css"); */
+
+/* ---------- Menu------------ */
+@import "./menu.css";
+
+/* ---------- Post thumb ------------ */
+/* @import url("./post_thumb.css"); */
+
+/* ---------- Notifications ------------ */
+/* @import url("./notification.css"); */
+
+/* ---------- Other ------------ */
+/* @import url("./other.css"); */
+
+/* ---------- Socials ------------ */
+/* @import url("./socials.css"); */
+
+/* ---------- Groups ------------ */
+/* @import url("./groups.css"); */
+
+/* --------- Responsive ------ */
+/* @import url("./responsive.css"); */
+
+/* --------- Message ------ */
+/* @import url("./message.css"); */
+
+/* --------- Call Modal ------ */
+/* @import url("./call_modal.css"); */
+
+/* --------- Explore ------ */
+/* @import url("./explore.css"); */
+
+/* --------- Chat box ------ */
+/* @import url("./chat.css"); */
+
+/* --------- Change password ------ */
+/* @import url("./change_pass.css"); */
+
+:root {
+    --primary-color: #4834d4;
+    --success-color: #6ab04c;
+    --warning-color: #f0932b;
+    --danger-color: #eb4d4b;
+
+    --light-color: #212529;
+    --light-second-color: #727475;
+    --light-background: #ffffff;
+    --light-second-background: #f1f1f1;
+
+    --dark-color: #909090;
+    --dark-second-color: #f5f6fa;
+    --dark-background: #23242D;
+    --dark-second-background: #181818;
+}
+
+.light {
+    --main-bg-color: var(--light-background);
+    --second-bg-color: var(--light-second-background);
+    --main-color: var(--light-color);
+    --second-color: var(--light-second-color);
+    --hamburger-url: url("https://svgshare.com/i/aMx.svg");
+    --background-primary: #fdfcfb;
+    --background-secondary: rgba(255, 242, 240, 0.75);
+    --text-primary: #262626;
+    --text-secondary: #747373;
+    --button-bg-1: #181818;
+    --border-1: #202020cb;
+    --border-2: #cdd0d3;
+    --border-3: rgba(75, 75, 75, 0.3);
+    --track-info-name: #181818;
+    --track-no: #464646b3;
+    --modal: #f8f8f8;
+    --q-m: rgba(85, 85, 85, 0.5);
+}
+
+.dark {
+    --main-bg-color: var(--dark-background);
+    --second-bg-color: var(--dark-second-background);
+    --main-color: var(--dark-color);
+    --second-color: var(--dark-second-color);
+    --hamburger-url: url("https://svgshare.com/i/aJm.svg");
+    --background-primary: #080300;
+    --background-secondary: #181818;
+    --text-primary: #fff;
+    --text-secondary: #c4c4c4;
+    --button-bg-1: #fff;
+    --border-1: #ffffff8c;
+    --border-2: #212529;
+    --border-3: rgba(255, 255, 255, 0.1);
+    --track-info-name: #fff;
+    --track-no: #8d8d8db3;
+    --modal: #2c2c2c;
+    --q-m: rgb(255, 255, 255, 0.5);
+}
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
+}
+
+body {
+    /* margin: 0; */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--main-bg-color);
+    color: var(--main-color);
+    --scrollbar-color: #00000000;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#theme {
+    display: none;
+}
+
+#theme:checked~* {
+    filter: invert(1);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.App {
+    width: 100%;
+    min-height: 100vh;
+    background: white;
+}
+
+.main {
+    /* max-width: 1200px; */
+    width: 100%;
+    min-height: 100vh;
+    margin: auto;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    transform: translateY(-3px);
+    border-radius: 50%;
+}
+
+img {
+    object-fit: cover;
+}
+
+textarea {
+    background: var(--second-bg-color);
+    color: var(--main-color);
+    border-radius: 6px 6px 0 0;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 0;
+}
+
+.menu-bar {
+    cursor: pointer;
+}
+
+ul{
+    list-style: none;
+}
+
+.notification-box>ul li figure img {
+    border-radius: 100%;
+}

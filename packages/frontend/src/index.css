@@ -1,0 +1,146 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+#theme {
+    display: none;
+}
+
+#theme:checked~* {
+    filter: invert(1);
+}
+
+.App {
+    width: 100%;
+    min-height: 100vh;
+    background: white;
+}
+
+.main {
+    max-width: 1000px;
+    width: 100%;
+    min-height: 100vh;
+    margin: auto;
+}
+
+img {
+    object-fit: cover;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+
+    button {
+        background-color: #f9f9f9;
+    }
+}
+
+.auth_page {
+    width: 100%;
+    min-height: 100vh;
+    background: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth_page form {
+    background: #fff;
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 50px 25px;
+}
+
+.auth_page form .pass {
+    position: relative;
+}
+
+.auth_page form .pass small {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading svg {
+    font-size: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    animation: text 1s ease-in-out infinite;
+}
+
+@keyframes text {
+    50% {
+        opacity: 0.1
+    }
+}
+
+.loading polygon {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 1;
+    animation: dash 4s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate-reverse;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 234;
+    }
+}
+
+.home {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+}
+
+.home h3 {
+  font-weight: bold;
+  color: #343a40;
+}
+
+.home p {
+  color: #6c757d;
+}
+
+.home .btn {
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.uniform-btn {
+  min-width: 200px;
+  text-align: center;
+}

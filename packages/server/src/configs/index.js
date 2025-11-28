@@ -1,5 +1,5 @@
 const dotEnv = require("dotenv");
-const { GetClientUrl, IsProduction } = require("./env.config");
+const { IsProduction, clientUrls } = require("./env.config");
 
 if (process.env.NODE_ENV !== "prod") {
     const configFile = `./.env.${process.env.NODE_ENV}`;
@@ -26,7 +26,7 @@ module.exports = {
     RF_PATH: process.env.RF_PATH,
     OAUTH_PLAYGROUND: process.env.OAUTH_PLAYGROUND,
     // CLIENT_URL: clientUrl,
-    CLIENT_URL: GetClientUrl,
+    CLIENT_URLS: clientUrls,
     GG_SECRET: process.env.GOOGLE_SECRET,
     FB_SECRET: process.env.FACEBOOK_SECRET,
     CLOUD_NAME: process.env.CLOUD_NAME,
