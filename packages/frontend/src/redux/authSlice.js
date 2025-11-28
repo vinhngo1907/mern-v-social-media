@@ -4,13 +4,12 @@ import {apiUrl} from '../context/constants';
 import {setLoading, setSuccess, setError, setAlertFields} from './alertSlice';
 import valid from '../utils/validation/valid';
 
-export const login = createAsyncThunk('auth/login', 
-  async (data, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
   const {dispatch} = thunkAPI;
   try {
     dispatch(setLoading());
 
-    const res = await postDataAPI(`${apiUrl}/api/auth/login`, data);
+    const res = await postDataAPI(`auth/login`, data);
     localStorage.setItem('firstLogin', true);
 
     dispatch(setSuccess(res.data.message));
@@ -40,7 +39,7 @@ export const register = createAsyncThunk(
     try {
       dispatch(setLoading());
 
-      const res = await postDataAPI(`${apiUrl}/api/auth/register`, data);
+      const res = await postDataAPI(`auth/register`, data);
       localStorage.setItem('firstLogin', true);
 
       dispatch(setSuccess(res.data.message));
@@ -63,7 +62,7 @@ export const refreshToken = createAsyncThunk(
   async (_, thunkAPI) => {
     const firstLogin = localStorage.getItem('firstLogin');
     if (!firstLogin) throw new Error('No login found');
-    const res = await postDataAPI(`${apiUrl}/api/auth/refresh-token`);
+    const res = await postDataAPI(`auth/refresh-token`);
 
     return {
       token: res.data.results.access_token,
@@ -79,7 +78,7 @@ export const loginSMS = createAsyncThunk(
     try {
       dispatch(setLoading());
 
-      const res = await postDataAPI(`${apiUrl}/api/auth/login_sms`, {phone});
+      const res = await postDataAPI(`auth/login_sms`, {phone});
       localStorage.setItem('firstLogin', true);
 
       dispatch(setSuccess(res.data.message));

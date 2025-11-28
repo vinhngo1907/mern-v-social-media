@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import {getDataAPI} from '../../utils/apis/FetchData';
 import UserCard from '../other/UserCard';
+import {useSelector} from 'react-redux';
 
 const Search = () => {
+  const {auth} = useSelector(state => state);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -11,8 +13,9 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     if (search) {
-      getDataAPI(`user?name=${search}`)
+      getDataAPI(`user/search?name=${search}`, auth.token)
         .then(res => {
+          console.log(res.data);
           setUsers(res.data.results);
         })
         .catch(err => console.log(err.response.data.message));
@@ -21,8 +24,8 @@ const Search = () => {
   };
 
   const handleClose = () => {
-    setUsers([]);
     setSearch('');
+    setUsers([]);
   };
 
   return (
@@ -34,6 +37,7 @@ const Search = () => {
           name="Search"
           className="navbar-search-input"
           title="What you searching for..."
+          value={search}
           onChange={e => setSearch(e.target.value)}
         />
         <div className="search_icon" style={{opacity: search ? 0 : 0.3}}>

@@ -2,9 +2,19 @@ import {Link} from 'react-router-dom';
 import Avatar from '../../components/other/Avatar';
 import {useSelector} from 'react-redux';
 
-const UserCard = ({children, user}) => {
+const UserCard = ({
+  children,
+  user,
+  border,
+  handleClose,
+  setShowFollowers,
+  setShowFollowing,
+  type,
+  msg,
+  handleUserClick,
+}) => {
   const {theme} = useSelector(state => state);
-  const handleClose = () => {
+  const handleCloseAll = () => {
     if (handleClose) handleClose();
     if (setShowFollowers) setShowFollowers(false);
     if (setShowFollowing) setShowFollowing(false);
@@ -18,20 +28,23 @@ const UserCard = ({children, user}) => {
     return (
       <>
         <div style={{fill: theme ? 'invert(1)' : 'invert(0)'}}>{user.text}</div>
-        {/* {
-        user.media.length > 0 &&
-        <div>{user.media.length}<i className="fas fa-image" /></div>
-      }
-      {
-        user.call &&
-        <span className="material-icons">
-          {
-            user.call.times === 0
-              ? user.call.video ? 'videocam_off' : 'phone_disabled'
-              : user.call.video ? 'video_camera_front' : 'call'
-          }
-        </span>
-      } */}
+        {user.media.length > 0 && (
+          <div>
+            {user.media.length}
+            <i className="fas fa-image" />
+          </div>
+        )}
+        {user.call && (
+          <span className="material-icons">
+            {user.call.times === 0
+              ? user.call.video
+                ? 'videocam_off'
+                : 'phone_disabled'
+              : user.call.video
+                ? 'video_camera_front'
+                : 'call'}
+          </span>
+        )}
       </>
     );
   };
