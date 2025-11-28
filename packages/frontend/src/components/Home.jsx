@@ -1,24 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import LeftSideBar from './global/LeftSideBar';
+import Status from './home/Status';
+import RightSideBar from './global/RightSideBar';
 
 const Home = () => {
-    return (
-        <div className="home row mx-0">
-            <div className="col-md-8">
-                <h3>Welcome to Transaction System</h3>
-                <p>This is the dashboard. Use the link below to upload your CSV file.</p>
-                <div className="d-flex justify-content-center gap-3 flex-wrap">
-                    <Link to="/upload" className="btn btn-lg btn-primary uniform-btn">
-                        📤 Upload CSV
-                    </Link>
-                    <Link to="/transactions" className="btn btn-lg btn-success uniform-btn">
-                        👉 View Imported Transactions
-                    </Link>
-                </div>
-
-            </div>
-        </div>
-    );
+  const { sidebar } = useSelector(state => state);
+  return (
+    <div className={`home row mx-0 ${sidebar ? 'sidebar-expand' : ''}`}>
+      <div className="left_sidebar col-md-3">
+        <LeftSideBar />
+      </div>
+      <div className="main_sidebar col-md-6">
+        <Status />
+      </div>
+      <div className="right_sidebar col-md-3">
+        <RightSideBar />
+      </div>
+    </div>
+  );
 };
 
 export default Home;
