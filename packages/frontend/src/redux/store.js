@@ -1,12 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import alertReducer from './alertSlice';
-import transactionReducer from './transactionSlice';
+import themeReducer from './themeSlice';
+import suggestionReducer from './suggestionSlice';
+import statusReducer from './statusSlice';
 
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        alert: alertReducer,
-        // transaction: transactionReducer
-    }
+  reducer: {
+    auth: authReducer,
+    alert: alertReducer,
+    theme: themeReducer,
+    suggestion: suggestionReducer,
+    status: statusReducer,
+  },
 });
