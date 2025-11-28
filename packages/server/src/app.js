@@ -5,9 +5,9 @@ const expressApp = require('./express-app');
 const { socketApp } = require('./socket-app');
 const { videoService } = require('./services');
 const { startVideoScheduler } = videoService;
-const { CLIENT_URL } = require('./configs');
+const { CLIENT_URLS } = require('./configs');
 
-const allowedOrigins = [CLIENT_URL];
+const allowedOrigins = CLIENT_URLS;
 console.log('✅ Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
@@ -24,7 +24,6 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true
 };
-
 
 const app = express();
 

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { transactionUrl } from '../context/constants';
+import { apiUrl } from '../context/constants';
 
 // Async thunk
 export const getTransactions = createAsyncThunk(
@@ -8,7 +8,7 @@ export const getTransactions = createAsyncThunk(
     async (page = 1, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.token;
-            const res = await axios.get(`${transactionUrl}/api/transactions?page=${page}`, {
+            const res = await axios.get(`${apiUrl}/api/transactions?page=${page}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

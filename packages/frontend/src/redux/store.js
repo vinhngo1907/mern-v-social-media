@@ -7,6 +7,6 @@ export const store = configureStore({
     reducer: {
         auth: authReducer,
         alert: alertReducer,
-        transaction: transactionReducer
+        // transaction: transactionReducer
     }
 });
