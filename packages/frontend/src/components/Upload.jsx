@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { importerUrl } from '../context/constants';
+import { clientUrl } from '../context/constants';
 import { useNavigate } from 'react-router-dom';
 
 const Upload = () => {
@@ -43,7 +43,7 @@ const Upload = () => {
 		formData.append('file', file);
 
 		try {
-			const res = await axios.post(`${importerUrl}/api/upload`, formData, {
+			const res = await axios.post(`${clientUrl}/api/upload`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					Authorization: `Bearer ${token}`,

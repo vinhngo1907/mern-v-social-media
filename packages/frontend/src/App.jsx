@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css'
+import './styles/global.css'
 import Login from './components/Login';
 import Home from './components/Home';
 import { refreshToken } from './redux/authSlice';

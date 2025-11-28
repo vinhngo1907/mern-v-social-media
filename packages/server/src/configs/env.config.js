@@ -68,3 +68,23 @@ function getClientUrl() {
 }
 
 exports.GetClientUrl = getClientUrl();
+
+function getClientUrls() {
+  const isProd = isProduction();
+
+  if (isProd) {
+    return ["https://v-social-media.netlify.app"];
+  }
+
+  const keys = ["CLIENT_URL", "APP_URL"];
+
+  const result =  keys
+    .map(k => getEnv(k))
+    .filter(Boolean)
+    .flatMap(v => v.split(",").map(u => u.trim()));
+
+    return result;
+}
+
+exports.clientUrls = getClientUrls();
+

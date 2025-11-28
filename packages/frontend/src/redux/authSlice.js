@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { postDataAPI } from '../utils/apis/FetchData';
-import { transactionUrl } from '../context/constants';
+import { apiUrl } from '../context/constants';
 import { setLoading, setSuccess, setError, setAlertFields } from './alertSlice';
 import valid from '../utils/validation/valid';
 
 export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
-    // const res = await postDataAPI(`${transactionUrl}/api/auth/login`, data);
+    // const res = await postDataAPI(`${apiUrl}/api/auth/login`, data);
     // localStorage.setItem('firstLogin', true);
     // return {
     //     token: res.data.accessToken,
@@ -16,7 +16,7 @@ export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
     try {
         dispatch(setLoading());
 
-        const res = await postDataAPI(`${transactionUrl}/api/auth/login`, data);
+        const res = await postDataAPI(`${apiUrl}/api/auth/login`, data);
         localStorage.setItem('firstLogin', true);
 
         dispatch(setSuccess(res.data.msg));
@@ -34,7 +34,7 @@ export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
 
 // export const register = createAsyncThunk('auth/register', async (data, thunkAPI) => {
 //     const { dispatch } = thunkAPI; Performance
-//     const res = await postDataAPI(`${transactionUrl}/api/auth/register`, data);
+//     const res = await postDataAPI(`${apiUrl}/api/auth/register`, data);
 //     localStorage.setItem('firstLogin', true);
 //     return {
 //         token: res.data.accessToken,
@@ -57,7 +57,7 @@ export const register = createAsyncThunk(
         try {
             dispatch(setLoading());
 
-            const res = await postDataAPI(`${transactionUrl}/api/auth/register`, data);
+            const res = await postDataAPI(`${apiUrl}/api/auth/register`, data);
             localStorage.setItem('firstLogin', true);
 
             dispatch(setSuccess(res.data.msg));
@@ -78,12 +78,33 @@ export const register = createAsyncThunk(
 export const refreshToken = createAsyncThunk('auth/refreshToken', async (_, thunkAPI) => {
     const firstLogin = localStorage.getItem('firstLogin');
     if (!firstLogin) throw new Error('No login found');
-    const res = await postDataAPI(`${transactionUrl}/api/auth/refresh_token`);
-    // console.log("????", res.data)
+    const res = await postDataAPI(`${apiUrl}/api/auth/refresh-token`);
+    
     return {
-        token: res.data.accessToken,
-        user: res.data.user,
+        token: res.data.results.access_token,
+        user: res.data.results.user,
     };
+});
+
+export const loginSMS = createAsyncThunk('auth/loginSMS', async (phone, thunkAPI) => {
+    const { dispatch } = thunkAPI;  
+    try {
+        dispatch(setLoading());
+
+        const res = await postDataAPI(`${apiUrl}/api/auth/login_sms`, { phone });
+        localStorage.setItem('firstLogin', true);
+
+        dispatch(setSuccess(res.data.message));
+
+        return {
+            token: res.data.results.access_token,
+            user: res.data.results.user,
+        };
+    } catch (error) {
+        const message = error.response?.data?.message || 'Login with SMS failed';
+        dispatch(setError(message));
+        return thunkAPI.rejectWithValue(message);
+    }       
 });
 
 // 🧠 Slice

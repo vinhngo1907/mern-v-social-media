@@ -1,9 +1,9 @@
-export const transactionUrl =
+export const apiUrl =
     process.env.NODE_ENV !== 'production'
-        ? 'http://localhost:3002'
-        : 'https://transaction-service-ch4q.onrender.com'
+        ? 'http://localhost:5001'
+        : 'https://mern-v-social-media.onrender.com'
 
-export const importerUrl =
+export const clientUrl =
     process.env.NODE_ENV !== 'production'
-        ? 'http://localhost:3001'
-        : 'https://importer-service.onrender.com'
+        ? 'http://localhost:5002'
+        : 'https://v-social-media.netlify.app'
