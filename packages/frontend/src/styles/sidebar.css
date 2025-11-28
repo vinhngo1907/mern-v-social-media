@@ -1,0 +1,127 @@
+/* .left_sidebar,
+.right_sidebar {
+    background: var(--main-bg-color);
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 4px 1px;
+    height: 100vh;
+} */
+/*--- sidebar widgets ---*/
+
+.sidebar {
+    display: table;
+    float: none;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    width: 80%;
+}
+
+.sidebar .widget {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    /* margin-bottom: 20px; */
+    background: #fdfdfd;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+}
+
+.sidebar .widget:last-child {
+    margin-bottom: 0;
+}
+
+.left_sidebar {
+    width: 300px;
+    overflow: hidden;
+    transition: width .5s;
+}
+
+.sidebar-expand .left_sidebar {
+    width: 300px;
+}
+
+.sidebar-expand .main_sidebar {
+    margin-left: 300px;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 260px;
+    overflow-y: auto;
+    /* overflow-y: scroll; */
+    /* height: 100vh; */
+}
+
+.sidebar-nav-item {
+    width: 100%;
+}
+
+.sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    color: var(--main-color);
+    text-decoration: none;
+    width: 100%;
+}
+
+.sidebar-nav-link i {
+    /* font-size: 1.5rem; */
+    color: var(--second-color);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sidebar-nav-link div {
+    min-width: 55px;
+    height: 50px;
+    position: relative;
+}
+
+.sidebar-nav-link:hover {
+    background: var(--second-bg-color);
+}
+
+.sidebar-nav-link.active {
+    background: var(--second-bg-color);
+    color: var(--danger-color);
+}
+
+.sidebar-nav-link.active div {
+    border-left: 5px solid var(--danger-color);
+}
+
+.sidebar-nav-link.active i {
+    color: var(--danger-color);
+    margin-left: -5px;
+}
+
+.sidebar-nav-link:hover {
+    text-decoration: none;
+}
+
+
+/* .main_sidebar{
+    margin-left: 82px;
+    margin-left: 300px;
+} */
+.right_sidebar,
+.left_sidebar,
+.main_sidebar {
+    margin-top: 18px;
+}
+.left_sidebar, .right_sidebar{
+    position: sticky;
+    position: -webkit-sticky;
+    height: 100%;
+    top: -280px;
+    /* left: 60px; */
+}
+/* .left_sidebar:hover{
+    width: 3000px;
+} */
