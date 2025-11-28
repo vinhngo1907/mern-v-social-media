@@ -4,14 +4,8 @@ import {apiUrl} from '../context/constants';
 import {setLoading, setSuccess, setError, setAlertFields} from './alertSlice';
 import valid from '../utils/validation/valid';
 
-export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
-  // const res = await postDataAPI(`${apiUrl}/api/auth/login`, data);
-  // localStorage.setItem('firstLogin', true);
-  // return {
-  //     token: res.data.accessToken,
-  //     user: res.data.user,
-  //     msg: res.data.msg,
-  // };
+export const login = createAsyncThunk('auth/login', 
+  async (data, thunkAPI) => {
   const {dispatch} = thunkAPI;
   try {
     dispatch(setLoading());
@@ -19,29 +13,18 @@ export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
     const res = await postDataAPI(`${apiUrl}/api/auth/login`, data);
     localStorage.setItem('firstLogin', true);
 
-    dispatch(setSuccess(res.data.msg));
+    dispatch(setSuccess(res.data.message));
 
     return {
-      token: res.data.accessToken,
-      user: res.data.user,
-      msg: res.data.msg,
+      token: res.data.results.access_token,
+      user: res.data.results.user,
+      msg: res.data.message,
     };
   } catch (error) {
     dispatch(setError(error.response?.data?.msg || 'Login failed'));
     return thunkAPI.rejectWithValue(error.response?.data?.msg);
   }
 });
-
-// export const register = createAsyncThunk('auth/register', async (data, thunkAPI) => {
-//     const { dispatch } = thunkAPI; Performance
-//     const res = await postDataAPI(`${apiUrl}/api/auth/register`, data);
-//     localStorage.setItem('firstLogin', true);
-//     return {
-//         token: res.data.accessToken,
-//         user: res.data.user,
-//         msg: res.data.msg,
-//     };
-// });
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -60,15 +43,15 @@ export const register = createAsyncThunk(
       const res = await postDataAPI(`${apiUrl}/api/auth/register`, data);
       localStorage.setItem('firstLogin', true);
 
-      dispatch(setSuccess(res.data.msg));
+      dispatch(setSuccess(res.data.message));
 
       return {
-        token: res.data.accessToken,
-        user: res.data.user,
-        msg: res.data.msg,
+        token: res.data.results.accessToken,
+        user: res.data.results.user,
+        msg: res.data.message,
       };
     } catch (error) {
-      const message = error.response?.data?.msg || 'Register failed';
+      const message = error.response?.data?.message || 'Register failed';
       dispatch(setError(message));
       return thunkAPI.rejectWithValue(message);
     }

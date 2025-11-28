@@ -22,10 +22,10 @@ function App() {
   return (
     <Router>
       <Alert />
-	  <input type="checkbox" id="theme" />
+      <input type="checkbox" id="theme" />
       <div className={`App ${status && 'mode'}`}>
         <div className="main">
-	  		{auth.token && <Header />}
+          {auth.token && <Header />}
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />

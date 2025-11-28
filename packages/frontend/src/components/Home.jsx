@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import LeftSideBar from './global/LeftSideBar';
 import Status from './home/Status';
 import RightSideBar from './global/RightSideBar';
 
 const Home = () => {
-  const { sidebar } = useSelector(state => state);
+  const {sidebar} = useSelector(state => state);
   return (
     <div className={`home row mx-0 ${sidebar ? 'sidebar-expand' : ''}`}>
       <div className="left_sidebar col-md-3">
