@@ -1,3 +1,4 @@
+const { responseDTO } = require("../utils");
 class MonitoringController {
     performanceMetrics = new Map();
     maxMetricsPerEndpoint = 1000;
@@ -17,7 +18,7 @@ class MonitoringController {
     }
 
     getPerformanceStats(req, res) {
-        res.json({
+        res.json(responseDTO.success("Performance statistics fetched successfully", {
             endpoints: this.getAllEndpointsStats(),
             systemInfo: {
                 nodeVersion: process.version,
@@ -26,12 +27,12 @@ class MonitoringController {
                 memoryUsage: process.memoryUsage(),
                 cpuUsage: process.cpuUsage(),
             }
-        })
+        }))
     }
 
     getAllEndpointsStats() {
         const stats = [];
-        this.performanceMetrics.forEach((_,endPoint) => {
+        this.performanceMetrics.forEach((_, endPoint) => {
             const endpointStats = this.getEndpointStats(endPoint);
             if (endpointStats) {
                 stats.push(endpointStats);
@@ -68,6 +69,33 @@ class MonitoringController {
     percentile(sortedArray, p) {
         const index = Math.ceil(p * sortedArray.length) - 1;
         return sortedArray[index] || 0;
+    }
+
+    generatePerformanceRecommendations(stats) {
+        const recommendations = [];
+        const slowEndpoints = stats.filter(s => s.averageResponseTime > 500);
+        if (slowEndpoints.length > 0) {
+            recommendations.push(
+                `${slowEndpoints.length} endpoints have average response time > 500ms. Consider optimizing database queries or caching.`,
+            );
+        }
+        stats.forEach(stat => {
+            const variance = stat.maxResponseTime - stat.minResponseTime;
+            if (variance > 1000) {
+                recommendations.push(
+                    `Endpoint ${stat.endpoint} has high response time variance (${variance}ms). Investigate potential performance bottlenecks.`,
+                );
+            }
+        });
+
+        const lowSuccessRateEndpoints = stats.filter(s => s.successRate < 95);
+        if (lowSuccessRateEndpoints.length > 0) {
+            recommendations.push(
+                `${lowSuccessRateEndpoints.length} endpoints have success rate < 95%. Review error handling and validation.`,
+            );
+        }
+
+        return recommendations;
     }
 }
 
