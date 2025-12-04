@@ -4,11 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import Login from './components/Login';
 import Home from './components/Home';
 import {refreshToken} from './redux/authSlice';
-import Upload from './components/Upload';
 import Alert from './components/alert/Alert';
 import PrivateRouter from './customRouter/PrivateRouter';
 import Header from './components/header';
-import Transactions from './components/Transactions';
 import Register from './components/Register';
 
 function App() {
@@ -33,22 +31,22 @@ function App() {
             <Route path="/" element={auth.token ? <Home /> : <Login />} />
 
             {/* Private Routes */}
-            <Route
+            {/* <Route
               path="/upload"
               element={
                 <PrivateRouter>
-                  <Upload />
+                  <Images />
                 </PrivateRouter>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/transactions"
               element={
                 <PrivateRouter>
                   <Transactions />
                 </PrivateRouter>
               }
-            />
+            /> */}
           </Routes>
         </div>
       </div>
