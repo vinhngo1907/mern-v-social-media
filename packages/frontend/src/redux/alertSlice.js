@@ -2,11 +2,12 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
-  error: '',
-  success: '',
-  email: '',
-  password: '',
-  cf_password: '',
+  error: null,
+  success: null,
+  fields: null,
+  // email: '',
+  // password: '',
+  // cf_password: '',
 };
 
 const alertSlice = createSlice({
@@ -15,27 +16,27 @@ const alertSlice = createSlice({
   reducers: {
     setLoading: state => {
       state.loading = true;
-      state.error = '';
-      state.success = '';
-      state.email = '';
-      state.password = '';
-      state.cf_password = '';
+      state.error = null;
+      state.success = null;
+      // state.email = '';
+      // state.password = '';
+      // state.cf_password = '';
     },
     setSuccess: (state, action) => {
       state.loading = false;
       state.success = action.payload;
-      state.error = '';
-      state.email = '';
-      state.password = '';
-      state.cf_password = '';
+      state.error = null;
+      // state.email = '';
+      // state.password = '';
+      // state.cf_password = '';
     },
     setError: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.success = '';
-      state.email = '';
-      state.password = '';
-      state.cf_password = '';
+      state.success = null;
+      // state.email = '';
+      // state.password = '';
+      // state.cf_password = '';
     },
     setAlertFields: (state, action) => {
       return {

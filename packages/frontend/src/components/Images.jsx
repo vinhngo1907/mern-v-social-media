@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getTransactions} from '../redux/transactionSlice';
 import {useNavigate} from 'react-router-dom';
 
-const Transactions = () => {
+const Images = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {data, loading, error, page, totalPages} = useSelector(
@@ -88,4 +88,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Images;
