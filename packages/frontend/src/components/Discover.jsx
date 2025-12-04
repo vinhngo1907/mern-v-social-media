@@ -4,18 +4,13 @@ import axios from 'axios';
 import {clientUrl} from '../context/constants';
 import {useNavigate} from 'react-router-dom';
 
-const Upload = () => {
+const Discover = () => {
   const [file, setFile] = useState(null);
   const [uploadResult, setUploadResult] = useState(null);
   const [error, setError] = useState('');
   const {token} = useSelector(state => state.auth);
   const navigate = useNavigate();
 
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  //   setUploadResult(null);
-  //   setError('');
-  // };
   const handleFileChange = e => {
     const selectedFile = e.target.files[0];
     const maxSize = 10 * 1024; // 10 KB
@@ -54,10 +49,6 @@ const Upload = () => {
 
       setUploadResult(res.data);
 
-      // 👉 Auto redirect after 2s if need
-      // setTimeout(() => {
-      //   navigate('/transactions');
-      // }, 2000);
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || 'Upload failed');
@@ -104,4 +95,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default Discover;
