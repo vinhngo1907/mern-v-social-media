@@ -45,7 +45,7 @@ export const register = createAsyncThunk(
       dispatch(setSuccess(res.data.message));
 
       return {
-        token: res.data.results.accessToken,
+        token: res.data.results.access_token,
         user: res.data.results.user,
         msg: res.data.message,
       };

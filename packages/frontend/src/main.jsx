@@ -4,6 +4,7 @@ import './styles/global.css';
 import App from './App.jsx';
 import {Provider} from 'react-redux';
 import {store} from './redux/store';
+import './firebase/config';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
