@@ -18,7 +18,7 @@ RUN apk add --no-cache build-base dumb-init jq libc6-compat python3
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
 COPY prisma/schema.prisma ./prisma/schema.prisma
-COPY prisma/schema.murror.prisma ./prisma/schema.murror.prisma
+COPY prisma/schema.v-social-media.prisma ./prisma/schema.v-social-media.prisma
 
 # Extract pnpm version and install dependencies with cache mounts
 RUN --mount=type=cache,target=/root/.npm \
@@ -40,7 +40,7 @@ COPY --from=deps /app/package.json ./
 COPY . .
 
 ARG DATABASE_URL="file:./dev.db"
-ARG MURROR_DATABASE_URL="file:./murror.db"
+ARG SOCIAL_MEDIA_DATABASE_URL="file:./v-social-media.db"
 RUN npm run db:generate
 
 # Build the application and clean up
@@ -74,8 +74,8 @@ FROM ${BASE_REGISTRY}/node:${NODE_VERSION} AS runner
 WORKDIR /app
 
 # Create non-root user
-RUN addgroup -g 1001 -S murror && \
-    adduser -S be -u 1001 -G murror && \
+RUN addgroup -g 1001 -S v-social-media && \
+    adduser -S be -u 1001 -G v-social-media && \
     apk add --no-cache dumb-init
 
 # Set environment variables
@@ -84,14 +84,14 @@ ENV NODE_ENV=production \
     NODE_OPTIONS="--max-old-space-size=1024"
 
 # Copy production dependencies
-COPY --from=prod-deps --chown=be:murror /app/node_modules ./node_modules
-COPY --from=prod-deps --chown=be:murror /app/package.json ./
+COPY --from=prod-deps --chown=be:v-social-media /app/node_modules ./node_modules
+COPY --from=prod-deps --chown=be:v-social-media /app/package.json ./
 
 # Copy built application
-COPY --from=builder --chown=be:murror /app/dist ./dist
-# COPY --from=builder --chown=be:murror /app/node_modules/@prisma/client ./node_modules/@prisma/client
-# COPY --from=builder --chown=be:murror /app/node_modules/.prisma/client ./node_modules/.prisma/client
-# COPY --from=builder --chown=be:murror /app/node_modules/.pnpm/@prisma+client@6.10.1_prisma@6.10.1_typescript@5.8.3__typescript@5.8.3/node_modules/ ./node_modules/.pnpm/@prisma+client@6.10.1_prisma@6.10.1_typescript@5.8.3__typescript@5.8.3/node_modules/
+COPY --from=builder --chown=be:v-social-media /app/dist ./dist
+# COPY --from=builder --chown=be:v-social-media /app/node_modules/@prisma/client ./node_modules/@prisma/client
+# COPY --from=builder --chown=be:v-social-media /app/node_modules/.prisma/client ./node_modules/.prisma/client
+# COPY --from=builder --chown=be:v-social-media /app/node_modules/.pnpm/@prisma+client@6.10.1_prisma@6.10.1_typescript@5.8.3__typescript@5.8.3/node_modules/ ./node_modules/.pnpm/@prisma+client@6.10.1_prisma@6.10.1_typescript@5.8.3__typescript@5.8.3/node_modules/
 
 # Switch to non-root user
 USER be

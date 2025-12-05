@@ -26,7 +26,9 @@ const LoginPass = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Email/Username/Mobile</label>
+          <label className="form-label" htmlFor="account">
+            Email/Username/Mobile
+          </label>
           <input
             type="text"
             className="form-control"
@@ -35,6 +37,7 @@ const LoginPass = () => {
             aria-describedby="emailHelp"
             onChange={handleChangeInput}
             value={account}
+            placeholder="Example@gmail.com/+84374481936"
           />
 
           <small id="emailHelp" className="form-text text-muted">
@@ -51,6 +54,7 @@ const LoginPass = () => {
               onChange={handleChangeInput}
               value={password}
               name="password"
+              autoComplete="on"
             />
 
             <small onClick={() => setTypePass(!typePass)}>

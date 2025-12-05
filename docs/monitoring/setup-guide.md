@@ -1,6 +1,6 @@
-# Murror API Monitoring Setup
+# Social Media API Monitoring Setup
 
-This document describes the comprehensive monitoring setup for the Murror API service.
+This document describes the comprehensive monitoring setup for the Social Media API service.
 
 ## Overview
 
@@ -16,7 +16,7 @@ The monitoring system provides:
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Murror API │────▶│  Prometheus  │────▶│   Grafana   │
+│  Social Media API │────▶│  Prometheus  │────▶│   Grafana   │
 │   Service   │     │    Server    │     │ Dashboards  │
 └─────────────┘     └──────────────┘     └─────────────┘
        │                    │                     │
@@ -233,7 +233,7 @@ this.businessMetrics.updateDailyMoodCheckinProgress(userId, 0.75);
 
 ### Available Dashboards
 
-#### 1. Infrastructure Dashboard (`murror-api-infrastructure.json`)
+#### 1. Infrastructure Dashboard (`v-social-media-api-infrastructure.json`)
 
 - **Request Rate by Pod** - Requests per second per pod
 - **P95 Latency by Pod** - 95th percentile latency
@@ -242,7 +242,7 @@ this.businessMetrics.updateDailyMoodCheckinProgress(userId, 0.75);
 - **Database Query Performance** - Query latency by operation
 - **External API Calls** - External service performance
 
-#### 2. Business Metrics Dashboard (`murror-api-business-metrics.json`)
+#### 2. Business Metrics Dashboard (`v-social-media-api-business-metrics.json`)
 
 - **User Activity** - DAU/WAU/MAU statistics
 - **Daily Mood Checkins** - Checkin rates and statuses
@@ -319,7 +319,7 @@ kubectl get prometheus -n monitoring -o yaml | grep serviceMonitorSelector
 3. Check metrics endpoint:
 
 ```bash
-kubectl port-forward svc/murror-api 3000:3000
+kubectl port-forward svc/v-social-media-api 3000:3000
 curl http://localhost:3000/api/metrics
 ```
 
@@ -328,7 +328,7 @@ curl http://localhost:3000/api/metrics
 Monitor metric cardinality:
 
 ```promql
-count(count by (__name__)({app="murror-api"}))
+count(count by (__name__)({app="v-social-media-api"}))
 ```
 
 If cardinality is high:

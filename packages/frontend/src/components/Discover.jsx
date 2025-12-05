@@ -48,7 +48,6 @@ const Discover = () => {
       });
 
       setUploadResult(res.data);
-
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || 'Upload failed');

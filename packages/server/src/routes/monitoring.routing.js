@@ -84,4 +84,20 @@ router.get("health/performance", async (req, res) => {
     }
 });
 
+router.get("requests", async (req,res) => {
+    const filters = req.query;
+    const parsedFilters = {
+        ...filters,
+        startTime: filters.startTime ? new Date(filters.startTime) : undefined,
+        endTime: filters.endTime ? new Date(filters.endTime) : undefined,
+        limit: filters.limit ? parseInt(filters.limit) : 100,
+    }
+    const data = await monitoringCtrl.getRequestHistory(parsedFilters);
+    res.status(200).json({
+        success: true,
+        data,
+        message: "Request logs fetched successfully"
+    });
+});
+
 module.exports = router;

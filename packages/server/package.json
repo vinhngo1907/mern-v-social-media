@@ -24,6 +24,7 @@
 		"express-fileupload": "^1.2.0",
 		"express-rate-limit": "^5.2.6",
 		"express-slow-down": "^1.4.0",
+		"firebase-admin": "^13.6.0",
 		"google-auth-library": "^7.1.0",
 		"googleapis": "^61.0.0",
 		"helmet": "^6.1.5",
