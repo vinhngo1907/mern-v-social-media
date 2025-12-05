@@ -1,18 +1,20 @@
 import {
   GoogleAuthProvider,
   FacebookAuthProvider,
-  signInWithPopup, getAuth
+  signInWithPopup,
+  getAuth,
 } from 'firebase/auth';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {socialLogin} from '../../redux/authSlice';
 
 const SoclialLogin = () => {
-  const { auth } = useSelector(state => state);
+  const {auth} = useSelector(state => state);
   const histore = useNavigate();
   useEffect(() => {
     if (auth.token) {
-      return histore("/")
+      return histore('/');
     }
   }, [auth.token, histore]);
 
@@ -24,9 +26,15 @@ const SoclialLogin = () => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log('Google user info:', user);
-      // You can send the user info to your backend for further processing
-      
+      // console.log('Google user info:', user);
+      const idToken = await user.getIdToken();
+// console.log('Google ID Token:', idToken);
+      dispatch(
+        socialLogin({
+          provider: 'google',
+          payload: {idToken: idToken},
+        }),
+      );
     } catch (error) {
       console.error('Error during Google login:', error);
     }
@@ -38,18 +46,26 @@ const SoclialLogin = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log('Facebook user info:', user);
-      // You can send the user info to your backend for further processing
+      const accessToken = result._tokenResponse.oauthAccessToken;
+      const userID = user.providerData[0].uid;
+
+      dispatch(
+        socialLogin({
+          provider: 'facebook',
+          payload: {accessToken, userID},
+        }),
+      );
     } catch (error) {
       console.error('Error during Facebook login:', error);
     }
-  }
+  };
 
   return (
     <>
       {/* GOOGLE LOGIN */}
       <button id="google-login" onClick={handleLoginWithGoogle}>
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Google_Logo_.svg"
+          src="https://developers.google.com/identity/images/g-logo.png"
           alt="Google"
         />
         <span>Login with Google</span>
@@ -63,7 +79,6 @@ const SoclialLogin = () => {
         <span>Login with Facebook</span>
       </button>
     </>
-
   );
 };
 

@@ -26,10 +26,9 @@ const LoginPass = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label 
-          className='form-label'
-          htmlFor="account"
-          >Email/Username/Mobile</label>
+          <label className="form-label" htmlFor="account">
+            Email/Username/Mobile
+          </label>
           <input
             type="text"
             className="form-control"
@@ -55,7 +54,7 @@ const LoginPass = () => {
               onChange={handleChangeInput}
               value={password}
               name="password"
-              autoComplete='on'
+              autoComplete="on"
             />
 
             <small onClick={() => setTypePass(!typePass)}>

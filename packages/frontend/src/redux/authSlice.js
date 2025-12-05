@@ -95,6 +95,52 @@ export const loginSMS = createAsyncThunk(
   },
 );
 
+export const socialLogin = createAsyncThunk(
+  'auth/socialLogin',
+  async ({provider, payload}, thunkAPI) => {
+    const {dispatch} = thunkAPI;
+
+    try {
+      dispatch(setLoading());
+
+      let endpoint = '';
+      let body = {};
+
+      if (provider === 'google') {
+        // Google gửi idToken
+        endpoint = 'auth/social-login/google';
+        body = {idToken: payload.idToken};
+      } else if (provider === 'facebook') {
+        // Facebook gửi accessToken + userID
+        endpoint = 'auth/facebook-login';
+        body = {
+          accessToken: payload.accessToken,
+          userID: payload.userID,
+        };
+      } else {
+        return thunkAPI.rejectWithValue('Provider not supported');
+      }
+
+      // Gửi đúng endpoint và đúng body
+      const res = await postDataAPI(endpoint, body);
+
+      localStorage.setItem('firstLogin', true);
+
+      dispatch(setSuccess(res.data.message));
+
+      return {
+        token: res.data.results.access_token,
+        user: res.data.results.user,
+        msg: res.data.message,
+      };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Social login failed';
+      dispatch(setError(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 // 🧠 Slice
 const initialState = {
   token: '',
@@ -116,6 +162,7 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      // Login
       .addCase(login.pending, state => {
         state.loading = true;
         state.error = null;
@@ -130,6 +177,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      // Register
       .addCase(register.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.user = action.payload.user;
@@ -138,6 +186,21 @@ const authSlice = createSlice({
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.user = action.payload.user;
+      })
+      // SOCIAL LOGIN (Google / Facebook)
+      .addCase(socialLogin.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(socialLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+        state.success = action.payload.msg;
+      })
+      .addCase(socialLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
