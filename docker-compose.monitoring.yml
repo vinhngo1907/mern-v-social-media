@@ -49,7 +49,7 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=social_media_admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=social_media_admin123456
-      - DOCKER_INFLUXDB_INIT_ORG=murror
+      - DOCKER_INFLUXDB_INIT_ORG=v-social-media
       - DOCKER_INFLUXDB_INIT_BUCKET=social_media_api_metrics
       - DOCKER_INFLUXDB_INIT_RETENTION=7d
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=social-media-influxdb-token-2024

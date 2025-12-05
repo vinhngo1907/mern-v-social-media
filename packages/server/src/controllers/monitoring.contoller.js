@@ -97,6 +97,10 @@ class MonitoringController {
 
         return recommendations;
     }
+
+    async getRequestHistory() {
+
+    }
 }
 
 module.exports = MonitoringController;

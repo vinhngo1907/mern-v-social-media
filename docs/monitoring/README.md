@@ -1,6 +1,6 @@
 # Monitoring Documentation
 
-This directory contains comprehensive guides for monitoring the Murror API system.
+This directory contains comprehensive guides for monitoring the Social Media API system.
 
 ## 📚 Available Guides
 

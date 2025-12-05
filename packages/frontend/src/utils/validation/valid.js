@@ -1,6 +1,15 @@
-const valid = ({email, password, cf_password}) => {
-  console.log({email, password, cf_password});
+const valid = ({fullname, username, email, password, cf_password}) => {
   const err = {};
+
+  if (!fullname) {
+    err.fullname = 'Please add your full name.';
+  }
+
+  if (!username) {
+    err.username = 'Please add your username.';
+  } else if (username.replace(/ /g, '').length > 20) {
+    err.username = 'Username is up to 20 chars long.';
+  }
 
   if (!email) {
     err.email = 'Please add your email.';
@@ -25,7 +34,6 @@ const valid = ({email, password, cf_password}) => {
 };
 
 function validateEmail(email) {
-   
   const re =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);

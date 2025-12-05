@@ -1,6 +1,6 @@
 # Redis Configuration for WebSocket Scaling
 
-Redis is required when scaling the Murror API to multiple pods to ensure Socket.IO events are properly distributed across all instances.
+Redis is required when scaling the Social Media API to multiple pods to ensure Socket.IO events are properly distributed across all instances.
 
 ## When You Need Redis
 
@@ -47,7 +47,7 @@ Create the Redis URL secret:
 
 ```bash
 # Create the secret with your external Redis URL
-kubectl create secret generic murror-api-secret \
+kubectl create secret generic v-social-media-api-secret \
   --from-literal=REDIS_URL="redis://:your-password@your-redis-host:6379/0" \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
@@ -67,7 +67,7 @@ app.useWebSocketAdapter(new RedisIoAdapter(app));
 
 ```bash
 # Check API logs for Redis connection
-kubectl logs -l app=murror-api | grep -i redis
+kubectl logs -l app=v-social-media-api | grep -i redis
 
 # You should see:
 # "Connecting to Redis: redis://***@your-redis-host:6379"

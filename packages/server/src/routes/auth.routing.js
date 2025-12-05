@@ -73,6 +73,13 @@ router.post('/facebook-login', authCtrl.FacebookLogin);
  * @desc Reset account if forgot password
  * @access Public
 */
-router.post('/facebook-login', authCtrl.ForgotPassword);
+router.post('/forgot-password', authCtrl.ForgotPassword);
+
+/** 
+ * @route POST api/auth/social-login
+ * @desc Login with social account
+ * @access Public
+*/
+router.post('/social-login/google', authCtrl.SocialLoginGoogle);
 
 module.exports = router;

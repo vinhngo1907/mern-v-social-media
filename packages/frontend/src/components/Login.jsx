@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import LoginPass from './auth/LoginPass';
 import LoginSMS from './auth/LoginSMS';
+import SocialLogin from './auth/SocialLogin';
 
 const Login = () => {
   const {auth} = useSelector(state => state);
@@ -19,9 +20,11 @@ const Login = () => {
         <h3 className="text-uppercase text-center mb-4">V-Network</h3>
         {sms ? <LoginSMS /> : <LoginPass />}
         <div className="hr"> Or Login With </div>
-        {/* <div className="social"></div> */}
+        <div className="social">
+          <SocialLogin />
+        </div>
         <div className="my-2">
-          <small className="row my-2 text text-primary">
+          <small className="row my-2 text-primary" style={{cursor: 'pointer'}}>
             <span className="col-6">
               <Link to="/forgot_password">Forgot password?</Link>
             </span>
