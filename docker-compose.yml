@@ -13,7 +13,7 @@ networks:
 services:
   api:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: docker/Dockerfile.backend
       context: ./server
     volumes:
       - /app/node_modules
@@ -27,7 +27,7 @@ services:
 
   client:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: docker/Dockerfile.frontend
       context: ./client
     volumes:
       - /app/node_modules
