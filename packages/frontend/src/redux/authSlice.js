@@ -107,11 +107,9 @@ export const socialLogin = createAsyncThunk(
       let body = {};
 
       if (provider === 'google') {
-        // Google gửi idToken
         endpoint = 'auth/social-login/google';
         body = {idToken: payload.idToken};
       } else if (provider === 'facebook') {
-        // Facebook gửi accessToken + userID
         endpoint = 'auth/facebook-login';
         body = {
           accessToken: payload.accessToken,
@@ -121,7 +119,6 @@ export const socialLogin = createAsyncThunk(
         return thunkAPI.rejectWithValue('Provider not supported');
       }
 
-      // Gửi đúng endpoint và đúng body
       const res = await postDataAPI(endpoint, body);
 
       localStorage.setItem('firstLogin', true);
