@@ -5,10 +5,7 @@
 
 require("dotenv").config();
 const mongoose = require("mongoose");
-
-const Role = require("../models/role.model");
-const Capacity = require("../models/capacity.model");
-const User = require("../models/userModel");
+const {userModel, capacitiesModel, roleModel} = require("../db/models");
 
 async function seedRoles() {
     try {
@@ -34,24 +31,24 @@ async function seedRoles() {
         ];
 
         // Clear old data
-        await Capacity.deleteMany({});
+        await capacitiesModel.deleteMany({});
         console.log("🧹 Cleared existing capacities");
 
-        const capacities = await Capacity.insertMany(capacitiesData);
+        const capacities = await capacitiesModel.insertMany(capacitiesData);
         console.log(`✅ Inserted ${capacities.length} capacities`);
 
         // ========= ROLE SEED ==========
-        await Role.deleteMany({});
+        await roleModel.deleteMany({});
         console.log("🧹 Cleared existing roles");
 
-        const adminRole = await Role.create({
+        const adminRole = await roleModel.create({
             name: "Administrator",
             slug: "admin",
             capacities: capacities.map(c => c._id),
             createdBy: "system"
         });
 
-        await Role.create({
+        await roleModel.create({
             name: "User",
             slug: "user",
             capacities: capacities
@@ -63,7 +60,7 @@ async function seedRoles() {
         console.log("🎉 Roles created successfully");
 
         // ========= ASSIGN ADMIN ROLE ==========
-        const adminUser = await User.findOne({ email: "admin@example.com" });
+        const adminUser = await userModel.findOne({ email: "admin@example.com" });
 
         if (adminUser) {
             adminUser.roles = [adminRole._id];

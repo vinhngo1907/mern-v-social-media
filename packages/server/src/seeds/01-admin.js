@@ -5,8 +5,8 @@
 
 require("dotenv").config();
 const mongoose = require("mongoose");
-const userModel = require("../models/userModel");
-const passwordUtil = require("../utils/password.util");
+const {userModel} = require("../db/models/");
+const passwordUtil = require("../utils/passwords");
 
 async function seedAdmin() {
   try {
