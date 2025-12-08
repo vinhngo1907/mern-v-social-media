@@ -3,7 +3,7 @@ import Avatar from '../other/Avatar';
 import {GLOBALTYPES} from '../../redux/globalTypes';
 
 const Status = () => {
-  const {auth} = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   return (

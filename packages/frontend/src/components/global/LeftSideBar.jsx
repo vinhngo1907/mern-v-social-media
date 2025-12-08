@@ -1,5 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {getSuggestion} from '../../redux/suggestionSlice';
+import UserCard from '../other/UserCard';
+import FollowBtn from '../other/FollowBtn';
 
 const LeftSideBar = () => {
   const {auth, suggestion} = useSelector(state => state);

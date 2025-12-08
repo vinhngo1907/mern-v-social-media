@@ -5,7 +5,9 @@ import {Link} from 'react-router-dom';
 import {isReadNotify, NOTIFY_TYPES} from '../../redux/notifySlice';
 
 const NotifyModal = () => {
-  const {notify, auth} = useSelector(state => state);
+  // const {notify, auth} = useSelector(state => state);
+  const notify = useSelector(state => state.notify);
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const handleIsRead = msg => {
     dispatch(isReadNotify({msg, auth}));

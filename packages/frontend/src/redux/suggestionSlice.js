@@ -1,17 +1,25 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {getDataAPI} from '../utils/apis/FetchData';
 
 const initialState = {
   users: [],
   loading: false,
+  // error: null
 };
 
 export const getSuggestion = createAsyncThunk(
   'suggestion/getSuggestion',
-  async (_, thunkAPI) => {
-    const {getState} = thunkAPI;
-    const token = getState().auth.token;
+  async (token, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI;
+    // const token = getState().auth.token;
+
     try {
-    } catch (error) {}
+      const res = await getDataAPI('user/suggestion', token);
+      const {results} = res.data;
+      return results;
+    } catch (error) {
+      rejectWithValue(error.response?.data?.message || error);
+    }
   },
 );
 
@@ -30,10 +38,11 @@ const suggestionSlice = createSlice({
       })
       .addCase(getSuggestion.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload;
+        state.users = action.payload.users;
       })
       .addCase(getSuggestion.rejected, state => {
         state.loading = false;
+        state.users = [];
       });
   },
 });

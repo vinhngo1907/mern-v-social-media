@@ -28,7 +28,7 @@ const SoclialLogin = () => {
       const user = result.user;
       // console.log('Google user info:', user);
       const idToken = await user.getIdToken();
-// console.log('Google ID Token:', idToken);
+      // console.log('Google ID Token:', idToken);
       dispatch(
         socialLogin({
           provider: 'google',

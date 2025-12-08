@@ -23,9 +23,6 @@ const Menu = () => {
     <div className="menu">
       <ul className="navbar-nav flex-row">
         <li className="nav-item px-2 active">
-          {/* <i className='fas fa-bars text-dark position-absolute' style={{top:"25%",left:"-20px", fontSize:"23px"}}
-                        onClick={() => dispatch({ type: GLOBALTYPES.SIDEBAR, payload: !sidebar })}
-                    /> */}
           <span
             className="material-icons menu-bar"
             style={{display: 'none'}}
