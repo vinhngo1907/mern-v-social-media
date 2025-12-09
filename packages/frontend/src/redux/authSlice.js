@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {postDataAPI} from '../utils/apis/FetchData';
-import {apiUrl} from '../context/constants';
+// import {apiUrl} from '../context/constants';
 import {setLoading, setSuccess, setError, setAlertFields} from './alertSlice';
 import valid from '../utils/validation/valid';
 
@@ -74,7 +74,7 @@ export const refreshToken = createAsyncThunk(
 export const loginSMS = createAsyncThunk(
   'auth/loginSMS',
   async (phone, thunkAPI) => {
-    const {dispatch} = thunkAPI;
+    const {dispatch, rejectWithValue} = thunkAPI;
     try {
       dispatch(setLoading());
 
@@ -90,7 +90,7 @@ export const loginSMS = createAsyncThunk(
     } catch (error) {
       const message = error.response?.data?.message || 'Login with SMS failed';
       dispatch(setError(message));
-      return thunkAPI.rejectWithValue(message);
+      return rejectWithValue(message);
     }
   },
 );

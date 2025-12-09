@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {getSuggestion} from '../../redux/suggestionSlice';
 import UserCard from '../other/UserCard';
 import FollowBtn from '../other/FollowBtn';
+import Socials from '../insight/Socials';
 
 const LeftSideBar = () => {
   const {auth, suggestion} = useSelector(state => state);
@@ -36,14 +37,15 @@ const LeftSideBar = () => {
                 title={item.content}>
                 <div>
                   <i className={item.icon} />
-                </div>{' '}
-                '<span>{item.content}</span>
+                </div>
+                <span>{item.content}</span>
               </Link>
             </li>
           ))}
         </ul>
       </div>
       {/* Social */}
+      <Socials />
       <div className="widget mt-3">
         <div className="d-flex justify-content-between align-items-center my-2 position-relative">
           <h4 className="widget-title">Suggestion</h4>

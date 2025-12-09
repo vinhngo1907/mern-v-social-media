@@ -6,7 +6,10 @@ import Avatar from '../other/Avatar';
 import NotifyModal from '../other/NotifyModal';
 
 const Menu = () => {
-  const {auth, theme, sidebar, notify} = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
+  const notify = useSelector(state => state.notify);
+  const theme = useSelector(state => state.theme);
+  const sidebar = useSelector(state => state.sidebar);
   const dispatch = useDispatch();
   const navLinks = [
     {label: 'Home', icon: 'home', path: '/'},

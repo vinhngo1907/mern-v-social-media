@@ -15,7 +15,7 @@ export const fetchStatistics = createAsyncThunk(
     try {
       await getDataAPI(`statistic/fetch?type=${type}&id=${id}`, auth.token);
     } catch (error) {
-      return thunkAPI.rejectWithValue(err.response?.data?.message || err);
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error);
     }
   },
 );

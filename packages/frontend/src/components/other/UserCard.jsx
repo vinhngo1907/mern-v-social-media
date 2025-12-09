@@ -13,7 +13,7 @@ const UserCard = ({
   msg,
   handleUserClick,
 }) => {
-  const {theme} = useSelector(state => state);
+  const theme = useSelector(state => state.theme);
   const handleCloseAll = () => {
     if (handleClose) handleClose();
     if (setShowFollowers) setShowFollowers(false);
@@ -48,10 +48,12 @@ const UserCard = ({
       </>
     );
   };
+
   return (
     <div
       className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}>
       <div>
+        {/* <Link to={`/profile/${user._id}`} onClick={handleCloseAll} */}
         <Link
           to={type === 'home' ? `/profile/${user._id}` : '#'}
           onClick={handleCloseAll}
@@ -69,8 +71,8 @@ const UserCard = ({
             </small>
           </div>
         </Link>
-        {children}
       </div>
+      {children}
     </div>
   );
 };

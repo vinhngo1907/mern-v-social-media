@@ -4,18 +4,21 @@ import {Link} from 'react-router-dom';
 import Avatar from '../other/Avatar';
 import {getDataAPI} from '../../utils/apis/FetchData';
 import UserCard from '../other/UserCard';
+import Visits from '../insight/Visits';
+import Views from '../insight/Views';
 
 const RightSideBar = () => {
-  const {
-    auth,
-    statistic,
-    // notify, statistic, message
-  } = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
+  const notify = useSelector(state => state.notify);
+  const statistic = useSelector(state => state.statistic);
+  const message = useSelector(state => state.message);
+
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [searchUsers, setSearchUsers] = useState([]);
   const [loadSearch, setLoadSearch] = useState(false);
+  const [visitTab, setVisitTab] = useState(false);
 
   useEffect(() => {
     if (auth.user.following) {
@@ -60,10 +63,62 @@ const RightSideBar = () => {
             </Link>
           </figure>
           <div className="page-meta">
-            <Link to={`/profile/${auth.user._id}`} title="">
-              <h6>{auth.user.username}</h6>
+            <Link
+              to={`profile/${auth.user._id}`}
+              style={{fontWeight: '600', color: '#088DCD'}}
+              title=""
+              className="underline">
+              My page
             </Link>
-            <span>{auth.user.followers.length} followers</span>
+            <span>
+              <i className="fas fa-comment" />
+              <Link to="/message" title="messages" style={{color: '#545454'}}>
+                Messages <em>{message.data.length}</em>
+              </Link>
+            </span>
+            <span>
+              <i className="fas fa-bell" />
+              <Link
+                to="/notifications"
+                title="notifications"
+                style={{color: '#545454'}}>
+                Notifications <em>{notify.data.length}</em>
+              </Link>
+            </span>
+          </div>
+          <div className="page-likes">
+            <ul className="nav nav-tabs likes-btn">
+              <li className="nav-item" onClick={() => setVisitTab(false)}>
+                <Link
+                  className={visitTab ? '' : 'active show'}
+                  to="#"
+                  data-toggle="tab"
+                  type="button">
+                  views
+                </Link>
+              </li>
+              <li className="nav-item" onClick={() => setVisitTab(true)}>
+                <Link
+                  className={visitTab ? 'active show' : ''}
+                  to="#"
+                  data-toggle="tab"
+                  type="button">
+                  Visitors
+                </Link>
+              </li>
+            </ul>
+            {/* <!-- Tab panes --> */}
+            <div className="tab-content">
+              {statistic.loading ? (
+                <div className="spinner-border d-block mx-auto" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              ) : visitTab ? (
+                <Visits />
+              ) : (
+                <Views />
+              )}
+            </div>
           </div>
         </div>
       </div>
