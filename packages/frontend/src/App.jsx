@@ -1,17 +1,18 @@
-import {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Login from './components/Login';
 import Home from './components/Home';
-import {refreshToken} from './redux/authSlice';
+import { refreshToken } from './redux/authSlice';
 import Alert from './components/alert/Alert';
 import PrivateRouter from './customRouter/PrivateRouter';
 import Header from './components/header';
 import Register from './components/Register';
-import {getSuggestion} from './redux/suggestionSlice';
+import { getSuggestion } from './redux/suggestionSlice';
+import ScrollTop from './components/other/ScrollTop';
 
 function App() {
-  const {auth, status} = useSelector(state => state);
+  const { auth, status } = useSelector(state => state);
   const [scrollTop, setScrollTop] = useState(0);
   const dispatch = useDispatch();
 
@@ -78,6 +79,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      {auth.token && <ScrollTop scroll={scrollTop}/>}
     </Router>
   );
 }

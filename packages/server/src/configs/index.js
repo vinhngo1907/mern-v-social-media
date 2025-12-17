@@ -56,5 +56,11 @@ module.exports = {
 
     REDIS_URL: process.env.REDIS_URL,
 
-    IS_PRODUCTION: IsProduction
+    IS_PRODUCTION: IsProduction,
+
+    APP: {
+        APP_RSS_THRESHOLD: process.env.APP_RSS_THRESHOLD,
+        APP_HEAP_THRESHOLD: process.env.APP_HEAP_THRESHOLD,
+        APP_DISK_THRESHOLD: process.env.APP_DISK_THRESHOLD,
+    }
 };
