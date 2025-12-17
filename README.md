@@ -106,4 +106,4 @@ The build folder is created at: packages/cms/build
 
 # 📋 TODO
 
-You can track progress in [`TASKS.md`](./docs/tasks.md).
+You can track progress in [`TASKS.md`](./docs/tasks/tasks.md).
