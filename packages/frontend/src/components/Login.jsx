@@ -6,7 +6,7 @@ import LoginSMS from './auth/LoginSMS';
 import SocialLogin from './auth/SocialLogin';
 
 const Login = () => {
-  const {auth} = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
   const history = useNavigate();
   const [sms, setSms] = useState(false);
 

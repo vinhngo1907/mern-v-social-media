@@ -3,11 +3,11 @@ import Avatar from '../other/Avatar';
 import {GLOBALTYPES} from '../../redux/globalTypes';
 
 const Status = () => {
-  const {auth} = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   return (
-    <div className="staus my-3 d-flex">
+    <div className="status my-3 d-flex">
       <Avatar src={auth?.user?.avatar} size="big-avatar" />
       <button
         className="statusBtn flex-fill"

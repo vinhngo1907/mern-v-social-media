@@ -5,6 +5,9 @@ import themeReducer from './themeSlice';
 import suggestionReducer from './suggestionSlice';
 import statusReducer from './statusSlice';
 import notifyReducer from './notifySlice';
+import statisticReducer from './statisticSlice';
+import messageReducer from './messageSlice';
+import socialReducer from './socialSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +17,8 @@ export const store = configureStore({
     suggestion: suggestionReducer,
     status: statusReducer,
     notify: notifyReducer,
+    statistic: statisticReducer,
+    message: messageReducer,
+    social: socialReducer,
   },
 });
