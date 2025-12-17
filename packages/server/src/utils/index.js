@@ -13,5 +13,6 @@ module.exports = {
     errorUtil: require("./errors"),
     checkUtil: require("./check"),
     cryptoUtil: require("./crypto"),
-    helpersUtil: require("./helpers")
+    helpersUtil: require("./helpers"),
+    promethusUtl: require("./prometheus/metrics")
 }

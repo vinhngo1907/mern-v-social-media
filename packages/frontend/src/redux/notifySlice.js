@@ -73,9 +73,9 @@ export const createNotify = createAsyncThunk(
     } catch (error) {
       dispatch({
         type: GLOBALTYPES.ALERT,
-        payload: err?.response?.data?.message || err,
+        payload: error?.response?.data?.message || error,
       });
-      return rejectWithValue(err);
+      return rejectWithValue(error);
     }
   },
 );

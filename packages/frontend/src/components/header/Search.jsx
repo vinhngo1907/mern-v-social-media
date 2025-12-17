@@ -4,7 +4,7 @@ import UserCard from '../other/UserCard';
 import {useSelector} from 'react-redux';
 
 const Search = () => {
-  const {auth} = useSelector(state => state);
+  const auth = useSelector(state => state.auth);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -15,7 +15,7 @@ const Search = () => {
     if (search) {
       getDataAPI(`user/search?name=${search}`, auth.token)
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           setUsers(res.data.results);
         })
         .catch(err => console.log(err.response.data.message));
