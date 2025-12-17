@@ -45,7 +45,69 @@ The database is designed using **MongoDB collections** with **Mongoose schemas**
 | `settings` | System configuration |
 
 ---
+## System Architecture
+```mermaid
+graph TB
+    subgraph Client
+        WEB[Web App<br/>React / Next.js]
+        MOBILE[Mobile App<br/>React Native]
+    end
 
+    subgraph Backend
+        API[Node.js API<br/>Express / NestJS]
+        AUTH[Auth Service<br/>JWT + Refresh Token]
+        WS[WebSocket<br/>Socket.io]
+    end
+
+    subgraph Database
+        MDB[(MongoDB)]
+        REDIS[(Redis Cache)]
+    end
+
+    subgraph External Services
+        CLOUDINARY[Cloudinary<br/>Images / Videos]
+        FCM[Firebase FCM<br/>Push Notification]
+    end
+
+    WEB -->|HTTP / HTTPS| API
+    MOBILE -->|HTTP / HTTPS| API
+
+    WEB -->|WebSocket| WS
+    MOBILE -->|WebSocket| WS
+
+    API --> AUTH
+    API --> MDB
+    API --> REDIS
+
+    WS --> MDB
+
+    API --> CLOUDINARY
+    API --> FCM
+
+```
+---
+
+## Detailed Flow Diagram
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as Client App
+    participant API as Backend API
+    participant MDB as MongoDB
+    participant CDN as Cloudinary
+    participant WS as WebSocket
+
+    U->>C: Create post (text + images)
+    C->>API: POST /posts
+    API->>CDN: Upload images
+    CDN-->>API: Image URLs
+    API->>MDB: Save post document
+    MDB-->>API: Post saved
+    API-->>C: Success response
+    API->>WS: Emit new post event
+    WS-->>C: Realtime post update
+```
+--- 
 ## 🧩 Database Schema (ER Diagram)
 
 ```mermaid
@@ -138,7 +200,11 @@ erDiagram
 
 ```
 
-## 🧑 User Schema
+---
+
+## Schema Details
+
+### 🧑 User Schema
 - Purpose: Stores user credentials, profile information, social relationships, and access roles.
 - Key Features:
     + Unique email and username
@@ -188,7 +254,7 @@ const UserSchema = new Schema({
 })
 ```
 
-## 🎭 Role Schema
+### 🎭 Role Schema
 - Purpose: Defines system roles and permissions grouping.
 - Design Notes:
     + Many-to-many relationship with users
@@ -211,7 +277,7 @@ const RoleSchema = new Schema({
 })
 ```
 
-## 📝 Post Schema
+### 📝 Post Schema
 - Purpose: User-generated posts (text + images).
 - Relationships:
     + Belongs to a user
@@ -242,7 +308,7 @@ const PostSchema = new Schema({
 })
 ```
 
-## 🎥 Video Schema
+### 🎥 Video Schema
 - Purpose: Video content uploaded by users.
 - Key Fields:
     + videoId (unique)
@@ -264,7 +330,7 @@ const VideoSchema = new Schema({
 })
 ```
 
-## 📊 Statistic Schema
+### 📊 Statistic Schema
 - Purpose: Tracks traffic, views, and analytics per user.
 - Usage:
     + Daily or session-based logging
@@ -283,7 +349,7 @@ const StatisticSchema = new Schema({
 })
 ```
 
-## 🔔 Notification Schema
+### 🔔 Notification Schema
 - Purpose: Stores system & user-generated notifications.
 - Features:
     + Multi-recipient support
@@ -303,7 +369,7 @@ const notifySchema = new Schema({
 })
 ```
 
-## 🌐 Social Schema
+### 🌐 Social Schema
 - Purpose: Stores third-party social account metadata.
 - Notes:
     + Flexible object structure
