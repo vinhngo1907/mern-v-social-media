@@ -33,7 +33,7 @@ The database is designed using **MongoDB collections** with **Mongoose schemas**
 
 ## 🗂 Collections Overview
 
-| Collection | - Purpose |
+| Collection | Purpose |
 |-----------|--------|
 | `users` | User accounts & profiles |
 | `roles` | Role-based access control |
@@ -235,7 +235,7 @@ const UserSchema = new Schema({
 	password: { type: String, required: true },
 	avatar: {
 		type: String,
-		default: "https://res.cloudinary.com/v-webdev/image/upload/v1661947123/v-chat-app/profile-user_p2khhu.png"
+		default: "https://res.cloudinary.com/dobieta/image/upload/v11947123/v/em-ju-anh-10%.png"
 	},
 	mobile: { type: String },
 	gender: { type: String },
