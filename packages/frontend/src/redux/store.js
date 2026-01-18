@@ -8,12 +8,14 @@ import notifyReducer from './notifySlice';
 import statisticReducer from './statisticSlice';
 import messageReducer from './messageSlice';
 import socialReducer from './socialSlice';
+import profileReducer from "./profileSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     alert: alertReducer,
     theme: themeReducer,
+    profile: profileReducer,
     suggestion: suggestionReducer,
     status: statusReducer,
     notify: notifyReducer,

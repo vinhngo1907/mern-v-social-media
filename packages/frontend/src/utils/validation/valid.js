@@ -42,3 +42,45 @@ function validateEmail(email) {
 }
 
 export default valid;
+
+export const validateUpdateProfile =(profileData) => {
+   const { fullname, mobile, story } = profileData;
+    let error = {}
+    if (!fullname) {
+        error.fullname = "Please add your full name."
+    } else if (fullname && fullname.length > 25) {
+        error.fullname = "Fullname is up to 25 chars long"
+    }
+
+    // if (mobile) {
+    //     if (!validatePhone(mobile)) {
+    //         error.mobile = "Mobile format is incorrect";
+    //     }
+    // }
+
+    if (story && story.length > 200) {
+        error.story = "Your story too long."
+    }
+
+    return {
+        errMsg: error,
+        errLength: Object.keys(error).length
+    }
+}
+
+export const validateLoginSMS = (phone) => {
+    let error = {}
+    if (!validatePhone(phone)) {
+        error = "Mobile format is incorrect";
+    }
+    
+    return {
+        errMsg: error,
+        errLength: Object.keys(error).length
+    }
+}
+
+function validatePhone(phone) {
+    const re = /^[+]/g
+    return re.test(phone);
+}

@@ -10,6 +10,7 @@ import Header from './components/header';
 import Register from './components/Register';
 import { getSuggestion } from './redux/suggestionSlice';
 import ScrollTop from './components/other/ScrollTop';
+import Profile from './components/Profile';
 
 function App() {
   const { auth, status } = useSelector(state => state);
@@ -60,6 +61,15 @@ function App() {
             <Route path="/" element={auth.token ? <Home /> : <Login />} />
 
             {/* Private Routes */}
+            <Route
+              path="/profile/:id"
+              element={
+                <PrivateRouter>
+                  <Profile />
+                </PrivateRouter>
+              }
+            />
+
             {/* <Route
               path="/upload"
               element={
@@ -79,7 +89,7 @@ function App() {
           </Routes>
         </div>
       </div>
-      {auth.token && <ScrollTop scroll={scrollTop}/>}
+      {auth.token && <ScrollTop scroll={scrollTop} />}
     </Router>
   );
 }

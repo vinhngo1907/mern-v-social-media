@@ -4,6 +4,7 @@ import {GLOBALTYPES} from '../../redux/globalTypes';
 import {logout} from '../../redux/authSlice';
 import Avatar from '../other/Avatar';
 import NotifyModal from '../other/NotifyModal';
+import { setTheme } from '../../redux/themeSlice';
 
 const Menu = () => {
   const auth = useSelector(state => state.auth);
@@ -89,10 +90,11 @@ const Menu = () => {
               htmlFor="theme"
               className="dropdown-item"
               onClick={() =>
-                dispatch({
-                  type: GLOBALTYPES.THEME,
-                  payload: !theme,
-                })
+                // dispatch({
+                //   type: GLOBALTYPES.THEME,
+                //   payload: !theme,
+                // })
+                dispatch(setTheme(!theme))
               }>
               {theme ? (
                 <i className="fas fa-sun light-icon mr-2" />
