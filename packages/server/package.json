@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "NODE_ENV=prod node src/app",
 		"server": "NODE_ENV=dev nodemon src/app",
-		"client": "cd ../client && npm run start"
+		"dev": "cross-env NODE_ENV=dev nodemon src/app",
+		"client": "cd ../client && npm run start",
+		"cms": "cd ../cms && npm run start"
 	},
 	"author": "Vinh Ngo <vinhtrungngo1907@gmail.com>",
 	"license": "ISC",
@@ -45,6 +47,7 @@
 		"winston": "^3.9.0"
 	},
 	"devDependencies": {
+		"cross-env": "^10.1.0",
 		"nodemon": "^2.0.7"
 	}
 }
