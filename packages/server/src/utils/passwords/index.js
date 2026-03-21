@@ -19,6 +19,7 @@ class Password {
     ) {
         return (await this.GeneratePassword(enteredPassword, salt) === savedPassword);
     }
+    
     async ToHash(password) {
         const salt = randomBytes(8).toString('hex');
         const buf = await new Promise((resolve, reject) => {
@@ -33,16 +34,18 @@ class Password {
 
     async Compare(storedPassword, suppliedPassword) {
         try {
+            console.log({storedPassword, suppliedPassword})
             const [hashedPassword, salt] = storedPassword.split(".");
+            console.log({hashedPassword, salt})
             const buf = await scryptAsync(suppliedPassword, salt, 64);
 
             // console.log("hashedPassword:", hashedPassword);
-            // console.log("buf:", buf.toString("hex"));
+            console.log("buf:", buf.toString("hex"));
             // console.log("Equal:", buf.toString("hex") === hashedPassword);
             const isEqual = buf.toString("hex") === hashedPassword;
             return isEqual;
         } catch (err) {
-            console.error("Compare error:", err);
+            console.error("[PASS_COMPARE_ERROR]:", err);
             return false;
         }
     }
@@ -61,6 +64,5 @@ module.exports = new Password();
 
 //     return `${buf.toString('hex')}.${salt}`;
 // }
-
-// const pass =  ToHash("do-may-biet")
+// const pass = ToHash("U2VjcmV0S2V5VG9Ub3BUb2tlbg==")
 // console.log(pass.then(result=>console.log({result})));

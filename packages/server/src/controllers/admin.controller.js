@@ -29,7 +29,7 @@ class AdminController {
             const users = await features.query;
             res.status(200).json(responseDTO.success("Get data successfully", users));
         } catch (error) {
-            console.log(error);
+            console.log("[ADMIN_GET_ALL_USER]", error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
@@ -247,7 +247,7 @@ class AdminController {
                 const allow = await checkPermission(
                     req.headers['x-api-key'] ?? null,
                     process.env.CAPACITY_CREATE_ROLE ?? null,
-                    req.user
+                    user, null
                 );
 
                 if (!allow) {
@@ -255,7 +255,7 @@ class AdminController {
                 }
             }
 
-            return LoginUser(password, user, req, res);
+            return await LoginUser(password, user, req, res);
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));

@@ -16,7 +16,8 @@ class CapacityController {
                 const allow = await checkPermission(
                     req.headers['x-api-key'] ?? null,
                     process.env.CAPACITY_CREATE_ROLE ?? null,
-                    req.user
+                    req.user,
+                    null
                 );
 
                 if (!allow) {

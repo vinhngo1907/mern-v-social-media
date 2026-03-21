@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
 import { showErrMsg, showSuccessMsg } from '../../utils/notifications/Notification'
-import { isLength, isMatch } from '../../utils/validation/Validation'
+// import { useParams } from 'react-router-dom'
+// import axios from 'axios'
+// import { isLength, isMatch } from '../../utils/validation/Validation'
 
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 
 function ResetPassword() {
     const [data, setData] = useState(initialState);
-    const { token } = useParams();
+    // const { token } = useParams();
     const { password, cf_password, err, success } = data
 
     const handleChangeInput = (e) => {
