@@ -1,27 +1,64 @@
-import React from 'react';
+import React, { useState } from "react";
 import "./home.css";
+import Table from "./Table";
+
+const MENU = [
+  { key: "users", label: "Users" },
+  { key: "groups", label: "Groups" },
+  { key: "posts", label: "Posts" },
+  { key: "comments", label: "Comments" },
+  { key: "policies", label: "Policies" },
+  { key: "content", label: "Videos" },
+];
 
 function Home() {
-    return (
-        <div className="home_page">
-            <h2>Hello everyone!</h2>
-            <p>
-                This site is about user authentication,
-                so there won't be any other pages here.
-                If people want to see more about how to
-                create other websites. You can click on
-                the link below, visit my youtube channel.
-                And if you find it useful, please subscribe
-                for us. Thank you very much!
-            </p>
-            <a href="https://www.youtube.com/c/DevATHTML" target="_blank"
-                rel="noopener noreferrer">My Youtube</a>
+  const [activeTab, setActiveTab] = useState("users");
 
-            <h3>Build a simple e-commerce site.</h3>
+  const renderTable = () => {
+    switch (activeTab) {
+      case "users":
+        return <Table title="Users" columns={["ID", "Email", "Role"]} />;
+      case "posts":
+        return <Table title="Posts" columns={["ID", "Title", "Status"]} />;
+      case "comments":
+        return <Table title="Comments" columns={["ID", "Content"]} />;
+      default:
+        return <Table title="Data" columns={["ID", "Name"]} />;
+    }
+  };
 
-            <a href="https://youtu.be/uXl77UFkrkQ" target="_blank"
-                rel="noopener noreferrer">Build a Ecommerce</a>
+  return (
+    <div className="container-fluid">
+      <div className="row">
+
+        {/* LEFT SIDEBAR */}
+        <div className="col-3 sidebar">
+          <h5 className="mt-3">Admin CMS</h5>
+          <ul className="list-group mt-4">
+            {MENU.map((item) => (
+              <li
+                key={item.key}
+                className={`list-group-item ${
+                  activeTab === item.key ? "active" : ""
+                }`}
+                onClick={() => setActiveTab(item.key)}
+                style={{ cursor: "pointer" }}
+              >
+                {item.label}
+              </li>
+            ))}
+          </ul>
         </div>
-    )
+
+        {/* RIGHT CONTENT */}
+        <div className="col-9 content p-4">
+          <h4 className="mb-4 text-capitalize">{activeTab}</h4>
+          {renderTable()}
+        </div>
+
+      </div>
+    </div>
+  );
 }
+
 export default Home;

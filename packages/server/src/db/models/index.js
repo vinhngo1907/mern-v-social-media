@@ -1,4 +1,4 @@
-const settingModel = require("./setting.model");
+const {policyModel, resourceModel} = require("./policy.model");
 
 module.exports = {
     userModel: require("./user.model"),
@@ -13,5 +13,6 @@ module.exports = {
     videoModel: require("./video.model"),
     roleModel: require("./role.model"),
     capacitiesModel: require("./capacity.model"),
-    settingModel: require("./setting.model")
+    settingModel: require("./setting.model"),
+    policyModel, resourceModel
 }

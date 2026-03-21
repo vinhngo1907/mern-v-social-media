@@ -1,15 +1,15 @@
 const { modelSchema } = require("../db");
-const { userModel, roleModel } = modelSchema;
+const { userModel } = modelSchema;
 const { responseDTO, checkUtil } = require("../utils");
-const checkAccountRoot = require("../utils/check/checkRoot");
-const { checkRoot } = checkUtil;
+// const checkAccountRoot = require("../utils/check/checkRoot");
+// const { checkRoot } = checkUtil;
 
 const authAdmin = async (req, res, next) => {
     try {
         const user = await userModel.findById(req.user._id)
         .populate('roles');
 
-        console.log(user.roles)
+        // console.log(user.roles)
 
         const isAdmin = user.roles.some(role => role.name.toLowerCase() === 'admin');
 
