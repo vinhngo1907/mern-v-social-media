@@ -6,6 +6,7 @@ const groupSchema = new Schema({
     name: { type: String, unique: true, maxLength: 200, required: true },
     members: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     posts: [{ type: Schema.Types.ObjectId, ref: 'post' },],
+    conversations: [{ type: Schema.Types.ObjectId, default: [], ref: "conversation" }],
     coverImage: String,
     additionalInfo: { type: String, required: true },
     inviteLink: { type: String, },
