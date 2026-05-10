@@ -33,7 +33,6 @@
 		"jsonwebtoken": "^9.0.0",
 		"moment-timezone": "^0.5.43",
 		"mongoose": "^6.13.6",
-		"monk": "^7.3.4",
 		"morgan": "^1.10.0",
 		"node-color-log": "^10.0.2",
 		"node-fetch": "^2.6.1",

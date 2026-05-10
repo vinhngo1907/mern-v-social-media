@@ -90,7 +90,7 @@ function SocketRoute(io, socketInfo) {
         });
 
         socket.on("editMessage", (data) => {
-            console.log({data});
+            console.log({ data });
             const user = users.find(u => u.id === data.msg.recipient);
             if (user) {
                 socket.to(`${user.socketId}`).emit('editMessageToClient', data);

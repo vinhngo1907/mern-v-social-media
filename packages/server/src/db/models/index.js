@@ -1,4 +1,4 @@
-const {policyModel, resourceModel} = require("./policy.model");
+const { policyModel, resourceModel } = require("./policy.model");
 
 module.exports = {
     userModel: require("./user.model"),
@@ -7,9 +7,10 @@ module.exports = {
     commentModel: require("./comment.model"),
     statisticModel: require("./statistic.model"),
     socialModel: require("./social.model"),
-    conversationModel: require("./conversation.model"),
-    messageModel: require("./message.model"),
-    groupModel: require("./group.model"),
+    conversationModel: require("./conversation"),
+    messageModel: require("./message"),
+    groupModel: require("./group"),
+    groupInvateModel: require("./groupInvite"),
     videoModel: require("./video.model"),
     roleModel: require("./role.model"),
     capacitiesModel: require("./capacity.model"),
