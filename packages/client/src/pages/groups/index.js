@@ -2,18 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LeftSideBar from "../../components/global/LeftSideBar";
 import RightSideBar from "../../components/global/RightSideBar";
+import CreateGroupModal from "../../components/group/CreateGroupModal";
+import { useState } from "react";
 
 const Groups = () => {
+    const [showCreateModal, setShowCreateModal] = useState(false);
+
     return (
         <div className="home-group row mx-auto">
             <div className="left_sidebar col-md-3">
-				<LeftSideBar />
-			</div>
+                <LeftSideBar />
+            </div>
             <div className="main_sidebar col-md-6 overlay-scrollbar scrollbar-hover">
-                <div className="my-3 p-20"></div>
-                <div className="central-meta">
+                <div className="central-meta mt-3">
                     <div className="groups">
-                        <span><i className="fa fa-users" /> joined Groups</span>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <span><i className="fa fa-users" /> joined Groups</span>
+                            <button
+                                className="btn btn-primary d-flex align-items-center gap-2"
+                                onClick={() => setShowCreateModal(true)}
+                            >
+                                <i className="fa fa-plus mr-3 mt-1" />
+                                New Group
+                            </button>
+                        </div>
                     </div>
                     <ul className="nearby-contct">
                         <li>
@@ -120,8 +132,13 @@ const Groups = () => {
                 </div>
             </div>
             <div className="right_sidebar col-md-3">
-				<RightSideBar />
-			</div>
+                <RightSideBar />
+            </div>
+            {/* Create Group Modal */}
+            <CreateGroupModal
+                show={showCreateModal}
+                onHide={() => setShowCreateModal(false)}
+            />
         </div>
     )
 }

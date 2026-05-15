@@ -40,6 +40,7 @@ const Settings = () => {
                                 />
                             </div>
 
+
                             <div className="setting-row">
                                 <span>Enable follow me</span>
 
@@ -54,6 +55,24 @@ const Settings = () => {
                                     data-on-label="ON"
                                     data-off-label="OFF"
                                 />
+                            </div>
+                            <div className="setting-row">
+                                <span>Send me notifications</span>
+                                <p>Send me notification emails my friends like, share or message me</p>
+                                <input type="checkbox" id="switch02" />
+                                <label htmlFor="switch02" data-on-label="ON" data-off-label="OFF"></label>
+                            </div>
+                            <div className="setting-row">
+                                <span>Text messages</span>
+                                <p>Send me messages to my cell phone</p>
+                                <input type="checkbox" id="switch03" />
+                                <label htmlFor="switch03" data-on-label="ON" data-off-label="OFF"></label>
+                            </div>
+                            <div className="setting-row">
+                                <span>Enable tagging</span>
+                                <p>Enable my friends to tag me on their posts</p>
+                                <input type="checkbox" id="switch04" />
+                                <label htmlFor="switch04" data-on-label="ON" data-off-label="OFF"></label>
                             </div>
 
                             <div className="setting-row">
