@@ -22,7 +22,7 @@ export const login = (data) => async (dispatch) => {
         localStorage.setItem('firstLogin', true);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
     } catch (err) {
-        console.log(err.response);
+        console.error(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
