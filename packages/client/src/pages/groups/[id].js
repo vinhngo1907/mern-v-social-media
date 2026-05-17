@@ -14,7 +14,7 @@ const GroupDetail = () => {
     const [showInviteModal, setShowInviteModal] = useState(false);
 
     const { group, loading } = useSelector(state => state.groups); // We'll create this reducer
-    const { user } = useSelector(state => state.auth);
+    const { user, token } = useSelector(state => state.auth);
 
     // Check if current user is admin/manager of this group
     const isAdmin = group?.members?.some(
@@ -23,9 +23,9 @@ const GroupDetail = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(getGroupById(id));
+            dispatch(getGroupById({ id, token }));
         }
-    }, [id, dispatch]);
+    }, [id, dispatch, token]);
 
     if (loading) {
         return <div className="text-center py-5">Loading group...</div>;
@@ -36,7 +36,7 @@ const GroupDetail = () => {
     }
 
     return (
-        <div className="group-detail">
+        <div className="post container w-90">
             {/* Cover Image & Header */}
             <div className="group-cover position-relative">
                 <img

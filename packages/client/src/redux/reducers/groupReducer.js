@@ -3,25 +3,36 @@ import { GLOBALTYPES } from '../actions/globalTypes';
 
 const initialState = {
     groups: [],           // User's joined groups (for Groups page)
+    myGroups: [],
     group: null,          // Current group detail (for GroupDetail page)
     loading: false,
     error: null,
+    page: 2,
+    result: 0
+
 };
 
 const groupReducer = (state = initialState, action) => {
-    switch (action.type) {
-
+    const { type, payload } = action;
+    switch (type) {
         case GROUP_TYPES.LOADING_GROUP:
             return {
                 ...state,
-                loading: action.payload
+                loading: payload
             };
 
+        case GROUP_TYPES.GET_ALL_GROUPS:
+            return {
+                ...state,
+                groups: payload.groups,
+                result: payload.result,
+                loading: false
+            }
         // Get User's Groups (My Groups Page)
         case GROUP_TYPES.GET_USER_GROUPS:
             return {
                 ...state,
-                groups: action.payload,
+                myGroups: payload,
                 loading: false
             };
 

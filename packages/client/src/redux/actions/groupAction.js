@@ -59,11 +59,11 @@ export const updateGroup = (groupId, data) => async (dispatch) => {
 };
 
 // Get User's Joined Groups
-export const getUserGroups = () => async (dispatch) => {
+export const getUserGroups = (token) => async (dispatch) => {
     try {
         dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: true });
 
-        const res = await getDataApi('group/by');
+        const res = await getDataApi('group/by', token);
 
         dispatch({
             type: GROUP_TYPES.GET_USER_GROUPS,
@@ -78,11 +78,11 @@ export const getUserGroups = () => async (dispatch) => {
 };
 
 // Get Single Group Detail
-export const getGroupById = (groupId) => async (dispatch) => {
+export const getGroupById = ({ id: groupId, token }) => async (dispatch) => {
     try {
         dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: true });
 
-        const res = await getDataApi(`group/${groupId}`);
+        const res = await getDataApi(`group/${groupId}`, token);
 
         dispatch({
             type: GROUP_TYPES.GET_GROUP_DETAIL,
