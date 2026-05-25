@@ -51,7 +51,7 @@ router.post('/', userAuth, postCtrl.CreatePost)
  * @desc Update post
  * @access Private
 */
-router.put('/:id', userAuth,postCtrl.UpdatePost)
+router.put('/:id', userAuth, postCtrl.UpdatePost)
 
 /**  
  * @route DELETE api/posts

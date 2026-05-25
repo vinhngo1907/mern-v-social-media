@@ -8,23 +8,42 @@ const groupSchema = new Schema({
     avatar: String,
     coverImage: String,
 
-    type: { type: String, enum: ['community', 'chat', 'hybrid'], default: 'community' },
-    privacy: { type: String, enum: ['public', 'private', 'secret'], default: 'private' },
+    // Core type
+    type: {
+        type: String,
+        enum: ['community', 'chat', 'hybrid'], default: 'community'
+    },
+    privacy: {
+        type: String,
+        enum: ['public', 'private', 'secret'], default: 'private'
+    },
 
     members: [{
         user: { type: Schema.Types.ObjectId, ref: 'user', required: true },
-        role: { type: String, enum: ['admin', 'manager', 'mod', 'member'], default: 'member' },
+        role: {
+            type: String,
+            enum: ['admin', 'manager', 'mod', 'member'],
+            default: 'member'
+        },
         joinedAt: { type: Date, default: Date.now }
     }],
     memberCount: { type: Number, default: 1 },
 
+    // Community Features
     posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
     isCommunityEnabled: { type: Boolean, default: true },
 
-    conversations: [{ type: Schema.Types.ObjectId, ref: "conversation" }],
+    // Chat Features
+    conversations: [{
+        type: Schema.Types.ObjectId, ref: "conversation"
+    }],
     isChatEnabled: { type: Boolean, default: false },
 
-    chatPrivacy: { type: String, enum: ['private', 'public'], default: 'private' },
+    // Settings
+    chatPrivacy: {
+        type: String, enum: ['private', 'public'],
+        default: 'private'
+    },
 
     // Group-level settings
     settings: {

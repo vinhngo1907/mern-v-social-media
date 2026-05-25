@@ -162,9 +162,9 @@ class UserController {
     async ChangePassword(req, res) {
         if (!req.user) return res.status(400).json(responseDTO.badRequest("User not found or/and not authorized"));
 
-        if (req.user.type !== "register") {
-            return res.status(400).json(responseDTO.badRequest(`Quick login account with ${req.user.type} can't use this function.`));
-        }
+        // if (req.user.type !== "register") {
+        //     return res.status(400).json(responseDTO.badRequest(`Quick login account with ${req.user.type} can't use this function.`));
+        // }
 
         try {
             const { newPassword, oldPassword } = req.body;
@@ -266,8 +266,8 @@ class UserController {
             const features = new APIFeatures(userModel.find({
                 ...filterObj
             })
-            .select("avatar username fullname mobile roles type createdAt"), req.query).paginating().sorting();
-           
+                .select("avatar username fullname mobile roles type createdAt"), req.query).paginating().sorting();
+
             // .select("-password -salt -__v -createdAt -updatedAt -rf_token"), req.query).paginating().sorting();
 
             const users = await features.query;

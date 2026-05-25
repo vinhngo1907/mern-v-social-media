@@ -311,7 +311,6 @@ class AuthController {
             }
 
             const decodedToken = await getAuth().verifyIdToken(idToken);
-// console.log("DECODED TOKEN:", decodedToken);
             const { email, name, picture, uid } = decodedToken;
 
             const provider = decodedToken.firebase?.sign_in_provider;
@@ -325,32 +324,31 @@ class AuthController {
             const password = email + GG_SECRET;
             const salt = await passwordUtil.GenerateSalt();
             const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
-              if (user) {
-                  if (user.type !== provider) {
-                      user.type = provider;
-                      await user.save();
-                  }
+            if (user) {
+                if (user.type !== provider) {
+                    user.type = provider;
+                    await user.save();
+                }
 
-                  return LoginUser(password, user, req, res);
-              } else {
-                  const newUser = {
-                      email,
-                      username: name,
-                      fullname: name,
-                      avatar: picture,
-                      type: "google",
-                      password: hashedPassword,
-                      salt,
-                  };
-                  return RegisterUser(newUser, req, res);
-              }
+                return LoginUser(password, user, req, res);
+            } else {
+                const newUser = {
+                    email,
+                    username: name,
+                    fullname: name,
+                    avatar: picture,
+                    type: "google",
+                    password: hashedPassword,
+                    salt,
+                };
+                return RegisterUser(newUser, req, res);
+            }
 
         } catch (error) {
             console.log(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
-
 }
 const LoginUser = async (password, user, req, res) => {
     try {
