@@ -2,7 +2,7 @@
 // import { GoogleLogin } from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login';
 // import { gapi } from "gapi-script"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     // googleLogin,
     // facebookLogin,
@@ -15,10 +15,12 @@ import {
     signInWithPopup,
     getAuth,
 } from 'firebase/auth';
-import { app } from "../../firebase/config"
+
+import { app } from "../../firebase/config";
+
 const SocialLogin = () => {
     const dispatch = useDispatch();
-    const { auth } = useSelector(state => state);
+    // const { auth } = useSelector(state => state);
     //       const histore = history();
     //      useEffect(() => {
     //     if (auth.token) {
