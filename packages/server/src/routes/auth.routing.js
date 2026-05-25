@@ -82,4 +82,12 @@ router.post('/forgot-password', authCtrl.ForgotPassword);
 */
 router.post('/social-login/google', authCtrl.SocialLoginGoogle);
 
+/** 
+ * @route POST api/auth/social-login
+ * @desc Login with social account
+ * @access Public
+*/
+router.patch('/change-password', authCtrl.SocialLoginGoogle);
+
+
 module.exports = router;

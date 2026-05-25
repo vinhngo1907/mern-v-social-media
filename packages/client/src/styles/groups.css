@@ -1,9 +1,12 @@
-.groups>span i {
-    color: var(--second-color);
+.groups span i {
+    /* color: var(--second-color); */
+	color: #088dcd;	
 }
 
-.pepl-info>span {
-    color: var(--second-color);
+
+.pepl-info span {
+    /* color: var(--second-color); */
+	color: #088dcd;	
 }
 
 a.add-butn {
@@ -19,11 +22,11 @@ a.add-butn {
     top: 10px;
 }
 
-.groups>span i {
+.groups span i {
     margin-right: 5px;
 }
 
-.groups>span {
+.groups span {
     font-size: 20px;
     font-weight: 400;
 }

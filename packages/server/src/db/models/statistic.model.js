@@ -12,4 +12,4 @@ const StatisticSchema = new Schema({
     clients: [{ type: Schema.Types.ObjectId, ref: "user" }]
 }, { versionKey: false });
 
-module.exports = mongoose.model("statistic", StatisticSchema)
+module.exports = mongoose.model("statistic", StatisticSchema);

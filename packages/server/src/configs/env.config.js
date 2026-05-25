@@ -33,7 +33,7 @@ function getYoutubeConfig() {
     // const MESSAGE_API_URL = getEnv('MESSAGE_API_URL')
     const YOUTUBE_API_URL = getEnv('YOUTUBE_API_URL')
 
-    if (!API_KEY || !YOUTUBE_CHANNEL_ID 
+    if (!API_KEY || !YOUTUBE_CHANNEL_ID
         // || !MESSAGE_API_URL 
         || !YOUTUBE_API_URL) {
         throw new Error(`Some of youtube env var are missing, please check \n
@@ -70,21 +70,62 @@ function getClientUrl() {
 exports.GetClientUrl = getClientUrl();
 
 function getClientUrls() {
-  const isProd = isProduction();
+    const isProd = isProduction();
 
-  if (isProd) {
-    return ["https://v-social-media.netlify.app"];
-  }
+    if (isProd) {
+        return ["https://v-social-media.netlify.app"];
+    }
 
-  const keys = ["CLIENT_URL", "APP_URL"];
+    const keys = ["CLIENT_URL", "APP_URL"];
 
-  const result =  keys
-    .map(k => getEnv(k))
-    .filter(Boolean)
-    .flatMap(v => v.split(",").map(u => u.trim()));
+    const result = keys
+        .map(k => getEnv(k))
+        .filter(Boolean)
+        .flatMap(v => v.split(",").map(u => u.trim()));
 
     return result;
 }
 
 exports.clientUrls = getClientUrls();
 
+function getFirebaseConfig() {
+    const API_KEY = getEnv('API_KEY');
+    const AUTH_DOMAIN = getEnv('AUTH_DOMAIN');
+    const DATABASE_URL = getEnv('DATABASE_URL');
+    const PROJECT_ID = getEnv('PROJECT_ID');
+    const STORAGE_BUCKET = getEnv('STORAGE_BUCKET');
+    const MESSAGING_SENDER_ID = getEnv('MESSAGING_SENDER_ID');
+    const APP_ID = getEnv('APP_ID');
+    const MEASUREMENT_ID = getEnv('MEASUREMENT_ID');
+
+    if (
+        !API_KEY ||
+        !AUTH_DOMAIN ||
+        !PROJECT_ID ||
+        !STORAGE_BUCKET ||
+        !MESSAGING_SENDER_ID ||
+        !APP_ID
+    ) {
+        throw new Error(`Some Firebase env vars are missing:
+    API_KEY: ${API_KEY}
+    AUTH_DOMAIN: ${AUTH_DOMAIN}
+    PROJECT_ID: ${PROJECT_ID}
+    STORAGE_BUCKET: ${STORAGE_BUCKET}
+    MESSAGING_SENDER_ID: ${MESSAGING_SENDER_ID}
+    APP_ID: ${APP_ID}
+    `);
+    }
+
+    return {
+        apiKey: API_KEY,
+        authDomain: AUTH_DOMAIN,
+        databaseURL: DATABASE_URL,
+        projectId: PROJECT_ID,
+        storageBucket: STORAGE_BUCKET,
+        messagingSenderId: MESSAGING_SENDER_ID,
+        appId: APP_ID,
+        measurementId: MEASUREMENT_ID,
+    };
+}
+
+exports.firebaseConfig = getFirebaseConfig();

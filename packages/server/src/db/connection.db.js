@@ -1,13 +1,12 @@
+const logger = require("node-color-log");
+
 const mongoose = require("mongoose");
 const { DB_URL } = require("../configs");
+// Promise = global.Promise;
 
-Promise = global.Promise;
+mongoose.set('strictQuery', false);
 
 const mongoConfig = {
-    // useCreateIndex: true,
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-    // useFindAndModify: false
     serverSelectionTimeoutMS: 5000,
     maxPoolSize: 10,
 };
@@ -15,9 +14,11 @@ const mongoConfig = {
 module.exports = async () => {
     try {
         await mongoose.connect(DB_URL, mongoConfig);
-        console.log("MongoDB Connected!");
+        // console.log("MongoDB Connected!");
+        logger.bgColorLog('blue', 'MongoDB connected!')
     } catch (error) {
-        console.log(error);
+        // console.log(error);
+        logger.error(error);
         process.exit(1);
     }
 }

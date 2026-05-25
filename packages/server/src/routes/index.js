@@ -31,9 +31,9 @@ function WebRoute(app) {
     app.use(BASE_URL + "/conversation", conversationRouter);
     app.use(BASE_URL + "/group", groupRouter);
     app.use(BASE_URL + "/video", videoRouter);
-    app.use(BASE_URL + "/role", roleRouter),
-    app.use(BASE_URL +"/capacity", capacityRouter);
-    app.use(BASE_URL +"/admin", adminRouter);
+    app.use(BASE_URL + "/role", roleRouter);
+    app.use(BASE_URL + "/capacity", capacityRouter);
+    app.use(BASE_URL + "/admin", adminRouter);
     app.use(BASE_URL + "/monitoring", monitoringRouter);
     app.use(BASE_URL + "/health", healthRouter);
     app.use(BASE_URL + "/metrics", prometheusRouter);
