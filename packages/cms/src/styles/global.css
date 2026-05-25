@@ -84,7 +84,7 @@ header ul li img {
 /* --------- Auth ---------- */
 .auth_page {
   width: 100%;
-  padding: 2.5rem 0;
+  padding: auto;
   background: #fdfdfd;
   display: flex;
   justify-content: center;
@@ -92,10 +92,10 @@ header ul li img {
 
 .auth_page .auth_box {
   background: #fff;
-  max-width: 400px;
+  max-width: 450px;
   width: 100%;
   border: 1px solid #ddd;
-  padding: 2.7rem 1.7rem;
+  padding: 2.7rem 1.7rem 1rem 1.7rem;
 }
 
 .auth_page .pass {
@@ -129,7 +129,8 @@ header ul li img {
   background: rgb(214, 10, 10);
   color: #fff9;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px 5px;
+  margin: 6px 0 10px 0;
   letter-spacing: 1.3px;
 }
 

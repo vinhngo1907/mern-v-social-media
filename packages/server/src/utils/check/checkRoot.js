@@ -7,6 +7,7 @@ const checkAccountRoot = async (user) => {
         
         return validRoot;
     } catch (error) {
+        console.log("[CHECK_ACCOUNT_ROOT_ERROR]", error);
         return error;
     }
 };

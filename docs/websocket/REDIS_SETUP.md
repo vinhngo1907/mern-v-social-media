@@ -26,7 +26,7 @@ REDIS_URL=redis://:your-secure-password@your-redis-host:6379/0
 
 ```bash
 # Local Redis with password
-REDIS_URL=redis://:mypassword@localhost:6379/0
+REDIS_URL=redis://:dobieta@localhost:6379/0
 
 # Redis Cloud
 REDIS_URL=redis://:password@redis-12345.cloud.redislabs.com:12345/0
@@ -80,8 +80,8 @@ kubectl logs -l app=v-social-media-api | grep -i redis
 
 ```javascript
 // Connect from different clients
-const socket1 = io('wss://your-api-domain.com');
-const socket2 = io('wss://your-api-domain.com');
+const socket1 = io("wss://social-api.com");
+const socket2 = io("wss://social-api.com");
 
 // They might connect to different pods
 // But events will be synchronized via Redis

@@ -34,11 +34,14 @@ const UserSchema = new Schema({
 	following: [{ type: Schema.Types.ObjectId, ref: "user" }],
 	saved: [{ type: Schema.Types.ObjectId }],
 	salt: { type: String },
-	type: { type: String, default: "register" },
+	type: {
+		type: String, default: "register",
+		enum: ['register', 'google', 'facebook']
+	},
 	rf_token: { type: String },
 	roles: [{ type: Schema.Types.ObjectId, ref: "role" }],
 	root: { type: String },
-	isActive: {type: Boolean, default: true}
+	isActive: { type: Boolean, default: true }
 }, {
 	timestamps: true,
 	versionKey: false

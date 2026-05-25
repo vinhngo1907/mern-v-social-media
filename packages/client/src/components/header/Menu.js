@@ -89,6 +89,10 @@ const Menu = () => {
                             < i className="fas fa-lock mr-2" />
                             Change password
                         </Link>
+                        <Link className="dropdown-item" to="/settings">
+                            < i className="fas fa-cog mr-2" />
+                            Account setting
+                        </Link>
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to="/"
                             onClick={() => dispatch(logout(auth.token))}

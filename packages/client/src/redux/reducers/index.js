@@ -20,6 +20,7 @@ import call from './callReducer';
 import peer from './peerReducer';
 import medias from './mediaExploreReducer';
 import videos from './videoReducer';
+import groups from './groupReducer';
 
 export default combineReducers({
     auth,
@@ -37,9 +38,6 @@ export default combineReducers({
     statistic,
     socket,
     message,
-    online,
-    call, 
-    peer,
-    medias,
-    videos
+    online, call, peer,
+    medias, videos, groups
 });

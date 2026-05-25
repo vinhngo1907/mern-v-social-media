@@ -139,6 +139,64 @@ ul{
     border-radius: 100%;
 }
 
+
+/*=========================
+	BACKGROUND COLOR
+=========================*/
+#nprogress .bar,
+.timeline-info > ul li a::before,
+.add-btn > a,
+.activitiez > li::before,
+form button,
+.colla-apps > li a:hover,
+a.underline:before,
+.setting-row input:checked + label,
+.user-avatar:hover .edit-phto,
+.error-meta > a,
+.color-bg,
+.add-butn,
+.nav.nav-tabs.likes-btn > li a.active,
+a.dislike-btn,
+.drop > a:hover,
+.btn-view.btn-load-more:hover,
+.accordion .card h5 button[aria-expanded="true"],
+.chat-head,
+.f-page > figure em,
+.inbox-panel-head > ul > li > a,
+.nav-tabs--left .nav-link.active,
+.nav-tabs--left .nav-link.active:hover,
+footer .widget-title h4::before,
+#topcontrol,
+.sidebar .widget-title::before,
+.f-title::before,
+.g-post-classic > figure > i::after,
+.purify > a,
+.help-list > a:hover,
+.open-position::before,
+.info > a,
+.category-box:hover, .category-box.selected,
+a.main-btn,
+.section-heading::before,
+.getquot-baner,
+.more-branches > h4::before,
+.is-helpful > a,
+.cart-optionz > li > a:hover,
+.paginationz > li a:hover,
+.paginationz > li a.active,
+.shopping-cart,
+a.btn2:hover,
+.form-submit > input[type="submit"],
+button.submit-checkout,
+.delete-cart:hover,
+.proceed .button,
+.amount-area .update-cart,
+a.addnewforum,
+.apply-bttons > a
+{
+	background: #088dcd;
+}
+
+
 /* ---------- Auth Page------------ */
 @import url("./auth.css");
 
@@ -207,3 +265,6 @@ ul{
 
 /* --------- Change password ------ */
 @import url("./change_pass.css");
+
+/* --------- Change password ------ */
+@import url("./setting.css");

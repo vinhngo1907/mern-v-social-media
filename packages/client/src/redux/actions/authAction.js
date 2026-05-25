@@ -22,7 +22,7 @@ export const login = (data) => async (dispatch) => {
         localStorage.setItem('firstLogin', true);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.message } })
     } catch (err) {
-        console.log(err.response);
+        console.error(err.response);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
     }
 }
@@ -159,9 +159,9 @@ export const register = (userRegister) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
         const res = await postDataApi("auth/register", userRegister, null);
-        
+
         localStorage.setItem('firstLogin', true);
-        
+
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.msg } });
 
@@ -174,5 +174,44 @@ export const register = (userRegister) => async (dispatch) => {
         })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response?.data?.message } });
+    }
+}
+
+export const socialLogin = (userData) => async (dispatch) => {
+    try {
+        console.log({ userData })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+        const { provider, payload } = userData;
+        let endpoint = '';
+        let body = {};
+
+        if (provider === 'google') {
+            endpoint = 'auth/social-login/google';
+            body = { idToken: payload.idToken };
+        } else if (provider === 'facebook') {
+            endpoint = 'auth/facebook-login';
+            body = {
+                accessToken: payload.accessToken,
+                userID: payload.userID,
+            };
+        } else {
+            return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Provider not supported" } })
+        }
+
+        const res = await postDataApi(endpoint, body);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.msg } });
+
+        localStorage.setItem("firstLogin", true);
+        dispatch({
+            type: GLOBALTYPES.AUTH, payload: {
+                user: res.data.results.user,
+                token: res.data.results.access_token
+            }
+        })
+    } catch (error) {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response?.data?.message } });
+
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 }

@@ -6,6 +6,7 @@ const RoleSchema = new Schema({
     users: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     slug: { type: String, required: [true, 'Please add slug name'], unique: true },
     capacities: [{ type: Schema.Types.ObjectId, ref: 'capacity' }],
+    policies: [{ type: mongoose.Schema.Types.ObjectId, ref: "policy" }],
     createdBy: {
         type: String,
         default: "system",

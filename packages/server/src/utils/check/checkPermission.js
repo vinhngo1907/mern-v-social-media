@@ -1,12 +1,14 @@
 const { modelSchema } = require("../../db");
 const { decrypted } = require("../crypto");
-const { userModel, roleModel, settingModel } = modelSchema;
+const { 
+    // userModel, 
+    roleModel, settingModel } = modelSchema;
 const checkAccountRoot = require("./checkRoot");
-const checkUser = require("./checkUser");
+// const checkUser = require("./checkUser");
 
-const getToken = (req) => {
-    return req.headers.authorization;
-};
+// const getToken = (req) => {
+//     return req.headers.authorization;
+// };
 
 async function checkPermission(apiKey, capacity, user, passphrase = null) {
     // const apiKey = req.header('X-Api-Key');
@@ -46,7 +48,7 @@ async function checkPermission(apiKey, capacity, user, passphrase = null) {
         const allow = roles[0].capacities.some((item) => item.slug == capacity);
         return allow;
     } catch (error) {
-        console.log("checkPermission: ", error);
+        console.log("[CHECK_PERMISSION_ERROR]: ", error);
         return false;
     }
 }

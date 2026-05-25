@@ -1,17 +1,12 @@
 {
     "folders": [
-        {
-            "name": "client",
-            "path": "packages/client"
-        },
-        {
-            "name": "server",
-            "path": "packages/server"
-        },
-        {
-            "name": "cms",
-            "path": "packages/cms"
-        },
+       { "name": "ROOT", "path": "." },
+        { "name": "Client", "path": "packages/client" },
+        { "name": "CMS", "path": "packages/cms" },
+        { "name": "Server", "path": "packages/server" },
+        { "name": "Docker", "path": "docker" },
+        { "name": "Scripts", "path": "scripts" },
+        { "name": "Docs", "path": "docs" }
     ],
     "settings": {
         "eslint.workingDirectories": [
@@ -36,13 +31,16 @@
             "**/*.map": true,
             "**/*.js": {
                 "when": "$(basename).ts"
-            }
+            },
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/.pnpm-store": true
         },
         "emmet.triggerExpansionOnTab": true,
         "breadcrumbs.enabled": true,
         "workbench.editor.enablePreview": false,
-        "eslint.packageManager": "yarn",
-        "npm.packageManager": "yarn",
+        "eslint.packageManager": "pnpm",
+        "npm.packageManager": "pnpm",
         "files.eol": "\n"
     },
 }

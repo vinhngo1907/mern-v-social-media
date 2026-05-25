@@ -23,9 +23,10 @@ const Images = () => {
             setLoad(true);
             const res = await getDataApi(`upload/images?num=${medias.page}*9&nextPageCursor=${medias.nextPageCursor}`, auth.token);
             dispatch({ type: DISCOVER_IMAGES_TYPES.UPDATE_IMAGE, payload: res.data.results })
-            setLoad(false);
         } catch (err) {
             dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+        } finally {
+            setLoad(false);
         }
     }
 
