@@ -1,5 +1,6 @@
 import axios from "axios";
 import { postDataApi } from "./fetchData";
+import { apiUrl } from "./constants";
 
 export const checkImage = (file) => {
     let err = "";
@@ -55,7 +56,7 @@ export const uploadSingleImage = async (image, token, postData = null) => {
         }
     }
 
-    const res = await axios.post('/api/upload/create', formData, {
+    const res = await axios.post(`${apiUrl}/api/upload/create`, formData, {
         withCredentials: true,
         headers: {
             'content-type': 'multipart/form-data',

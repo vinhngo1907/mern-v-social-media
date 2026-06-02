@@ -6,6 +6,7 @@ import CreateGroupModal from "../../components/group/CreateGroupModal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserGroups } from "../../redux/actions/groupAction";
+import Avatar from "../../components/other/Avatar";
 
 const Groups = () => {
     const { auth, groups: { myGroups, publicGroups, loading } } = useSelector(state => state);
@@ -81,8 +82,13 @@ const Groups = () => {
                                             <div className="nearly-pepls">
                                                 <figure>
                                                     <Link to={`/group/${group._id}`}>
-                                                        <img
-                                                            src={group.avatar || group.coverImage || "/default-group.jpg"}
+                                                        {/* <img
+                                                            src={group.avatar?.url || "/default-group.jpg"}
+                                                            alt={group.name}
+                                                        /> */}
+                                                        <Avatar
+                                                            size="large-avatar"
+                                                            src={group.avatar?.url || "/default-group.jpg"}
                                                             alt={group.name}
                                                         />
                                                     </Link>
@@ -116,7 +122,7 @@ const Groups = () => {
                                 </div>
                             )
                         }
-                        <li>
+                        {/* <li>
                             <div className="nearly-pepls">
                                 <figure>
                                     <Link to="#" title="">
@@ -214,7 +220,7 @@ const Groups = () => {
                                     <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
                                 </div>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                     <div className="lodmore"><button className="btn-view btn-load-more"></button></div>
                 </div>

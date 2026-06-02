@@ -1,5 +1,4 @@
 import { GROUP_TYPES } from '../actions/groupAction';
-import { GLOBALTYPES } from '../actions/globalTypes';
 
 const initialState = {
     groups: [],           // User's joined groups (for Groups page)
@@ -66,17 +65,6 @@ const groupReducer = (state = initialState, action) => {
                     : state.group,
                 loading: false
             };
-
-        // Handle Alert Error (Global)
-        case GLOBALTYPES.ALERT:
-            if (action.payload.error) {
-                return {
-                    ...state,
-                    error: action.payload.error,
-                    loading: false
-                };
-            }
-            return state;
 
         default:
             return state;
