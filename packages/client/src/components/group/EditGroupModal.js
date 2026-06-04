@@ -38,7 +38,6 @@ const EditGroupModal = ({ show, onHide, group }) => {
         }
     }, [group, show]);
 
-    //   const isAdmin = () => group?.memebers?.map(a => a._id || a).includes(auth.user._id);
     const isAdmin = () => group?.members?.map(u => u._id).includes(user._id);
 
     const handleChange = (e) => {

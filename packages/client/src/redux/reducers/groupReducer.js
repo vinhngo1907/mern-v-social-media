@@ -2,13 +2,13 @@ import { GROUP_TYPES } from '../actions/groupAction';
 
 const initialState = {
     groups: [],           // User's joined groups (for Groups page)
+    discoverGroups: [],
     myGroups: [],
     group: null,          // Current group detail (for GroupDetail page)
     loading: false,
-    error: null,
-    page: 2,
-    result: 0
-
+    myGroupsResult: 0,
+    discoverResult: 0,
+    loadingDiscover: false,
 };
 
 const groupReducer = (state = initialState, action) => {
@@ -24,15 +24,28 @@ const groupReducer = (state = initialState, action) => {
             return {
                 ...state,
                 groups: payload.groups,
-                result: payload.result,
+                // result: payload.result,
                 loading: false
             }
         // Get User's Groups (My Groups Page)
         case GROUP_TYPES.GET_USER_GROUPS:
             return {
                 ...state,
-                myGroups: payload,
+                myGroups: payload.page === 1
+                    ? payload.groups
+                    : [...state.myGroups, ...action.payload.groups],
+                myGroupsResult: payload.result,
                 loading: false
+            };
+
+        case GROUP_TYPES.GET_DISCOVER_GROUPS:
+            return {
+                ...state,
+                discoverGroups: payload.page === 1
+                    ? payload.groups
+                    : [...state.discoverGroups, ...payload.groups],
+                discoverResult: payload.result,
+                loadingDiscover: false
             };
 
         // Get Single Group Detail
