@@ -5,20 +5,87 @@ import RightSideBar from "../../components/global/RightSideBar";
 import CreateGroupModal from "../../components/group/CreateGroupModal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserGroups } from "../../redux/actions/groupAction";
+import { getUserGroups, searchOrDiscoverGroups } from "../../redux/actions/groupAction";
+import Avatar from "../../components/other/Avatar";
 
 const Groups = () => {
-    const { auth, groups: { myGroups, publicGroups, loading } } = useSelector(state => state);
+    const { auth: { token },
+        groups: {
+            myGroups,
+            discoverGroups,
+            loading,
+            loadingDiscover,
+        }
+    } = useSelector(state => state);
     const [activeTab, setActiveTab] = useState('my');// my or 'discover'
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUserGroups(auth.token))
-    }, [dispatch, auth.token]);
+    // Pagination States
+    const [myPage, setMyPage] = useState(1);
+    const [discoverPage, setDiscoverPage] = useState(1);
+    // const [hasMoreMy, setHasMoreMy] = useState(true);
+    // const [hasMoreDiscover, setHasMoreDiscover] = useState(true);
 
-    const displayedGroups = activeTab === 'my' ? myGroups : publicGroups;
+    const dispatch = useDispatch();
+    const limit = 12; // item per page
+
+    // Load My Groups
+    useEffect(() => {
+        if (token) {
+            dispatch(getUserGroups({ token, page: 1, limit }));
+            setMyPage(1);
+        }
+    }, [dispatch, token]);
+
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         dispatch(searchOrDiscoverGroups({ searchTerm, page: 1, limit }));
+    //         setDiscoverPage(1);
+    //     }, 500);
+
+    //     return () => clearTimeout(timeout)
+    // }, [searchTerm, dispatch, activeTab])
+
+    // Load Discover Groups when tab or search changes
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            dispatch(searchOrDiscoverGroups({ searchTerm, page: 1, token, limit }));
+            setDiscoverPage(1);
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, [searchTerm, activeTab, dispatch, token]);
+
+    const displayedGroups = activeTab === 'my' ? myGroups : discoverGroups;
+    const isLoading = activeTab === 'my' ? loading : loadingDiscover;
+    // const currentPage = activeTab === 'my' ? myPage : discoverPage;
+    // const hasMore = activeTab === 'my' ? hasMoreMy : hasMoreDiscover;
+
+    // const handleLoadMore = () => {
+    //     const nextPage = currentPage + 1;
+    //     if (activeTab === 'my') {
+    //         dispatch(getUserGroups({ token, nextPage, limit }))
+    //     } else {
+    //         dispatch(searchOrDiscoverGroups(searchTerm, nextPage, limit));
+    //         setDiscoverPage(nextPage);
+    //     }
+    // }
+
+    // Simple way to check if we should show "Load More"
+    const hasMore = displayedGroups.length >= (activeTab === 'my' ? myPage : discoverPage) * limit;
+
+    const handleLoadMore = () => {
+        const nextPage = (activeTab === 'my' ? myPage : discoverPage) + 1;
+
+        if (activeTab === 'my') {
+            dispatch(getUserGroups({ token: token, page: nextPage, limit }));
+            setMyPage(nextPage);
+        } else {
+            dispatch(searchOrDiscoverGroups({ token, searchTerm, page: nextPage, limit }));
+            setDiscoverPage(nextPage);
+        }
+    };
     return (
         <div className="home-group row mx-auto">
             <div className="left_sidebar col-md-3">
@@ -67,7 +134,8 @@ const Groups = () => {
                             </button>
                         </li>
                     </ul>
-                    <ul className="nearby-contct">
+                    {/* Groups list */}
+                    {/* <ul className="nearby-contct">
                         {
                             loading && <div className="spinner-border text-primary mx-auto d-block" role="status">
                                 <span className="sr-only">Loading...</span>
@@ -81,8 +149,10 @@ const Groups = () => {
                                             <div className="nearly-pepls">
                                                 <figure>
                                                     <Link to={`/group/${group._id}`}>
-                                                        <img
-                                                            src={group.avatar || group.coverImage || "/default-group.jpg"}
+                                                        
+                                                        <Avatar
+                                                            size="large-avatar"
+                                                            src={group.avatar?.url || "/default-group.jpg"}
                                                             alt={group.name}
                                                         />
                                                     </Link>
@@ -116,107 +186,63 @@ const Groups = () => {
                                 </div>
                             )
                         }
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title="">
-                                        <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group1_s9buyc.jpg" alt="" />
-                                    </Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">funparty</Link></h4>
-                                    <span>public group</span>
-                                    <em>32k Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title="">
-                                        <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554260/test/group2_tytwqi.jpg" alt="" />
-                                    </Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">ABC News</Link></h4>
-                                    <span>Private group</span>
-                                    <em>5M Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title="">
-                                        <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group3_vj1y7y.jpg" alt="" />
-                                    </Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">SEO Zone</Link></h4>
-                                    <span>Public group</span>
-                                    <em>32k Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title=""><img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group4_kck1ta.jpg" alt="" /></Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">Max Us</Link></h4>
-                                    <span>Public group</span>
-                                    <em> 756 Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title="">
-                                        <img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group5_xb0jfl.jpg" alt="" />
-                                    </Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">Banana Group</Link></h4>
-                                    <span>Friends Group</span>
-                                    <em>32k Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title=""><img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554260/test/group6_rzgamj.jpg" alt="" /></Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">Bad boys n Girls</Link></h4>
-                                    <span>Public group</span>
-                                    <em>32k Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="nearly-pepls">
-                                <figure>
-                                    <Link to="#" title=""><img src="https://res.cloudinary.com/v-webdev/image/upload/v1683554260/test/group7_d3b0jz.jpg" alt="" /></Link>
-                                </figure>
-                                <div className="pepl-info">
-                                    <h4><Link to="#" title="">Bachelor's fun</Link></h4>
-                                    <span>Public Group</span>
-                                    <em>500 Members</em>
-                                    <Link to="#" title="" className="add-butn" data-ripple="">leave group</Link>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
-                    <div className="lodmore"><button className="btn-view btn-load-more"></button></div>
+                    <div className="lodmore"><button className="btn-view btn-load-more"></button></div> */}
+                    {isLoading && (activeTab === 'my' ? myPage : discoverPage) === 1 ? (
+                        <div className="text-center py-5">
+                            <div className="spinner-border text-primary" role="status" />
+                        </div>
+                    ) : displayedGroups?.length > 0 ? (
+                        <>
+                            <ul className="nearby-contct">
+                                {displayedGroups.map(group => (
+                                    <li key={group._id}>
+                                        <div className="nearly-pepls">
+                                            <figure>
+                                                <Link to={`/group/${group._id}`}>
+                                                    <Avatar size="large-avatar" src={group.avatar?.url || "/default-group.jpg"} />
+                                                </Link>
+                                            </figure>
+                                            <div className="pepl-info">
+                                                <h4><Link to={`/group/${group._id}`}>{group.name}</Link></h4>
+                                                <span>
+                                                    {group.privacy === 'public' ? 'Public' : 'Private'} • {group.type}
+                                                </span>
+                                                <em>{group.memberCount || 0} members</em>
+
+                                                {activeTab === 'my' ? (
+                                                    <Link to={`/group/${group._id}`} className="add-butn">View Group</Link>
+                                                ) : (
+                                                    <button className="add-butn">Join Group</button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Load More Button */}
+                            {hasMore && (
+                                <div className="lodmore text-center mt-4">
+                                    <button
+                                        className="btn btn-light btn-load-more"
+                                        onClick={handleLoadMore}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? 'Loading...' : 'Load More'}
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="text-center py-5 text-muted">
+                            {activeTab === 'my'
+                                ? "You haven't joined any groups yet."
+                                : searchTerm
+                                    ? "No groups found."
+                                    : "No groups available."}
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="right_sidebar col-md-3">

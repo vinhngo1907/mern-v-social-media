@@ -40,7 +40,7 @@ const GroupDetail = () => {
             {/* Cover Image & Header */}
             <div className="group-cover position-relative">
                 <img
-                    src={group.coverImage || "https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group-cover-default.jpg"}
+                    src={group.avatar?.url || "https://res.cloudinary.com/v-webdev/image/upload/v1683554259/test/group-cover-default.jpg"}
                     alt="cover"
                     className="w-100"
                     style={{ height: '320px', objectFit: 'cover' }}
@@ -59,20 +59,23 @@ const GroupDetail = () => {
 
                         <div>
                             {isAdmin && (
-                                <button
-                                    className="btn btn-light me-2"
-                                    onClick={() => setShowEditModal(true)}
-                                >
-                                    <i className="fa fa-edit"></i> Edit Group
-                                </button>
-                            )}
+                                <>
+                                    <button
+                                        className="btn btn-light me-2"
+                                        onClick={() => setShowEditModal(true)}
+                                    >
+                                        <i className="fa fa-edit" /> Edit Group
+                                    </button>
 
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => setShowInviteModal(true)}
-                            >
-                                <i className="fa fa-user-plus"></i> Invite
-                            </button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => setShowInviteModal(true)}
+                                    >
+                                        <i className="fa fa-user-plus" /> Invite
+                                    </button>
+                                </>
+
+                            )}
                         </div>
                     </div>
                 </div>

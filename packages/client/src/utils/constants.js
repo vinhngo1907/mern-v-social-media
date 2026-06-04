@@ -12,4 +12,8 @@ export const BASE_URL = process.env.NODE_ENV !== "production"
 	? "http://localhost:5002"
 	: "https://v-social-media.netlify.app";
 
-export const LOCAL_STORAGE_TOKEN_NAME = 'firstLogin'
+export const LOCAL_STORAGE_TOKEN_NAME = 'firstLogin';
+
+export const GG_CLIENT_ID = '616694186975-olqok3eltlaouicov78vk2h3uhlepp1p.apps.googleusercontent.com';
+
+export const FB_APP_ID = '1515286105607652';

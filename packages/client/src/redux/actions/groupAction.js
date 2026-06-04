@@ -1,4 +1,5 @@
-import { postDataApi, getDataApi, patchDataApi, deleteDataApi } from "../../utils/fetchData";
+import { postDataApi, getDataApi, deleteDataApi, putDataApi } from "../../utils/fetchData";
+import { imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
 export const GROUP_TYPES = {
     CREATE_GROUP: 'CREATE_GROUP',
@@ -7,17 +8,27 @@ export const GROUP_TYPES = {
     GET_GROUP_DETAIL: 'GET_GROUP_DETAIL',
     GET_ALL_GROUPS: 'GET_ALL_GROUPS',
     LOADING_GROUP: 'LOADING_GROUP',
+    LOADING_DISCOVER: 'LOADING_DISCOVER',
+    GET_DISCOVER_GROUPS: 'GET_DISCOVER_GROUPS',
 }
 
-export const createGroup = ({ data, auth }) => async (dispatch) => {
+export const createGroup = ({ data, token, avatar }) => async (dispatch) => {
     try {
+        let newImg = null;
+        if (avatar) newImg = await imageUpload([avatar], token);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
-        const res = await postDataApi('group', data, auth.token);
+        const res = await postDataApi('group', {
+            ...data,
+            avatar
+        }, token);
 
         dispatch({
             type: GROUP_TYPES.CREATE_GROUP,
-            payload: res.data.results  // Adjust according to your backend response
+            payload: {
+                ...res.data.results,
+                avatar: avatar ? newImg[0].url : ''
+            }  // Adjust according to your backend response
         });
 
         dispatch({
@@ -33,16 +44,36 @@ export const createGroup = ({ data, auth }) => async (dispatch) => {
 }
 
 // Update / Edit Group
-export const updateGroup = (groupId, data) => async (dispatch) => {
+export const updateGroup = ({ groupId, token, data: groupData, avatar, socket }) => async (dispatch) => {
     try {
+        let newImg = null;
+        if (avatar) {
+            newImg = await imageUpload([avatar], token);
+        }
+
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
-        const res = await patchDataApi(`group/${groupId}`, data);
+        const res = await putDataApi(`group/${groupId}`, {
+            ...groupData,
+            avatar: avatar ? newImg[0] : groupData?.avatar
+        }, token);
+
+        const newGroup = {
+            groupId,
+            data: {
+                ...groupData,
+                avatar: avatar ? newImg[0].url : groupData?.avatar
+
+            }
+        }
 
         dispatch({
             type: GROUP_TYPES.UPDATE_GROUP,
-            payload: res.data.group || res.data.results
+            // payload: res.data.results
+            payload: newGroup.data
         });
+
+        socket.emit("group:update", newGroup)
 
         dispatch({
             type: GLOBALTYPES.ALERT,
@@ -50,30 +81,80 @@ export const updateGroup = (groupId, data) => async (dispatch) => {
         });
 
     } catch (err) {
-        console.error(err.response?.data);
+        console.error(err.response?.data?.message ?? err);
         dispatch({
             type: GLOBALTYPES.ALERT,
             payload: { error: err.response?.data?.message || "Failed to update group" }
         });
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };
 
+export const promoteToAdmin = () => async (dispatch) => {
+
+}
+
+export const removeMember = ({ ids, auth, socket }) => {
+
+}
+
 // Get User's Joined Groups
-export const getUserGroups = (token) => async (dispatch) => {
+export const getUserGroups = ({ token, page, limit }) => async (dispatch) => {
     try {
         dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: true });
 
-        const res = await getDataApi('group/by', token);
+        const res = await getDataApi(`group/by?page=${page}&limit=${limit}`, token);
 
         dispatch({
             type: GROUP_TYPES.GET_USER_GROUPS,
-            payload: res.data.results || res.data.groups
+            payload: {
+                groups: res.data.results || res.data.groups || res.data,
+                page,
+                result: res.data.result || res.data.length || 0
+            }
         });
 
     } catch (err) {
         console.error(err);
     } finally {
         dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: false });
+    }
+};
+
+export const searchGroups = (query) => async (dispatch) => {
+    try {
+        const res = await getDataApi(`group/search?name=${query}`);
+        return res.data.results || res.data.groups;
+    } catch (err) {
+        console.error(err);
+        return [];
+    }
+};
+
+// Search / Discover Groups
+export const searchOrDiscoverGroups = ({ token, searchTerm = '', page, limit }) => async (dispatch) => {
+    try {
+        dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: true });
+
+        let url = searchTerm
+            ? `group/discover?name=${encodeURIComponent(searchTerm)}&page=${page}&limit=${limit}`
+            : `group/discover?page=${page}&limit=${limit}`;
+
+        const res = await getDataApi(url, token);   // No token needed for discover
+
+        dispatch({
+            type: GROUP_TYPES.GET_DISCOVER_GROUPS,
+            payload: {
+                groups: res.data.results || res.data.groups || res.data,
+                page,
+                result: res.data.result || res.data.length || 0
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    } finally {
+        dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: false });
     }
 };
 
@@ -142,15 +223,5 @@ export const leaveGroup = (groupId) => async (dispatch) => {
             type: GLOBALTYPES.ALERT,
             payload: { error: err.response?.data?.message || "Failed to leave group" }
         });
-    }
-};
-
-export const searchGroups = (query) => async (dispatch) => {
-    try {
-        const res = await getDataApi(`group/search?name=${query}`);
-        return res.data.results || res.data.groups;
-    } catch (err) {
-        console.error(err);
-        return [];
     }
 };

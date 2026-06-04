@@ -55,12 +55,15 @@ export const refreshToken = () => async (dispatch) => {
 
 export const logout = (token) => async (dispatch) => {
     try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
         const res = await postDataApi('auth/logout', null, token);
         localStorage.removeItem("firstLogin");
         window.location.href = "/";
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.message } })
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response?.data?.message } })
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 }
 
@@ -75,13 +78,15 @@ export const googleLogin = ({ idToken }) => async (dispatch) => {
         localStorage.setItem('firstLogin', true);
 
         dispatch({
-            type: GLOBALTYPES.AUTH, payload: {
+            type: GLOBALTYPES.AUTH,
+            payload: {
                 user: res.data.results.user,
-                token: res.data.results.access_token
+                token: res.data.results.access_token,
+                provider: 'google'
             }
         })
     } catch (err) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response?.data?.message || err } })
     }
 }
 
@@ -96,12 +101,15 @@ export const facebookLogin = (data) => async (dispatch) => {
         dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {
+                provider: 'facebook',
                 user: res.data.results.user,
                 token: res.data.results.access_token
             },
         })
     } catch (err) {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message } })
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 }
 
@@ -182,34 +190,39 @@ export const socialLogin = (userData) => async (dispatch) => {
         console.log({ userData })
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
         const { provider, payload } = userData;
-        let endpoint = '';
+        // let endpoint = '';
         let body = {};
 
         if (provider === 'google') {
-            endpoint = 'auth/social-login/google';
-            body = { idToken: payload.idToken };
+            // endpoint = 'auth/social-login';
+            body = { idToken: payload.idToken, provider };
         } else if (provider === 'facebook') {
-            endpoint = 'auth/facebook-login';
+            // endpoint = 'auth/facebook-login';
             body = {
                 accessToken: payload.accessToken,
                 userID: payload.userID,
+                provider
             };
         } else {
-            return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Provider not supported" } })
+            return dispatch({
+                type: GLOBALTYPES.ALERT,
+                payload: { error: "Provider not supported" }
+            })
         }
 
-        const res = await postDataApi(endpoint, body);
+        const res = await postDataApi("auth/social-login", body);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.results.msg } });
 
         localStorage.setItem("firstLogin", true);
         dispatch({
-            type: GLOBALTYPES.AUTH, payload: {
+            type: GLOBALTYPES.AUTH,
+            payload: {
                 user: res.data.results.user,
                 token: res.data.results.access_token
             }
         })
     } catch (error) {
-        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response?.data?.message } });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response?.data?.message || error } });
 
     } finally {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
