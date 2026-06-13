@@ -9,7 +9,7 @@ const fetch = require("node-fetch");
 const { ValidateEmail, ValidateMobile } = require("../utils/validations");
 const { roleModel } = require("../db/models");
 const { encrypted, hashPassword } = cryptoUtil;
-const { getAuth } = require("firebase-admin/auth");
+// const { getAuth } = require("firebase-admin/auth");
 
 class AuthController {
     async Login(req, res) {
@@ -303,52 +303,52 @@ class AuthController {
         }
     }
 
-    async SocialLoginGoogle(req, res) {
-        try {
-            const { idToken } = req.body;
-            if (!idToken) {
-                return res.status(400).json(responseDTO.badRequest("Authenticated failed, please try again!"));
-            }
+    // async SocialLoginGoogle(req, res) {
+    //     try {
+    //         const { idToken } = req.body;
+    //         if (!idToken) {
+    //             return res.status(400).json(responseDTO.badRequest("Authenticated failed, please try again!"));
+    //         }
 
-            const decodedToken = await getAuth().verifyIdToken(idToken);
-            const { email, name, picture, uid } = decodedToken;
+    //         const decodedToken = await getAuth().verifyIdToken(idToken);
+    //         const { email, name, picture, uid } = decodedToken;
 
-            const provider = decodedToken.firebase?.sign_in_provider;
+    //         const provider = decodedToken.firebase?.sign_in_provider;
 
-            console.log("LOGIN PROVIDER:", provider);
+    //         console.log("LOGIN PROVIDER:", provider);
 
-            const user = await userModel
-                .findOne({ email })
-                .populate("following followers", "avatar fullname username email");
+    //         const user = await userModel
+    //             .findOne({ email })
+    //             .populate("following followers", "avatar fullname username email");
 
-            const password = email + GG_SECRET;
-            const salt = await passwordUtil.GenerateSalt();
-            const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
-            if (user) {
-                if (user.type !== provider) {
-                    user.type = provider;
-                    await user.save();
-                }
+    //         const password = email + GG_SECRET;
+    //         const salt = await passwordUtil.GenerateSalt();
+    //         const hashedPassword = await passwordUtil.GeneratePassword(password, salt);
+    //         if (user) {
+    //             if (user.type !== provider) {
+    //                 user.type = provider;
+    //                 await user.save();
+    //             }
 
-                return LoginUser(password, user, req, res);
-            } else {
-                const newUser = {
-                    email,
-                    username: name,
-                    fullname: name,
-                    avatar: picture,
-                    type: "google",
-                    password: hashedPassword,
-                    salt,
-                };
-                return RegisterUser(newUser, req, res);
-            }
+    //             return LoginUser(password, user, req, res);
+    //         } else {
+    //             const newUser = {
+    //                 email,
+    //                 username: name,
+    //                 fullname: name,
+    //                 avatar: picture,
+    //                 type: "google",
+    //                 password: hashedPassword,
+    //                 salt,
+    //             };
+    //             return RegisterUser(newUser, req, res);
+    //         }
 
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json(responseDTO.serverError(error.message));
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error);
+    //         return res.status(500).json(responseDTO.serverError(error.message));
+    //     }
+    // }
 }
 const LoginUser = async (password, user, req, res) => {
     try {

@@ -5,17 +5,19 @@ const groupSchema = new Schema({
     name: { type: String, required: true, maxlength: 200 },
     slug: { type: String, required: true, unique: true },
     description: String,
-    avatar: String,
+    avatar: { type: Object },
     coverImage: String,
 
     // Core type
     type: {
         type: String,
-        enum: ['community', 'chat', 'hybrid'], default: 'community'
+        enum: ['community', 'chat', 'hybrid'],
+        default: 'community'
     },
     privacy: {
         type: String,
-        enum: ['public', 'private', 'secret'], default: 'private'
+        enum: ['public', 'private', 'secret'],
+        default: 'private'
     },
 
     members: [{

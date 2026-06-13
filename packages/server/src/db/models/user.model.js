@@ -41,7 +41,49 @@ const UserSchema = new Schema({
 	rf_token: { type: String },
 	roles: [{ type: Schema.Types.ObjectId, ref: "role" }],
 	root: { type: String },
-	isActive: { type: Boolean, default: true }
+	isActive: { type: Boolean, default: true },
+	settings: {
+		// Privacy / Discovery
+		allowFollow: { type: Boolean, default: true },           // "Enable follow me"
+		allowSubUsers: { type: Boolean, default: true },         // "Sub users" – unclear, maybe sub-accounts or followers?
+		allowTagging: { type: Boolean, default: true },          // "Enable tagging"
+
+		// Notifications
+		notifications: {
+			email: {
+				enabled: { type: Boolean, default: true },
+				likes: { type: Boolean, default: true },
+				shares: { type: Boolean, default: true },
+				messages: { type: Boolean, default: true },
+				mentions: { type: Boolean, default: true },
+				// add more categories as needed
+			},
+			push: {
+				enabled: { type: Boolean, default: true },
+				soundEnabled: { type: Boolean, default: true },   // "Enable sound Notification"
+			},
+			sms: {                                                // "Text messages"
+				enabled: { type: Boolean, default: false },
+				phoneNumber: { type: String },                    // only if enabled
+			}
+		},
+
+		// Other common settings
+		profileVisibility: {
+			type: String,
+			enum: ['public', 'followers_only', 'private'],
+			default: 'public'
+		},
+		showOnlineStatus: { type: Boolean, default: true },
+		quietHours: {
+			enabled: { type: Boolean, default: false },
+			start: String, // e.g. "22:00"
+			end: String    // e.g. "08:00"
+		},
+
+		// Flexible catch-all
+		custom: { type: Schema.Types.Mixed, default: {} }
+	},
 }, {
 	timestamps: true,
 	versionKey: false

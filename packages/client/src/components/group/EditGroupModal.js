@@ -99,7 +99,6 @@ const EditGroupModal = ({ show, onHide, group }) => {
     return (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
             <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                {/* ↑↑↑ This is the key: modal-dialog-scrollable */}
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Edit Group</h5>

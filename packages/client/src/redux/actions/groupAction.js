@@ -1,6 +1,7 @@
 import { postDataApi, getDataApi, deleteDataApi, putDataApi } from "../../utils/fetchData";
 import { imageUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
+
 export const GROUP_TYPES = {
     CREATE_GROUP: 'CREATE_GROUP',
     UPDATE_GROUP: 'UPDATE_GROUP',
@@ -223,5 +224,35 @@ export const leaveGroup = (groupId) => async (dispatch) => {
             type: GLOBALTYPES.ALERT,
             payload: { error: err.response?.data?.message || "Failed to leave group" }
         });
+    }
+};
+
+// ====================== JOIN GROUP ======================
+export const joinGroup = ({ id: groupId, token }) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+
+        const res = await postDataApi(`group/${groupId}/join`, {}, token);
+
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: { success: res.data.message || "Joined group successfully!" }
+        });
+
+        // Refresh my groups list
+        dispatch(getUserGroups({ token, page: 1, limit: 12 }));
+
+        return res.data;
+    } catch (error) {
+        console.error(error);
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: {
+                error: error.response?.data?.message || "Failed to join group"
+            }
+        });
+        throw error;
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };

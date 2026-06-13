@@ -57,4 +57,36 @@ const groupInviteSchema = new Schema({
 groupInviteSchema.index({ code: 1 });
 groupInviteSchema.index({ group: 1, status: 1 });
 
-module.exports = mongoose.model('groupInvite', groupInviteSchema);
+const groupJoinRequestSchema = new Schema({
+    group: {
+        type: Schema.Types.ObjectId,
+        ref: 'group',
+        required: true
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
+    },
+    requestedAt: { type: Date, default: Date.now },
+    reviewedAt: Date,
+    reviewedBy: { type: Schema.Types.ObjectId, ref: 'user' },
+    message: String // Optional message from requester
+}, {
+    timestamps: true
+});
+
+// Indexes
+groupJoinRequestSchema.index({ group: 1, user: 1 }, { unique: true });
+groupJoinRequestSchema.index({ group: 1, status: 1 });
+
+module.exports =
+{
+    groupJoinRequestModel: mongoose.model('GroupJoinRequest', groupJoinRequestSchema),
+    groupInviteModel: mongoose.model('groupInvite', groupInviteSchema)
+}

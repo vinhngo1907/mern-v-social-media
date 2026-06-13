@@ -26,6 +26,20 @@ router.get("/by", userAuth, groupCtrl.GetUserGroups);
 router.get("/", userAuth, groupCtrl.GetAllGroups);
 
 /**
+ * @route GET api/group
+ * @desc Get all groups
+ * @access Private
+ */
+router.get("/discover", userAuth, groupCtrl.DiscoverGroups);
+
+/**
+ * @route GET api/group/:id
+ * @desc Get group by id
+ * @access Private
+ */
+router.get("/:id", userAuth, groupCtrl.GetGroupById);
+
+/**
  * @route PUT api/group/:id
  * @desc Update a group
  * @access Private
@@ -37,11 +51,8 @@ router.put("/:id", userAuth, groupCtrl.UpdateGroup);
 // router.post("/:id/members/:userId/role", userAuth, groupCtrl.ChangeMemberRole);
 // router.delete("/:id/members/:userId", userAuth, groupCtrl.RemoveMember);
 
-/**
- * @route GET api/group/:id
- * @desc Get group by id
- * @access Private
- */
-router.get("/:id", userAuth, groupCtrl.GetGroupById);
+router.post('/:id/join', userAuth, groupCtrl.JoinGroup);
+router.get('/:id/join-requests', userAuth, groupCtrl.GetJoinRequests);
+router.put('/join-request/:requestId', userAuth, groupCtrl.ReviewJoinRequest);
 
 module.exports = router;
