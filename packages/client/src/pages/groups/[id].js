@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGroupById } from '../../redux/actions/groupAction';
 import EditGroupModal from '../../components/group/EditGroupModal';
 import InviteMembersModal from '../../components/group/InviteMembersModal';
+import JoinRequestsPanel from '../../components/group/JoinRequestPanel';
 
 const GroupDetail = () => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const GroupDetail = () => {
     const { user, token } = useSelector(state => state.auth);
 
     // Check if current user is admin/manager of this group
-    const isAdmin = group?.members?.some(
+    const isAdminOrManager = group?.members?.some(
         member => member.user._id === user._id && ['admin', 'manager'].includes(member.role)
     );
 
@@ -58,7 +59,7 @@ const GroupDetail = () => {
                         </div>
 
                         <div>
-                            {isAdmin && (
+                            {isAdminOrManager && (
                                 <>
                                     <button
                                         className="btn btn-light me-2"
@@ -149,6 +150,13 @@ const GroupDetail = () => {
                                 {/* Member list will go here */}
                             </div>
                         )}
+
+                        {/* ==================== JOIN REQUESTS TAB ==================== */}
+                        {activeTab === 'requests' && isAdminOrManager && (
+                            <JoinRequestsPanel groupId={id} />
+                        )}
+
+                        {activeTab === 'media' && <div>Media Gallery Here</div>}
 
                         {activeTab === 'media' && (
                             <div>
