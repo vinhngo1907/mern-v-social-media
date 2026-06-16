@@ -1,92 +1,131 @@
+// components/capacity/CapacityModal.js
 import { useState, useEffect } from 'react';
 
 const CapacityModal = ({
-	show,
-	mode = "create",
-	roleName,
-	setRoleName,
-	capacities,
-	selected,
-	toggleCapacity,
-	onClose,
-	onSave
+    show,
+    mode = "create",
+    currentCapacity,
+    onClose,
+    onSave
 }) => {
-	const [localName, setLocalName] = useState(roleName || "");
+    const [formData, setFormData] = useState({
+        name: "",
+        slug: "",
+        resource: "",
+        description: ""
+    });
 
-	useEffect(() => {
-		setLocalName(roleName || "");
-	}, [roleName]);
+    useEffect(() => {
+        if (currentCapacity && mode === "edit") {
+            setFormData({
+                name: currentCapacity.name || "",
+                slug: currentCapacity.slug || "",
+                resource: currentCapacity.resource || "",
+                description: currentCapacity.description || ""
+            });
+        } else {
+            setFormData({ name: "", slug: "", resource: "", description: "" });
+        }
+    }, [currentCapacity, mode]);
 
-	if (!show) return null;
+    if (!show) return null;
 
-	const handleSave = () => {
-		if (mode === "edit" && !localName.trim()) {
-			alert("Role name is required.");
-			return;
-		}
-		setRoleName(localName);
-		onSave(localName);
-	};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
-	const handleClose = () => {
-    setLocalName("");
-    setRoleName(""); 
-    onClose();
-  };
+    const handleSave = () => {
+        if (!formData.name.trim() || !formData.slug.trim() || !formData.resource.trim()) {
+            alert("Name, Slug, and Resource are required!");
+            return;
+        }
+        onSave(formData);
+    };
 
-	return (
-		<div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,.5)" }}>
-			<div className="modal-dialog">
-				<div className="modal-content">
+    const handleClose = () => {
+        onClose();
+    };
 
-					<div className="modal-header">
-						<h5 className="modal-title">{mode === "edit" ? "Edit Role & Capacities" : "Select Capacities"}</h5>
-						<button type="button" className="btn-close" onClick={handleClose}></button>
-					</div>
+    return (
+        <div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+            <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">
+                            {mode === "edit" ? "Edit Capacity" : "Create New Capacity"}
+                        </h5>
+                        <button type="button" className="btn-close" onClick={handleClose}></button>
+                    </div>
 
-					<div className="modal-body">
-						{mode === "edit" && (
-							<div className="mb-3">
-								<label className="form-label">Role Name</label>
-								<input
-									type="text"
-									className="form-control"
-									value={localName}
-									onChange={e => setLocalName(e.target.value)}
-									placeholder="Role name"
-								/>
-							</div>
-						)}
+                    <div className="modal-body">
+                        <div className="row">
+                            <div className="col-md-6 mb-3">
+                                <label className="form-label">Capacity Name <span className="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Delete Any Post"
+                                />
+                            </div>
 
-						<div className="mb-3 row">
-							{capacities.map(cap => (
-								<div className='col-md-4 mb-2' key={cap._id}>
-									<div className="form-check" >
-										<input
-											className="form-check-input"
-											type="checkbox"
-											id={`cap-${cap._id}`}
-											checked={selected.includes(cap._id)}
-											onChange={() => toggleCapacity(cap._id)}
-										/>
-										<label className="form-check-label" htmlFor={`cap-${cap._id}`}>
-											{cap.name}
-										</label>
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
+                            <div className="col-md-6 mb-3">
+                                <label className="form-label">Slug <span className="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="slug"
+                                    value={formData.slug}
+                                    onChange={handleChange}
+                                    placeholder="e.g. delete_any_post"
+                                />
+                                <small className="text-muted">Lowercase with underscores</small>
+                            </div>
+                        </div>
 
-					<div className="modal-footer">
-						<button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
-						<button className="btn btn-primary" onClick={handleSave}>Save</button>
-					</div>
+                        <div className="mb-3">
+                            <label className="form-label">Resource <span className="text-danger">*</span></label>
+                            <select
+                                className="form-select"
+                                name="resource"
+                                value={formData.resource}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Resource</option>
+                                <option value="group">Group</option>
+                                <option value="post">Post</option>
+                                <option value="comment">Comment</option>
+                                <option value="user">User</option>
+                                <option value="media">Media</option>
+                            </select>
+                        </div>
 
-				</div>
-			</div>
-		</div>
-	);
+                        <div className="mb-3">
+                            <label className="form-label">Description</label>
+                            <textarea
+                                className="form-control"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                rows="3"
+                                placeholder="Optional description..."
+                            />
+                        </div>
+                    </div>
+
+                    <div className="modal-footer">
+                        <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
+                        <button className="btn btn-primary" onClick={handleSave}>
+                            {mode === "edit" ? "Update Capacity" : "Create Capacity"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default CapacityModal;
