@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getPost } from "../../redux/actions/postAction";
 import PostCard from "../../components/other/PostCard";
 
-const Profile = () => {
+const PostDetail = () => {
     const { id } = useParams();
     const { auth, postDetail } = useSelector(state => state);
     const [post, setPost] = useState([]);
@@ -21,9 +21,9 @@ const Profile = () => {
     return (
         <div className="posts container col-md-6">
             {
-                post.length === 0 &&  <div className="mx-auto d-block spinner-border text-dark my-4">
-                <span className="sr-only">Loading...</span>
-            </div>
+                post.length === 0 && <div className="mx-auto d-block spinner-border text-dark my-4">
+                    <span className="sr-only">Loading...</span>
+                </div>
             }
             {
                 post.map(p => (
@@ -34,4 +34,4 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+export default PostDetail;

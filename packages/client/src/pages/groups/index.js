@@ -258,19 +258,19 @@ const Groups = () => {
                                         <li key={group._id}>
                                             <div className="nearly-pepls">
                                                 <figure>
-                                                    <Link to={`/group/${group._id}`}>
+                                                    <Link to={`/groups/${group._id}`}>
                                                         <Avatar size="large-avatar" src={group.avatar?.url || "/default-group.jpg"} />
                                                     </Link>
                                                 </figure>
                                                 <div className="pepl-info">
-                                                    <h4><Link to={`/group/${group._id}`}>{group.name}</Link></h4>
+                                                    <h4><Link to={`/groups/${group._id}`}>{group.name}</Link></h4>
                                                     <span>
                                                         {group.privacy === 'public' ? 'Public' : 'Private'} • {group.type}
                                                     </span>
                                                     <em>{group.memberCount || 0} members</em>
 
                                                     {joined ? (
-                                                        <Link to={`/group/${group._id}`} className="add-butn">
+                                                        <Link to={`/groups/${group._id}`} className="add-butn">
                                                             View Group
                                                         </Link>
                                                     ) : (
@@ -278,7 +278,7 @@ const Groups = () => {
                                                             className="add-butn"
                                                             onClick={() => handleJoinClick(group)}
                                                         >
-                                                            Join Group
+                                                            {group?.privacy === 'public' ? 'Join Group' : 'Request to Join'}
                                                         </button>
                                                     )}
                                                 </div>

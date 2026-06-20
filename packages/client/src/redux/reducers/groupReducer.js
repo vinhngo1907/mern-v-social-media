@@ -4,10 +4,10 @@ const initialState = {
     groups: [],           // User's joined groups (for Groups page)
     discoverGroups: [],
     myGroups: [],
-    group: null,          // Current group detail (for GroupDetail page)
+    // group: null,          // Current group detail (for GroupDetail page)
     loading: false,
-    myGroupsResult: 0,
-    discoverResult: 0,
+    // myGroupsResult: 0,
+    // discoverResult: 0,
     loadingDiscover: false,
 };
 
@@ -34,7 +34,7 @@ const groupReducer = (state = initialState, action) => {
                 myGroups: payload.page === 1
                     ? payload.groups
                     : [...state.myGroups, ...action.payload.groups],
-                myGroupsResult: payload.result,
+                // myGroupsResult: payload.result,
                 loading: false
             };
 
@@ -44,16 +44,8 @@ const groupReducer = (state = initialState, action) => {
                 discoverGroups: payload.page === 1
                     ? payload.groups
                     : [...state.discoverGroups, ...payload.groups],
-                discoverResult: payload.result,
+                // discoverResult: payload.result,
                 loadingDiscover: false
-            };
-
-        // Get Single Group Detail
-        case GROUP_TYPES.GET_GROUP_DETAIL:
-            return {
-                ...state,
-                group: action.payload,
-                loading: false
             };
 
         // Create New Group
@@ -65,19 +57,19 @@ const groupReducer = (state = initialState, action) => {
             };
 
         // Update Group
-        case GROUP_TYPES.UPDATE_GROUP:
-            return {
-                ...state,
-                // Update in groups list if exists
-                groups: state.groups.map(g =>
-                    g._id === action.payload._id ? action.payload : g
-                ),
-                // Update current group detail
-                group: state.group?._id === action.payload._id
-                    ? action.payload
-                    : state.group,
-                loading: false
-            };
+        // case GROUP_TYPES.UPDATE_GROUP:
+        //     return {
+        //         ...state,
+        //         // Update in groups list if exists
+        //         groups: state.groups.map(g =>
+        //             g._id === action.payload._id ? action.payload : g
+        //         ),
+        //         // Update current group detail
+        //         group: state.group?._id === action.payload._id
+        //             ? action.payload
+        //             : state.group,
+        //         loading: false
+        //     };
 
         default:
             return state;
