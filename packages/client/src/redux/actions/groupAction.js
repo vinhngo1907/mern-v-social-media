@@ -1,6 +1,6 @@
-import { postDataApi, getDataApi, putDataApi } from "../../utils/fetchData";
+import { postDataApi, getDataApi, putDataApi, patchDataApi, deleteDataApi } from "../../utils/fetchData";
 import { imageUpload } from "../../utils/imageUpload";
-import { GLOBALTYPES } from "./globalTypes";
+import { DeleteData, GLOBALTYPES } from "./globalTypes";
 
 export const GROUP_TYPES = {
     CREATE_GROUP: 'CREATE_GROUP',
@@ -12,6 +12,8 @@ export const GROUP_TYPES = {
     LOADING_DISCOVER: 'LOADING_DISCOVER',
     GET_DISCOVER_GROUPS: 'GET_DISCOVER_GROUPS',
     GET_JOIN_REQUESTS: 'GET_JOIN_REQUESTS',
+    REVIEW_JOIN_REQUEST: 'REVIEW_JOIN_REQUEST',
+    REMOVE_MEMBER: 'REMOVE_MEMBER',
 }
 
 // export const createGroup = ({ data, token, avatar }) => async (dispatch) => {
@@ -143,14 +145,6 @@ export const updateGroup = ({ groupId, token, data: groupData, avatar, socket })
     }
 };
 
-export const promoteToAdmin = () => async (dispatch) => {
-
-}
-
-export const removeMember = ({ ids, auth, socket }) => {
-
-}
-
 // Get User's Joined Groups
 export const getUserGroups = ({ token, page, limit }) => async (dispatch) => {
     try {
@@ -169,8 +163,10 @@ export const getUserGroups = ({ token, page, limit }) => async (dispatch) => {
 
     } catch (err) {
         console.error(err);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err?.response?.message || "Something wnet wrong" } });
+        throw err;
     } finally {
-        // dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: false });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };
 
@@ -214,22 +210,6 @@ export const searchOrDiscoverGroups = ({ token, searchTerm = '', page, limit }) 
 export const getGroup = ({ groupDetail, id: groupId, token }) => async (dispatch) => {
     if (groupDetail.every(p => p._id !== groupId)) {
         try {
-            // dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: true });
-
-            // const resGroupDetail = await getDataApi(`group/${groupId}`, token);
-            // const resJoinGroupRequests = await getDataApi(`group/${groupId}/join-requests`, token);
-            // dispatch({
-            //     type: GROUP_TYPES.GET_GROUP_DETAIL,
-            //     payload: resGroupDetail.data.results
-            // });
-
-            // dispatch({
-            //     type: GROUP_TYPES.GET_JOIN_REQUESTS,
-            //     payload: resJoinGroupRequests.data.results
-            // });
-
-            // dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: false });
-
             const res = await getDataApi(`group/${groupId}`, token);
             dispatch({ type: GROUP_TYPES.GET_GROUP_DETAIL, payload: res.data.results })
 
@@ -244,7 +224,6 @@ export const getGroup = ({ groupDetail, id: groupId, token }) => async (dispatch
                 type: GLOBALTYPES.ALERT,
                 payload: {}
             });
-            // dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: false });
         }
     }
 
@@ -294,21 +273,35 @@ export const leaveGroup = ({ id: groupId, token }) => async (dispatch) => {
 };
 
 // ====================== JOIN GROUP ======================
-export const joinGroup = ({ id: groupId, token }) => async (dispatch) => {
+export const joinGroup = ({ group: groupDetail, auth }) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
-        const res = await postDataApi(`group/${groupId}/join`, {}, token);
-
+        const res = await postDataApi(`group/${groupDetail._id}/join`, {}, auth.token);
         dispatch({
             type: GLOBALTYPES.ALERT,
             payload: { success: res.data.message || "Joined group successfully!" }
         });
 
-        // Refresh my groups list
-        dispatch(getUserGroups({ token, page: 1, limit: 12 }));
+        dispatch({
+            type: GROUP_TYPES.GET_GROUP_DETAIL,
+            payload: {
+                ...groupDetail,
+                joinRequests: [...groupDetail.joinRequests, {
+                    _id: res.data.results._id,
+                    group: groupDetail._id,
+                    user: {
+                        username: auth.user.username,
+                        avatar: auth.user.avatar,
+                        _id: auth.user._id
+                    },
+                    requestedAt: new Date().toISOString(),
+                    createdAt: new Date().toISOString(),
+                    status: "pending"
+                }]
+            }
+        });
 
-        return res.data;
     } catch (error) {
         console.error(error);
         dispatch({
@@ -326,7 +319,7 @@ export const joinGroup = ({ id: groupId, token }) => async (dispatch) => {
 // ====================== GET JOIN REQUESTS (For Admin/Manager) ======================
 export const getJoinRequests = ({ groupId, token }) => async dispatch => {
     try {
-        dispatch({ type: GROUP_TYPES.LOADING_JOIN_REQUESTS, payload: true });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
         const res = await getDataApi(`group/${groupId}/join-requests`, token);
 
@@ -337,17 +330,40 @@ export const getJoinRequests = ({ groupId, token }) => async dispatch => {
 
         return res.data;
     } catch (error) {
-        dispatch({ type: GROUP_TYPES.LOADING_JOIN_REQUESTS, payload: false });
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: error.response?.message || "Something went wrong" } });
         throw error;
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };
 
 // ====================== REVIEW JOIN REQUEST (Approve / Reject) ======================
-export const reviewJoinRequest = ({ requestId, status, token }) => async (dispatch) => {
+export const reviewJoinRequest = ({ request, status, group, token }) => async (dispatch) => {
+    const { _id: requestId } = request;
+    if (!requestId) return;
+
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
-
-        const res = await putDataApi(`join-request/${requestId}`, { status }, token);
+        const res = await patchDataApi(`group/join-request/${requestId}`, { status }, token);
+        const newListRequest = DeleteData(group.joinRequests, requestId);
+        if (status === 'approved') {
+            dispatch({
+                type: GROUP_TYPES.REVIEW_JOIN_REQUEST,
+                payload: {
+                    ...group,
+                    joinRequests: newListRequest,
+                    members: [
+                        ...group.members,
+                        {
+                            user: request.user,
+                            role: 'member',
+                            joinedAt: new Date().toISOString()
+                        }
+                    ],
+                    memberCount: group.memberCount + 1
+                }
+            });
+        }
 
         dispatch({
             type: GLOBALTYPES.ALERT,
@@ -356,7 +372,6 @@ export const reviewJoinRequest = ({ requestId, status, token }) => async (dispat
             }
         });
 
-        return res.data;
     } catch (error) {
         console.error(error);
         dispatch({
@@ -370,3 +385,70 @@ export const reviewJoinRequest = ({ requestId, status, token }) => async (dispat
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };
+
+// Change Member Role (Promote / Demote)
+export const changeMemberRole = ({ groupId, userId, newRole, token }) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+
+        const res = await putDataApi(`group/${groupId}/member/${userId}/role`, { newRole }, token);
+
+        dispatch({
+            type: GROUP_TYPES.UPDATE_GROUP,
+            payload: res.data.results || res.data
+        });
+
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: { success: `Member role updated to ${newRole}` }
+        });
+
+        return res.data;
+    } catch (error) {
+        console.error(error);
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: { error: error.response?.data?.message || "Failed to update role" }
+        });
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
+    }
+};
+
+// Remove Member
+export const removeMember = ({ group: groupDetail, userId, token }) => async (dispatch) => {
+    const { _id: groupId } = groupDetail;
+    if (!groupId) return;
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+
+        const res = await deleteDataApi(`group/${groupId}/members/${userId}`, token);
+        // console.log({ groupId, userId, groupDetail })
+        const newList = groupDetail.members.filter(m => m.user._id !== userId)
+        dispatch({
+            type: GROUP_TYPES.REMOVE_MEMBER,
+            payload: {
+                ...groupDetail,
+                members: newList
+            }
+        });
+
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: { success: res.data?.message || "success" }
+        });
+    } catch (error) {
+        console.error(error);
+        dispatch({
+            type: GLOBALTYPES.ALERT,
+            payload: { error: error.response?.data?.message || "Failed to remove member" }
+        });
+        throw error;
+    } finally {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
+    }
+};
+
+export const promoteToAdmin = () => async (dispatch) => {
+
+}

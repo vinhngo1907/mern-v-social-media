@@ -2,13 +2,13 @@ import { EditData } from "../actions/globalTypes";
 import { GROUP_TYPES } from "../actions/groupAction";
 
 
-const initialState = {
-    group: null,
-    joinRequests: [],
-    loading: false,
-    loadingRequests: false,
-    error: null
-};
+// const initialState = {
+//     group: null,
+//     joinRequests: [],
+//     loading: false,
+//     loadingRequests: false,
+//     error: null
+// };
 
 const groupDetailReducer = (state = [], action) => {
     switch (action.type) {
@@ -41,16 +41,22 @@ const groupDetailReducer = (state = [], action) => {
 
         case GROUP_TYPES.REVIEW_JOIN_REQUEST:
             // Update join requests list after approve/reject
-            return {
-                ...state,
-                joinRequests: state.joinRequests.filter(req => req._id !== action.payload.requestId),
-                group: state.group ? {
-                    ...state.group,
-                    memberCount: action.payload.newMemberCount || state.group.memberCount
-                } : null,
-                loadingRequests: false
-            };
+            // return {
+            //     ...state,
+            //     joinRequests: state.joinRequests.filter(req => req._id !== action.payload.requestId),
+            //     group: state.group ? {
+            //         ...state.group,
+            //         memberCount: action.payload.newMemberCount || state.group.memberCount
+            //     } : null,
+            //     loadingRequests: false
+            // };
+            const reviewedGroup = action.payload;
 
+            return EditData(state, reviewedGroup._id, reviewedGroup);
+
+        case GROUP_TYPES.REMOVE_MEMBER:
+            const removedMemberGroup = action.payload;
+            return EditData(state, removedMemberGroup._id, removedMemberGroup)
         default:
             return state;
     }

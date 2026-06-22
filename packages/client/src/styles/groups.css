@@ -9,7 +9,7 @@
 	color: #088dcd;	
 }
 
-a.add-butn {
+a.add-butn, button.add-butn {
     background: #088dcd;
     color: #fff;
     float: right;

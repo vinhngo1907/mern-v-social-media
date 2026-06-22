@@ -1,31 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { reviewJoinRequest } from '../../redux/actions/groupAction';
 import Avatar from '../other/Avatar';
 
-const JoinRequestsPanel = ({ groupId, token, requests }) => {
-    console.log({ groupId, requests })
+const JoinRequestsPanel = ({ group, token, requests }) => {
+    // console.log({ group })
+    // const { _id: groupId } = group;
     const dispatch = useDispatch();
     // const [requests, setRequests] = useState([]);
     // const { joinRequests: requests } = useSelector(state => state.groupDetail);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
-    const handleReview = async (requestId, status) => {
+    // const handleReview = async (requestId, status) => {
+    const handleReview = async (request, status) => {
+        const { _id: requestId } = request;
+        if (!requestId) return;
         if (!window.confirm(`Are you sure you want to ${status} this request?`)) return;
 
         try {
-            setLoading(true);
-            await dispatch(reviewJoinRequest({ requestId, status, token }));
+            // setLoading(true);
+            await dispatch(reviewJoinRequest({ request, status, group, token }));
         } catch (err) {
             console.error(err);
-        } finally {
-            setLoading(false);
+            // setLoading(false);
         }
+        //     finally {
+        //     setLoading(false);
+        // }
     };
 
-    if (loading) return <div className="text-center py-4">Loading requests...</div>;
+    // if (loading) return <div className="text-center py-4">Loading requests...</div>;
 
-    if (!groupId || !token) return null;
+    if (!group || !token) return null;
+    console.log({ group })
 
     return (
         <div className="join-requests-panel">
@@ -49,13 +56,13 @@ const JoinRequestsPanel = ({ groupId, token, requests }) => {
                         <div>
                             <button
                                 className="btn btn-success btn-sm me-2"
-                                onClick={() => handleReview(req._id, 'approved')}
+                                onClick={() => handleReview(req, 'approved')}
                             >
                                 Approve
                             </button>
                             <button
                                 className="btn btn-danger btn-sm"
-                                onClick={() => handleReview(req._id, 'rejected')}
+                                onClick={() => handleReview(req, 'rejected')}
                             >
                                 Reject
                             </button>

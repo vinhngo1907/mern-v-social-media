@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { promoteToAdmin, removeMember, updateGroup } from '../../redux/actions/groupAction';
+import { changeMemberRole, removeMember, updateGroup } from '../../redux/actions/groupAction';
 import { checkImage } from '../../utils/imageUpload';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 
@@ -264,6 +264,14 @@ const EditGroupModal = ({ show, onHide, group }) => {
         );
     };
 
+    const isSuperAdmin = (group, currentUserId) => {
+        if (!group || !currentUserId) return false;
+        const member = group.members?.find(m =>
+            (m.user?._id || m.user) === currentUserId
+        );
+        return member?.role === 'admin';
+    };
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -293,6 +301,18 @@ const EditGroupModal = ({ show, onHide, group }) => {
 
         setAvatar(file);
         setAvatarPreview(URL.createObjectURL(file));
+    };
+
+    const handleRemoveMember = async (member) => {
+        if (window.confirm(`Remove ${member.fullname}?`)) {
+            dispatch(removeMember({
+                // groupId: group._id,
+                group: group,
+                userId: member._id,
+                token
+            }));
+
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -365,10 +385,14 @@ const EditGroupModal = ({ show, onHide, group }) => {
                             </div>
 
                             <div className="mb-3">
-                                <label>Group Name <span className="text-danger">*</span></label>
+                                <label
+                                    className='form-label font-weight-bold'
+                                    htmlFor='group-name'
+                                >Group Name <span className="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     className="form-control"
+                                    id="group-name"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
@@ -376,21 +400,91 @@ const EditGroupModal = ({ show, onHide, group }) => {
                                 />
                             </div>
 
-                            <div className="mb-3">
-                                <label>Description</label>
+                            <div className="form-group mb-3">
+                                <label
+                                    htmlFor='description'
+                                    className='form-label font-weight-bold'>Description</label>
                                 <textarea
                                     className="form-control"
+                                    id='description'
                                     rows="3"
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
                                 />
                             </div>
+                            {/* <div className="form-group mb-3"
+                                style={{ maxHeight: '60vh' }}
+                            >
+                                <label className='font-weight-bold form-label'>Members</label>
+                                <div className="members-scroll"
+                                    style={{
+                                        maxHeight: 'calc(60vh - 130px)',
+                                        overflowY: 'auto',
+                                        overflowX: 'hidden'
+                                    }}
+                                >
+                                    {group?.members && group?.members.map(member => {
+                                        const memberUser = member.user || member;
+                                        const isCurrentUser = memberUser._id === user._id;
+                                        const canManage = isAdmin() && !isCurrentUser;
+                                        return (
+                                            <div key={memberUser._id} className="d-flex align-items-center justify-content-between p-3 border-bottom">
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        className='rounded-circle me-3'
+                                                        alt='avatar' style={{
+                                                            height: "60px",
+                                                            width: "60px"
+                                                        }} src={memberUser.avatar}
+                                                    />
+                                                    <div>
+                                                        <strong>{memberUser.fullname}</strong>
+                                                        <small className="d-block text-muted">@{memberUser.username}</small>
+                                                        <span className="badge bg-info">{member.role}</span>
+                                                    </div>
+                                                </div>
+
+                                                {canManage && (
+                                                    <div className="d-flex gap-2">
+                                                        <select
+                                                            className="form-select form-select-sm"
+                                                            value={member.role}
+                                                            onChange={(e) => dispatch(changeMemberRole({
+                                                                groupId: group._id,
+                                                                userId: memberUser._id,
+                                                                newRole: e.target.value,
+                                                                token
+                                                            }))}
+                                                        >
+                                                            <option value="member">Member</option>
+                                                            <option value="mod">Moderator</option>
+                                                            <option value="manager">Manager</option>
+                                                            {isSuperAdmin() && <option value="admin">Admin</option>}
+                                                        </select>
+
+                                                        <button
+                                                            className="btn btn-sm btn-danger"
+                                                            onClick={() => handleRemoveMember(memberUser)}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div> */}
 
                             <div className="row">
                                 <div className="col-md-6 mb-3">
-                                    <label>Group Type</label>
-                                    <select className="form-select" name="type" value={formData.type} onChange={handleChange}>
+                                    <label htmlFor='group-type'
+                                        className='form-label'
+                                    >Group Type</label>
+                                    <select className="form-select"
+                                        id='group-type'
+                                        name="type" value={formData.type} onChange={handleChange}>
                                         <option value="community">Community</option>
                                         <option value="chat">Chat Only</option>
                                         <option value="hybrid">Hybrid</option>
@@ -408,7 +502,7 @@ const EditGroupModal = ({ show, onHide, group }) => {
                             </div>
 
                             {/* Advanced Settings */}
-                            <h6 className="mt-4 mb-3 border-bottom pb-2">Group Settings</h6>
+                            <h6 className="mt-4 mb-3 border-bottom pb-2 font-weight-bold">Group Settings</h6>
 
                             <div className="mb-3 form-check">
                                 <input
@@ -457,6 +551,70 @@ const EditGroupModal = ({ show, onHide, group }) => {
                             </div>
 
                         </form>
+
+                        <div className="form-group"
+                            style={{ maxHeight: '60vh' }}
+                        >
+                            <label className='font-weight-bold form-label'>Members</label>
+                            <div className="members-scroll"
+                                style={{
+                                    maxHeight: 'calc(60vh - 130px)',
+                                    overflowY: 'auto',
+                                    overflowX: 'hidden'
+                                }}
+                            >
+                                {group?.members && group?.members.map(member => {
+                                    const memberUser = member.user || member;
+                                    const isCurrentUser = memberUser._id === user._id;
+                                    const canManage = isAdmin() && !isCurrentUser;
+                                    return (
+                                        <div key={memberUser._id} className="d-flex align-items-center justify-content-between p-3 border-bottom">
+                                            <div className="d-flex align-items-center">
+                                                <img
+                                                    className='rounded-circle me-3'
+                                                    alt='avatar' style={{
+                                                        height: "60px",
+                                                        width: "60px"
+                                                    }} src={memberUser.avatar}
+                                                />
+                                                <div>
+                                                    <strong>{memberUser.fullname}</strong>
+                                                    <small className="d-block text-muted">@{memberUser.username}</small>
+                                                    <span className="badge bg-info">{member.role}</span>
+                                                </div>
+                                            </div>
+
+                                            {canManage && (
+                                                <div className="d-flex gap-2">
+                                                    <select
+                                                        className="form-select form-select-sm"
+                                                        value={member.role}
+                                                        onChange={(e) => dispatch(changeMemberRole({
+                                                            groupId: group._id,
+                                                            userId: memberUser._id,
+                                                            newRole: e.target.value,
+                                                            token
+                                                        }))}
+                                                    >
+                                                        <option value="member">Member</option>
+                                                        <option value="mod">Moderator</option>
+                                                        <option value="manager">Manager</option>
+                                                        {isSuperAdmin() && <option value="admin">Admin</option>}
+                                                    </select>
+
+                                                    <button
+                                                        className="btn btn-sm btn-danger"
+                                                        onClick={() => handleRemoveMember(memberUser)}
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
                     </div>
 
                     <div className="modal-footer">

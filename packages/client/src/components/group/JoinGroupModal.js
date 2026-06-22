@@ -1,16 +1,17 @@
 import React from 'react';
-import { useDispatch, } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { joinGroup } from '../../redux/actions/groupAction';
 
-const JoinGroupModal = ({ show, onHide, group, token }) => {
+const JoinGroupModal = ({ show, onHide, group }) => {
+    const { auth } = useSelector(state => state);
     const dispatch = useDispatch();
 
     if (!show || !group) return null;
 
     const handleJoin = () => {
         // Call your join API here
-        console.log("Joining group:", group.name);
-        dispatch(joinGroup({ id: group._id, token }));
+        // console.log("Joining group:", group.name);
+        dispatch(joinGroup({ group, auth }));
         onHide();
     };
 

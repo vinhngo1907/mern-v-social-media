@@ -187,7 +187,11 @@ a.forgot-pwd {
     margin-right: 0;
 }
 
-.editing-info .submit-btns {
+.mm-panel.mm-hasnavbar.mm-opened .setting-row span {
+    width: 72%;
+}
+
+.editing-info > form > .submit-btns, .onoff-options > form > .submit-btns {
     display: inline-block;
     margin-top: 20px;
     width: 100%;

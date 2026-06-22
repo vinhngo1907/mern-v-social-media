@@ -10,7 +10,7 @@ import Avatar from "../../components/other/Avatar";
 import JoinGroupModal from "../../components/group/JoinGroupModal";
 
 const Groups = () => {
-    const { auth: { token },
+    const { auth: { user, token },
         groups: {
             myGroups,
             discoverGroups,
@@ -28,37 +28,9 @@ const Groups = () => {
     const [myPage, setMyPage] = useState(1);
     const [discoverPage, setDiscoverPage] = useState(1);
     const [allPage, setAllPage] = useState(1);
-    // const [hasMoreMy, setHasMoreMy] = useState(true);
-    // const [hasMoreDiscover, setHasMoreDiscover] = useState(true);
 
     const dispatch = useDispatch();
     const limit = 12; // item per page
-
-    // Load My Groups
-    // useEffect(() => {
-    //     if (!token) return;
-
-    //     if (activeTab === 'my') {
-    //         dispatch(getUserGroups({ token, page: 1, limit }));
-    //         setMyPage(1);
-    //     } else if (activeTab === 'discover') {
-    //         dispatch(searchOrDiscoverGroups({ searchTerm, page: 1, limit, token }));
-    //         setDiscoverPage(1);
-    //     } else { // 'all'
-    //         dispatch(searchOrDiscoverGroups({ searchTerm, page: 1, limit, token })); // Reuse discover logic for now
-    //         setAllPage(1);
-    //     }
-    // }, [dispatch, token, activeTab, searchTerm]);
-
-    // // Load Discover Groups when tab or search changes
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         dispatch(searchOrDiscoverGroups({ searchTerm, page: 1, token, limit }));
-    //         setDiscoverPage(1);
-    //     }, 500);
-
-    //     return () => clearTimeout(timeout);
-    // }, [searchTerm, activeTab, dispatch, token]);
 
     // Main data loading effect (with search support)
     useEffect(() => {
@@ -93,26 +65,11 @@ const Groups = () => {
         displayedGroups = displayedGroups.filter(group => !joinedIds.has(group._id));
     }
 
-
     const isLoading = activeTab === 'my' ? loading : loadingDiscover;
     const currentPage = activeTab === 'my' ? myPage : activeTab === 'all' ? allPage : discoverPage;
 
-    // const hasMore = activeTab === 'my' ? hasMoreMy : hasMoreDiscover;
-
-    // const handleLoadMore = () => {
-    //     const nextPage = currentPage + 1;
-    //     if (activeTab === 'my') {
-    //         dispatch(getUserGroups({ token, nextPage, limit }))
-    //     } else {
-    //         dispatch(searchOrDiscoverGroups(searchTerm, nextPage, limit));
-    //         setDiscoverPage(nextPage);
-    //     }
-    // }
-
     // Simple way to check if we should show "Load More"
     const hasMore = displayedGroups.length >= (currentPage * limit);
-    // const hasMore = displayedGroups.length >=
-    //     ((activeTab === 'my' ? myPage : activeTab === 'all' ? allPage : discoverPage) * limit);
 
     const handleLoadMore = () => {
         // const nextPage = (activeTab === 'my' ? myPage : discoverPage) + 1;
@@ -135,6 +92,15 @@ const Groups = () => {
 
     const isJoined = (groupId) => {
         return myGroups.some(g => g._id === groupId);
+    };
+
+    // Check if current user has pending request for this group
+    const hasPendingRequest = (group) => {
+        if (!group?.joinRequests || !Array.isArray(group.joinRequests)) return false;
+
+        return group.joinRequests.some(req =>
+            req.user?._id === user?._id && req.status === 'pending'
+        );
     };
 
     return (
@@ -192,59 +158,6 @@ const Groups = () => {
                         </li>
                     </ul>
                     {/* Groups list */}
-                    {/* <ul className="nearby-contct">
-                        {
-                            loading && <div className="spinner-border text-primary mx-auto d-block" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </div>
-                        }
-                        {
-                            displayedGroups && displayedGroups.length > 0 ? (
-                                <ul className="nearby-contct">
-                                    {displayedGroups.map(group => (
-                                        <li key={group._id}>
-                                            <div className="nearly-pepls">
-                                                <figure>
-                                                    <Link to={`/group/${group._id}`}>
-                                                        
-                                                        <Avatar
-                                                            size="large-avatar"
-                                                            src={group.avatar?.url || "/default-group.jpg"}
-                                                            alt={group.name}
-                                                        />
-                                                    </Link>
-                                                </figure>
-                                                <div className="pepl-info">
-                                                    <h4>
-                                                        <Link to={`/group/${group._id}`}>{group.name}</Link>
-                                                    </h4>
-                                                    <span>
-                                                        {group.privacy === 'public' ? 'Public' : 'Private'} Group
-                                                    </span>
-                                                    <em>{group.memberCount || 0} members</em>
-
-                                                    {activeTab === 'my' ? (
-                                                        <Link to={`/groups/${group._id}`} className="add-butn">
-                                                            View Group
-                                                        </Link>
-                                                    ) : (
-                                                        <button className="add-butn">Join Group</button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <div className="text-center py-5 text-muted">
-                                    {activeTab === 'my'
-                                        ? "You haven't joined any groups yet."
-                                        : "No groups found."}
-                                </div>
-                            )
-                        }
-                    </ul>
-                    <div className="lodmore"><button className="btn-view btn-load-more"></button></div> */}
                     {isLoading && (activeTab === 'my' ? myPage : discoverPage) === 1 ? (
                         <div className="text-center py-5">
                             <div className="spinner-border text-primary" role="status" />
@@ -254,6 +167,7 @@ const Groups = () => {
                             <ul className="nearby-contct">
                                 {displayedGroups.map(group => {
                                     const joined = isJoined(group._id);
+                                    const pending = hasPendingRequest(group);
                                     return (
                                         <li key={group._id}>
                                             <div className="nearly-pepls">
@@ -268,17 +182,20 @@ const Groups = () => {
                                                         {group.privacy === 'public' ? 'Public' : 'Private'} • {group.type}
                                                     </span>
                                                     <em>{group.memberCount || 0} members</em>
-
                                                     {joined ? (
                                                         <Link to={`/groups/${group._id}`} className="add-butn">
                                                             View Group
                                                         </Link>
+                                                    ) : pending ? (
+                                                        <button className="add-butn btn-secondary" disabled>
+                                                            <i className="fa fa-clock-o" /> Request Sent (Pending)
+                                                        </button>
                                                     ) : (
                                                         <button
                                                             className="add-butn"
                                                             onClick={() => handleJoinClick(group)}
                                                         >
-                                                            {group?.privacy === 'public' ? 'Join Group' : 'Request to Join'}
+                                                            {group.privacy === 'public' ? 'Join Group' : 'Request to Join'}
                                                         </button>
                                                     )}
                                                 </div>
@@ -324,7 +241,7 @@ const Groups = () => {
                 show={showJoinModal}
                 onHide={() => setShowJoinModal(false)}
                 group={selectedGroup}
-                token={token}
+            // token={token}
             />
         </div>
     )

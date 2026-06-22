@@ -201,8 +201,9 @@ const GroupCard = ({ id, group, theme }) => {
                         {activeTab === 'requests' && isAdminOrManager && (
                             group?.joinRequests?.length > 0 ? (
                                 <JoinRequestsPanel
-                                    groupId={id}
+                                    // groupId={id}
                                     token={token}
+                                    group={group}
                                     requests={group.joinRequests}
                                 />
                             ) : (
@@ -227,19 +228,27 @@ const GroupCard = ({ id, group, theme }) => {
                     </div>
 
                     {/* Right Sidebar */}
-                    <div className="col-lg-4">
-                        <div className="card mb-4">
-                            <div className="card-body">
-                                <h6>Group Info</h6>
-                                <ul className="list-unstyled">
+                    <div className="col-lg-4 pr-0">
+                        <div className="sidebar static w-100">
+                            <div className="widget pl-2">
+                                <h4 className="widget-title">Group Info</h4>
+                                <ul className="short-profile">
                                     <li className="mb-2">
-                                        <strong>Created by:</strong> {group.createdBy?.fullname || 'Unknown'}
+                                        <span>Name:</span>
+                                        <p>{group.name}</p>
                                     </li>
                                     <li className="mb-2">
-                                        <strong>Visibility:</strong> {group.privacy}
+                                        <span>Created by:</span>
+                                        <p>{group.createdBy?.fullname || 'Unknown'}</p>
+
+                                    </li>
+                                    <li className="mb-2">
+                                        <span>Visibility:</span>
+                                        <p>{group.privacy}</p>
                                     </li>
                                     <li>
-                                        <strong>Type:</strong> {group.type}
+                                        <span>Type:</span>
+                                        <p>{group.type}</p>
                                     </li>
                                 </ul>
                             </div>

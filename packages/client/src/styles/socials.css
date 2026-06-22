@@ -45,6 +45,24 @@
     vertical-align: sub;
 }
 
+/*-- short profile widget ---*/
+
+.short-profile li span {
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+.short-profile > li {
+    border-bottom: 1px solid #eaeaea;
+}
+
+.short-profile > li:last-child {
+    border-bottom: 0 none;
+}
+
 /*--- social icons opening hovers style ---*/
 .absolute-center,
 .social-menu,

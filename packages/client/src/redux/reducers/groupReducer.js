@@ -56,21 +56,6 @@ const groupReducer = (state = initialState, action) => {
                 loading: false
             };
 
-        // Update Group
-        // case GROUP_TYPES.UPDATE_GROUP:
-        //     return {
-        //         ...state,
-        //         // Update in groups list if exists
-        //         groups: state.groups.map(g =>
-        //             g._id === action.payload._id ? action.payload : g
-        //         ),
-        //         // Update current group detail
-        //         group: state.group?._id === action.payload._id
-        //             ? action.payload
-        //             : state.group,
-        //         loading: false
-        //     };
-
         default:
             return state;
     }
