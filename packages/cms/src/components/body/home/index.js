@@ -1,72 +1,63 @@
-// components/body/home/index.js
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import "./home.css";
+import Table from "./Table";
 
-const Home = () => {
-    const { auth } = useSelector(state => state);
-    const { isLogged, isAdmin } = auth;
+const MENU = [
+  { key: "users", label: "Users" },
+  { key: "groups", label: "Groups" },
+  { key: "posts", label: "Posts" },
+  { key: "comments", label: "Comments" },
+  { key: "policies", label: "Policies" },
+  { key: "content", label: "Videos" },
+];
 
-    return (
-        <div className="home-page">
-            <div className="container py-5">
-                <div className="row justify-content-center text-center">
-                    <div className="col-lg-8">
-                        <h1 className="display-4 fw-bold mb-4">
-                            Welcome to <span className="text-primary">V-Net✮CMS</span>
-                        </h1>
-                        <p className="lead mb-5">
-                            A modern social media platform with powerful admin tools, 
-                            role-based access control, and community management.
-                        </p>
+function Home() {
+  const [activeTab, setActiveTab] = useState("users");
 
-                        <div className="d-flex justify-content-center gap-3 flex-wrap">
-                            {!isLogged ? (
-                                <>
-                                    <Link to="/register" className="btn btn-primary btn-lg px-5">
-                                        Get Started
-                                    </Link>
-                                    <Link to="/login" className="btn btn-outline-primary btn-lg px-5">
-                                        Login
-                                    </Link>
-                                </>
-                            ) : isAdmin ? (
-                                <Link to="/admin" className="btn btn-success btn-lg px-5">
-                                    Go to Admin Dashboard
-                                </Link>
-                            ) : (
-                                <Link to="/profile" className="btn btn-primary btn-lg px-5">
-                                    Go to Profile
-                                </Link>
-                            )}
-                        </div>
-                    </div>
-                </div>
+  const renderTable = () => {
+    switch (activeTab) {
+      case "users":
+        return <Table title="Users" columns={["ID", "Email", "Role"]} />;
+      case "posts":
+        return <Table title="Posts" columns={["ID", "Title", "Status"]} />;
+      case "comments":
+        return <Table title="Comments" columns={["ID", "Content"]} />;
+      default:
+        return <Table title="Data" columns={["ID", "Name"]} />;
+    }
+  };
 
-                {/* Features Section */}
-                <div className="row mt-5 g-4">
-                    <div className="col-md-4">
-                        <div className="card h-100 text-center p-4">
-                            <h3>👥 Communities</h3>
-                            <p>Build and manage powerful groups with role-based permissions.</p>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="card h-100 text-center p-4">
-                            <h3>🔑 RBAC System</h3>
-                            <p>Advanced Roles, Capacities, and Policies management.</p>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="card h-100 text-center p-4">
-                            <h3>📊 Admin CMS</h3>
-                            <p>Complete dashboard to manage users, content, and moderation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="container-fluid">
+      <div className="row">
+
+        {/* LEFT SIDEBAR */}
+        <div className="col-3 sidebar">
+          <h5 className="mt-3">Admin CMS</h5>
+          <ul className="list-group mt-4">
+            {MENU.map((item) => (
+              <li
+                key={item.key}
+                className={`list-group-item ${activeTab === item.key ? "active" : ""
+                  }`}
+                onClick={() => setActiveTab(item.key)}
+                style={{ cursor: "pointer" }}
+              >
+                {item.label}
+              </li>
+            ))}
+          </ul>
         </div>
-    );
-};
+
+        {/* RIGHT CONTENT */}
+        <div className="col-9 content p-4">
+          <h4 className="mb-4 text-capitalize">{activeTab}</h4>
+          {renderTable()}
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
 export default Home;

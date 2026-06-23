@@ -1,7 +1,7 @@
 import ACTIONS from "./index";
 import { getDataAPI, postDataAPI } from "../../components/utils/apis/FetchData";
 
-export const dispatchLogin =  () => {
+export const dispatchLogin = () => {
 	return {
 		type: ACTIONS.LOGIN
 	};
@@ -13,7 +13,7 @@ export const fetchUser = async (token) => {
 	// 	headers: { Authorization: `Bearer ${token}` }
 	// });
 	const res = await getDataAPI('/user/me', token);
-	
+
 	return res;
 }
 
@@ -28,22 +28,23 @@ export const dispatchGetUser = (res) => {
 }
 
 export const refreshToken = () => async (dispatch) => {
-    const firstLogin = localStorage.getItem("firstLogin")
-    if(firstLogin){       
-        try {
-            const res = await postDataAPI('auth/refresh-token');
+	const firstLogin = localStorage.getItem("firstLogin")
+	if (firstLogin) {
+		try {
+			const res = await postDataAPI('auth/refresh-token');
 			console.log(res.data);
 			dispatch({ type: ACTIONS.GET_TOKEN, payload: res.data.results.access_token });
 
-        } catch (err) {
+		} catch (err) {
 			console.log(err.response.data.message);
-        }
-    }
+			throw err;
+		}
+	}
 }
 
-export const editUserProfile = (data) => async(dispatch) => {
+export const editUserProfile = (data) => async (dispatch) => {
 	try {
-		
+
 	} catch (error) {
 		console.log(error.response.data.message);
 	}
