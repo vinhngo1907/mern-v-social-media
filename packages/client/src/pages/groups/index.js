@@ -18,7 +18,7 @@ const Groups = () => {
             loadingDiscover,
         }
     } = useSelector(state => state);
-    const [activeTab, setActiveTab] = useState('my');// my or 'discover'
+    const [activeTab, setActiveTab] = useState('all');// my or 'discover'
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showJoinModal, setShowJoinModal] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(false);
@@ -72,7 +72,6 @@ const Groups = () => {
     const hasMore = displayedGroups.length >= (currentPage * limit);
 
     const handleLoadMore = () => {
-        // const nextPage = (activeTab === 'my' ? myPage : discoverPage) + 1;
         const nextPage = currentPage + 1;
 
         if (activeTab === 'my') {
@@ -188,7 +187,7 @@ const Groups = () => {
                                                         </Link>
                                                     ) : pending ? (
                                                         <button className="add-butn btn-secondary" disabled>
-                                                            <i className="fa fa-clock-o" /> Request Sent (Pending)
+                                                            <i className="fa fa-clock-o" /> Request Sent
                                                         </button>
                                                     ) : (
                                                         <button

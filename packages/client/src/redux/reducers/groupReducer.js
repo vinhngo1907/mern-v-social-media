@@ -1,7 +1,7 @@
 import { GROUP_TYPES } from '../actions/groupAction';
 
 const initialState = {
-    groups: [],           // User's joined groups (for Groups page)
+    groups: [],
     discoverGroups: [],
     myGroups: [],
     // group: null,          // Current group detail (for GroupDetail page)

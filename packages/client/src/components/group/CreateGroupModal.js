@@ -4,166 +4,6 @@ import { createGroup } from '../../redux/actions/groupAction';
 import { checkImage } from '../../utils/imageUpload';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 
-// const CreateGroupModal = ({ show, onHide }) => {
-//     const { auth: { token }, theme } = useSelector(state => state)
-//     const dispatch = useDispatch();
-//     const [loading, setLoading] = useState(false);
-//     const [avatar, setAvatar] = useState('');
-//     const [avatarPreview, setAvatarPreview] = useState('');
-
-//     const [formData, setFormData] = useState({
-//         name: '',
-//         description: '',
-//         type: 'community',
-//         privacy: 'private',
-//     });
-
-//     const handleChange = (e) => {
-//         setFormData({ ...formData, [e.target.name]: e.target.value });
-//     };
-
-//     const handleChangeAvatar = (e) => {
-//         e.preventDefault();
-
-//         const file = e.target.files[0];
-//         const err = checkImage(file);
-//         if (err) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
-
-//         setAvatar(file);
-//         setAvatarPreview(URL.createObjectURL(file))
-//     }
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         setLoading(true);
-//         if (!avatar) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Cover image group is required" } })
-//         try {
-//             await dispatch(createGroup({ data: formData, token, avatar }));
-//             onHide();                    // Close modal after success
-//             setFormData({ name: '', description: '', type: 'community', privacy: 'private' });
-//         } catch (error) {
-//             console.error(error);
-//             setLoading(false);
-//         }
-//         finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     if (!show) return null;
-//     const handleClose = () => {
-//         onHide();
-//     }
-//     return (
-//         <>
-//             <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-//                 <div className="modal-dialog modal-lg modal-dialog-centered">
-//                     <div className="modal-content">
-//                         <div className="modal-header">
-//                             <h5 className="modal-title">Create Group</h5>
-//                             <button
-//                                 className="btn btn-danger btn_close"
-//                                 onClick={handleClose}
-//                             >
-//                                 Close
-//                             </button>
-//                         </div>
-
-//                         <form onSubmit={handleSubmit}>
-//                             <div className="modal-body">
-//                                 <div className="group_avatar">
-//                                     <img
-//                                         src={avatarPreview}
-//                                         required
-//                                         alt="avatar" style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-//                                     <span>
-//                                         <i className="fas fa-camera" />
-//                                         <p>Change</p>
-//                                         <input type="file" name="file" id="file_up"
-//                                             accept="image/*" onChange={handleChangeAvatar} />
-//                                     </span>
-//                                 </div>
-//                                 <div className="mb-3">
-//                                     <label className="form-label">Group Name <span className="text-danger">*</span></label>
-//                                     <input
-//                                         type="text"
-//                                         className="form-control"
-//                                         name="name"
-//                                         value={formData.name}
-//                                         onChange={handleChange}
-//                                         required
-//                                         placeholder="Enter group name"
-//                                     />
-//                                 </div>
-
-//                                 <div className="mb-3">
-//                                     <label className="form-label">Description <span className="text-danger">*</span></label>
-//                                     <textarea
-//                                         className="form-control"
-//                                         rows="4"
-//                                         name="description"
-//                                         value={formData.description}
-//                                         onChange={handleChange}
-//                                         required
-//                                         placeholder="What is this group about?"
-//                                     />
-//                                 </div>
-
-//                                 <div className="row">
-//                                     <div className="col-md-6 mb-3">
-//                                         <label className="form-label">Group Type</label>
-//                                         <select
-//                                             className="form-select"
-//                                             name="type"
-//                                             value={formData.type}
-//                                             onChange={handleChange}
-//                                         >
-//                                             <option value="community">Community (Posts + Discussion)</option>
-//                                             <option value="chat">Chat Group Only</option>
-//                                             <option value="hybrid">Hybrid</option>
-//                                         </select>
-//                                     </div>
-
-//                                     <div className="col-md-6 mb-3">
-//                                         <label className="form-label">Privacy</label>
-//                                         <select
-//                                             className="form-select"
-//                                             name="privacy"
-//                                             value={formData.privacy}
-//                                             onChange={handleChange}
-//                                         >
-//                                             <option value="public">Public - Anyone can see and join</option>
-//                                             <option value="private">Private - Approval needed to join</option>
-//                                             <option value="secret">Secret - Invite only</option>
-//                                         </select>
-//                                     </div>
-//                                 </div>
-//                             </div>
-
-//                             <div className="modal-footer">
-//                                 <button
-//                                     type="button"
-//                                     className="btn btn-secondary"
-//                                     onClick={onHide}
-//                                 >
-//                                     Cancel
-//                                 </button>
-//                                 <button
-//                                     type="submit"
-//                                     className="btn btn-primary"
-//                                     disabled={loading}
-//                                 >
-//                                     {loading ? 'Creating...' : 'Create Group'}
-//                                 </button>
-//                             </div>
-//                         </form>
-//                     </div>
-//                 </div>
-//             </div>
-//         </>
-//     );
-// };
-
 const CreateGroupModal = ({ show, onHide }) => {
     const { auth: { token }, theme } = useSelector(state => state);
     const dispatch = useDispatch();
@@ -171,8 +11,7 @@ const CreateGroupModal = ({ show, onHide }) => {
     const [loading, setLoading] = useState(false);
     const [avatar, setAvatar] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState('');
-
-    const [formData, setFormData] = useState({
+    const initialGroup = {
         name: '',
         description: '',
         type: 'community',
@@ -181,12 +20,19 @@ const CreateGroupModal = ({ show, onHide }) => {
         settings: {
             allowAnyoneToInvite: false,
             requireApprovalToJoin: false,
-            invitePermission: 'mod_and_above'
+            invitePermission: 'mod_and_above',
+            requirePostApproval: false
         },
-        publicLink: {
-            enabled: false
-        }
-    });
+        publicLink: { enabled: false }
+    }
+
+    const [formData, setFormData] = useState(initialGroup);
+
+    // Computed values
+    const isCommunityType = formData.type === 'community' || formData.type === 'hybrid';
+    const isChatType = formData.type === 'chat';
+    const showPostSettings = isCommunityType;
+    const showChatSettings = isChatType || formData.type === 'hybrid';
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -194,6 +40,7 @@ const CreateGroupModal = ({ show, onHide }) => {
 
     const handleSettingsChange = (e) => {
         const { name, value, type, checked } = e.target;
+        console.log({ name, value, type, checked })
         setFormData({
             ...formData,
             settings: {
@@ -210,6 +57,17 @@ const CreateGroupModal = ({ show, onHide }) => {
         });
     };
 
+    const handleTypeChange = (e) => {
+        const newType = e.target.value;
+        setFormData((prev) => ({
+            ...prev,
+            type: newType,
+            settings: {
+                ...prev.settings,
+                requirePostApproval: newType === 'community' || newType === 'hybrid'
+            }
+        }))
+    }
     const handleChangeAvatar = (e) => {
         const file = e.target.files[0];
         const err = checkImage(file);
@@ -231,7 +89,8 @@ const CreateGroupModal = ({ show, onHide }) => {
             onHide();
             // Reset form
             setFormData({
-                name: '', description: '', type: 'community', privacy: 'private', chatPrivacy: 'private',
+                name: '', description: '', type: 'community',
+                privacy: 'private', chatPrivacy: 'private',
                 settings: { allowAnyoneToInvite: false, requireApprovalToJoin: false, invitePermission: 'mod_and_above' },
                 publicLink: { enabled: false }
             });
@@ -244,6 +103,15 @@ const CreateGroupModal = ({ show, onHide }) => {
         }
     };
 
+
+    const handleClose = () => {
+        setFormData(initialGroup);
+        setAvatarPreview('https://res.cloudinary.com/v-webdev/image/upload/v1652077544/samples/cloudinary-group.jpg');
+        // setMembers(group ? group.members : []);
+        setAvatar(null);
+        onHide();
+    }
+
     if (!show) return null;
 
     return (
@@ -253,8 +121,8 @@ const CreateGroupModal = ({ show, onHide }) => {
 
                     {/* Header */}
                     <div className="modal-header">
-                        <h5 className="modal-title">Create New Group</h5>
-                        <button type="button" className="btn-close" onClick={onHide}></button>
+                        <h5 className="modal-title">Edit Group</h5>
+                        <button className="btn btn-danger btn_close" onClick={handleClose}>Close</button>
                     </div>
 
                     <div className="modal-body" style={{
@@ -267,9 +135,13 @@ const CreateGroupModal = ({ show, onHide }) => {
                             {/* Avatar */}
                             <div className="group_avatar text-center">
                                 <img
-                                    src={avatarPreview || 'https://res.cloudinary.com/.../default-group.png'}
+                                    src={avatarPreview || 'https://res.cloudinary.com/v-webdev/image/upload/v1652077544/samples/cloudinary-group.jpg'}
                                     alt="avatar"
-                                    style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '50%' }}
+                                    style={{
+                                        width: '120px', height: '120px',
+                                        objectFit: 'cover', borderRadius: '50%',
+                                        filder: `${theme ? 'invert(0)' : 'invert(1)'}`
+                                    }}
                                 />
                                 <div className="mt-2">
                                     <label className="btn btn-outline-primary btn-sm">
@@ -313,7 +185,9 @@ const CreateGroupModal = ({ show, onHide }) => {
                             <div className="row">
                                 <div className="col-md-6 mb-3">
                                     <label className="form-label">Group Type</label>
-                                    <select className="form-select" name="type" value={formData.type} onChange={handleChange}>
+                                    <select className="form-select form-control" name="type"
+                                        value={formData.type}
+                                        onChange={handleTypeChange}>
                                         <option value="community">Community (Posts + Discussion)</option>
                                         <option value="chat">Chat Group Only</option>
                                         <option value="hybrid">Hybrid</option>
@@ -322,7 +196,9 @@ const CreateGroupModal = ({ show, onHide }) => {
 
                                 <div className="col-md-6 mb-3">
                                     <label className="form-label">Privacy</label>
-                                    <select className="form-select" name="privacy" value={formData.privacy} onChange={handleChange}>
+                                    <select className="form-select form-control"
+                                        name="privacy" value={formData.privacy}
+                                        onChange={handleChange}>
                                         <option value="public">Public</option>
                                         <option value="private">Private</option>
                                         <option value="secret">Secret</option>
@@ -333,6 +209,23 @@ const CreateGroupModal = ({ show, onHide }) => {
                             {/* Settings Section */}
                             <h6 className="mt-4 mb-3 border-bottom pb-2">Group Settings</h6>
 
+                            {/* Post-related settings - only for Community & Hybrid */}
+                            {showPostSettings && (
+                                <div className="mb-3 form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        name="requirePostApproval"
+                                        checked={formData.settings.requirePostApproval}
+                                        onChange={handleSettingsChange}
+                                    />
+                                    <label className="form-check-label">
+                                        Require admin approval for new posts
+                                    </label>
+                                </div>
+                            )}
+
+                            {/* Common settings */}
                             <div className="mb-3 form-check">
                                 <input
                                     type="checkbox"
@@ -341,7 +234,9 @@ const CreateGroupModal = ({ show, onHide }) => {
                                     checked={formData.settings.allowAnyoneToInvite}
                                     onChange={handleSettingsChange}
                                 />
-                                <label className="form-check-label">Allow anyone to invite members</label>
+                                <label className="form-check-label form-label">
+                                    Allow anyone to invite members
+                                </label>
                             </div>
 
                             <div className="mb-3 form-check">
@@ -358,7 +253,7 @@ const CreateGroupModal = ({ show, onHide }) => {
                             <div className="mb-3">
                                 <label className="form-label">Who can invite members?</label>
                                 <select
-                                    className="form-select"
+                                    className="form-select form-control"
                                     name="invitePermission"
                                     value={formData.settings.invitePermission}
                                     onChange={handleSettingsChange}
