@@ -46,13 +46,20 @@ router.get("/:id", userAuth, groupCtrl.GetGroupById);
  */
 router.put("/:id", userAuth, groupCtrl.UpdateGroup);
 
-// router.post("/:id/invite", userAuth, groupCtrl.GenerateInvite);
-// router.post("/join/:inviteCode", userAuth, groupCtrl.JoinViaInvite);
-// router.post("/:id/members/:userId/role", userAuth, groupCtrl.ChangeMemberRole);
-// router.delete("/:id/members/:userId", userAuth, groupCtrl.RemoveMember);
+router.post("/:id/invite", userAuth, groupCtrl.GenerateInvite);
+router.post("/join/:inviteCode", userAuth, groupCtrl.JoinViaInvite);
+router.post("/:id/members/:userId/role", userAuth, groupCtrl.ChangeMemberRole);
+router.delete("/:id/members/:userId", userAuth, groupCtrl.RemoveMember);
 
+router.patch('/join-request/:requestId', userAuth, groupCtrl.ReviewJoinRequest);
 router.post('/:id/join', userAuth, groupCtrl.JoinGroup);
 router.get('/:id/join-requests', userAuth, groupCtrl.GetJoinRequests);
-router.put('/join-request/:requestId', userAuth, groupCtrl.ReviewJoinRequest);
+
+
+// Leave Group
+router.post('/:id/leave', userAuth, groupCtrl.LeaveGroup);
+
+// Invite Members
+router.post('/:id/invite', userAuth, groupCtrl.InviteMembers);
 
 module.exports = router;

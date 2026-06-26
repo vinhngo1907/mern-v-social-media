@@ -55,16 +55,19 @@ const groupSchema = new Schema({
             type: String,
             enum: ['admin_only', 'mod_and_above', 'anyone'],
             default: 'mod_and_above'
-        }
+        },
+        requirePostApproval: { type: Boolean, default: false }
     },
 
     publicLink: {
         enabled: { type: Boolean, default: false },
-        code: { type: String, unique: true, sparse: true }
+        code: { type: String, sparse: true }
     },
 
     createdBy: { type: Schema.Types.ObjectId, ref: 'user', required: true },
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'user' }
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'user' },
+
+    joinRequests: [{ type: Schema.Types.ObjectId, ref: 'groupJoinRequest' }],
 }, {
     timestamps: true,
     versionKey: false

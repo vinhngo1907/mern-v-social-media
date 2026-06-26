@@ -21,7 +21,7 @@ class AuthController {
                     { username: account },
                     { mobile: account }
                 ]
-            }).populate("following followers", "-rf_token -password -salt");
+            }).populate("following followers", "-rf_token -password -salt -settings -__v");
 
             if (!user) {
                 return res.status(400).json(responseDTO.badRequest("This user does not exist"));

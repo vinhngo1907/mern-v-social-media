@@ -1,3 +1,5 @@
+const { groupModel } = require("../../db/models");
+
 const changeSlug = (characters) => {
 	let slug = characters.toLowerCase();
 
@@ -43,7 +45,37 @@ function generateSlug(text) {
 		.replace(/-+/g, '-');
 }
 
+// utils/generateInviteCode.js
+
+/**
+ * Generate a unique invite code for group public link
+ * Format: 8-10 characters, uppercase + numbers (easy to read and type)
+ */
+const generateInviteCode = async () => {
+	const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+	const codeLength = 8;
+
+	let attempts = 0;
+	const maxAttempts = 10;
+
+	while (attempts < maxAttempts) {
+		let code = '';
+		for (let i = 0; i < codeLength; i++) {
+			code += characters.charAt(Math.floor(Math.random() * characters.length));
+		}
+
+		const existing = await groupModel.findOne({ 'publicLink.code': code });
+		if (!existing) {
+			return code;
+		}
+		attempts++;
+	}
+
+	throw new Error('Failed to generate unique invite code');
+};
+
 module.exports = {
 	changeSlug,
 	generateSlug,
+	generateInviteCode
 }

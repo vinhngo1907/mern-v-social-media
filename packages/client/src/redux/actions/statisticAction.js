@@ -34,5 +34,6 @@ export const getTotalStatistics = (token, user) => async (dispatch) => {
     } catch (err) {
         console.log(err || err?.response.data.message);
         dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.message || err } });
+        throw err;
     }
 }

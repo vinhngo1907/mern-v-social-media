@@ -11,8 +11,28 @@ class StatisticController {
         try {
             const now = moment(new Date());
             const today = now.toDate();
-            const recordExist = await statisticModel.findOne({ user: id })
-                .populate("user clients folowers following", "username fullname avatar following followers");
+            // const recordExist = await statisticModel.findOne({ user: id })
+            //     .populate("user clients followers following", "username fullname avatar following followers");
+            const recordExist = await statisticModel
+                .findOne({ user: id })
+                .populate({
+                    path: "user",
+                    select: "username fullname avatar followers following",
+                    populate: [
+                        {
+                            path: "followers",
+                            select: "username fullname avatar"
+                        },
+                        {
+                            path: "following",
+                            select: "username fullname avatar"
+                        }
+                    ]
+                })
+                .populate({
+                    path: "clients",
+                    select: "username fullname avatar"
+                });
 
             if (recordExist) {
                 recordExist.loggedAt = now;
@@ -46,7 +66,7 @@ class StatisticController {
                 }
 
                 await stats.save();
-                await stats.populate("user clients folowers following", "username fullname avatar following followers");
+                await stats.populate("user clients followers following", "username fullname avatar following followers");
 
                 logger.info(`Updated ${req.user?.username} stats for date: ${today}`);
 
@@ -57,8 +77,8 @@ class StatisticController {
             }
 
         } catch (error) {
-            // console.log(error);
-            logger.error(error.message);
+            console.error(error);
+            // logger.error(error);
             return res.status(500).json(responseDTO.serverError(error.message));
         }
     }
@@ -74,7 +94,7 @@ class StatisticController {
                 loggedAt: {
                     $gte: timeQuery
                 }
-            }).populate("user clients folowers following", "username fullname avatar following followers");
+            }).populate("user clients", "username fullname avatar following followers");
 
             if (!recordStats) {
                 recordStats = await statisticModel.findOne({
@@ -85,7 +105,7 @@ class StatisticController {
                     // }
                 }).populate("user clients", "username fullname avatar following followers");
             }
-            // console.log({recordStats});
+
             let stats = {};
 
             if (recordStats) {
@@ -95,7 +115,7 @@ class StatisticController {
                     user: { _id: req.user._id, username: req.user.username, avatar: req.user.avatar }
                 }
             }
-            
+
             res.status(200).json(responseDTO.success("Get statistic in successfully", stats));
         } catch (error) {
             console.log(error);

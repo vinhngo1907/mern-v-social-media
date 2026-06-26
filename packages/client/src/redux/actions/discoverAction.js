@@ -30,6 +30,7 @@ export const getDiscoverImages = (token) => async (dispatch) => {
     try {
         dispatch({ type: DISCOVER_IMAGES_TYPES.LOADING, payload: true });
         const res = await getDataApi('upload/images', token);
+        console.log("MEDIAS >>>>", res.data.results)
         dispatch({ type: DISCOVER_IMAGES_TYPES.GET_IMAGES, payload: res.data.results });
         dispatch({ type: DISCOVER_IMAGES_TYPES.LOADING, payload: false });
     } catch (err) {

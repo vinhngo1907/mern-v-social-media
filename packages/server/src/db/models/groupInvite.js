@@ -87,6 +87,6 @@ groupJoinRequestSchema.index({ group: 1, status: 1 });
 
 module.exports =
 {
-    groupJoinRequestModel: mongoose.model('GroupJoinRequest', groupJoinRequestSchema),
+    groupJoinRequestModel: mongoose.model('groupJoinRequest', groupJoinRequestSchema),
     groupInviteModel: mongoose.model('groupInvite', groupInviteSchema)
 }
