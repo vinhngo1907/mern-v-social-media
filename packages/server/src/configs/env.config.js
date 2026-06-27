@@ -88,44 +88,44 @@ function getClientUrls() {
 
 exports.clientUrls = getClientUrls();
 
-function getFirebaseConfig() {
-	const API_KEY = getEnv('FIREBASE_API_KEY');
-	const AUTH_DOMAIN = getEnv('FIREBASE_AUTH_DOMAIN');
-	const DATABASE_URL = getEnv('FIREBASE_DATABASE_URL');
-	const PROJECT_ID = getEnv('FIREBASE_PROJECT_ID');
-	const STORAGE_BUCKET = getEnv('FIREBASE_STORAGE_BUCKET');
-	const MESSAGING_SENDER_ID = getEnv('FIREBASE_MESSAGING_SENDER_ID');
-	const APP_ID = getEnv('FIREBASE_APP_ID');
-	const MEASUREMENT_ID = getEnv('FIREBASE_MEASUREMENT_ID');
+// function getFirebaseConfig() {
+// 	const API_KEY = getEnv('FIREBASE_API_KEY');
+// 	const AUTH_DOMAIN = getEnv('FIREBASE_AUTH_DOMAIN');
+// 	const DATABASE_URL = getEnv('FIREBASE_DATABASE_URL');
+// 	const PROJECT_ID = getEnv('FIREBASE_PROJECT_ID');
+// 	const STORAGE_BUCKET = getEnv('FIREBASE_STORAGE_BUCKET');
+// 	const MESSAGING_SENDER_ID = getEnv('FIREBASE_MESSAGING_SENDER_ID');
+// 	const APP_ID = getEnv('FIREBASE_APP_ID');
+// 	const MEASUREMENT_ID = getEnv('FIREBASE_MEASUREMENT_ID');
 
-	if (
-		!API_KEY ||
-		!AUTH_DOMAIN ||
-		!PROJECT_ID ||
-		!STORAGE_BUCKET ||
-		!MESSAGING_SENDER_ID ||
-		!APP_ID
-	) {
-		throw new Error(`Some Firebase env vars are missing:
-    FIREBASE_API_KEY: ${API_KEY}
-    FIREBASE_AUTH_DOMAIN: ${AUTH_DOMAIN}
-    FIREBASE_PROJECT_ID: ${PROJECT_ID}
-    FIREBASE_STORAGE_BUCKET: ${STORAGE_BUCKET}
-    FIREBASE_MESSAGING_SENDER_ID: ${MESSAGING_SENDER_ID}
-    FIREBASE_APP_ID: ${APP_ID}
-    `);
-	}
+// 	if (
+// 		!API_KEY ||
+// 		!AUTH_DOMAIN ||
+// 		!PROJECT_ID ||
+// 		!STORAGE_BUCKET ||
+// 		!MESSAGING_SENDER_ID ||
+// 		!APP_ID
+// 	) {
+// 		throw new Error(`Some Firebase env vars are missing:
+//     FIREBASE_API_KEY: ${API_KEY}
+//     FIREBASE_AUTH_DOMAIN: ${AUTH_DOMAIN}
+//     FIREBASE_PROJECT_ID: ${PROJECT_ID}
+//     FIREBASE_STORAGE_BUCKET: ${STORAGE_BUCKET}
+//     FIREBASE_MESSAGING_SENDER_ID: ${MESSAGING_SENDER_ID}
+//     FIREBASE_APP_ID: ${APP_ID}
+//     `);
+// 	}
 
-	return {
-		apiKey: API_KEY,
-		authDomain: AUTH_DOMAIN,
-		databaseURL: DATABASE_URL,
-		projectId: PROJECT_ID,
-		storageBucket: STORAGE_BUCKET,
-		messagingSenderId: MESSAGING_SENDER_ID,
-		appId: APP_ID,
-		measurementId: MEASUREMENT_ID,
-	};
-}
+// 	return {
+// 		apiKey: API_KEY,
+// 		authDomain: AUTH_DOMAIN,
+// 		databaseURL: DATABASE_URL,
+// 		projectId: PROJECT_ID,
+// 		storageBucket: STORAGE_BUCKET,
+// 		messagingSenderId: MESSAGING_SENDER_ID,
+// 		appId: APP_ID,
+// 		measurementId: MEASUREMENT_ID,
+// 	};
+// }
 
-exports.firebaseConfig = getFirebaseConfig();
+// exports.firebaseConfig = getFirebaseConfig();

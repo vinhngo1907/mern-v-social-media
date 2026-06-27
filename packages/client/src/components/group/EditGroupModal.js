@@ -1,25 +1,238 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { promoteToAdmin, removeMember, updateGroup } from '../../redux/actions/groupAction';
+import { changeMemberRole, removeMember, updateGroup } from '../../redux/actions/groupAction';
 import { checkImage } from '../../utils/imageUpload';
 import { GLOBALTYPES } from '../../redux/actions/globalTypes';
 
+// const EditGroupModal = ({ show, onHide, group }) => {
+//     const { auth: { token, user }, theme, socket } = useSelector(state => state);
+//     const dispatch = useDispatch();
+//     const [loading, setLoading] = useState(false);
+//     const [avatar, setAvatar] = useState('');
+//     const [avatarPreview, setAvatarPreview] = useState('');
+//     const [members, setMembers] = useState([]);
+//     const initialGroup = {
+//         name: '',
+//         description: '',
+//         type: 'community',
+//         privacy: 'private',
+//         chatPrivacy: 'private',
+//     }
+
+//     const [formData, setFormData] = useState(initialGroup);
+
+//     // Fill data when modal opens
+//     useEffect(() => {
+//         if (group && show) {
+//             setFormData({
+//                 name: group.name || '',
+//                 description: group.description || '',
+//                 type: group.type || 'community',
+//                 privacy: group.privacy || 'private',
+//                 chatPrivacy: group.chatPrivacy || 'private',
+//             });
+
+//             setAvatarPreview(group.avatar || '/default-group.png');
+//             setMembers(group.members || []);
+//             setAvatar(null);
+//         }
+//     }, [group, show]);
+
+//     const isAdmin = () => group?.members?.map(u => u._id).includes(user._id);
+
+//     const handleChange = (e) => {
+//         setFormData({ ...formData, [e.target.name]: e.target.value });
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         if (!isAdmin) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Only admins can edit group settings" } })
+//         setLoading(true);
+
+//         if (!group.name.trim()) {
+//             return dispatch({
+//                 type: GLOBALTYPES.ALERT,
+//                 payload: { error: 'Group name required' }
+//             });
+//         }
+
+//         try {
+//             await dispatch(updateGroup({ groupId: group._id, token, data: formData, avatar, socket }));
+//             handleClose();
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     if (!show || !group) return null;
+
+//     const handleChangeAvatar = (e) => {
+//         e.preventDefault();
+//         if (!isAdmin) {
+//             return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Only admins can edit group settings" } })
+//         }
+
+//         const file = e.target.files[0];
+//         const err = checkImage(file);
+//         if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
+
+//         setAvatar(file);
+//         setAvatarPreview(URL.createObjectURL(file));
+//     }
+
+//     const handlePromoteDemote = async (memberId) => {
+//         await dispatch(promoteToAdmin({ groupId: group._id, memberId, token }));
+//     };
+
+//     const handleRemoveMember = async (memberId) => {
+//         if (window.confirm('Remove this member?')) {
+//             await dispatch(removeMember({ groupId: group._id, memberId, token }));
+//         }
+//     };
+//     const handleClose = () => {
+//         setFormData(initialGroup);
+//         setAvatarPreview(group.avatar?.url || '/default-group.png');
+//         setMembers(group ? group.members : []);
+//         setAvatar(null);
+//         onHide();
+//     }
+//     return (
+//         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
+//             <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+//                 <div className="modal-content">
+//                     <div className="modal-header">
+//                         <h5 className="modal-title">Edit Group</h5>
+//                         {/* <button type="button" className="btn-close" onClick={onHide}></button> */}
+//                         <button
+//                             className="btn btn-danger btn_close"
+//                             onClick={handleClose}
+//                         >
+//                             Close
+//                         </button>
+//                     </div>
+
+//                     <form onSubmit={handleSubmit}>
+//                         <div className="modal-body">
+//                             <div className="group_avatar">
+//                                 <img src={avatarPreview}
+//                                     alt="avatar" style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
+//                                 <span>
+//                                     <i className="fas fa-camera" />
+//                                     <p>Change</p>
+//                                     <input type="file" name="file" id="file_up"
+//                                         accept="image/*" onChange={handleChangeAvatar} />
+//                                 </span>
+//                             </div>
+//                             <div className="form-group mb-3">
+//                                 <label className="form-label">Group Name <span className="text-danger">*</span></label>
+//                                 <input
+//                                     type="text" className="form-control"
+//                                     name="name"
+//                                     value={formData.name}
+//                                     onChange={handleChange}
+//                                     required
+//                                 />
+//                             </div>
+
+//                             <div className="form-group mb-3">
+//                                 <label className="form-label">Description</label>
+//                                 <textarea
+//                                     className="form-control"
+//                                     rows="4"
+//                                     name="description"
+//                                     value={formData.description}
+//                                     onChange={handleChange}
+//                                 />
+//                             </div>
+
+//                             <div className="form-group mb-3">
+//                                 <label className='font-weight-bold'>Members</label>
+//                                 <div className="members-scroll">
+//                                     {members.map(member => (
+//                                         <div key={member.user._id} className="member-item d-flex align-items-center justify-content-between py-2 border-bottom">
+//                                             <div>
+//                                                 <span>{member.user.fullname || member.user.username}</span>
+//                                                 {
+//                                                     group?.members?.some(a => (a._id || a) === member._id)
+//                                                     && <span className="badge badge-primary ml-2">Admin</span>}
+//                                             </div>
+//                                             <div>
+//                                                 <button className="btn btn-sm btn-outline-info mr-2" onClick={() => handlePromoteDemote(member._id)}>
+//                                                     {group?.members?.some(a => (a._id || a) === member._id) ? 'Demote' : 'Promote'}
+//                                                 </button>
+//                                                 {member._id !== user._id && (
+//                                                     <button className="btn btn-sm btn-outline-danger" onClick={() => handleRemoveMember(member._id)}>Remove</button>
+//                                                 )}
+//                                             </div>
+//                                         </div>
+//                                     ))}
+//                                 </div>
+//                             </div>
+
+//                             <div className="row">
+//                                 <div className="form-group col-md-6 mb-3">
+//                                     <label className="form-label">Group Type</label>
+//                                     <select className="form-select" name="type" value={formData.type} onChange={handleChange}>
+//                                         <option value="community">Community</option>
+//                                         <option value="chat">Chat Only</option>
+//                                         <option value="hybrid">Hybrid</option>
+//                                     </select>
+//                                 </div>
+
+//                                 <div className="col-md-6 mb-3">
+//                                     <label className="form-label">Privacy</label>
+//                                     <select className="form-select"
+//                                         name="privacy" value={formData.privacy}
+//                                         onChange={handleChange}>
+//                                         <option value="public">Public</option>
+//                                         <option value="private">Private</option>
+//                                         <option value="secret">Secret</option>
+//                                     </select>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         <div className="modal-footer">
+//                             <button
+//                                 type="button" className="btn btn-secondary"
+//                                 onClick={handleClose}>Cancel</button>
+//                             <button
+//                                 type="submit"
+//                                 className="btn btn-primary" disabled={loading}
+//                             >
+//                                 {loading ? 'Saving...' : 'Save Changes'}
+//                             </button>
+//                         </div>
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
 const EditGroupModal = ({ show, onHide, group }) => {
-    const { auth: { token, user }, theme, socket } = useSelector(state => state);
+    const { auth: { token, user }, theme } = useSelector(state => state);
     const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState('');
-    const [members, setMembers] = useState([]);
-    const initialGroup = {
+
+    const [formData, setFormData] = useState({
         name: '',
         description: '',
         type: 'community',
         privacy: 'private',
         chatPrivacy: 'private',
-    }
-
-    const [formData, setFormData] = useState(initialGroup);
+        settings: {
+            allowAnyoneToInvite: false,
+            requireApprovalToJoin: false,
+            invitePermission: 'mod_and_above'
+        },
+        publicLink: {
+            enabled: false
+        }
+    });
 
     // Fill data when modal opens
     useEffect(() => {
@@ -30,35 +243,95 @@ const EditGroupModal = ({ show, onHide, group }) => {
                 type: group.type || 'community',
                 privacy: group.privacy || 'private',
                 chatPrivacy: group.chatPrivacy || 'private',
+                settings: {
+                    allowAnyoneToInvite: group.settings?.allowAnyoneToInvite ?? false,
+                    requireApprovalToJoin: group.settings?.requireApprovalToJoin ?? false,
+                    invitePermission: group.settings?.invitePermission || 'mod_and_above'
+                },
+                publicLink: {
+                    enabled: group.publicLink?.enabled ?? false
+                }
             });
 
-            setAvatarPreview(group.avatar || '/default-group.png');
-            setMembers(group.members || []);
+            setAvatarPreview(group.avatar?.url || group.avatar || '/default-group.png');
             setAvatar(null);
         }
     }, [group, show]);
 
-    const isAdmin = () => group?.members?.map(u => u._id).includes(user._id);
+    const isAdmin = () => {
+        return group?.members?.some(m =>
+            (m.user?._id || m.user) === user._id && ['admin', 'manager'].includes(m.role)
+        );
+    };
+
+    const isSuperAdmin = (group, currentUserId) => {
+        if (!group || !currentUserId) return false;
+        const member = group.members?.find(m =>
+            (m.user?._id || m.user) === currentUserId
+        );
+        return member?.role === 'admin';
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleSettingsChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            settings: {
+                ...formData.settings,
+                [name]: type === 'checkbox' ? checked : value
+            }
+        });
+    };
+
+    const handlePublicLinkChange = (e) => {
+        setFormData({
+            ...formData,
+            publicLink: { enabled: e.target.checked }
+        });
+    };
+
+    const handleChangeAvatar = (e) => {
+        const file = e.target.files[0];
+        const err = checkImage(file);
+        if (err) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
+
+        setAvatar(file);
+        setAvatarPreview(URL.createObjectURL(file));
+    };
+
+    const handleRemoveMember = async (member) => {
+        if (window.confirm(`Remove ${member.fullname}?`)) {
+            dispatch(removeMember({
+                // groupId: group._id,
+                group: group,
+                userId: member._id,
+                token
+            }));
+
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isAdmin) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Only admins can edit group settings" } })
-        setLoading(true);
-
-        if (!group.name.trim()) {
-            return dispatch({
-                type: GLOBALTYPES.ALERT,
-                payload: { error: 'Group name required' }
-            });
+        if (!isAdmin()) {
+            return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Only admins can edit group" } });
         }
 
+        setLoading(true);
         try {
-            await dispatch(updateGroup({ groupId: group._id, token, data: formData, avatar, socket }));
-            handleClose();
+            await dispatch(updateGroup({
+                groupId: group._id,
+                token,
+                data: formData,
+                avatar
+            }));
+            onHide();
+        } catch (error) {
+            console.error(error);
         } finally {
             setLoading(false);
         }
@@ -66,68 +339,60 @@ const EditGroupModal = ({ show, onHide, group }) => {
 
     if (!show || !group) return null;
 
-    const handleChangeAvatar = (e) => {
-        e.preventDefault();
-        if (!isAdmin) {
-            return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: "Only admins can edit group settings" } })
-        }
-
-        const file = e.target.files[0];
-        const err = checkImage(file);
-        if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
-
-        setAvatar(file);
-        setAvatarPreview(URL.createObjectURL(file));
-    }
-
-    const handlePromoteDemote = async (memberId) => {
-        await dispatch(promoteToAdmin({ groupId: group._id, memberId, token }));
-    };
-
-    const handleRemoveMember = async (memberId) => {
-        if (window.confirm('Remove this member?')) {
-            await dispatch(removeMember({ groupId: group._id, memberId, token }));
-        }
-    };
-    const handleClose = () => {
-        setFormData(initialGroup);
-        setAvatarPreview(group.avatar?.url || '/default-group.png');
-        setMembers(group ? group.members : []);
-        setAvatar(null);
-        onHide();
-    }
     return (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
-            <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                {/* ↑↑↑ This is the key: modal-dialog-scrollable */}
-                <div className="modal-content">
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <div className="modal-dialog modal-lg modal-dialog-centered">
+                <div className="modal-content" style={{ maxHeight: '90vh' }}>
+
                     <div className="modal-header">
                         <h5 className="modal-title">Edit Group</h5>
-                        {/* <button type="button" className="btn-close" onClick={onHide}></button> */}
-                        <button
-                            className="btn btn-danger btn_close"
-                            onClick={handleClose}
-                        >
-                            Close
-                        </button>
+                        <button className="btn btn-danger btn_close" onClick={onHide}>Close</button>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="modal-body">
-                            <div className="group_avatar">
-                                <img src={avatarPreview}
-                                    alt="avatar" style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} />
-                                <span>
-                                    <i className="fas fa-camera" />
-                                    <p>Change</p>
-                                    <input type="file" name="file" id="file_up"
-                                        accept="image/*" onChange={handleChangeAvatar} />
-                                </span>
+                    <div className="modal-body"
+                        style={{
+                            maxHeight: 'calc(90vh - 130px)',
+                            overflowY: 'auto',
+                            overflowX: 'hidden'
+                        }}
+                    >
+                        <form onSubmit={handleSubmit} id="editGroupForm">
+
+                            {/* Avatar */}
+                            <div className="info_avatar mb-4 text-center">
+                                <img
+                                    src={avatarPreview}
+                                    alt="avatar"
+                                    style={{
+                                        width: '120px',
+                                        height: '100px',
+                                        objectFit: 'cover',
+                                        borderRadius: '50%',
+                                        filter: theme ? 'invert(1)' : 'invert(0)'
+                                    }}
+                                />
+                                <div className="mt-2">
+                                    <label className="btn btn-outline-primary btn-sm">
+                                        <i className="fas fa-camera"></i> Change Avatar
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            hidden
+                                            onChange={handleChangeAvatar}
+                                        />
+                                    </label>
+                                </div>
                             </div>
-                            <div className="form-group mb-3">
-                                <label className="form-label">Group Name <span className="text-danger">*</span></label>
+
+                            <div className="mb-3">
+                                <label
+                                    className='form-label font-weight-bold'
+                                    htmlFor='group-name'
+                                >Group Name <span className="text-danger">*</span></label>
                                 <input
-                                    type="text" className="form-control"
+                                    type="text"
+                                    className="form-control"
+                                    id="group-name"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
@@ -136,44 +401,90 @@ const EditGroupModal = ({ show, onHide, group }) => {
                             </div>
 
                             <div className="form-group mb-3">
-                                <label className="form-label">Description</label>
+                                <label
+                                    htmlFor='description'
+                                    className='form-label font-weight-bold'>Description</label>
                                 <textarea
                                     className="form-control"
-                                    rows="4"
+                                    id='description'
+                                    rows="3"
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
                                 />
                             </div>
+                            {/* <div className="form-group mb-3"
+                                style={{ maxHeight: '60vh' }}
+                            >
+                                <label className='font-weight-bold form-label'>Members</label>
+                                <div className="members-scroll"
+                                    style={{
+                                        maxHeight: 'calc(60vh - 130px)',
+                                        overflowY: 'auto',
+                                        overflowX: 'hidden'
+                                    }}
+                                >
+                                    {group?.members && group?.members.map(member => {
+                                        const memberUser = member.user || member;
+                                        const isCurrentUser = memberUser._id === user._id;
+                                        const canManage = isAdmin() && !isCurrentUser;
+                                        return (
+                                            <div key={memberUser._id} className="d-flex align-items-center justify-content-between p-3 border-bottom">
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        className='rounded-circle me-3'
+                                                        alt='avatar' style={{
+                                                            height: "60px",
+                                                            width: "60px"
+                                                        }} src={memberUser.avatar}
+                                                    />
+                                                    <div>
+                                                        <strong>{memberUser.fullname}</strong>
+                                                        <small className="d-block text-muted">@{memberUser.username}</small>
+                                                        <span className="badge bg-info">{member.role}</span>
+                                                    </div>
+                                                </div>
 
-                            <div className="form-group mb-3">
-                                <label className='font-weight-bold'>Members</label>
-                                <div className="members-scroll">
-                                    {members.map(member => (
-                                        <div key={member.user._id} className="member-item d-flex align-items-center justify-content-between py-2 border-bottom">
-                                            <div>
-                                                <span>{member.user.fullname || member.user.username}</span>
-                                                {
-                                                    group?.members?.some(a => (a._id || a) === member._id)
-                                                    && <span className="badge badge-primary ml-2">Admin</span>}
-                                            </div>
-                                            <div>
-                                                <button className="btn btn-sm btn-outline-info mr-2" onClick={() => handlePromoteDemote(member._id)}>
-                                                    {group?.members?.some(a => (a._id || a) === member._id) ? 'Demote' : 'Promote'}
-                                                </button>
-                                                {member._id !== user._id && (
-                                                    <button className="btn btn-sm btn-outline-danger" onClick={() => handleRemoveMember(member._id)}>Remove</button>
+                                                {canManage && (
+                                                    <div className="d-flex gap-2">
+                                                        <select
+                                                            className="form-select form-select-sm"
+                                                            value={member.role}
+                                                            onChange={(e) => dispatch(changeMemberRole({
+                                                                groupId: group._id,
+                                                                userId: memberUser._id,
+                                                                newRole: e.target.value,
+                                                                token
+                                                            }))}
+                                                        >
+                                                            <option value="member">Member</option>
+                                                            <option value="mod">Moderator</option>
+                                                            <option value="manager">Manager</option>
+                                                            {isSuperAdmin() && <option value="admin">Admin</option>}
+                                                        </select>
+
+                                                        <button
+                                                            className="btn btn-sm btn-danger"
+                                                            onClick={() => handleRemoveMember(memberUser)}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    </div>
                                                 )}
                                             </div>
-                                        </div>
-                                    ))}
+                                        )
+                                    })}
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="row">
-                                <div className="form-group col-md-6 mb-3">
-                                    <label className="form-label">Group Type</label>
-                                    <select className="form-select" name="type" value={formData.type} onChange={handleChange}>
+                                <div className="col-md-6 mb-3">
+                                    <label htmlFor='group-type'
+                                        className='form-label'
+                                    >Group Type</label>
+                                    <select className="form-select"
+                                        id='group-type'
+                                        name="type" value={formData.type} onChange={handleChange}>
                                         <option value="community">Community</option>
                                         <option value="chat">Chat Only</option>
                                         <option value="hybrid">Hybrid</option>
@@ -181,30 +492,142 @@ const EditGroupModal = ({ show, onHide, group }) => {
                                 </div>
 
                                 <div className="col-md-6 mb-3">
-                                    <label className="form-label">Privacy</label>
-                                    <select className="form-select"
-                                        name="privacy" value={formData.privacy}
-                                        onChange={handleChange}>
+                                    <label>Privacy</label>
+                                    <select className="form-select" name="privacy" value={formData.privacy} onChange={handleChange}>
                                         <option value="public">Public</option>
                                         <option value="private">Private</option>
                                         <option value="secret">Secret</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="modal-footer">
-                            <button
-                                type="button" className="btn btn-secondary"
-                                onClick={handleClose}>Cancel</button>
-                            <button
-                                type="submit"
-                                className="btn btn-primary" disabled={loading}
+                            {/* Advanced Settings */}
+                            <h6 className="mt-4 mb-3 border-bottom pb-2 font-weight-bold">Group Settings</h6>
+
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="allowAnyoneToInvite"
+                                    checked={formData.settings.allowAnyoneToInvite}
+                                    onChange={handleSettingsChange}
+                                />
+                                <label className="form-check-label">Allow anyone to invite members</label>
+                            </div>
+
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="requireApprovalToJoin"
+                                    checked={formData.settings.requireApprovalToJoin}
+                                    onChange={handleSettingsChange}
+                                />
+                                <label className="form-check-label">Require approval to join</label>
+                            </div>
+
+                            <div className="mb-3">
+                                <label>Who can invite members?</label>
+                                <select
+                                    className="form-select"
+                                    name="invitePermission"
+                                    value={formData.settings.invitePermission}
+                                    onChange={handleSettingsChange}
+                                >
+                                    <option value="admin_only">Admin only</option>
+                                    <option value="mod_and_above">Mods and above</option>
+                                    <option value="anyone">Anyone in group</option>
+                                </select>
+                            </div>
+
+                            <div className="form-check mb-3">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    checked={formData.publicLink.enabled}
+                                    onChange={handlePublicLinkChange}
+                                />
+                                <label className="form-check-label">Enable public invite link</label>
+                            </div>
+
+                        </form>
+
+                        <div className="form-group"
+                            style={{ maxHeight: '60vh' }}
+                        >
+                            <label className='font-weight-bold form-label'>Members</label>
+                            <div className="members-scroll"
+                                style={{
+                                    maxHeight: 'calc(60vh - 130px)',
+                                    overflowY: 'auto',
+                                    overflowX: 'hidden'
+                                }}
                             >
-                                {loading ? 'Saving...' : 'Save Changes'}
-                            </button>
+                                {group?.members && group?.members.map(member => {
+                                    const memberUser = member.user || member;
+                                    const isCurrentUser = memberUser._id === user._id;
+                                    const canManage = isAdmin() && !isCurrentUser;
+                                    return (
+                                        <div key={memberUser._id} className="d-flex align-items-center justify-content-between p-3 border-bottom">
+                                            <div className="d-flex align-items-center">
+                                                <img
+                                                    className='rounded-circle me-3'
+                                                    alt='avatar' style={{
+                                                        height: "60px",
+                                                        width: "60px"
+                                                    }} src={memberUser.avatar}
+                                                />
+                                                <div>
+                                                    <strong>{memberUser.fullname}</strong>
+                                                    <small className="d-block text-muted">@{memberUser.username}</small>
+                                                    <span className="badge bg-info">{member.role}</span>
+                                                </div>
+                                            </div>
+
+                                            {canManage && (
+                                                <div className="d-flex gap-2">
+                                                    <select
+                                                        className="form-select form-select-sm"
+                                                        value={member.role}
+                                                        onChange={(e) => dispatch(changeMemberRole({
+                                                            groupId: group._id,
+                                                            userId: memberUser._id,
+                                                            newRole: e.target.value,
+                                                            token
+                                                        }))}
+                                                    >
+                                                        <option value="member">Member</option>
+                                                        <option value="mod">Moderator</option>
+                                                        <option value="manager">Manager</option>
+                                                        {isSuperAdmin() && <option value="admin">Admin</option>}
+                                                    </select>
+
+                                                    <button
+                                                        className="btn btn-sm btn-danger"
+                                                        onClick={() => handleRemoveMember(memberUser)}
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={onHide}>Cancel</button>
+                        <button
+                            type="submit"
+                            form="editGroupForm"
+                            className="btn btn-primary"
+                            disabled={loading}
+                        >
+                            {loading ? 'Saving...' : 'Save Changes'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

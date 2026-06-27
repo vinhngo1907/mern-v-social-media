@@ -1,4 +1,5 @@
 const { policyModel, resourceModel } = require("./policy.model");
+const { groupInviteModel, groupJoinRequestModel } = require("./groupInvite");
 
 module.exports = {
     userModel: require("./user.model"),
@@ -10,7 +11,7 @@ module.exports = {
     conversationModel: require("./conversation.model"),
     messageModel: require("./message.model"),
     groupModel: require("./group.model"),
-    groupInvateModel: require("./groupInvite"),
+    groupInviteModel, groupJoinRequestModel,
     videoModel: require("./video.model"),
     roleModel: require("./role.model"),
     capacitiesModel: require("./capacity.model"),

@@ -15,10 +15,10 @@ The monitoring system provides:
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Social Media API │────▶│  Prometheus  │────▶│   Grafana   │
-│   Service   │     │    Server    │     │ Dashboards  │
-└─────────────┘     └──────────────┘     └─────────────┘
+┌─────────────┐      ┌──────────────┐     ┌─────────────┐
+│  Server API │────▶│  Prometheus  │────▶│   Grafana   │
+│   Service   │      │    Server    │     │ Dashboards  │
+└─────────────┘      └──────────────┘     └─────────────┘
        │                    │                     │
        │                    │                     │
        ▼                    ▼                     ▼
@@ -233,7 +233,7 @@ this.businessMetrics.updateDailyMoodCheckinProgress(userId, 0.75);
 
 ### Available Dashboards
 
-#### 1. Infrastructure Dashboard (`v-social-media-api-infrastructure.json`)
+#### 1. Infrastructure Dashboard (`server-api-infrastructure.json`)
 
 - **Request Rate by Pod** - Requests per second per pod
 - **P95 Latency by Pod** - 95th percentile latency

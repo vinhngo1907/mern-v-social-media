@@ -38,9 +38,8 @@ function Home() {
             {MENU.map((item) => (
               <li
                 key={item.key}
-                className={`list-group-item ${
-                  activeTab === item.key ? "active" : ""
-                }`}
+                className={`list-group-item ${activeTab === item.key ? "active" : ""
+                  }`}
                 onClick={() => setActiveTab(item.key)}
                 style={{ cursor: "pointer" }}
               >

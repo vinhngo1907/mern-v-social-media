@@ -1,13 +1,16 @@
 import { GROUP_TYPES } from '../actions/groupAction';
 
 const initialState = {
-    groups: [],           // User's joined groups (for Groups page)
+    groups: [],
     discoverGroups: [],
     myGroups: [],
-    group: null,          // Current group detail (for GroupDetail page)
     loading: false,
-    myGroupsResult: 0,
-    discoverResult: 0,
+    allPage: 0,
+    allResult: 9,
+    myPage: 0,
+    myGroupsResult: 9,
+    discoverPage: 0,
+    discoverResult: 9,
     loadingDiscover: false,
 };
 
@@ -17,14 +20,16 @@ const groupReducer = (state = initialState, action) => {
         case GROUP_TYPES.LOADING_GROUP:
             return {
                 ...state,
-                loading: payload
+                loading: payload,
             };
 
         case GROUP_TYPES.GET_ALL_GROUPS:
             return {
                 ...state,
-                groups: payload.groups,
-                // result: payload.result,
+                groups: payload.page === 1
+                    ? payload.groups
+                    : [...state.allResult, ...action.payload.groups],
+                allResult: payload.result,
                 loading: false
             }
         // Get User's Groups (My Groups Page)
@@ -45,14 +50,6 @@ const groupReducer = (state = initialState, action) => {
                     ? payload.groups
                     : [...state.discoverGroups, ...payload.groups],
                 discoverResult: payload.result,
-                loadingDiscover: false
-            };
-
-        // Get Single Group Detail
-        case GROUP_TYPES.GET_GROUP_DETAIL:
-            return {
-                ...state,
-                group: action.payload,
                 loading: false
             };
 
@@ -60,22 +57,7 @@ const groupReducer = (state = initialState, action) => {
         case GROUP_TYPES.CREATE_GROUP:
             return {
                 ...state,
-                groups: [action.payload, ...state.groups], // Add new group to top
-                loading: false
-            };
-
-        // Update Group
-        case GROUP_TYPES.UPDATE_GROUP:
-            return {
-                ...state,
-                // Update in groups list if exists
-                groups: state.groups.map(g =>
-                    g._id === action.payload._id ? action.payload : g
-                ),
-                // Update current group detail
-                group: state.group?._id === action.payload._id
-                    ? action.payload
-                    : state.group,
+                groups: [action.payload, ...state.groups],
                 loading: false
             };
 

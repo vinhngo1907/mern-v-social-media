@@ -1,6 +1,6 @@
 const dotEnv = require("dotenv");
 const { IsProduction, clientUrls } = require("./env.config");
-require("./firebase.config");
+// require("./firebase.config");
 
 if (process.env.NODE_ENV !== "prod") {
     const configFile = `./.env.${process.env.NODE_ENV}`;

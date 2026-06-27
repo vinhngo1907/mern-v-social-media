@@ -1,70 +1,197 @@
-# Getting Started with Create React App
+## 1. Dashboard Overview (Home)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Total users, groups, posts, comments, active users today
+- Recent activities (new groups, reported content, new registrations)
+- Quick stats charts (user growth, post engagement, group activity)
+- Pending items (join requests, reports, verification)
 
-## Available Scripts
+## 2. User Management
 
-In the project directory, you can run:
+- List all users with search, filter (by role, status, registration date)
+- View user profile + activity history
+- Edit user info (name, email, avatar, bio, etc.)
+- Ban / Suspend / Delete user
+- Assign global roles
+- Manage user settings (notification preferences, privacy)
+- Export user data
 
-### `yarn start`
+## 3. Group / Community Management
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- List all groups with search & filters
+- Create / Edit / Delete groups
+- View group details (members count, posts count, settings)
+- Approve or reject group creation requests (if needed)
+- Change group privacy, settings
+- Manage group members (add/remove, change roles)
+- Archive / Restore groups
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 4. Role & Permission Management (Very Important)
+- **This is one of the strongest parts of your system.**
 
-### `yarn test`
+- **Capacity Management**
+  - CRUD for Capacities (name, slug, resource, description)
+  - Filter by resource (group, post, comment, user...)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Role Management**
+  - Create / Edit / Delete Roles
+  - Assign resource + group (for group-specific roles)
+  - Assign multiple capacities to a role
+  - View which users have this role
 
-### `yarn build`
+- **Policy Management**
+  - Create direct policies for users
+  - View all policies (filter by subject, resource, resourceId)
+  - Override role permissions when needed
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 5. Content Management
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Posts Management**
+  - List all posts (global or per group)
+  - Filter by group, author, status, date
+  - View, Edit, Delete, Pin posts
+  - Moderate reported posts
 
-### `yarn eject`
+- **Comments Management**
+  - List comments with parent post
+  - Bulk delete, hide, or approve comments
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **Media Management**
+  - View all uploaded images/videos
+  - Moderate inappropriate media
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 6. Moderation Tools
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Reported Content (posts, comments, users, groups)
+- Moderation Queue (pending join requests, post approvals)
+- Ban list / Blacklist management
+- Moderation logs (who deleted what, when)
 
-## Learn More
+## 7. Analytics & Reports
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- User engagement analytics
+- Group performance (most active groups)
+- Content performance (top posts)
+- Moderation statistics (reports resolved, actions taken)
+- Export reports (CSV / PDF)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 8. System Settings
 
-### Code Splitting
+- Global app settings (using your settingSchema)
+- Email / Notification configuration
+- Security settings (API rate limiting, etc.)
+- Feature flags (enable/disable certain features)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 9. Advanced / Nice-to-have Features
 
-### Analyzing the Bundle Size
+- Audit Log (track all admin actions)
+- Multi-admin management with different permission levels
+- Bulk actions (delete multiple posts, assign role to many users)
+- Search across everything
+- Dark mode + responsive design
+- Activity timeline / Feed for admins
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# Example Data (Ready to Seed)
+```js 
+// A. Resources
+const resources = [
+    { name: "group", description: "Social media group / community" },
+    { name: "post", description: "Post in group or feed" },
+    { name: "comment", description: "Comment on a post" },
+    { name: "user", description: "User account & profile" }
+];
 
-### Making a Progressive Web App
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+// B. Capacities
 
-### Advanced Configuration
+const capacities = [
+    // Group Capacities
+    { name: "View Group", slug: "view_group", resource: "group" },
+    { name: "Join Group", slug: "join_group", resource: "group" },
+    { name: "Create Post", slug: "create_post", resource: "group" },
+    { name: "Delete Any Post", slug: "delete_any_post", resource: "group" },
+    { name: "Manage Group Settings", slug: "manage_group_settings", resource: "group" },
+    { name: "Remove Member", slug: "remove_member", resource: "group" },
+    { name: "Invite Member", slug: "invite_member", resource: "group" },
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    // Post Capacities
+    { name: "Delete Own Post", slug: "delete_own_post", resource: "post" },
+    { name: "Pin Post", slug: "pin_post", resource: "post" },
+    { name: "Like Post", slug: "like_post", resource: "post" },
 
-### Deployment
+    // Comment Capacities
+    { name: "Create Comment", slug: "create_comment", resource: "comment" },
+    { name: "Delete Any Comment", slug: "delete_any_comment", resource: "comment" },
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    // User Capacities
+    { name: "Follow User", slug: "follow_user", resource: "user" },
+    { name: "Send Message", slug: "send_message", resource: "user" },
+    { name: "View Profile", slug: "view_profile", resource: "user" }
+];
 
-### `yarn build` fails to minify
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```js
+// C. Roles
+const roles = [
+    // === Group Roles (group-specific) ===
+    {
+        name: "Group Admin",
+        slug: "group_admin",
+        resource: "group",
+        group: groupId1,                    // specific group
+        capacities: [/* all group capacities */]
+    },
+    {
+        name: "Group Moderator",
+        slug: "group_moderator",
+        resource: "group",
+        group: groupId1,
+        capacities: [/* view_group, delete_any_post, remove_member, etc. */]
+    },
+    {
+        name: "Group Member",
+        slug: "group_member",
+        resource: "group",
+        group: groupId1,
+        capacities: ["view_group", "create_post", "create_comment", "like_post"]
+    },
+
+    // === Global Roles ===
+    {
+        name: "Post Moderator",
+        slug: "post_moderator",
+        resource: "post",
+        group: null,
+        capacities: ["delete_any_post", "pin_post"]
+    },
+    {
+        name: "Verified User",
+        slug: "verified_user",
+        resource: "user",
+        group: null,
+        capacities: ["follow_user", "send_message"]
+    }
+];
+```
+
+# Permission Considerations for CMS Dashboard
+- Since you have Roles + Capacities, you should create these Admin Capacities:
+
+```access_cms_dashboard```
+```manage_users```
+```manage_groups```
+```manage_roles```
+```manage_policies```
+```moderate_content```
+```view_analytics```
+```manage_settings```
+
+- Then create roles like:
+
+  - Super Admin → All capacities
+  - Content Moderator → Only moderate_content + view reports
+  - Group Manager → manage_groups + manage_roles (limited)

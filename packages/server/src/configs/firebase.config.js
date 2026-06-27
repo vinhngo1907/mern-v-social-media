@@ -1,5 +1,5 @@
-const { initializeApp } = require("firebase-admin/app");
-const { firebaseConfig } = require("./env.config");
+// const { initializeApp } = require("firebase-admin/app");
+// const { firebaseConfig } = require("./env.config");
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCENc03yPkq8npLjucVOKWrYJANlAOa_2M",
@@ -11,4 +11,4 @@ const { firebaseConfig } = require("./env.config");
 //   measurementId: "G-3Q8LHK52K1"
 // };
 
-initializeApp(firebaseConfig);
+// initializeApp(firebaseConfig);

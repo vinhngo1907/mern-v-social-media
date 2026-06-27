@@ -26,16 +26,11 @@ router.get("/by", userAuth, groupCtrl.GetUserGroups);
 router.get("/", userAuth, groupCtrl.GetAllGroups);
 
 /**
- * @route PUT api/group/:id
- * @desc Update a group
+ * @route GET api/group
+ * @desc Get all groups
  * @access Private
  */
-router.put("/:id", userAuth, groupCtrl.UpdateGroup);
-
-// router.post("/:id/invite", userAuth, groupCtrl.GenerateInvite);
-// router.post("/join/:inviteCode", userAuth, groupCtrl.JoinViaInvite);
-// router.post("/:id/members/:userId/role", userAuth, groupCtrl.ChangeMemberRole);
-// router.delete("/:id/members/:userId", userAuth, groupCtrl.RemoveMember);
+router.get("/discover", userAuth, groupCtrl.DiscoverGroups);
 
 /**
  * @route GET api/group/:id
@@ -43,5 +38,28 @@ router.put("/:id", userAuth, groupCtrl.UpdateGroup);
  * @access Private
  */
 router.get("/:id", userAuth, groupCtrl.GetGroupById);
+
+/**
+ * @route PUT api/group/:id
+ * @desc Update a group
+ * @access Private
+ */
+router.put("/:id", userAuth, groupCtrl.UpdateGroup);
+
+router.post("/:id/invite", userAuth, groupCtrl.GenerateInvite);
+router.post("/join/:inviteCode", userAuth, groupCtrl.JoinViaInvite);
+router.post("/:id/members/:userId/role", userAuth, groupCtrl.ChangeMemberRole);
+router.delete("/:id/members/:userId", userAuth, groupCtrl.RemoveMember);
+
+router.patch('/join-request/:requestId', userAuth, groupCtrl.ReviewJoinRequest);
+router.post('/:id/join', userAuth, groupCtrl.JoinGroup);
+router.get('/:id/join-requests', userAuth, groupCtrl.GetJoinRequests);
+
+
+// Leave Group
+router.post('/:id/leave', userAuth, groupCtrl.LeaveGroup);
+
+// Invite Members
+router.post('/:id/invite', userAuth, groupCtrl.InviteMembers);
 
 module.exports = router;

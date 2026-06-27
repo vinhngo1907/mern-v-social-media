@@ -7,6 +7,10 @@ const RoleSchema = new Schema({
     slug: { type: String, required: [true, 'Please add slug name'], unique: true },
     capacities: [{ type: Schema.Types.ObjectId, ref: 'capacity' }],
     policies: [{ type: mongoose.Schema.Types.ObjectId, ref: "policy" }],
+    resource: {
+        type: String,
+        required: true, // group, post, .e.g
+    },
     createdBy: {
         type: String,
         default: "system",

@@ -89,7 +89,7 @@ const Menu = () => {
                             < i className="fas fa-lock mr-2" />
                             Change password
                         </Link>
-                        <Link className="dropdown-item" to="/settings">
+                        <Link className="dropdown-item" to="/account-settings">
                             < i className="fas fa-cog mr-2" />
                             Account setting
                         </Link>

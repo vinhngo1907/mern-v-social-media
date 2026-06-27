@@ -17,7 +17,7 @@ const policySchema = new Schema({
     },
 
     actions: [{
-        type: String, // "view", "create", "update", "delete"
+        type: String, // Use capacity slugs: "create_post", "delete_any_post", etc.
     }],
 
     effect: {
@@ -33,13 +33,13 @@ const policySchema = new Schema({
 }, { timestamps: true, versionKey: false })
 
 const resourceSchema = new Schema({
-  name: { type: String, unique: true }, // post, comment, video
-  description: String,
+    name: { type: String, unique: true }, // post, comment, video
+    description: { type: String }
 }, {
     timestamp: true, versionKey: false
 });
 
 module.exports = {
-    policyModel:  mongoose.model("policy", policySchema),
+    policyModel: mongoose.model("policy", policySchema),
     resourceModel: mongoose.model("resource", resourceSchema)
 }

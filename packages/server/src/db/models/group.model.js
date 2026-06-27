@@ -5,17 +5,19 @@ const groupSchema = new Schema({
     name: { type: String, required: true, maxlength: 200 },
     slug: { type: String, required: true, unique: true },
     description: String,
-    avatar: String,
+    avatar: { type: Object },
     coverImage: String,
 
     // Core type
     type: {
         type: String,
-        enum: ['community', 'chat', 'hybrid'], default: 'community'
+        enum: ['community', 'chat', 'hybrid'],
+        default: 'community'
     },
     privacy: {
         type: String,
-        enum: ['public', 'private', 'secret'], default: 'private'
+        enum: ['public', 'private', 'secret'],
+        default: 'private'
     },
 
     members: [{
@@ -53,16 +55,19 @@ const groupSchema = new Schema({
             type: String,
             enum: ['admin_only', 'mod_and_above', 'anyone'],
             default: 'mod_and_above'
-        }
+        },
+        requirePostApproval: { type: Boolean, default: false }
     },
 
     publicLink: {
         enabled: { type: Boolean, default: false },
-        code: { type: String, unique: true, sparse: true }
+        code: { type: String, sparse: true }
     },
 
     createdBy: { type: Schema.Types.ObjectId, ref: 'user', required: true },
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'user' }
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'user' },
+
+    joinRequests: [{ type: Schema.Types.ObjectId, ref: 'groupJoinRequest' }],
 }, {
     timestamps: true,
     versionKey: false

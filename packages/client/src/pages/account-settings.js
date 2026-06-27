@@ -1,7 +1,7 @@
 import React from "react";
 import LeftSideBar from "../components/global/LeftSideBar";
 
-const Settings = () => {
+const AccountSettings = () => {
     return (
         <div className='home row mx-0'>
             <div className="left_sidebar col-md-3">
@@ -10,7 +10,7 @@ const Settings = () => {
 
             <div className="main_sidebar py-3 col-md-6">
                 <div className="central-meta">
-                    <div className="editing-info">
+                    <div className="onoff-options">
 
                         <h5 className="f-title">
                             <i className="fas fa-cog" />
@@ -27,9 +27,7 @@ const Settings = () => {
                             <div className="setting-row">
                                 <span>Sub users</span>
 
-                                <p>
-                                    Enable this if you want people to follow you
-                                </p>
+                                <p>Enable this if you want people to follow you                                </p>
 
                                 <input type="checkbox" id="switch00" />
 
@@ -121,4 +119,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default AccountSettings;

@@ -3,16 +3,19 @@ const Schema = mongoose.Schema;
 
 const CapacitySchema = new Schema({
     name: {
-        type: String,
-        required: true,
-        unique: true,
-        maxLength: 25, trim: true
+        type: String, required: true, unique: true, maxLength: 25, trim: true
     },
     slug: {
         type: String,
         required: [true, "Fill in your information carefully!"],
         unique: true
-    }
+    },
+    description: { type: String, required: false },
+    resource: {
+        type: String,
+        ref: 'resource',
+        required: true
+    },
 }, {
     timestamps: true,
     versionKey: false

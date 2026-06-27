@@ -7,44 +7,6 @@ const { checkPermissionAdmin, checkRoot, checkPermission } = checkUtil;
 const { roleModel, userModel } = modelSchema;
 
 class RoleController {
-    // async GetAll(req, res, next) {
-    //     try {
-    //         const user = req.user;
-    //         if (!user) {
-    //             return res.status(401).json(responseDTO.unauthorization("User not found or/and authorized"));
-    //         }
-    //         const validRoot = await checkRoot(req.user);
-
-    //         if (!validRoot) {
-    //             const allow = await checkPermission(
-    //                 req.headers['x-api-key'] ?? null,
-    //                 process.env.CAPACITY_GET_ROLE ?? null,
-    //                 req.user
-    //             );
-
-    //             if (!allow) {
-    //                 return res.status(403).json(responseDTO.forbiden("You don't have permission to create a new capacity"));
-    //             }
-    //         }
-    //         if (user.roles.find((role) => role.slug === "administrator")) {
-    //             // const xApiKey = req.headers['x-api-key'];
-    //             const allowAdmin = await checkPermissionAdmin(
-    //                 req.headers['x-api-key'] ?? null,
-    //                 process.env.secret_key ?? null,
-    //                 user._id.toString()
-    //             );
-
-    //             if (!allowAdmin) {
-    //                 return res.status(403).json(responseDTO.forbiden("You don't have permission to create new role"))
-    //             }
-    //         }
-    //         const roles = await roleModel.find({});
-    //         res.json(responseDTO.success("Get data in successfully", roles));
-    //     } catch (error) {
-    //         console.log(error);
-    //         return res.status(500).json(responseDTO.serverError(error.message));
-    //     }
-    // }
     async GetAll(req, res, next) {
         try {
             const user = req.user;
@@ -78,8 +40,9 @@ class RoleController {
                 }
             }
 
-            const features = new APIFeatures(roleModel.find({ }), req.query).paginating().sorting();
-            
+            const features = new APIFeatures(roleModel.find({}), req.query)
+                .paginating().sorting();
+
             const roles = await features.query;
             res.json(responseDTO.success("Get roles successfully", {
                 roles, result: roles.length

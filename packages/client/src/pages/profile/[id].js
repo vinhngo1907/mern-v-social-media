@@ -25,17 +25,16 @@ const Profile = () => {
         const fromSS = sessionStorage.getItem("visit");
         if (!fromSS) {
             const timer = setTimeout(() => {
-                console.log("make api request to log visit");
+                // console.log("make api request to log visit");
                 dispatch(fetchStatistics({ id, type: 'visit-pageview', auth, socket }))
                 sessionStorage.setItem("visit", 'x');
             }, 10000); // 10 sec
 
             return () => clearTimeout(timer);
-        }else{
+        } else {
             const timer = setTimeout(() => {
-                console.log("make api request to log count");
+                // console.log("make api request to log count");
                 dispatch(fetchStatistics({ id, type: '', auth, socket }));
-                
             }, 10000);
             return () => clearTimeout(timer);
         }
@@ -47,7 +46,7 @@ const Profile = () => {
                 <LeftSideBar type="profile" />
             </div>
             <div className="main_sidebar col-md-9">
-                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} statistic={statistic}/>
+                <Info auth={auth} profile={profile} dispatch={dispatch} id={id} socket={socket} statistic={statistic} />
                 {
                     auth.user._id === id &&
                     <div className="profile_tab">
