@@ -464,27 +464,21 @@ const Groups = () => {
                 ? myGroupsResult
                 : discoverResult;
 
-    const hasMore = displayedGroups.length < totalResult;
+    const hasMore = displayedGroups.length < totalResult && totalResult > 0;
 
     return (
 
         <div className="home-group row mx-auto">
 
             <div className="left_sidebar col-md-3">
-
                 <LeftSideBar />
-
             </div>
 
             <div className="main_sidebar col-md-6 overlay-scrollbar scrollbar-hover">
-
                 <div className="central-meta mt-3">
-
                     <div className="groups">
-
                         <div className="d-flex justify-content-between">
-
-                            <span><i className="fa fa-users" /> Joined Groups                            </span>
+                            <span><i className="fa fa-users" /> Joined Groups</span>
 
                             <button
                                 className="btn btn-primary"

@@ -17,19 +17,12 @@ const ListGroup = ({
     const [load, setLoad] = useState(false);
 
     const handleLoadMore = async () => {
-
         setLoad(true);
-
         try {
-
             await onLoadMore();
-
         } finally {
-
             setLoad(false);
-
         }
-
     };
 
     return (

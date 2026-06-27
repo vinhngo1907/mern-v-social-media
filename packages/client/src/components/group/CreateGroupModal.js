@@ -32,7 +32,7 @@ const CreateGroupModal = ({ show, onHide }) => {
     const isCommunityType = formData.type === 'community' || formData.type === 'hybrid';
     const isChatType = formData.type === 'chat';
     const showPostSettings = isCommunityType;
-    const showChatSettings = isChatType || formData.type === 'hybrid';
+    // const showChatSettings = isChatType || formData.type === 'hybrid';
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,7 +40,7 @@ const CreateGroupModal = ({ show, onHide }) => {
 
     const handleSettingsChange = (e) => {
         const { name, value, type, checked } = e.target;
-        console.log({ name, value, type, checked })
+        // console.log({ name, value, type, checked })
         setFormData({
             ...formData,
             settings: {
