@@ -30,7 +30,7 @@ const CreateGroupModal = ({ show, onHide }) => {
 
     // Computed values
     const isCommunityType = formData.type === 'community' || formData.type === 'hybrid';
-    const isChatType = formData.type === 'chat';
+    // const isChatType = formData.type === 'chat';
     const showPostSettings = isCommunityType;
     // const showChatSettings = isChatType || formData.type === 'hybrid';
 
