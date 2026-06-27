@@ -4,10 +4,13 @@ const initialState = {
     groups: [],
     discoverGroups: [],
     myGroups: [],
-    // group: null,          // Current group detail (for GroupDetail page)
     loading: false,
-    // myGroupsResult: 0,
-    // discoverResult: 0,
+    allPage: 0,
+    allResult: 9,
+    myPage: 0,
+    myGroupsResult: 9,
+    discoverPage: 0,
+    discoverResult: 9,
     loadingDiscover: false,
 };
 
@@ -17,14 +20,16 @@ const groupReducer = (state = initialState, action) => {
         case GROUP_TYPES.LOADING_GROUP:
             return {
                 ...state,
-                loading: payload
+                loading: payload,
             };
 
         case GROUP_TYPES.GET_ALL_GROUPS:
             return {
                 ...state,
-                groups: payload.groups,
-                // result: payload.result,
+                groups: payload.page === 1
+                    ? payload.groups
+                    : [...state.allResult, ...action.payload.groups],
+                allResult: payload.result,
                 loading: false
             }
         // Get User's Groups (My Groups Page)
@@ -34,7 +39,7 @@ const groupReducer = (state = initialState, action) => {
                 myGroups: payload.page === 1
                     ? payload.groups
                     : [...state.myGroups, ...action.payload.groups],
-                // myGroupsResult: payload.result,
+                myGroupsResult: payload.result,
                 loading: false
             };
 
@@ -44,15 +49,15 @@ const groupReducer = (state = initialState, action) => {
                 discoverGroups: payload.page === 1
                     ? payload.groups
                     : [...state.discoverGroups, ...payload.groups],
-                // discoverResult: payload.result,
-                loadingDiscover: false
+                discoverResult: payload.result,
+                loading: false
             };
 
         // Create New Group
         case GROUP_TYPES.CREATE_GROUP:
             return {
                 ...state,
-                groups: [action.payload, ...state.groups], // Add new group to top
+                groups: [action.payload, ...state.groups],
                 loading: false
             };
 

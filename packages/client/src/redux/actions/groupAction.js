@@ -47,8 +47,6 @@ export const GROUP_TYPES = {
 //     }
 // }
 
-// Update / Edit Group
-
 export const createGroup = ({ data, token, avatar }) => async (dispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
@@ -98,6 +96,7 @@ export const createGroup = ({ data, token, avatar }) => async (dispatch) => {
     }
 };
 
+// Update / Edit Group
 export const updateGroup = ({ groupId, token, data: groupData, avatar, socket }) => async (dispatch) => {
     try {
         let newImg = null;
@@ -140,24 +139,35 @@ export const updateGroup = ({ groupId, token, data: groupData, avatar, socket })
             type: GLOBALTYPES.ALERT,
             payload: { error: err.response?.data?.message || "Failed to update group" }
         });
+        throw err;
     } finally {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
     }
 };
 
-// Get User's Joined Groups
-export const getUserGroups = ({ token, page, limit }) => async (dispatch) => {
+/**
+ * Get User's Joined Groups
+ * @param {*} param0 
+ * @returns 
+ */
+export const getUserGroups = ({ token, page, searchTerm }) => async (dispatch) => {
     try {
         // dispatch({ type: GROUP_TYPES.LOADING_GROUP, payload: true });
 
-        const res = await getDataApi(`group/by?page=${page}&limit=${limit}`, token);
+        // const res = await getDataApi(`group/by?page=${page}&limit=${page * 9}`, token);
+        let url = searchTerm
+            ? `group/by?name=${encodeURIComponent(searchTerm)}&limit=${page * 9}`
+            : `group/by?page=${page}&limit=${page * 9}`;
 
+        const res = await getDataApi(url, token);
+        const { data: { results } } = res;
         dispatch({
             type: GROUP_TYPES.GET_USER_GROUPS,
             payload: {
-                groups: res.data.results || res.data.groups || res.data,
+                // groups: res.data.results || res.data.groups || res.data,
+                groups: results,
                 page,
-                result: res.data.result || res.data.length || 0
+                myGroupsResult: results.length || 0
             }
         });
 
@@ -170,42 +180,81 @@ export const getUserGroups = ({ token, page, limit }) => async (dispatch) => {
     }
 };
 
-export const searchGroups = (query) => async (dispatch) => {
-    try {
-        const res = await getDataApi(`group/search?name=${query}`);
-        return res.data.results || res.data.groups;
-    } catch (err) {
-        console.error(err);
-        return [];
-    }
-};
-
-// Search / Discover Groups
-export const searchOrDiscoverGroups = ({ token, searchTerm = '', page, limit }) => async (dispatch) => {
+/**
+Search / Discover Groups
+@param {Object} param0 - Object containing parameters for searching / discovering groups
+@param {string} param0.token - Authentication token
+@param {string} [param0.searchTerm=''] - Search term condition, default is an empty string
+@param {number} param0.page - Current page number
+@param {string} param0.tab - Tab or group to search / discover
+@returns {Function} - An async function that returns a dispatch function
+*/
+export const searchOrDiscoverGroups = ({ token, searchTerm = '', page, tab }) => async (dispatch) => {
     try {
         dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: true });
 
         let url = searchTerm
-            ? `group/discover?name=${encodeURIComponent(searchTerm)}&page=${page}&limit=${limit}`
-            : `group/discover?page=${page}&limit=${limit}`;
+            // ? `group/discover?name=${encodeURIComponent(searchTerm)}&page=${page}&limit=${page * 9}`
+            ? `group/discover?name=${encodeURIComponent(searchTerm)}&limit=${page * 9}`
+            : `group/discover?limit=${page * 9}`;
 
-        const res = await getDataApi(url, token);   // No token needed for discover
+        const res = await getDataApi(url, token);
+        const { data: { results } } = res;
 
         dispatch({
             type: GROUP_TYPES.GET_DISCOVER_GROUPS,
             payload: {
-                groups: res.data.results || res.data.groups || res.data,
+                // groups: res.data.results || res.data.groups || res.data,
+                groups: results,
                 page,
-                result: res.data.result || res.data.length || 0
+                result: results.length || 0
             }
         });
     } catch (err) {
-        console.error(err);
+        console.error("[ERR_GET_DISCOVER_GROUPS] ", err);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data?.message } });
     } finally {
         dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: false });
     }
 };
 
+/**
+ * Search / All Groups
+ * @param {Object} param0 - Object containing parameters for searching / discovering groups
+ * @param {string} param0.token - Authentication token
+ * @param {string} [param0.searchTerm=''] - Search term condition, default is an empty string
+ * @param {number} param0.page - Current page number
+ * @param {string} param0.tab - Tab or group to search / discover@param {*} param0 
+ * @returns {Function} - An async function that returns a dispatch function
+ */
+export const searchOrAllGroups = ({ token, searchTerm = '', page }) => async (dispatch) => {
+    try {
+        dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: true });
+
+        let url = searchTerm
+            // ? `group/discover?name=${encodeURIComponent(searchTerm)}&page=${page}&limit=${page * 9}`
+            ? `group?name=${encodeURIComponent(searchTerm)}&limit=${page * 9}`
+            : `group?limit=${page * 9}`;
+
+        const res = await getDataApi(url, token);
+
+        const { data: { results } } = res;
+
+        dispatch({
+            type: GROUP_TYPES.GET_ALL_GROUPS,
+            payload: {
+                groups: results,
+                page,
+                result: results.length
+            }
+        });
+    } catch (err) {
+        console.error("[ERR_GET_GROUPS] ", err);
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data?.message } });
+    } finally {
+        dispatch({ type: GROUP_TYPES.LOADING_DISCOVER, payload: false });
+    }
+};
 // Get Single Group Detail
 export const getGroup = ({ groupDetail, id: groupId, token }) => async (dispatch) => {
     if (groupDetail.every(p => p._id !== groupId)) {

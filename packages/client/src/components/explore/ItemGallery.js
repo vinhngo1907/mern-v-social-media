@@ -53,7 +53,7 @@ const ItemGallery = ({ items, result }) => {
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">Item Gallery</h5>
+                                <h5 className="modal-title">Photo Gallery</h5>
                                 <button type="button" className="close" onClick={handleCloseModal}>
                                     <span>&times;</span>
                                 </button>
@@ -63,7 +63,7 @@ const ItemGallery = ({ items, result }) => {
                                     src={items[currentItemIndex].url}
                                     alt={`Alt ${currentItemIndex}`}
                                     className="img-fluid"
-                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }} 
+                                    style={{ filter: theme ? 'invert(1)' : 'invert(0)' }}
                                 />
                             </div>
                             <div className="modal-footer">
